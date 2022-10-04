@@ -21,6 +21,7 @@
 
   homebrew.brews = [
     "lunchy"
+    "postgresql@14"
     "shpotify"
     "trash"
     "wxwidgets"
