@@ -150,6 +150,7 @@ Alternatively, if you have the Rust toolchain installed, you can simply `make`.
 
 Home Manager has the capability to configure a lot of the programs that I use, but for those not supported and for anything but the simplest configurations I prefer to maintain a classic [dotfiles] setup. Programs configured this way include:
 
+- [Karabiner-Elements], a keyboard customizer for macOS
 - [Neovim], my text editor and software development tool
 - [Nix], the [aforementioned](#prelude) package manager
 - [ranger], a console file manager
@@ -160,7 +161,7 @@ Home Manager has the capability to configure a lot of the programs that I use, b
 
 Neovim is sort of the centerpiece of most of my systems, and has the most elaborate and volatile configuration that I maintain.
 
-The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Tangerine] and [Hibiscus]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through Conjure and [Aniseed], and for being an overall great person.
+The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot] and [some great macros]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through Conjure and [Aniseed], and for being an overall great person.
 
 In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use loads of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here, but the most up-to-date list can be viewed in the the main [package file].
 
@@ -185,6 +186,8 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [google chromebook]: https://en.wikipedia.org/wiki/Chromebook
 [hibiscus]: https://github.com/udayvir-singh/hibiscus.nvim
 [home manager]: https://github.com/nix-community/home-manager
+[hotpot]: https://github.com/rktjmp/hotpot.nvim
+[karabiner-elements]: https://karabiner-elements.pqrs.org/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [language servers]: https://microsoft.github.io/language-server-protocol/
 [laptop]: #glamdring
@@ -205,6 +208,7 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [shell]: https://en.wikipedia.org/wiki/Shell_(computing)
 [skhd]: https://github.com/koekeishiya/skhd
 [soc]: https://en.wikipedia.org/wiki/System_on_a_chip
+[some great macros]: https://github.com/datwaft/themis.nvim
 [tangerine]: https://github.com/udayvir-singh/tangerine.nvim
 [themes]: https://github.com/ngscheurich/systems/tree/main/home/.local/share/themes
 [tmux]: https://github.com/tmux/tmux
