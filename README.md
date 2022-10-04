@@ -200,7 +200,7 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [nixos]: https://en.wikipedia.org/wiki/NixOS
 [oliver caldwell]: https://github.com/Olical
 [overlay]: https://github.com/nix-community/neovim-nightly-overlay
-[package file]: https://github.com/ngscheurich/systems/blob/main/home/.config/nvim/fnl/packages/init.fnl
+[package file]: https://github.com/ngscheurich/systems/blob/main/dotfiles/nvim/fnl/conf/pack/init.fnl
 [packer]: https://github.com/wbthomason/packer.nvim
 [pico-8]: https://en.wikipedia.org/wiki/PICO-8
 [pocket c.h.i.p]: https://en.wikipedia.org/wiki/CHIP_(computer)#Pocket_CHIP_and_Pockulus
