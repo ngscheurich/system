@@ -142,7 +142,7 @@ Included in this repository is the source code for _Grimoire_, a command-line in
 
 To build Grimoire, first install Nix then run this command from the `cli` directory:
 
-       nix shell nixpkgs#cargo -c make
+    nix shell nixpkgs#cargo -c make
        
 Alternatively, if you have the Rust toolchain installed, you can simply `make`.
 
