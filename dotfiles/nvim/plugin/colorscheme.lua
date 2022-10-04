@@ -1,0 +1,1 @@
+/etc/system/themes/one-dark/nvim.lua
