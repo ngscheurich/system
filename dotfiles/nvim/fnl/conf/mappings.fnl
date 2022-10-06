@@ -10,4 +10,3 @@
 (map! [n] :<Right> "<C-w>l")
 
 (map! [n] :<Esc> "<Cmd>nohlsearch<CR>")
-
