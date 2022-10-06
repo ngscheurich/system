@@ -62,7 +62,6 @@
     '';
 
     shellInit = ''
-      set -gx ANDROID_SDK_ROOT $HOME/Library/Android/sdk
       set -gx AWS_VAULT_KEYCHAIN_NAME login
       set -gx BROWSER open
       set -gx EDITOR nvim
@@ -76,10 +75,16 @@
       set -gx PLAYDATE_SDK_PATH $HOME/Developer/PlaydateSDK 
 
       fish_add_path /opt/homebrew/bin
-      fish_add_path $ANDROID_SDK_ROOT/emulator
-      fish_add_path $ANDROID_SDK_ROOT/platform-tools
-      fish_add_path $ANDROID_SDK_ROOT/tools
-      fish_add_path $ANDROID_SDK_ROOT/tools/bin
+
+      if string match -q -r '^N.*\.local$' "$(hostname)"
+        set -gx ANDROID_SDK_ROOT $HOME/Library/Android/sdk
+
+        fish_add_path $ANDROID_SDK_ROOT/emulator
+        fish_add_path $ANDROID_SDK_ROOT/platform-tools
+        fish_add_path $ANDROID_SDK_ROOT/tools
+        fish_add_path $ANDROID_SDK_ROOT/tools/bin
+      end
+
     '';
 
     plugins = [
