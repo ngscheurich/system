@@ -182,8 +182,6 @@
     enableBashIntegration = false;
 
     settings = {
-      command_timeout = 600;
-
       format = lib.concatStrings [
         "$username"
         "$hostname"
@@ -196,9 +194,6 @@
         "$git_metrics"
         "$git_status"
         "$fill"
-        "$elixir"
-        "$nodejs"
-        "$lua"
         "$time"
         "$battery"
         "$line_break"
@@ -206,9 +201,6 @@
         "$status"
         "$character"
       ];
-
-      elixir.symbol = " ";
-      lua.symbol = "  ";
 
       time = {
         disabled = false;
