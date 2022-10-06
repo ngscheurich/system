@@ -1,0 +1,5 @@
+completions/fisher.fish
+conf.d/
+functions/__*
+fish_variables
+secrets.fish

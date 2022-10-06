@@ -13,93 +13,6 @@
     '';
   };
 
-  programs.fish = {
-    enable = true;
-
-    functions = {
-      fish_greeting = "";
-      gitignore = "curl -sL https://www.gitignore.io/api/$argv";
-      tmuxdir = "tmux new-session -s $(pwd | string split '/')[-1]";
-    };
-
-    interactiveShellInit = ''
-      fish_hybrid_key_bindings
-
-      abbr -a cls clear
-      abbr -a lg lazygit
-      abbr -a love /Applications/love.app/Contents/MacOS/love
-      abbr -a pico8 /Applications/PICO-8.app/Contents/MacOS/pico8
-      abbr -a serve "python -m http.server"
-      abbr -a ta "tmux attach"
-      abbr -a vboxls "VBoxManage list runningvms"
-      abbr -a vimdiff "nvim -d"
-
-      alias l exa
-      alias la "exa --long --all"
-      alias ll "exa --long"
-      alias ls exa
-      alias lt "exa --tree"
-      alias ta "tmux attach"
-      alias tn tmuxdir
-      alias weather "curl wttr.in"
-
-      thefuck --alias | source
-
-      # FZF colors
-      set -gx FZF_DEFAULT_OPTS "--color \
-      fg:7,\
-      bg:0,\
-      hl:8,\
-      fg+:3,\
-      bg+:0,\
-      gutter:8,\
-      hl+:1,\
-      info:6,\
-      prompt:2,\
-      pointer:4,\
-      marker:1,\
-      spinner:5"
-    '';
-
-    shellInit = ''
-      set -gx AWS_VAULT_KEYCHAIN_NAME login
-      set -gx BROWSER open
-      set -gx EDITOR nvim
-      set -gx ERL_AFLAGS "-kernel shell_history enabled"
-      set -gx JAVA_HOME /Library/Java/JavaVirtualMachines/temurin-11.jdk/Contents/Home
-      set -gx KERL_CONFIGURE_OPTIONS --without-javac
-      set -gx NVIM_LISTEN_ADDRESS /tmp/nvimsocket
-      set -gx RANGER_DEVICONS_SEPARATOR "  "
-      set -gx XDG_DATA_HOME $HOME/.local/share
-      set -gx XDG_CONFIG_HOME $HOME/.config
-      set -gx PLAYDATE_SDK_PATH $HOME/Developer/PlaydateSDK 
-
-      fish_add_path /opt/homebrew/bin
-
-      if string match -q -r '^N.*\.local$' "$(hostname)"
-        set -gx ANDROID_SDK_ROOT $HOME/Library/Android/sdk
-
-        fish_add_path $ANDROID_SDK_ROOT/emulator
-        fish_add_path $ANDROID_SDK_ROOT/platform-tools
-        fish_add_path $ANDROID_SDK_ROOT/tools
-        fish_add_path $ANDROID_SDK_ROOT/tools/bin
-      end
-
-    '';
-
-    plugins = [
-      {
-        name = "z";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "z";
-          rev = "85f863f20f24faf675827fb00f3a4e15c7838d76";
-          sha256 = "+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
-        };
-      }
-    ];
-  };
-
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -225,6 +138,7 @@
     fasd
     fd
     figlet
+    fish
     fzy
     htop
     httpie
