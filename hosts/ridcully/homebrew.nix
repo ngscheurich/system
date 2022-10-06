@@ -20,6 +20,7 @@
   ];
 
   homebrew.brews = [
+    "asdf"
     "lunchy"
     "postgresql@14"
     "shpotify"

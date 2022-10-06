@@ -6,9 +6,6 @@
 
 {
   home.packages = with pkgs; [
-    # Runtime management
-    asdf-vm
-
     # Languages 
     fennel
 

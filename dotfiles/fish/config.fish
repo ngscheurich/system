@@ -22,8 +22,6 @@ if string match -q -r '^N.*\.local$' "$(hostname)"
   fish_add_path $ANDROID_SDK_ROOT/tools/bin
 end
 
-thefuck --alias | source
-
 if status is-interactive
   fish_hybrid_key_bindings
 
@@ -45,6 +43,10 @@ if status is-interactive
   alias tn tmuxdir
   alias weather 'curl wttr.in'
 
+  thefuck --alias | source
+
+  starship init fish | source
+
   # FZF colors
   set -gx FZF_DEFAULT_OPTS "--color \
 fg:7,\
@@ -65,4 +67,13 @@ if test -f $__fish_config_dir/secrets.fish
     source $__fish_config_dir/secrets.fish
 end
 
-starship init fish | source
+# asdf
+source "$(brew --prefix asdf)"/libexec/asdf.fish
+
+if test -d (brew --prefix)"/share/fish/completions"
+    set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/completions
+end
+
+if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+    set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+end
