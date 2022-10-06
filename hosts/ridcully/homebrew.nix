@@ -52,12 +52,13 @@
     "postico"
     "postman"
     "raycast"
-    "slack"
     "spotify"
     "statusfy"
     "todoist"
     "wireshark"
   ];
 
-  homebrew.masApps = {};
+  homebrew.masApps = {
+    Slack = 803453959;
+  };
 }
