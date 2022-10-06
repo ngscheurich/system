@@ -7,16 +7,17 @@
 
   (local telescope (require :telescope.builtin))
 
-  (buf-map! [n] "K" vim.lsp.buf.hover)
-  (buf-map! [nv] "<LocalLeader>a" vim.lsp.buf.code_action)
+  (buf-map! [n]  "K"               vim.lsp.buf.hover)
+  (buf-map! [n]  "<C-]>"           vim.lsp.buf.definition)
+  (buf-map! [nv] "<LocalLeader>a"  vim.lsp.buf.code_action)
   (buf-map! [nv] "<LocalLeader>rn" vim.lsp.buf.rename)
-  (buf-map! [n] "<LocalLeader>gD" vim.lsp.buf.declaration)
-  (buf-map! [n] "<LocalLeader>gd" vim.lsp.buf.definition)
-  (buf-map! [n] "<LocalLeader>gt" vim.lsp.buf.type_definition)
-  (buf-map! [n] "<LocalLeader>li" telescope.lsp_implementations)
-  (buf-map! [n] "<LocalLeader>lr" telescope.lsp_references)
-  (buf-map! [n] "<LocalLeader>ls" telescope.lsp_document_symbols)
-  (buf-map! [n] "<LocalLeader>lS" telescope.lsp_workspace_symbols)
+  (buf-map! [n]  "<LocalLeader>gD" vim.lsp.buf.declaration)
+  (buf-map! [n]  "<LocalLeader>gd" vim.lsp.buf.definition)
+  (buf-map! [n]  "<LocalLeader>gt" vim.lsp.buf.type_definition)
+  (buf-map! [n]  "<LocalLeader>li" telescope.lsp_implementations)
+  (buf-map! [n]  "<LocalLeader>lr" telescope.lsp_references)
+  (buf-map! [n]  "<LocalLeader>ls" telescope.lsp_document_symbols)
+  (buf-map! [n]  "<LocalLeader>lS" telescope.lsp_workspace_symbols)
 
   (when (client.supports_method "textDocument/formatting")
     (augroup! lsp-format-before-saving
