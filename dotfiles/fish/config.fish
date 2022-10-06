@@ -47,18 +47,18 @@ if status is-interactive
 
   # FZF colors
   set -gx FZF_DEFAULT_OPTS "--color \
-  fg:7,\
-  bg:0,\
-  hl:8,\
-  fg+:3,\
-  bg+:0,\
-  gutter:8,\
-  hl+:1,\
-  info:6,\
-  prompt:2,\
-  pointer:4,\
-  marker:1,\
-  spinner:5"
+fg:7,\
+bg:0,\
+hl:8,\
+fg+:3,\
+bg+:0,\
+gutter:8,\
+hl+:1,\
+info:6,\
+prompt:2,\
+pointer:4,\
+marker:1,\
+spinner:5"
 end
 
 if test -f $__fish_config_dir/secrets.fish
