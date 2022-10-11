@@ -2,30 +2,23 @@
 
 {
   imports = [
+    ../../modules/darwin
+    ../../modules/home
     ./configuration.nix
-    ./preferences.nix
-    ./homebrew.nix
   ];
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
     users.nick = {
       imports = [
-        ../../modules/code.nix
-        ../../modules/crypt.nix
-        ../../modules/devel.nix
-        ../../modules/devops.nix
-        ../../modules/git.nix
-        ../../modules/prose.nix
-        ../../modules/shell.nix
-        ../../modules/term.nix
-        ../../modules/vim.nix
-      ];
-
-      home.packages = with pkgs; [
-        stow
+        ../../modules/home/cli
+        ../../modules/home/code.nix
+        ../../modules/home/crypt.nix
+        ../../modules/home/devel.nix
+        ../../modules/home/devops.nix
+        ../../modules/home/git.nix
+        ../../modules/home/prose.nix
+        ../../modules/home/term.nix
+        ../../modules/home/vim.nix
       ];
     };
   };

@@ -1,6 +1,11 @@
 { pkgs, inputs, ... }:
 
 {
+  imports = [
+    ./homebrew.nix
+    ./preferences.nix
+  ];
+
   system.stateVersion = 4;
 
   services.nix-daemon.enable = true;
@@ -18,9 +23,8 @@
     overlays = inputs.overlays;
   };
 
-  environment.shells = [
-    pkgs.fish
-  ];
-
   programs.fish.enable = true;
+  programs.zsh.enable = true;
+
+  environment.shells = [ pkgs.fish pkgs.zsh ];
 }

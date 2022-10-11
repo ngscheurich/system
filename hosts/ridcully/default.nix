@@ -2,26 +2,22 @@
 
 {
   imports = [
-    ./configuration.nix
-    ./preferences.nix
-    ./homebrew.nix
+    ../../modules/darwin
+    ../../modules/home
   ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    users.nscheurich = {
+  home-manager.users = {
+    nscheurich = {
       imports = [
-        ../../modules/code.nix
-        ../../modules/crypt.nix
-        ../../modules/devel.nix
-        ../../modules/devops.nix
-        ../../modules/git.nix
-        ../../modules/prose.nix
-        ../../modules/shell.nix
-        ../../modules/term.nix
-        ../../modules/vim.nix
+        ../../modules/home/cli
+        ../../modules/home/code.nix
+        ../../modules/home/crypt.nix
+        ../../modules/home/devel.nix
+        ../../modules/home/devops.nix
+        ../../modules/home/git.nix
+        ../../modules/home/prose.nix
+        ../../modules/home/term.nix
+        ../../modules/home/vim.nix
       ];
     };
   };

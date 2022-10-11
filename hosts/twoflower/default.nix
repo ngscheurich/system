@@ -2,19 +2,17 @@
 
 {
   imports = [
+    ../../modules/home
     ./configuration.nix
-    ./hardware-configuration.nix
+    ./hardware.nix
   ];
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
     users.nick = {
       imports = [
-        ../../modules/git.nix
-        ../../modules/shell.nix
-        ../../modules/vim.nix
+        ../../home/modules/cli
+        ../../home/modules/git.nix
+        ../../home/modules/vim.nix
       ];
     };
   };

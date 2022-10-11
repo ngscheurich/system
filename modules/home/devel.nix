@@ -7,6 +7,7 @@
 {
   home.packages = with pkgs; [
     # Languages 
+    asdf-vm
     fennel
 
     # Database tools
