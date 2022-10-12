@@ -29,7 +29,12 @@
 (local mason (require :mason-lspconfig))
 (mason.setup {:automatic_installation true})
 
-;; Global lsp-config options
+;; Capabilities
+(local capabilities (let [cmp (require :cmp_nvim_lsp)]
+                      (cmp.update_capabilities
+                        (vim.lsp.protocol.make_client_capabilities))))
+
+;; Global lspconfig options
 (local global-options {:on_attach on-attach
                        : capabilities})
 
