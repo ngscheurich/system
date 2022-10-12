@@ -16,5 +16,4 @@ ensure("https://github.com/ngscheurich/themis.nvim")
 ensure("https://github.com/wbthomason/packer.nvim")
 
 require("hotpot")
-
 require("conf")
