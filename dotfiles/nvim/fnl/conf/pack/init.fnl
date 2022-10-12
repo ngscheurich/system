@@ -79,7 +79,7 @@
 (pack! "PaterJason/cmp-conjure")
 (pack! "hrsh7th/cmp-buffer")
 (pack! "hrsh7th/cmp-nvim-lsp")
-(pack! "hrsh7th/nvim-cmp")
+(pack! "hrsh7th/nvim-cmp" {:require* :conf.pack.cmp})
 (pack! "saadparwaiz1/cmp_luasnip")
 
 ;; ----------------------------------------------------------------
