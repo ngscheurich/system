@@ -17,7 +17,7 @@
 (pack! "junegunn/vim-easy-align")
 (pack! "ngscheurich/edeex.nvim" {:config #((. (require :edeex) :setup) {:mapping "<C-c>e"})})
 (pack! "tpope/vim-repeat")
-(pack! "tpope/vim-sexp-mappings-for-regular-people")
+(pack! "tpope/vim-sexp-mappings-for-regular-people" {:ft conf.lisp_filetypes})
 (pack! "tpope/vim-speeddating")
 (pack! "tpope/vim-surround")
 (pack! "windwp/nvim-autopairs" {:require* :conf.pack.autopairs})
