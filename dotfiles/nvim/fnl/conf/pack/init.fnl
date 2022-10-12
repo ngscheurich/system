@@ -29,20 +29,17 @@
 (pack! "feline-nvim/feline.nvim" {:require* :conf.pack.feline})
 (pack! "folke/todo-comments.nvim" {:requires ["nvim-lua/plenary.nvim"]})
 (pack! "folke/which-key.nvim" {:setup* "which-key"})
+(pack! "habamax/vim-alchemist")
 (pack! "https://gitlab.com/yorickpeterse/nvim-pqf.git" {:setup* "pqf"})
 (pack! "kyazdani42/nvim-web-devicons" {:require* :conf.pack.web-devicons})
+(pack! "navarasu/onedark.nvim")
 (pack! "norcalli/nvim-colorizer.lua" {:setup* "colorizer"})
 (pack! "rcarriga/nvim-notify")
+(pack! "romainl/Apprentice")
 (pack! "sidebar-nvim/sidebar.nvim" {:require* :conf.pack.sidebar})
 (pack! "stevearc/dressing.nvim" {:require* :conf.pack.dressing})
 
-(pack! "EdenEast/nightfox.nvim")
-(pack! "RRethy/nvim-base16")
-(pack! "folke/tokyonight.nvim")
-(pack! "habamax/vim-alchemist")
 (pack! "jan-warchol/selenized" {:run "touch post-run"})
-(pack! "navarasu/onedark.nvim")
-(pack! "romainl/Apprentice")
 
 ;; ----------------------------------------------------------------
 ;; Navigation
