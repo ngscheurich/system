@@ -30,7 +30,7 @@
           ];
         };
 
-	ridcully = darwinSystem {
+        ridcully = darwinSystem {
           system = "aarch64-darwin";
           inputs = { inherit overlays; };
           modules = [
