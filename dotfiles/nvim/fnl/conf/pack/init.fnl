@@ -58,23 +58,7 @@
 ;; ----------------------------------------------------------------
 ;; Languages
 ;; ----------------------------------------------------------------
-(pack! "Glench/Vim-Jinja2-Syntax")
-(pack! "HerringtonDarkholme/yats.vim")
-(pack! "LnL7/vim-nix")
-(pack! "MaxMEllon/vim-jsx-pretty")
-(pack! "bakpakin/fennel.vim")
-(pack! "cespare/vim-toml")
-(pack! "dag/vim-fish")
-(pack! "elixir-editors/vim-elixir")
-(pack! "ericpruitt/tmux.vim")
-(pack! "euclidianAce/BetterLua.vim")
-(pack! "fladson/vim-kitty")
-(pack! "hashivim/vim-terraform")
-(pack! "ixru/nvim-markdown")
-(pack! "jparise/vim-graphql")
-(pack! "othree/html5.vim")
-(pack! "pangloss/vim-javascript")
-(pack! "rust-lang/rust.vim")
+(pack! "sheerun/vim-polyglot")
 
 ;; ----------------------------------------------------------------
 ;; Code Intelligence
