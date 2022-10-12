@@ -30,6 +30,7 @@
     };
 
     shellInit = builtins.readFile ./init.fish;
+    functions = builtins.readFile ./functions.fish;
   };
 
   programs.atuin = {

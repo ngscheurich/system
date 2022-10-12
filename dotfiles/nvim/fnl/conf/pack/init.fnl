@@ -15,7 +15,7 @@
                                  :ft conf.lisp-filetypes})
 (pack! "numToStr/Comment.nvim" {:setup* "Comment"})
 (pack! "junegunn/vim-easy-align")
-(pack! "ngscheurich/edeex.nvim" {:setup #(. (require :edeex) {:mapping "<C-c>e"})})
+(pack! "ngscheurich/edeex.nvim" {:config #((. (require :edeex) :setup) {:mapping "<C-c>e"})})
 (pack! "tpope/vim-repeat")
 (pack! "tpope/vim-sexp-mappings-for-regular-people")
 (pack! "tpope/vim-speeddating")
@@ -25,22 +25,24 @@
 ;; ----------------------------------------------------------------
 ;; Interface
 ;; ----------------------------------------------------------------
-(pack! "EdenEast/nightfox.nvim")
-(pack! "Mofiqul/vscode.nvim")
-(pack! "RRethy/nvim-base16")
 (pack! "dstein64/vim-win")
 (pack! "feline-nvim/feline.nvim" {:require* :conf.pack.feline})
 (pack! "folke/todo-comments.nvim" {:requires ["nvim-lua/plenary.nvim"]})
-(pack! "folke/tokyonight.nvim")
 (pack! "folke/which-key.nvim" {:setup* "which-key"})
 (pack! "https://gitlab.com/yorickpeterse/nvim-pqf.git" {:setup* "pqf"})
-(pack! "ishan9299/modus-theme-vim")
 (pack! "kyazdani42/nvim-web-devicons" {:require* :conf.pack.web-devicons})
 (pack! "norcalli/nvim-colorizer.lua" {:setup* "colorizer"})
-(pack! "navarasu/onedark.nvim")
-(pack! :rcarriga/nvim-notify)
+(pack! "rcarriga/nvim-notify")
 (pack! "sidebar-nvim/sidebar.nvim" {:require* :conf.pack.sidebar})
 (pack! "stevearc/dressing.nvim" {:require* :conf.pack.dressing})
+
+(pack! "EdenEast/nightfox.nvim")
+(pack! "RRethy/nvim-base16")
+(pack! "folke/tokyonight.nvim")
+(pack! "habamax/vim-alchemist")
+(pack! "jan-warchol/selenized" {:run "touch post-run"})
+(pack! "navarasu/onedark.nvim")
+(pack! "romainl/Apprentice")
 
 ;; ----------------------------------------------------------------
 ;; Navigation
@@ -48,7 +50,7 @@
 (pack! "andymass/vim-matchup")
 (pack! "folke/trouble.nvim" {:cmd "Trouble"
                              :setup* "trouble"})
-(pack! "ggandor/leap.nvim" {:setup #(. (require :leap) :set_default_keymaps)})
+(pack! "ggandor/leap.nvim" {:config #((. (require :leap) :add_default_mappings))})
 (pack! "justinmk/vim-dirvish")
 (pack! "kyazdani42/nvim-tree.lua" {:require* :conf.pack.tree})
 (pack! "nvim-telescope/telescope.nvim" {:requires ["nvim-lua/plenary.nvim"]
