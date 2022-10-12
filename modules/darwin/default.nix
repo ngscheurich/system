@@ -15,7 +15,11 @@
       automatic = true;
       interval = { Hour = 3; Minute = 15; };
     };
-    extraOptions = "experimental-features = nix-command flakes";
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   nixpkgs = {

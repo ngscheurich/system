@@ -33,6 +33,9 @@
     functions = builtins.readFile ./functions.fish;
   };
 
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
   programs.atuin = {
     enable = true;
     settings = {
