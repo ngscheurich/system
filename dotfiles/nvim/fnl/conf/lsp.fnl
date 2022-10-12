@@ -13,6 +13,7 @@
   (buf-map! [nv] "<LocalLeader>R" vim.lsp.buf.rename)
   (buf-map! [n]  "<LocalLeader>D" vim.lsp.buf.declaration)
   (buf-map! [n]  "<LocalLeader>d" vim.lsp.buf.definition)
+  (buf-map! [n]  "<LocalLeader>F" vim.lsp.buf.format)
   (buf-map! [n]  "<LocalLeader>t" vim.lsp.buf.type_definition)
   (buf-map! [n]  "<LocalLeader>i" telescope.lsp_implementations)
   (buf-map! [n]  "<LocalLeader>r" telescope.lsp_references)
@@ -22,7 +23,7 @@
   (when (client.supports_method "textDocument/formatting")
     (augroup! lsp-format-before-saving
       (clear! {:buffer bufnr})
-      (autocmd! BufWritePre <buffer> vim.lsp.buf.format {:buffer bufnr}))))
+      (autocmd! BufWritePre <buffer> '(vim.lsp.buf.format {:buffer bufnr})))))
 
 ;; Install language servers automatically
 (local mason (require :mason-lspconfig))
