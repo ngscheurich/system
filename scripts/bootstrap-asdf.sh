@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 LANGS=(elixir erlang lua nodejs python ruby rust)
 
 for lang in "${LANGS[@]}"; do

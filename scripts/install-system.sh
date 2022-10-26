@@ -1,4 +1,5 @@
 #!/bin/sh
+
 set -e
 
 if [ -z "$SYSTEM_DIR" ]; then
