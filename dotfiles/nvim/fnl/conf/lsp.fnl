@@ -31,7 +31,7 @@
 
 ;; Capabilities
 (local capabilities (let [cmp (require :cmp_nvim_lsp)]
-                      (cmp.update_capabilities
+                      (cmp.default_capabilities
                         (vim.lsp.protocol.make_client_capabilities))))
 
 ;; Global lspconfig options
