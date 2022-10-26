@@ -61,7 +61,7 @@
 ;; ----------------------------------------------------------------
 ;; Code Intelligence
 ;; ----------------------------------------------------------------
-(pack! "folke/lua-dev.nvim")
+(pack! "folke/neodev.nvim")
 (pack! "jose-elias-alvarez/null-ls.nvim")
 (pack! "neovim/nvim-lspconfig")
 (pack! "nvim-treesitter/nvim-treesitter" {:run ":TSUpdate"

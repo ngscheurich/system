@@ -51,8 +51,8 @@
 (config.tsserver.setup global-options)
 (config.vimls.setup global-options)
 
-(let [lua-dev (require :lua-dev)]
-  (lua-dev.setup {})
+(let [neodev (require :neodev)]
+  (neodev.setup {})
   (config.sumneko_lua.setup {:on_attach on-attach}))
 
 
