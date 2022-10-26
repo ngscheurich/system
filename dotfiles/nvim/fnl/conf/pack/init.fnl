@@ -74,7 +74,6 @@
 ;; Completion & Snippets
 ;; ----------------------------------------------------------------
 (pack! :L3MON4D3/LuaSnip {:require* :conf.pack.luasnip})
-(pack! "PaterJason/cmp-conjure")
 (pack! "hrsh7th/cmp-buffer")
 (pack! "hrsh7th/cmp-nvim-lsp")
 (pack! "hrsh7th/nvim-cmp" {:require* :conf.pack.cmp})
