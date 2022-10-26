@@ -9,12 +9,17 @@
 
   (buf-map! [n]  "K"              vim.lsp.buf.hover)
   (buf-map! [n]  "<C-]>"          vim.lsp.buf.definition)
+  (buf-map! [n]  "[d"             vim.lsp.diagnostic.goto_prev)
+  (buf-map! [n]  "]d"             vim.lsp.diagnostic.goto_next)
+
   (buf-map! [nv] "<LocalLeader>a" vim.lsp.buf.code_action)
   (buf-map! [nv] "<LocalLeader>R" vim.lsp.buf.rename)
   (buf-map! [n]  "<LocalLeader>D" vim.lsp.buf.declaration)
-  (buf-map! [n]  "<LocalLeader>d" vim.lsp.buf.definition)
+  (buf-map! [n]  "<LocalLeader>n" vim.lsp.buf.definition)
+  (buf-map! [n]  "<LocalLeader>d" vim.diagnostic.open_float)
   (buf-map! [n]  "<LocalLeader>F" vim.lsp.buf.format)
   (buf-map! [n]  "<LocalLeader>t" vim.lsp.buf.type_definition)
+
   (buf-map! [n]  "<LocalLeader>i" telescope.lsp_implementations)
   (buf-map! [n]  "<LocalLeader>r" telescope.lsp_references)
   (buf-map! [n]  "<LocalLeader>s" telescope.lsp_document_symbols)
