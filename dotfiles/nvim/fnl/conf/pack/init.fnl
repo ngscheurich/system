@@ -76,7 +76,8 @@
 (pack! :L3MON4D3/LuaSnip {:require* :conf.pack.luasnip})
 (pack! "hrsh7th/cmp-buffer")
 (pack! "hrsh7th/cmp-nvim-lsp")
-(pack! "hrsh7th/nvim-cmp" {:require* :conf.pack.cmp})
+(pack! "hrsh7th/nvim-cmp" {:require* :conf.pack.cmp
+                           :commit "99ef854322d0de9269044ee197b6c9ca14911d96"})
 (pack! "saadparwaiz1/cmp_luasnip")
 
 ;; ----------------------------------------------------------------
