@@ -311,5 +311,5 @@ Code here should be documented and moved to a more appropriate place.
 
 * Inspiration & Reference
 
-- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a build-along configuration and video seriby [[https://youtube.com/c/SystemCrafters][David Wilson]] of System Crafters
+- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a build-along configuration and video series by [[https://youtube.com/c/SystemCrafters][David Wilson]] of System Crafters
 - Words, spoken and written, from [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
