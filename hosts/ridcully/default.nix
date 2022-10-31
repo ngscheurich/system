@@ -3,11 +3,14 @@
 {
   imports = [
     ../../modules/darwin
-    ../../modules/home
   ];
 
   home-manager.users = {
     nscheurich = {
+      home = {
+        stateVersion = "22.05";
+      };
+
       imports = [
         ../../modules/home/cli
         ../../modules/home/code.nix

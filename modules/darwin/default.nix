@@ -27,8 +27,13 @@
     overlays = inputs.overlays;
   };
 
-  programs.fish.enable = true;
   programs.zsh.enable = true;
+  programs.fish.enable = true;
 
-  environment.shells = [ pkgs.fish pkgs.zsh ];
+  environment.shells = [ pkgs.zsh pkgs.fish ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 }
