@@ -17,7 +17,7 @@
       vimdiff = "nvim -d";
     };
 
-    
+
     shellAliases = {
       l = "exa";
       la = "exa --long --all";
@@ -30,7 +30,9 @@
     };
 
     shellInit = builtins.readFile ./init.fish;
-    functions = builtins.readFile ./functions.fish;
+    functions = {
+      fish_greeting = "function fish_greeting; end";
+    };
   };
 
   programs.direnv.enable = true;
