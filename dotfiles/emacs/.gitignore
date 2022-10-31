@@ -1,2 +1,4 @@
-straight/
-config.el
+*
+!early-init.el
+!init.el
+!config.org

@@ -8,7 +8,7 @@ This is my primary *GNU Emacs* configuration file. I say /primary/ because two o
 
 This file is an [[https://orgmode.org/][Org Mode]] document written in a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] style, with text meant for computer interpretation, i.e. /code/, intermingled with plain-language text meant to be parsed by humans. I find that this paradigm lends itself nicely to system configuration, as it allows me to colocate my thoughts about parts of the config along with the Emac Lisp (Elisp) configuration code itself. Hopefully this colocation will make the myriad functions of this file easier to narrow in on and parse by others, my future self included.
 
-From a technical perspective, when Emacs is started each code block in this document is /tangled/ (exported using to a file useing =org-babel-tangle=) and then loaded using =load-file=. Note that /loading/ a file in the context of Emacs typically refers to reading the file and then evaluating its contents as Elisp code, which is the case here.
+From a technical perspective, when Emacs is started each code block in this document is /tangled/ (exported using to a file using =org-babel-tangle=) and then loaded using =load-file=. Note that /loading/ a file in the context of Emacs typically refers to reading the file and then evaluating its contents as Elisp code, which is the case here.
 
 * Basic Settings
 
@@ -25,10 +25,10 @@ I prefer to bypass the Emacs splash screen and boot to the scratch buffer by def
   (setq inhibit-startup-message t)
 #+end_src
 
-The audible bell can be quite jarring; I use the visual bell instead.
+There will be no bell-ringing of any sort inside of my Emacs.
 
 #+begin_src emacs-lisp
-  (setq visible-bell t)
+  (setq ring-bell-function 'ignore)
 #+end_src
 
 * Package Management
@@ -43,18 +43,19 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 * User Interface
 ** Theme
 
-I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-vivendi=, the light-on-dark Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the dark and light (=modus-operandi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
+I use the Modus themes by Protesilaos Stavrou, which are optimized for maximum color-contrast accessibility. modus-vivendi, the light-on-dark Modus theme, is loaded by default. <f5> is bound to a function that lets me toggle between the dark and light (modus-operandi) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
-    (setq modus-themes-mode-line '(padded borderless))
+    (setq modus-themes-mode-line '(borderless 4))
+    (setq modus-themes-bold-constructs nil)
+    (setq modus-themes-syntax '(alt-syntax))
     (modus-themes-load-themes)
     :config
-    (modus-themes-load-operandi)
+    (modus-themes-load-vivendi)
     :bind
     ("<f5>" . modus-themes-toggle))
-
 #+end_src
 
 ** Typography
@@ -78,9 +79,10 @@ If history is any indication I will likely end up heavily customizing this area 
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :ensure t
+    :config
+    (setq doom-modeline-minor-modes nil)
     :init (doom-modeline-mode 1))
-  
+
   (setq column-number-mode t)
 #+end_src
 
@@ -107,12 +109,77 @@ If history is any indication I will likely end up heavily customizing this area 
 
 * Keybindings
 
+Vim’s modal text editing model was eye-opening for me, and changed the way I think about interacting with a machine via a keyboard. I’m excited to dive into Emacs, but having near-perfect Vim emulation is a top requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is here to help.
+
+#+begin_src  emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+#+end_src
+
+There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are not covered by Evil. [[https://github.com/emacs-evil/evil-collection][Evil Collection]] is a community-sourced collection of Evil bindings that aims to provide a consistent Evil experience throughout Emacs.
+
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
+#+end_src
+
+---
+
 #+begin_src emacs-lisp
   ;; Make <escape> quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
   ;; Remap help prefix
-  (global-set-key (kbd "C-c h") 'help-command)
+  (global-set-key (kbd "s-h") 'help-command)
+
+  ;; Map Option key to Super
+  (setq mac-option-modifier 'super)
+
+  ;; General
+  (use-package general
+    :config
+    (general-evil-setup)
+  
+    (general-def 'normal (kbd "right") 'evil-window-right)
+  
+    (general-create-definer ngs/leader-def
+  			  :keymaps '(normal emacs)
+  			  :prefix "SPC")
+    (ngs/leader-def
+      "f"  '(:ignore t :which-key "find")
+      "ff" '(find-file :which-key "file")
+      "fb" '(consult-buffer :which-key "buffer")
+  
+      "p"  '(:ignore t :which-key "project")
+      "pf" '(projectile-find-file :which-key "find file")
+      "pk" '(projectile-kill-buffers :which-key "kill buffers")
+      "ps" '(projectile-switch-project :which-key "switch")
+  
+      "g"  '(:ignore g :which-key "git")
+      "gs" '(magit-status :which-key "status")
+  
+      ;; "l"  '(:ignore l :which-key "lsp")
+      ;; "lb" '(lsp-headerline-breadcrumb-mode :which-key "toggle breadcrumbs")
+      ;; "lh" '(lsp-describe-thing-at-point :which-key "describe thing")
+  
+      "t"  '(:ignore t :which-key "toggles")
+      "ts" '(hydra-text-scale/body :which-key "scale text")))
+  
+  ;; Hydra
+  (use-package hydra
+    :config
+    (defhydra hydra-text-scale (:timeout 4)
+      "scale text"
+      ("j" text-scale-decrease "out")
+      ("k" text-scale-increase "in")))
 #+end_src
 
 * Completion
@@ -169,32 +236,10 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 
 #+begin_src emacs-lisp
   (use-package company
-    :after
-    lsp-mode
-    :hook
-    (prog-mode . company-mode))
-#+end_src
+    :hook (prog-mode . company-mode))
 
-* Text Editing
-
-Vim’s modal text editing model was eye-opening for me, and changed the way I think about interacting with a machine via a keyboard. I’m excited to dive into Emacs, but having near-perfect Vim emulation is a top requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is here to help.
-
-#+begin_src  emacs-lisp
-  (use-package evil
-    :init
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    :config
-    (evil-mode 1))
-#+end_src
-
-There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are not covered by Evil. [[https://github.com/emacs-evil/evil-collection][Evil Collection]] is a community-sourced collection of Evil bindings that aims to provide a consistent Evil experience throughout Emacs.
-
-#+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 #+end_src
 
 * Programming
@@ -202,7 +247,7 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
 
 #+begin_src emacs-lisp
   (use-package elixir-mode)
-
+  
   (use-package nix-mode
     :mode "\\.nix\\'")
 #+end_src
@@ -217,12 +262,13 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
 ** Language Server Protocol
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :hook ((elixir-mode . lsp)
-	   (lsp-mode . lsp-enable-which-key-integration))
-    :commands (lsp lsp-deferred))
+  (use-package eglot
+    :config
+    (add-to-list 'eglot-server-programs '(elixir-mode . "/Users/nscheurich/.local/share/nvim/mason/bin/elixir-ls"))
+    (add-to-list 'eglot-server-programs '(lua-mode . ("/Users/nscheurich/.local/share/nvim/mason/bin/lua-language-server")))
+    :hook
+    ((elixir-mode . eglot-ensure)
+     (lua-mode . eglot-ensure)))
 #+end_src
 
 * Org Mode
@@ -232,7 +278,8 @@ Org Mode is one of those parts of Emacs (now an /official/ part) that seems almo
 #+begin_src emacs-lisp
   (defun ngs/org-mode-visual-fill ()
     (setq visual-fill-column-width 100
-          visual-fill-column-center-text t)
+	  visual-fill-column-center-text t)
+    (visual-line-mode 1)
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
@@ -244,6 +291,9 @@ Org Mode is one of those parts of Emacs (now an /official/ part) that seems almo
 Code here should be documented and moved to a more appropriate place.
 
 #+begin_src emacs-lisp
+  ;; Wrap lines nicely when editing prose
+  (add-hook 'text-mode-hook 'visual-line-mode)
+
   ;; Automatically pair parentheses, et al.
   (electric-pair-mode t)
 
@@ -305,8 +355,64 @@ Code here should be documented and moved to a more appropriate place.
   (use-package vterm)
 
   ;; Display icons
-  (use-package all-the-icons
-    :if (display-graphic-p))
+  ;; (use-package all-the-icons
+  ;;   :if (display-graphic-p))
+
+  ;; Git interface
+  (use-package magit)
+
+  ;; Get Emacs path from shell $PATH
+  (use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize))
+
+  ;; More useful *help*
+  (use-package helpful
+    :bind
+    ([remap describe-function] . #'helpful-callable)
+    ([remap describe-command] . #'helpful-command)
+    ([Remap describe-variable] . #'helpful-variable)
+    ([remap describe-key] . #'helpful-key))
+
+  ;; vim-sneak
+  (use-package evil-snipe
+    :config
+    (evil-snipe-mode +1))
+
+  ;; Wrangle copy/paste
+  (use-package simpleclip
+    :bind
+    (("M-c" . simpleclip-copy)
+     ("M-v" . simpleclip-paste))
+    :config
+    (simpleclip-mode 1))
+
+  ;; Markdown editing
+  (use-package markdown-mode)
+
+  ;; Snippets
+  ;; https://github.com/joaotavora/yasnippet
+  (use-package yasnippet)
+
+  ;; REST client
+  ;; https://github.com/pashky/restclient.el
+  (use-package restclient)
+
+  (use-package lua-mode)
+
+  (use-package popper
+    :bind (("C-`"   . popper-toggle-latest)
+	   ("M-`"   . popper-cycle)
+	   ("C-M-`" . popper-toggle-type))
+    :init
+    (setq popper-reference-buffers
+	  '("\\*Messages\\*"
+	    "Output\\*$"
+	    "\\*Async Shell Command\\*"
+	    help-mode
+	    compilation-mode))
+    (popper-mode +1)
+    (popper-echo-mode +1))
 #+end_src
 
 * Inspiration & Reference
