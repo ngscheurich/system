@@ -36,7 +36,6 @@
 (pack! "norcalli/nvim-colorizer.lua" {:setup* "colorizer"})
 (pack! "rcarriga/nvim-notify")
 (pack! "romainl/Apprentice")
-(pack! "sidebar-nvim/sidebar.nvim" {:require* :conf.pack.sidebar})
 (pack! "stevearc/dressing.nvim" {:require* :conf.pack.dressing})
 
 ;; ----------------------------------------------------------------
