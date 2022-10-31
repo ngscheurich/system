@@ -4,12 +4,14 @@
   homebrew = {
     enable = true;
 
-    autoUpdate = false;
+    onActivation = {
+      autoUpdate = false;
+      cleanup = "zap";
+    };
+
     brewPrefix = "/opt/homebrew/bin";
-    cleanup = "zap";
 
     global.brewfile = true;
-    global.noLock = true;
 
     taps = [
       "homebrew/cask"
