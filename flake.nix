@@ -17,9 +17,9 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
     let
-      inherit (flake-utils.lib) eachSystemMap;
+      inherit (inputs.flake-utils.lib) eachSystemMap;
 
       defaultSystems =
         [
