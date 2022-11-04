@@ -1,10 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  imports = [
-    ./configuration.nix
-  ];
-
   home-manager.users = {
     nick = {
       home.stateVersion = "22.11";

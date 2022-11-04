@@ -2,18 +2,8 @@
 
 {
   imports = [
-    ../../modules/home
     ./configuration.nix
     ./hardware.nix
+    ./home.nix
   ];
-
-  home-manager = {
-    users.nick = {
-      imports = [
-        ../../home/modules/cli
-        ../../home/modules/git.nix
-        ../../home/modules/vim.nix
-      ];
-    };
-  };
 }

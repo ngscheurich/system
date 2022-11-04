@@ -15,38 +15,47 @@
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
     let
-      inherit (darwin.lib) darwinSystem;
-      inherit (nixpkgs.lib) nixosSystem;
       overlays = [ inputs.neovim-nightly.overlay ];
+
+      mkDarwinSystem =
+        { system ? "aarch64-darwin"
+        , baseModules ? [
+            home-manager.darwinModules.home-manager
+            ./modules/darwin
+          ]
+        , extraModules ? [ ]
+        }: darwin.lib.darwinSystem {
+          inherit system;
+          inputs = { inherit overlays; };
+          modules = baseModules ++ extraModules;
+        };
+
+      mkNixosSystem =
+        { system ? "x86_64-linux"
+        , baseModules ? [
+            home-manager.nixosModules.home-manager
+            ./modules/nixos
+          ]
+        , extraModules ? [ ]
+        }: nixpkgs.lib.nixosSystem {
+          inherit system;
+          inputs = { inherit overlays; };
+          modules = baseModules ++ extraModules;
+        };
     in
     {
       darwinConfigurations = {
-        weatherwax = darwinSystem {
-          system = "aarch64-darwin";
-          inputs = { inherit overlays; };
-          modules = [
-            ./hosts/weatherwax
-            home-manager.darwinModules.home-manager
-          ];
+        weatherwax = mkDarwinSystem {
+          extraModules = [ ./hosts/weatherwax ];
         };
-
-        ridcully = darwinSystem {
-          system = "aarch64-darwin";
-          inputs = { inherit overlays; };
-          modules = [
-            ./hosts/ridcully
-            home-manager.darwinModules.home-manager
-          ];
+        ridcully = mkDarwinSystem {
+          extraModules = [ ./hosts/ridcully ];
         };
       };
 
       nixosConfigurations = {
-        twoflower = nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/twoflower
-            home-manager.nixosModules.home-manager
-          ];
+        twoflower = mkNixosSystem {
+          extraModules = [ ./hosts/twoflower ];
         };
       };
     };

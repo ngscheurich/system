@@ -9,6 +9,8 @@
     # Languages 
     asdf-vm
     fennel
+    beam.interpreters.erlangR25
+    beam.packages.erlangR25.elixir_1_14
 
     # Database tools
     freetds

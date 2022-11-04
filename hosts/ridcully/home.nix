@@ -1,12 +1,8 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  imports = [
-    ./configuration.nix
-  ];
-
   home-manager.users = {
-    nick = {
+    nscheurich = {
       home.stateVersion = "22.11";
 
       imports = [
@@ -17,7 +13,6 @@
         ../../modules/home/devops.nix
         ../../modules/home/git.nix
         ../../modules/home/prose.nix
-        ../../modules/home/term.nix
         ../../modules/home/vim.nix
       ];
     };

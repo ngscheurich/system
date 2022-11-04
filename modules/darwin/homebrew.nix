@@ -4,11 +4,6 @@
   homebrew = {
     enable = true;
 
-    onActivation = {
-      autoUpdate = false;
-      cleanup = "zap";
-    };
-
     brewPrefix = "/opt/homebrew/bin";
 
     global.brewfile = true;
@@ -19,9 +14,11 @@
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
+      "railwaycat/emacsmacport"
     ];
 
     brews = [
+      "emacs-mac"
       "lunchy"
       "shpotify"
       "trash"

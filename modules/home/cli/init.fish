@@ -9,11 +9,6 @@ set -gx XDG_DATA_HOME $HOME/.local/share
 set -gx XDG_CONFIG_HOME $HOME/.config
 
 set -l brew '/opt/homebrew/bin/brew'
-
-if test -d $HOME/.asdf
-  fish_add_path $HOME/.asdf/shims
-end
-
 if test -f $brew
   eval ($brew shellenv)
 end
