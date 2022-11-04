@@ -1,7 +1,7 @@
 {
   description = "Incantations; or, A Set of Declarative System Configurations";
 
-  nixConfig.bash-prompt = "\\033[32m\[nix-develop\:$PWD]$\\033[0m ";
+  nixConfig.bash-prompt = "[nix-develop\:$PWD]$ ";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
