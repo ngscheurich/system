@@ -17,7 +17,6 @@
       vimdiff = "nvim -d";
     };
 
-
     shellAliases = {
       l = "exa";
       la = "exa --long --all";
@@ -29,7 +28,8 @@
       weather = "curl wttr.in";
     };
 
-    shellInit = builtins.readFile ./init.fish;
+    shellInit = builtins.readFile ./files/init.fish;
+
     functions = {
       fish_greeting = "function fish_greeting; end";
     };
@@ -56,7 +56,7 @@
     resizeAmount = 20;
     shortcut = "s";
 
-    extraConfig = builtins.readFile ./tmux.conf;
+    extraConfig = builtins.readFile ./files/tmux.conf;
   };
 
   programs.fzf = {

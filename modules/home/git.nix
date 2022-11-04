@@ -82,11 +82,10 @@
       ".env.staging"
       ".env.production"
       ".envrc"
-      ".http.env"
 
       # Elixir
       ".elixir_ls"
-      "__lab__.ex"
+      "__scratch__.ex"
 
       # Projections
       ".projections.json"
