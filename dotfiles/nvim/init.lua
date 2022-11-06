@@ -12,7 +12,6 @@ local function ensure(url)
 end
 
 ensure("https://github.com/rktjmp/hotpot.nvim")
-ensure("https://github.com/ngscheurich/themis.nvim")
 ensure("https://github.com/wbthomason/packer.nvim")
 
 require("hotpot")

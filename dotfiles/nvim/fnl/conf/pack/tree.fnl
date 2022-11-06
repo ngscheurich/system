@@ -1,4 +1,4 @@
-(import-macros {: map!} :themis.keybind)
+(local {:set map} vim.keymap)
 
 (local tree (require "nvim-tree"))
 
@@ -9,5 +9,5 @@
                                                :renamed   ""
                                                :untracked ""}}}}})
 
-(map! [n] "<Leader>ee" "<Cmd>NvimTreeToggle<CR>")
-(map! [n] "<Leader>ef" "<Cmd>NvimTreeFindFile<CR>")
+(map [:n] "<Leader>ee" "<Cmd>NvimTreeToggle<CR>")
+(map [:n] "<Leader>ef" "<Cmd>NvimTreeFindFile<CR>")

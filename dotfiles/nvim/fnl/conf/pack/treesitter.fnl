@@ -1,4 +1,4 @@
-(import-macros {: map!} :themis.keybind)
+(local {:set map} vim.keymap)
 
 (local treesitter (require :nvim-treesitter.configs))
 
@@ -30,4 +30,4 @@
    :indent {:enable true}
    :rainbow {:enable true :disable [:elixir]}})
 
-(map! [n] "<Leader>Ti" "<Cmd>TSToggle indent<CR>")
+(map [:n] "<Leader>Ti" "<Cmd>TSToggle indent<CR>")

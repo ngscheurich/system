@@ -1,43 +1,41 @@
+(local {:set map} vim.keymap)
+(local {:nvim_create_autocmd autocmd} vim.api)
+(local lsp vim.lsp)
+
 ;; On-attach function
-(fn on-attach [client bufnr]
-  (import-macros {: buf-map!} :themis.keybind)
-  (import-macros {: augroup!
-                  : clear!
-                  : autocmd!} :themis.event)
-
+(fn on-attach [client buffer]
   (local telescope (require :telescope.builtin))
+  (local {: nnoremap} (require :util.map))
 
-  (buf-map! [n]  "K"              vim.lsp.buf.hover)
-  (buf-map! [n]  "<C-]>"          vim.lsp.buf.definition)
-  (buf-map! [n]  "[d"             vim.lsp.diagnostic.goto_prev)
-  (buf-map! [n]  "]d"             vim.lsp.diagnostic.goto_next)
+  (local opts {:buffer buffer})
 
-  (buf-map! [nv] "<LocalLeader>a" vim.lsp.buf.code_action)
-  (buf-map! [nv] "<LocalLeader>R" vim.lsp.buf.rename)
-  (buf-map! [n]  "<LocalLeader>D" vim.lsp.buf.declaration)
-  (buf-map! [n]  "<LocalLeader>n" vim.lsp.buf.definition)
-  (buf-map! [n]  "<LocalLeader>d" vim.diagnostic.open_float)
-  (buf-map! [n]  "<LocalLeader>F" vim.lsp.buf.format)
-  (buf-map! [n]  "<LocalLeader>t" vim.lsp.buf.type_definition)
+  (map [:n] "K"               lsp.buf.hover opts) 
+  (map [:n] "<C-]>"           lsp.buf.definition opts)
+  (map [:n] "[d"              lsp.diagnostic.goto_prev opts)
+  (map [:n] "]d"              lsp.diagnostic.goto_next opts)
 
-  (buf-map! [n]  "<LocalLeader>i" telescope.lsp_implementations)
-  (buf-map! [n]  "<LocalLeader>r" telescope.lsp_references)
-  (buf-map! [n]  "<LocalLeader>s" telescope.lsp_document_symbols)
-  (buf-map! [n]  "<LocalLeader>S" telescope.lsp_workspace_symbols)
+  (map [:n] "<LocalLeader>a"  lsp.buf.code_action opts)
+  (map [:n] "<LocalLeader>R"  lsp.buf.rename opts)
+  (map [:n]  "<LocalLeader>D" lsp.buf.declaration opts)
+  (map [:n]  "<LocalLeader>n" lsp.buf.definition opts)
+  (map [:n]  "<LocalLeader>d" vim.diagnostic.open_float opts)
+  (map [:n]  "<LocalLeader>F" lsp.buf.format opts)
+  (map [:n]  "<LocalLeader>t" lsp.buf.type_definition opts)
+
+  (map [:n]  "<LocalLeader>i" telescope.lsp_implementations opts)
+  (map [:n]  "<LocalLeader>r" telescope.lsp_references opts)
+  (map [:n]  "<LocalLeader>s" telescope.lsp_document_symbols opts)
+  (map [:n]  "<LocalLeader>S" telescope.lsp_workspace_symbols opts)
 
   (when (client.supports_method "textDocument/formatting")
-    (augroup! lsp-format-before-saving
-      (clear! {:buffer bufnr})
-      (autocmd! BufWritePre <buffer> '(vim.lsp.buf.format {:buffer bufnr})))))
-
-;; Install language servers automatically
-(local mason (require :mason-lspconfig))
-(mason.setup {:automatic_installation true})
+    (autocmd "BufWritePre" {:buffer buffer
+                            :callback #(lsp.buf.format)})))
+                            
 
 ;; Capabilities
 (local capabilities (let [cmp (require :cmp_nvim_lsp)]
                       (cmp.default_capabilities
-                        (vim.lsp.protocol.make_client_capabilities))))
+                        (lsp.protocol.make_client_capabilities))))
 
 ;; Global lspconfig options
 (local global-options {:on_attach on-attach
@@ -48,18 +46,21 @@
 
 (config.bashls.setup global-options)
 (config.cssls.setup global-options)
-(config.elixirls.setup global-options)
 (config.pyright.setup global-options)
-(config.rls.setup global-options)
+(config.rust_analyzer.setup global-options)
 (config.rnix.setup global-options)
 (config.terraformls.setup global-options)
 (config.tsserver.setup global-options)
 (config.vimls.setup global-options)
 
+;; Use vim.tbl_extend?
+(let [options global-options]
+  (tset options :cmd ["elixir-ls"])
+  (config.elixirls.setup options)) 
+
 (let [neodev (require :neodev)]
   (neodev.setup {})
-  (config.sumneko_lua.setup {:on_attach on-attach}))
-
+  (config.sumneko_lua.setup global-options))
 
 ;; Set up null-ls
 (local null-ls (require :null-ls))
@@ -70,4 +71,3 @@
                           formatting.eslint_d
                           formatting.prettierd
                           formatting.stylelint]})
-                          ;; formatting.stylua]})

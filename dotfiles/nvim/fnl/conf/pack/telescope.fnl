@@ -1,4 +1,4 @@
-(import-macros {: map!} :themis.keybind)
+(local {:set map} vim.keymap)
 
 (local {:find_files find-files
         :live_grep live-grep
@@ -7,9 +7,9 @@
         :quickfix quickfix
         :loclist loclist} (require :telescope.builtin))
 
-(map! [n] "<Leader>ff" find-files)
-(map! [n] "<Leader>fg" live-grep)
-(map! [n] "<Leader>fb" buffers)
-(map! [n] "<Leader>fh" help-tags)
-(map! [n] "<Leader>fq" quickfix)
-(map! [n] "<Leader>fk" loclist)
+(map [:n] "<Leader>ff" find-files)
+(map [:n] "<Leader>fg" live-grep)
+(map [:n] "<Leader>fb" buffers)
+(map [:n] "<Leader>fh" help-tags)
+(map [:n] "<Leader>fq" quickfix)
+(map [:n] "<Leader>fk" loclist)
