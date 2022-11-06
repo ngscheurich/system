@@ -21,13 +21,7 @@
     let
       inherit (inputs.flake-utils.lib) eachSystemMap;
 
-      defaultSystems =
-        [
-          "aarch64-linux"
-          "aarch64-darwin"
-          "x86_64-darwin"
-          "x86_64-linux"
-        ];
+      defaultSystems = [ "aarch64-darwin" "x86_64-linux" ];
 
       overlays = [ inputs.neovim-nightly.overlay ];
 
