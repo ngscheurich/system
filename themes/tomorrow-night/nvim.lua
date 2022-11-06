@@ -1,34 +1,49 @@
-vim.opt.background = "dark"
-vim.cmd("colorscheme base16-tomorrow-night")
+local cmd, opt = vim.cmd, vim.opt
+local colorscheme = "base16-tomorrow-night"
 
-vim.cmd [[
-hi SignColumn   guibg=#202225
-hi LineNr       guibg=#202225
-hi CursorLineNr guibg=#202225
+local apply_colors = function()
+  local light_bg = {
+    "CursorLineNr",
+    "GitGutterAdd",
+    "GitGutterChange",
+    "GitGutterChangeDelete",
+    "GitGutterDelete",
+    "LineNr",
+    "SignColumn",
+  }
+  for _, group in ipairs(light_bg) do
+    cmd(string.format("hi %s guibg=#212326", group))
+  end
 
-hi WinSeparator guifg=#363a41 guibg=None
+  local dark_bg = {
+    "NvimTreeNormal",
+    "NvimTreeNormalNC",
+    "NvimTreeRootFolder"
+  }
+  for _, group in ipairs(dark_bg) do
+    cmd(string.format("hi %s guibg=#141517", group))
+  end
 
-hi MatchParen   guibg=None gui=underline
+  cmd("hi GitGutterAdd          guifg=#b5bd68")
+  cmd("hi GitGutterChange       guifg=#f0c574")
+  cmd("hi GitGutterDelete       guifg=#cc6666")
+  cmd("hi GitGutterChangeDelete guifg=#80a1bd")
+end
 
-hi GitGutterAdd          guibg=#202225
-hi GitGutterChange       guibg=#202225
-hi GitGutterDelete       guibg=#202225
-hi GitGutterChangeDelete guibg=#202225
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  pattern = { colorscheme },
+  callback = apply_colors,
+})
 
-hi DiagnosticError       guifg=#cc6666 guibg=#291414
-hi DiagnosticSignError   guifg=#cc6666 guibg=#202225
-hi DiagnosticHint        guifg=#8abeb7 guibg=#1a2026
-hi DiagnosticSignHint    guifg=#8abeb7 guibg=#202225
-hi DiagnosticSignInfo    guifg=#b4b7b4 guibg=#242524
-hi DiagnosticSignOther   guifg=#b4b7b4 guibg=#202225
-hi DiagnosticWarn        guifg=#f0c674 guibg=#302717
-hi DiagnosticSignWarn    guifg=#f0c674 guibg=#202225
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "help" },
+  callback = function()
+    vim.opt_local.signcolumn = "no"
+  end,
+})
 
-hi NvimTreeNormal     guibg=#141517
-hi NvimTreeNormalNC   guibg=#141517
-hi NvimTreeRootFolder guibg=#141517
-]]
-
+opt.background = "dark"
+cmd("colorscheme " .. colorscheme)
 
 _G.theme = {
   statusbar = {
