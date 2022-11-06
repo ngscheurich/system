@@ -27,6 +27,8 @@ hi DiagnosticSignWarn    guifg=#af8700 guibg=#232323
 hi NvimTreeNormal     guibg=#1e1e1e
 hi NvimTreeNormalNC   guibg=#1e1e1e
 hi NvimTreeRootFolder guibg=#1e1e1e
+
+hi link TelescopeSelection CursorLine
 ]]
 
 _G.theme = {
