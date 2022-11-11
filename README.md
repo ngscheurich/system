@@ -160,7 +160,7 @@ Home Manager has the capability to configure some of the programs that I use, bu
 
 Neovim is sort of the centerpiece of most of my systems, and has the most elaborate and volatile configuration that I maintain.
 
-The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through [Conjure] and [Aniseed], and for being an overall great person.
+The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot]. I use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through Conjure and [Aniseed], and for being an overall great person.
 
 In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use a host of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here; the most up-to-date list can be viewed in the the main [package file].
 
