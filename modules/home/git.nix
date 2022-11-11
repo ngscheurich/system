@@ -81,7 +81,6 @@
       ".env"
       ".env.staging"
       ".env.production"
-      ".envrc"
 
       # Elixir
       ".elixir_ls"
@@ -95,6 +94,9 @@
 
       # Miscellaneous project files
       "requests.http"
+
+      # direnv caches
+      ".direnv/"
     ];
 
     signing = {
