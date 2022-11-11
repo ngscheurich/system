@@ -162,7 +162,7 @@ Neovim is sort of the centerpiece of most of my systems, and has the most elabor
 
 The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through [Conjure] and [Aniseed], and for being an overall great person.
 
-In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use loads of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here, but the most up-to-date list can be viewed in the the main [package file].
+In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use a host of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here; the most up-to-date list can be viewed in the the main [package file].
 
 [aniseed]: https://github.com/Olical/aniseed
 [apple m1 pro]: https://en.wikipedia.org/wiki/Apple_M1_Pro_and_M1_Max
