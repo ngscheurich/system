@@ -16,3 +16,5 @@ end
 if test -f $__fish_config_dir/secrets.fish
   source $__fish_config_dir/secrets.fish
 end
+
+starship init fish | source
