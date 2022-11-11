@@ -75,7 +75,7 @@ Finally, I maintain a simple cloud computing environment over at [Linode].
 
 The root of my Nix configuration is a _[flake]_ whose outputs are configurations for each of my systems.
 
-System-level configuration is managed by [nix-darwin] and [NixOS] on my [laptop] and [cloud system], respectively.
+System-level configuration is managed by [nix-darwin] or [NixOS], depending on the platform.
 
 Each system’s user-level packages are specified and configured using [Home Manager].
 
@@ -85,7 +85,7 @@ I maintain a set of Nix modules loosely separated by area of concern. This helps
 
 ### Code
 
-One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. I’m using an [overlay] to get the nightly version since I like test driving new features and sometimes make bad decisions. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter], [language servers], and formatting tools.
+One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. I’m using an [overlay] to get the nightly version since I like test driving new features and sometimes make bad decisions. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter].
 
 ### Crypt
 
@@ -93,7 +93,7 @@ I use public key cryptography for encrypting data like emails and sensitive docu
 
 ### Devel
 
-This module specifies packages that are used to build or run software. It includes [asdf] for managing runtimes, [Fennel] (a lovely little Lisp that compiles to Lua), and lots of build-time dependencies—[Autoconf], [Cmake], et al.
+This module specifies packages that are used to build or run software. It includes [asdf] for managing certain programming languages, [Fennel] (a lovely little Lisp that compiles to Lua), and lots of build-time dependencies—[Autoconf], [Cmake], et al.
 
 ### Devops 
 
@@ -109,11 +109,7 @@ To make it more pleasant to read and edit natural language text, e.g. notes, doc
 
 ### Shell
 
-My [shell] these days is [fish], which I’ve been enjoying. I specify and configure it in this module along with a [lengthy list] of CLI programs I’m fond of. [tmux], in particular is a must-have.
-
-### Term
-
-I use the [kitty] terminal emulator for its impressive speed and configurability. It gets specified here along with its configuration.
+My [shell] these days is [fish], which I’ve been enjoying. I specify and configure it in this module along with a [lengthy list][shell-modules] of CLI programs I’m fond of. [tmux], in particular is a must-have.
 
 ### Vim
 
@@ -143,17 +139,20 @@ Included in this repository is the source code for _Grimoire_, a command-line in
 To build Grimoire, first install Nix then run this command from the `cli` directory:
 
     nix shell nixpkgs#cargo -c make
-       
+
 Alternatively, if you have the Rust toolchain installed, you can simply `make`.
 
 # Dotfiles
 
-Home Manager has the capability to configure a lot of the programs that I use, but for those not supported and for anything but the simplest configurations I prefer to maintain a classic [dotfiles] setup. Programs configured this way include:
+Home Manager has the capability to configure some of the programs that I use, but for those not supported and for anything but the simplest configurations I prefer to maintain a classic [dotfiles] setup. Programs configured this way include:
 
+- [Emacs], a text editor and Lisp application environment
 - [Karabiner-Elements], a keyboard customizer for macOS
+- [kitty], a feature-rich GPU-based terminal emulator
 - [Neovim], my text editor and software development tool
 - [Nix], the [aforementioned](#prelude) package manager
 - [ranger], a console file manager
+- [Starship], a customizable cross-shell prompt
 - [skhd], a simple hotkey daemon for macOS
 - [yabai], a tiling window manager for macOS
 
@@ -161,7 +160,7 @@ Home Manager has the capability to configure a lot of the programs that I use, b
 
 Neovim is sort of the centerpiece of most of my systems, and has the most elaborate and volatile configuration that I maintain.
 
-The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot] and [some great macros]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through Conjure and [Aniseed], and for being an overall great person.
+The core config files are written in Fennel, a lovely little Lisp that compiles to Lua, with the help of [Hotpot]. I also use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through [Conjure] and [Aniseed], and for being an overall great person.
 
 In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use loads of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here, but the most up-to-date list can be viewed in the the main [package file].
 
@@ -170,29 +169,23 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
 [asdf]: https://asdf-vm.com/
 [autoconf]: https://www.gnu.org/software/autoconf/
-[cloud system]: #hex
 [cmake]: https://cmake.org/
 [command-line interface]: https://en.wikipedia.org/wiki/Command-line_interface
 [conjure]: https://github.com/Olical/conjure
 [dotfiles]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
+[emacs]: https://www.gnu.org/software/emacs/
 [fennel]: https://fennel-lang.org/
 [fish]: https://fishshell.com/
-[fish function]: https://github.com/ngscheurich/systems/blob/main/home/.config/fish/functions/theme.fish
 [flake]: https://nixos.wiki/wiki/Flakes
 [git]: https://git-scm.com/
 [glow]: https://github.com/charmbracelet/glow
 [gnu privacy guard]: https://gnupg.org/
 [gnu stow]: https://www.gnu.org/software/stow/
-[google chromebook]: https://en.wikipedia.org/wiki/Chromebook
-[hibiscus]: https://github.com/udayvir-singh/hibiscus.nvim
 [home manager]: https://github.com/nix-community/home-manager
 [hotpot]: https://github.com/rktjmp/hotpot.nvim
 [karabiner-elements]: https://karabiner-elements.pqrs.org/
 [kitty]: https://sw.kovidgoyal.net/kitty/
-[language servers]: https://microsoft.github.io/language-server-protocol/
-[laptop]: #glamdring
 [lazygit]: https://github.com/jesseduffield/lazygit
-[lengthy list]: https://github.com/ngscheurich/systems/blob/main/modules/shell.nix
 [linode]: https://www.linode.com
 [neovim]: https://neovim.io/
 [nix-darwin]: https://github.com/LnL7/nix-darwin
@@ -200,17 +193,15 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [nixos]: https://en.wikipedia.org/wiki/NixOS
 [oliver caldwell]: https://github.com/Olical
 [overlay]: https://github.com/nix-community/neovim-nightly-overlay
-[package file]: https://github.com/ngscheurich/systems/blob/main/dotfiles/nvim/fnl/conf/pack/init.fnl
+[package file]: dotfiles/nvim/fnl/conf/pack/init.fnl
 [packer]: https://github.com/wbthomason/packer.nvim
-[pico-8]: https://en.wikipedia.org/wiki/PICO-8
-[pocket c.h.i.p]: https://en.wikipedia.org/wiki/CHIP_(computer)#Pocket_CHIP_and_Pockulus
 [ranger]: https://ranger.github.io
 [shell]: https://en.wikipedia.org/wiki/Shell_(computing)
+[shell-modules]: modules/home/shell.nix
 [skhd]: https://github.com/koekeishiya/skhd
 [soc]: https://en.wikipedia.org/wiki/System_on_a_chip
-[some great macros]: https://github.com/datwaft/themis.nvim
-[tangerine]: https://github.com/udayvir-singh/tangerine.nvim
-[themes]: https://github.com/ngscheurich/systems/tree/main/home/.local/share/themes
+[starship]: https://starship.rs/
+[themes]: /themes
 [tmux]: https://github.com/tmux/tmux
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vale]: https://github.com/errata-ai/vale
