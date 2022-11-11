@@ -149,7 +149,7 @@ Home Manager has the capability to configure some of the programs that I use, bu
 - [Emacs], a text editor and Lisp application environment
 - [Karabiner-Elements], a keyboard customizer for macOS
 - [kitty], a feature-rich GPU-based terminal emulator
-- [Neovim], my text editor and software development tool
+- [Neovim], my primary text editor and software development tool
 - [Nix], the [aforementioned](#prelude) package manager
 - [ranger], a console file manager
 - [Starship], a customizable cross-shell prompt
