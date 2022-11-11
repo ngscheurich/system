@@ -1,11 +1,12 @@
-(local {:set map} vim.keymap)
-(local {:nvim_create_autocmd autocmd} vim.api)
 (local lsp vim.lsp)
 
 ;; On-attach function
 (fn on-attach [client buffer]
+  (local {: opt_local
+          :api {:nvim_create_autocmd autocmd}
+          :keymap {:set map}} vim)
+
   (local telescope (require :telescope.builtin))
-  (local {: nnoremap} (require :util.map))
 
   (local opts {:buffer buffer})
 
@@ -27,10 +28,12 @@
   (map [:n]  "<LocalLeader>s" telescope.lsp_document_symbols opts)
   (map [:n]  "<LocalLeader>S" telescope.lsp_workspace_symbols opts)
 
+  (tset opt_local :foldmethd "expr")
+  (tset opt_local :foldexpr vim.fn.nvim_treesitter#foldexpr)
+
   (when (client.supports_method "textDocument/formatting")
     (autocmd "BufWritePre" {:buffer buffer
                             :callback #(lsp.buf.format)})))
-                            
 
 ;; Capabilities
 (local capabilities (let [cmp (require :cmp_nvim_lsp)]
@@ -42,25 +45,25 @@
                        : capabilities})
 
 ;; Set up language servers
-(local config (require :lspconfig))
+(local servers (require :lspconfig))
 
-(config.bashls.setup global-options)
-(config.cssls.setup global-options)
-(config.pyright.setup global-options)
-(config.rust_analyzer.setup global-options)
-(config.rnix.setup global-options)
-(config.terraformls.setup global-options)
-(config.tsserver.setup global-options)
-(config.vimls.setup global-options)
+(servers.bashls.setup global-options)
+(servers.cssls.setup global-options)
+(servers.pyright.setup global-options)
+(servers.rust_analyzer.setup global-options)
+(servers.rnix.setup global-options)
+(servers.terraformls.setup global-options)
+(servers.tsserver.setup global-options)
+(servers.vimls.setup global-options)
 
 ;; Use vim.tbl_extend?
 (let [options global-options]
   (tset options :cmd ["elixir-ls"])
-  (config.elixirls.setup options)) 
+  (servers.elixirls.setup options)) 
 
 (let [neodev (require :neodev)]
   (neodev.setup {})
-  (config.sumneko_lua.setup global-options))
+  (servers.sumneko_lua.setup global-options))
 
 ;; Set up null-ls
 (local null-ls (require :null-ls))
