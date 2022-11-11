@@ -43,17 +43,15 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 * User Interface
 ** Theme
 
-I use the Modus themes by Protesilaos Stavrou, which are optimized for maximum color-contrast accessibility. modus-vivendi, the light-on-dark Modus theme, is loaded by default. <f5> is bound to a function that lets me toggle between the dark and light (modus-operandi) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
+I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-operandi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-vivendi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
-    (setq modus-themes-mode-line '(borderless 4))
-    (setq modus-themes-bold-constructs nil)
-    (setq modus-themes-syntax '(alt-syntax))
+    (setq modus-themes-mode-line '(borderless))
     (modus-themes-load-themes)
     :config
-    (modus-themes-load-vivendi)
+    (modus-themes-load-operandi)
     :bind
     ("<f5>" . modus-themes-toggle))
 #+end_src
@@ -63,8 +61,8 @@ I use the Modus themes by Protesilaos Stavrou, which are optimized for maximum c
 My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmatapro/][PragmataPro Mono Liga]] by [[https://fsd.it/][Fabrizio Schiavi]]. I also slightly increase the leading and enable font ligatures.
 
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "PragmataPro Mono Liga" :height 140)
-  (setq-default line-spacing 0.1)
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 130)
+  (setq-default line-spacing 0.25)
   (mac-auto-operator-composition-mode t)
 #+end_src
 
@@ -75,14 +73,10 @@ My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmata
 
 ** Mode Line
 
-If history is any indication I will likely end up heavily customizing this area of the user interface, but this is a start:
-
 #+begin_src emacs-lisp
   (use-package doom-modeline
-    :config
-    (setq doom-modeline-minor-modes nil)
     :init (doom-modeline-mode 1))
-
+  
   (setq column-number-mode t)
 #+end_src
 
@@ -147,8 +141,6 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
   (use-package general
     :config
     (general-evil-setup)
-  
-    (general-def 'normal (kbd "right") 'evil-window-right)
   
     (general-create-definer ngs/leader-def
   			  :keymaps '(normal emacs)
@@ -264,7 +256,7 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 #+begin_src emacs-lisp
   (use-package eglot
     :config
-    (add-to-list 'eglot-server-programs '(elixir-mode . "/Users/nscheurich/.local/share/nvim/mason/bin/elixir-ls"))
+    (add-to-list 'eglot-server-programs '(elixir-mode . ("elixir-ls")))
     (add-to-list 'eglot-server-programs '(lua-mode . ("/Users/nscheurich/.local/share/nvim/mason/bin/lua-language-server")))
     :hook
     ((elixir-mode . eglot-ensure)
@@ -347,9 +339,7 @@ Code here should be documented and moved to a more appropriate place.
     (("C-." . embark-act)))
 
   ;; Buffer tabs
-  (use-package centaur-tabs
-    :config
-    (centaur-tabs-mode t))
+  (use-package centaur-tabs)
 
   ;; Full-fledged terminal emulation
   (use-package vterm)
@@ -413,6 +403,24 @@ Code here should be documented and moved to a more appropriate place.
 	    compilation-mode))
     (popper-mode +1)
     (popper-echo-mode +1))
+
+
+  (use-package treemacs)
+
+  (defun ngs/reload-dir-locals-for-current-buffer ()
+    "Reload directory-local variables for the current buffer."
+    (interactive)
+    (let ((enable-local-variables :all))
+      (hack-dir-local-variables-non-file-buffer)))
+
+
+  (use-package tree-sitter)
+  (use-package tree-sitter-langs)
+
+  (use-package solaire-mode
+    :config (solaire-global-mode +1))
+
+  (use-package burly)
 #+end_src
 
 * Inspiration & Reference
