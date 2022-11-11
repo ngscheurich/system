@@ -97,10 +97,10 @@ fn main() {
             None => (),
         },
         Some(Commands::Theme(theme)) => match &theme.command {
-            Some(ThemeCommands::Apply {name}) => theme::apply(name).unwrap(),
+            Some(ThemeCommands::Apply { name }) => theme::apply(name).unwrap(),
             Some(ThemeCommands::List) => theme::list().unwrap(),
             None => (),
-        }
+        },
         None => (),
     }
 }
