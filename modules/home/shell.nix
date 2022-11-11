@@ -71,39 +71,6 @@
     config.theme = "base16";
   };
 
-  programs.starship = {
-    enable = true;
-
-    settings = {
-      format = lib.concatStrings [
-        "$username"
-        "$hostname"
-        "$directory"
-        "$sudo"
-        "$cmd_duration"
-        "$git_branch"
-        "$git_commit"
-        "$git_state"
-        "$git_metrics"
-        "$git_status"
-        "$fill"
-        "$time"
-        "$battery"
-        "$line_break"
-        "$jobs"
-        "$status"
-        "$character"
-      ];
-
-      time = {
-        disabled = false;
-        format = "[$time]($style) ";
-        style = "bright-black";
-        time_format = "%R";
-      };
-    };
-  };
-
   home.packages = with pkgs; [
     ack
     asciinema
@@ -121,6 +88,7 @@
     ranger
     ripgrep
     slides
+    starship
     thefuck
     tldr
     tree
