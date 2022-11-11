@@ -16,9 +16,9 @@ struct Cli {
 enum Commands {
     /// Switch to a new Nix system generation
     Switch {
-        /// Nix flake configuration
-        #[clap(short, long = "config", value_parser)]
-        configuration: Option<String>,
+        /// Nix host (defaults to hostname)
+        #[clap(short = 'H', long, value_parser)]
+        host: Option<String>,
     },
 
     /// Manage program configuration links
@@ -89,7 +89,7 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::Switch { configuration }) => switch::switch(configuration),
+        Some(Commands::Switch { host }) => switch::switch(host),
         Some(Commands::Link(link)) => match &link.command {
             Some(LinkCommands::Add { name, all }) => link::add(name, all).unwrap(),
             Some(LinkCommands::Del { name, all }) => link::del(name, all).unwrap(),
