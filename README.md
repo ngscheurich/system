@@ -109,7 +109,7 @@ To make it more pleasant to read and edit natural language text, e.g. notes, doc
 
 ### Shell
 
-The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for many common Unix commands: [bat], [exa], [fd], and [ripgrep].
+The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for some common Unix commands: [bat], [exa], [fd], and [ripgrep].
 
 ### Vim
 
