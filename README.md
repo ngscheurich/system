@@ -109,7 +109,7 @@ To make it more pleasant to read and edit natural language text, e.g. notes, doc
 
 ### Shell
 
-The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for many standard Unix programs, e.g. [bat], [exa], [fd], [ripgrep].
+The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for many common Unix commands: [bat], [exa], [fd], and [ripgrep].
 
 ### Vim
 
@@ -173,6 +173,7 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [cmake]: https://cmake.org/
 [command-line interface]: https://en.wikipedia.org/wiki/Command-line_interface
 [conjure]: https://github.com/Olical/conjure
+[direnv]: https://direnv.net/
 [dotfiles]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 [emacs]: https://www.gnu.org/software/emacs/
 [exa]: https://the.exa.website/
