@@ -25,7 +25,7 @@
 
 (treesitter.setup
   {:ensure_installed langs
-   :highlight {:enable true :disable [:elixir]}
+   :highlight {:enable true :disable ["elixir" "fennel"]}
    :incremental_selection {:enable true} 
    :indent {:enable true}
    :rainbow {:enable true :disable [:elixir]}})

@@ -25,18 +25,21 @@
 ;; ----------------------------------------------------------------
 ;; Interface
 ;; ----------------------------------------------------------------
+(pack! "EdenEast/nightfox.nvim")
 (pack! "dstein64/vim-win")
 (pack! "feline-nvim/feline.nvim" {:require* :conf.pack.feline})
 (pack! "folke/todo-comments.nvim" {:requires ["nvim-lua/plenary.nvim"]})
-(pack! "folke/which-key.nvim" {:setup* "which-key"})
+(pack! "folke/which-key.nvim" {:require* :conf.pack.which-key})
 (pack! "habamax/vim-saturnite")
 (pack! "https://gitlab.com/yorickpeterse/nvim-pqf.git" {:setup* "pqf"})
+(pack! "lifepillar/vim-solarized8")
 (pack! "kyazdani42/nvim-web-devicons" {:require* :conf.pack.web-devicons})
 (pack! "navarasu/onedark.nvim")
 (pack! "norcalli/nvim-colorizer.lua" {:setup* "colorizer"})
-(pack! "rcarriga/nvim-notify")
+(pack! "rcarriga/nvim-notify" {:require* :conf.pack.notify})
 (pack! "romainl/Apprentice")
 (pack! "stevearc/dressing.nvim" {:require* :conf.pack.dressing})
+(pack! "tinted-theming/base16-vim")
 
 ;; ----------------------------------------------------------------
 ;; Navigation
@@ -82,7 +85,7 @@
 ;; ----------------------------------------------------------------
 ;; Source Control
 ;; ----------------------------------------------------------------
-(pack! "lewis6991/gitsigns.nvim" {:requires [:nvim-lua/plenary.nvim]
+(pack! "lewis6991/gitsigns.nvim" {:requires ["nvim-lua/plenary.nvim"]
                                   :require* :conf.pack.gitsigns})
 (pack! "tpope/vim-fugitive")
 
@@ -97,7 +100,7 @@
 ;; ----------------------------------------------------------------
 ;; Miscelleous Tools
 ;; ----------------------------------------------------------------
-(pack! "Olical/conjure" {:ft conf.lisp-filetypes})
+(pack! "Olical/conjure" {:ft ["lua" (unpack conf.lisp-filetypes)]})
 (pack! "janko/vim-test" {:require* :conf.pack.test})
 (pack! "michaelb/sniprun" {:run "nix shell nixpkgs#cargo -c bash install.sh"})
 (pack! "mbbill/undotree")
@@ -108,5 +111,8 @@
 (pack! "tpope/vim-rsi")
 (pack! "tpope/vim-sleuth")
 (pack! "tpope/vim-unimpaired")
+
+(pack! "mfussenegger/nvim-dap")
+(pack! "glacambre/firenvim" {:run #(vim.fn.firenvim#install 0)})
 
 (unpack!)

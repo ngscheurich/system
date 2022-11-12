@@ -28,8 +28,8 @@
   (map [:n]  "<LocalLeader>s" telescope.lsp_document_symbols opts)
   (map [:n]  "<LocalLeader>S" telescope.lsp_workspace_symbols opts)
 
-  (tset opt_local :foldmethd "expr")
-  (tset opt_local :foldexpr vim.fn.nvim_treesitter#foldexpr)
+  (tset opt_local :foldmethod "expr")
+  (tset opt_local :foldexpr "nvim_treesitter#foldexpr()")
 
   (when (client.supports_method "textDocument/formatting")
     (autocmd "BufWritePre" {:buffer buffer

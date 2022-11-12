@@ -1,8 +1,6 @@
 (local feline  (require "feline"))
 (local vi-mode (require "feline.providers.vi_mode"))
 
-(set vim.o.termguicolors true)
-
 (local colors _G.theme.statusbar)
 
 (local mode-hl (fn [] {:name (vi-mode.get_mode_highlight_name)
