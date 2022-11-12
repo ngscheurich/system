@@ -1,4 +1,4 @@
-if not set -q ngs_abbrs_set
+if not set -q ngs_abbrs_added
   abbr cls clear
   abbr gco git checkout
   abbr grb git rebase
@@ -13,5 +13,5 @@ if not set -q ngs_abbrs_set
   abbr vimdiff nvim -d
   abbr weather curl wttr.in
 
-  set -U ngs_abbrs_set
+  set -U ngs_abbrs_added
 end
