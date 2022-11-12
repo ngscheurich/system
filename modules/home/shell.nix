@@ -6,46 +6,8 @@
 { lib, pkgs, ... }:
 
 {
-  programs.fish = {
-    enable = true;
-
-    shellAbbrs = {
-      cls = "clear";
-      lg = "lazygit";
-      serve = "python -m http.server";
-      ta = "tmux attach";
-      vimdiff = "nvim -d";
-    };
-
-    shellAliases = {
-      l = "exa";
-      la = "exa --long --all";
-      ll = "exa --long";
-      ls = "exa";
-      lt = "exa --tree";
-      ta = "tmux attach";
-      tn = "tmuxdir";
-      weather = "curl wttr.in";
-    };
-
-    shellInit = builtins.readFile ./files/init.fish;
-
-    functions = {
-      fish_greeting = "function fish_greeting; end";
-    };
-  };
-
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-
-  programs.zoxide.enable = true;
-
-  programs.atuin = {
-    enable = false;
-    settings = {
-      auto_sync = false;
-    };
-  };
 
   programs.tmux = {
     enable = true;

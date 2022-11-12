@@ -1,0 +1,12 @@
+completions/fisher.fish
+completions/fzf_configure_bindings.fish
+
+conf.d/fzf.fish
+
+functions/_*
+functions/fisher.fish
+functions/fzf_configure_bindings.fish
+functions/v.fish
+functions/z.fish
+
+fish_variables

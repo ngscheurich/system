@@ -109,7 +109,7 @@ To make it more pleasant to read and edit natural language text, e.g. notes, doc
 
 ### Shell
 
-My [shell] these days is [fish], which I’ve been enjoying. I specify and configure it in this module along with a [lengthy list][shell-modules] of CLI programs I’m fond of. [tmux], in particular is a must-have.
+The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for many standard Unix programs, e.g. [bat], [exa], [fd], [ripgrep].
 
 ### Vim
 
@@ -148,10 +148,11 @@ Home Manager has the capability to configure some of the programs that I use, bu
 
 - [Emacs], a text editor and Lisp application environment
 - [Karabiner-Elements], a keyboard customizer for macOS
-- [kitty], a feature-rich GPU-based terminal emulator
 - [Neovim], my primary text editor and software development tool
-- [ranger], a console file manager
 - [Starship], a customizable cross-shell prompt
+- [fish], a command line shell for the 90s
+- [kitty], a feature-rich GPU-based terminal emulator
+- [ranger], a console file manager
 - [skhd], a simple hotkey daemon for macOS
 - [yabai], a tiling window manager for macOS
 
@@ -168,14 +169,18 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
 [asdf]: https://asdf-vm.com/
 [autoconf]: https://www.gnu.org/software/autoconf/
+[bat]: https://github.com/sharkdp/bat
 [cmake]: https://cmake.org/
 [command-line interface]: https://en.wikipedia.org/wiki/Command-line_interface
 [conjure]: https://github.com/Olical/conjure
 [dotfiles]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 [emacs]: https://www.gnu.org/software/emacs/
+[exa]: https://the.exa.website/
+[fd]: https://github.com/sharkdp/fd
 [fennel]: https://fennel-lang.org/
 [fish]: https://fishshell.com/
 [flake]: https://nixos.wiki/wiki/Flakes
+[fzf]: https://github.com/junegunn/fzf
 [git]: https://git-scm.com/
 [glow]: https://github.com/charmbracelet/glow
 [gnu privacy guard]: https://gnupg.org/
@@ -195,8 +200,9 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [package file]: dotfiles/nvim/fnl/conf/pack/init.fnl
 [packer]: https://github.com/wbthomason/packer.nvim
 [ranger]: https://ranger.github.io
-[shell]: https://en.wikipedia.org/wiki/Shell_(computing)
+[ripgreg]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix
+[shell]: https://en.wikipedia.org/wiki/Shell_(computing)
 [skhd]: https://github.com/koekeishiya/skhd
 [soc]: https://en.wikipedia.org/wiki/System_on_a_chip
 [starship]: https://starship.rs/
