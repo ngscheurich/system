@@ -200,7 +200,7 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [package file]: dotfiles/nvim/fnl/conf/pack/init.fnl
 [packer]: https://github.com/wbthomason/packer.nvim
 [ranger]: https://ranger.github.io
-[ripgreg]: https://github.com/BurntSushi/ripgrep
+[ripgrep]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix
 [shell]: https://en.wikipedia.org/wiki/Shell_(computing)
 [skhd]: https://github.com/koekeishiya/skhd
