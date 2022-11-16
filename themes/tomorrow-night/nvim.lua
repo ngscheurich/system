@@ -21,7 +21,7 @@ local apply_colors = function()
     "NvimTreeRootFolder"
   }
   for _, group in ipairs(dark_bg) do
-    cmd(string.format("hi %s guibg=#141517", group))
+    cmd(string.format("hi %s guibg=#1b1c1f", group))
   end
 
   cmd("hi GitGutterAdd          guifg=#b5bd68")

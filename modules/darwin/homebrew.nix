@@ -19,6 +19,7 @@
 
     brews = [
       "emacs-mac"
+      "fsouza/prettierd/prettierd"
       "lunchy"
       "shpotify"
       "trash"

@@ -42,6 +42,7 @@
     fd
     figlet
     fzy
+    graph-easy
     htop
     httpie
     jq

@@ -3,6 +3,7 @@
 ;; On-attach function
 (fn on-attach [client buffer]
   (local {: opt_local
+          : diagnostic
           :api {:nvim_create_autocmd autocmd}
           :keymap {:set map}} vim)
 
@@ -12,8 +13,8 @@
 
   (map [:n] "K"               lsp.buf.hover opts) 
   (map [:n] "<C-]>"           lsp.buf.definition opts)
-  (map [:n] "[d"              lsp.diagnostic.goto_prev opts)
-  (map [:n] "]d"              lsp.diagnostic.goto_next opts)
+  (map [:n] "[d"              diagnostic.goto_prev opts)
+  (map [:n] "]d"              diagnostic.goto_next opts)
 
   (map [:n] "<LocalLeader>a"  lsp.buf.code_action opts)
   (map [:n] "<LocalLeader>R"  lsp.buf.rename opts)
@@ -70,7 +71,6 @@
 (local {:builtins {: formatting
                    : diagnostics }} null-ls)
 (null-ls.setup {:sources [diagnostics.eslint_d
-                          diagnostics.stylelint
                           formatting.eslint_d
-                          formatting.prettierd
+                          formatting.prettier
                           formatting.stylelint]})

@@ -12,5 +12,8 @@
 
     # Tools
     ctags
+    nodePackages_latest.eslint_d
+    nodePackages_latest.prettier
+    nodePackages_latest.stylelint
   ];
 }
