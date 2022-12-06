@@ -40,23 +40,10 @@ My work computer is a 2021 [Apple MacBook Pro] that runs on the [Apple M1 Pro] [
 
 | Component        | Description                  |
 | ---------------- | ---------------------------- |
-| Operating System | macOS 12.1 (Monterey)        |
+| Operating System | macOS 13.0 (Ventura)         |
 | CPU              | 3.2 GHz/2 GHz AArch64        |
 | Memory           | 32 GB LPDDR5                 |
 | Storage          | 1 TB PCIe 4.0 ×4 SSD         |
-
-
-
-## Vimes
-
-I keep an old ThinkPad E465 at hand as an alternative device for simple tasks, and to experiment with.
-
-| Component        | Description                  |
-| ---------------- | ---------------------------- |
-| Operating System | Fedora Linux 36              |
-| CPU              | 1.65 GHz x86-64              |
-| Memory           | 4 GB ???                     |
-| Storage          | ???                          |
 
 ## Twoflower
 
@@ -97,7 +84,7 @@ This module specifies packages that are used to build or run software. It includ
 
 ### Devops 
 
-I sometimes find myself needing to engage in some light devops work and this module specifies packages that make engaging in those sorts of tasks a bit comfier on the command line.
+I sometimes find myself needing to engage in some light devops work and this module specifies packages that make those sorts of tasks a bit comfier on the command line.
 
 ### Git
 
