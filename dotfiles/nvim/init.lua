@@ -1,42 +1,34 @@
-local function ensure(url)
-  local name = url:gsub(".*/", "")
-  local path = vim.fn.stdpath("data") .. "/site/pack/packer/start/" .. name
+-- Bootstrap plugin manager
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-  if vim.fn.isdirectory(path) == 0 then
-    print(name .. ": Installing to " .. path .. "...")
-    vim.fn.system({ "git", "clone", "--depth", "1", url, path })
-    vim.cmd("redraw")
-    vim.cmd("packadd " .. name)
-    print(name .. ": Installation complete!")
-  end
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  })
 end
 
-ensure("https://github.com/rktjmp/hotpot.nvim")
-ensure("https://github.com/wbthomason/packer.nvim")
+vim.opt.runtimepath:prepend(lazypath)
 
-require("hotpot")
-require("conf")
+-- Load core config
+require("config.abbrevs")
+require("config.commands")
+require("config.keymaps")
+require("config.options")
 
-local dap = require("dap")
-
-dap.adapters.mix_task = {
-  type = "executable",
-  command = "/Users/nscheurich/.local/share/nvim/mason/bin/elixir-ls-debugger",
-  args = {},
-}
-
-dap.configurations.elixir = {
-  {
-    type = "mix_task",
-    name = "mix test",
-    task = 'test',
-    taskArgs = { "--trace" },
-    request = "launch",
-    startApps = true, -- for Phoenix projects
-    projectDir = "${workspaceFolder}",
-    requireFiles = {
-      "test/**/test_helper.exs",
-      "test/**/*_test.exs"
-    }
+-- Load plugin manager
+require("lazy").setup("config.plugins", {
+  checker = {
+    enabled = false
   },
-}
+  change_detection = {
+    notify = false,
+  },
+  install = {
+    colorscheme = { "tokyonight-night" },
+  },
+})
