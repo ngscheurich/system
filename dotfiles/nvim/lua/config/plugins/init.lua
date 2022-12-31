@@ -15,7 +15,6 @@ return {
   "sheerun/vim-polyglot",
 
   -- Source Control
-  { "lewis6991/gitsigns.nvim", config = true },
   "tpope/vim-fugitive",
 
   -- Miscellaneous
