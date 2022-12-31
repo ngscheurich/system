@@ -12,16 +12,6 @@ $git_status\
 $docker_context\
 $package\
 $fill\
-$elixir\
-$erlang\
-$java\
-$lua\
-$nodejs\
-$python\
-$ruby\
-$rust\
-$scala\
-$terraform\
 $aws\
 $cmd_duration\
 $line_break\
@@ -84,7 +74,7 @@ style = "blue"
 format = "[$symbol($version )]($style)"
 
 [package]
-disabled = false
+disabled = true
 symbol = " "
 format = "at [$symbol$version]($style) "
 style = "yellow"
