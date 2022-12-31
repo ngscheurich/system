@@ -24,6 +24,7 @@ M.keys = {
   { "<Leader>ff", function() builtin("find_files") end, desc = "Files" },
   { "<Leader>fg", function() builtin("live_grep") end, desc = "Grep" },
   { "<Leader>fh", function() builtin("help_tags") end, desc = "Help" },
+  { "<Leader>fk", function() builtin("keymaps") end, desc = "Keymaps" },
   { "<Leader>fl", function() builtin("loclist") end, desc = "Location list" },
   { "<Leader>fq", function() builtin("quickfix") end, desc = "Quickfix list" },
 }
