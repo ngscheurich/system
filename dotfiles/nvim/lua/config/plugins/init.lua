@@ -9,7 +9,6 @@ return {
   -- Navigation
   "andymass/vim-matchup",
   "justinmk/vim-dirvish",
-  { "folke/trouble.nvim", config = true },
 
   -- Syntax
   "sheerun/vim-polyglot",
