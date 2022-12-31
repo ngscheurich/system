@@ -1,7 +1,9 @@
 local M = { "nvim-telescope/telescope.nvim" }
 
-local function builtin(source)
-  require("telescope.builtin")[source]()
+local function find(source)
+  return function()
+    require("telescope.builtin")[source]()
+  end
 end
 
 M.dependencies = { "nvim-lua/plenary.nvim" }
@@ -17,16 +19,16 @@ function M.config()
 end
 
 M.keys = {
-  { "<Leader>/", function() builtin("current_buffer_fuzzy_find") end, desc = "Search" },
-  { "<Leader><Space>", function() builtin("buffers") end, desc = "Buffers" },
-  { "<Leader>fa", function() builtin("autocommands") end, desc = "Autocommands" },
-  { "<Leader>fc", function() builtin("commands") end, desc = "Commands" },
-  { "<Leader>ff", function() builtin("find_files") end, desc = "Files" },
-  { "<Leader>fg", function() builtin("live_grep") end, desc = "Grep" },
-  { "<Leader>fh", function() builtin("help_tags") end, desc = "Help" },
-  { "<Leader>fk", function() builtin("keymaps") end, desc = "Keymaps" },
-  { "<Leader>fl", function() builtin("loclist") end, desc = "Location list" },
-  { "<Leader>fq", function() builtin("quickfix") end, desc = "Quickfix list" },
+  { "<Leader>/", find("current_buffer_fuzzy_find"), desc = "Search" },
+  { "<Leader><Space>", find("buffers"), desc = "Buffers" },
+  { "<Leader>fa", find("autocommands"), desc = "Autocommands" },
+  { "<Leader>fc", find("commands"), desc = "Commands" },
+  { "<Leader>ff", find("find_files"), desc = "Files" },
+  { "<Leader>fg", find("live_grep"), desc = "Grep" },
+  { "<Leader>fh", find("help_tags"), desc = "Help" },
+  { "<Leader>fk", find("keymaps"), desc = "Keymaps" },
+  { "<Leader>fl", find("loclist"), desc = "Location list" },
+  { "<Leader>fq", find("quickfix"), desc = "Quickfix list" },
 }
 
 return M
