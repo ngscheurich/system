@@ -40,15 +40,15 @@ function M.config()
     ensure_installed = vim.tbl_keys(servers),
   })
 
-  mason_lspconfig.setup_handlers {
+  mason_lspconfig.setup_handlers({
     function(server)
-      require("lspconfig")[server].setup {
+      require("lspconfig")[server].setup({
         capabilities = capabilities,
         on_attach = on_attach,
         settings = servers[server],
-      }
+      })
     end,
-  }
+  })
 end
 
 return M
