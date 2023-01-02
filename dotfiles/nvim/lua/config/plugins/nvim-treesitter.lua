@@ -4,7 +4,7 @@ M.dependencies = {
   "nvim-treesitter/playground",
 }
 
-M.build = ":TSUpdte"
+M.build = ":TSUpdate"
 
 function M.config()
   require("nvim-treesitter.configs").setup({
