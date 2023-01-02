@@ -1,5 +1,6 @@
 return {
   -- Interface
+  "rcarriga/nvim-notify",
   { "nvim-tree/nvim-web-devicons", config = true },
   { "yamatsum/nvim-nonicons", config = true },
 
