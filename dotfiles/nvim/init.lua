@@ -35,4 +35,11 @@ require("lazy").setup("plugins", {
   install = {
     colorscheme = { "tokyonight-night" },
   },
+  ui = {
+    icons = {
+      cmd = "⌘",
+      lazy = "  ",
+      start = "",
+    },
+  },
 })
