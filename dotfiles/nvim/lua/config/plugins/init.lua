@@ -1,7 +1,4 @@
 return {
-  -- Editing
-  "tpope/vim-surround",
-
   -- Interface
   { "nvim-tree/nvim-web-devicons", config = true },
   { "yamatsum/nvim-nonicons", config = true },

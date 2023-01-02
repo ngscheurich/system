@@ -12,10 +12,25 @@ function M.pairs()
   require("mini.pairs").setup({})
 end
 
+function M.surround()
+  require("mini.surround").setup({
+    mappings = {
+      add = "gza",
+      delete = "gzd",
+      find = "gzf",
+      find_left = "gzF",
+      highlight = "gzh",
+      replace = "gzr",
+      update_n_lines = "gzn",
+    },
+  })
+end
+
 function M.config()
   M.align()
   M.comment()
   M.pairs()
+  M.surround()
 end
 
 return M
