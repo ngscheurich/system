@@ -15,6 +15,7 @@ return {
 
   -- Miscellaneous
   { "NvChad/nvim-colorizer.lua", config = true },
+  "tpope/vim-eunuch",
   "tpope/vim-repeat",
   "tpope/vim-rsi",
   "tpope/vim-unimpaired",
