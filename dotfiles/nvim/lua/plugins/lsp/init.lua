@@ -22,8 +22,8 @@ function M.config()
   require("mason").setup()
 
   local function on_attach(client, buffer)
-    require("config.plugins.lsp.keymaps").setup(client, buffer)
-    require("config.plugins.lsp.formatting").setup(client, buffer)
+    require("plugins.lsp.keymaps").setup(client, buffer)
+    require("plugins.lsp.formatting").setup(client, buffer)
 
     vim.opt_local.foldmethod = "expr"
     vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"

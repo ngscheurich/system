@@ -21,7 +21,7 @@ require("config.keymaps")
 require("config.options")
 
 -- Load plugin manager
-require("lazy").setup("config.plugins", {
+require("lazy").setup("plugins", {
   checker = { enabled = false },
   change_detection = { notify = false },
   install = {

@@ -18,7 +18,7 @@ function M.config()
       end,
     },
 
-    mapping = require("config.plugins.cmp.keymaps").setup(cmp, luasnip),
+    mapping = require("plugins.cmp.keymaps").setup(cmp, luasnip),
 
     sources = cmp.config.sources({
       { name = "nvim_lsp" },
