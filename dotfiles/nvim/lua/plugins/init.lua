@@ -4,6 +4,9 @@ return {
   { "nvim-tree/nvim-web-devicons", config = true },
   { "yamatsum/nvim-nonicons", config = true },
 
+  -- Code Intelligence
+  { "smjonas/inc-rename.nvim", config = true },
+
   -- Navigation
   "andymass/vim-matchup",
   "justinmk/vim-dirvish",

@@ -9,7 +9,7 @@ function M.setup(client, buffer)
     ["<LocalLeader>"] = {
       name = "lsp",
 
-      R = { lsp.buf.rename, "Rename" },
+      R = { ":IncRename ", "Rename" },
       S = { telescope.lsp_workspace_symbols, "Symbols" },
       a = { lsp.buf.code_action, "Code actions" },
       d = { vim.diagnostic.open_float, "Diagnostics" },
