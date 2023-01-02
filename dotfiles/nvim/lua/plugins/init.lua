@@ -18,6 +18,7 @@ return {
   { "NvChad/nvim-colorizer.lua", config = true },
   "tpope/vim-abolish",
   "tpope/vim-eunuch",
+  "tpope/vim-projectionist",
   "tpope/vim-repeat",
   "tpope/vim-rsi",
   "tpope/vim-unimpaired",
