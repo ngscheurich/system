@@ -14,6 +14,7 @@ function M.setup(client, buffer)
       a = { lsp.buf.code_action, "Code actions" },
       d = { vim.diagnostic.open_float, "Diagnostics" },
       f = { lsp.buf.format, "Format", cond = formatting },
+      o = { "<Cmd>SymbolsOutline<CR>", "Outline" },
       r = { telescope.lsp_references, "References" },
       s = { telescope.lsp_document_symbols, "Symbols" },
     },
