@@ -4,10 +4,20 @@
 
 local indent = 2
 
+local listchars = {
+  tab = ">-",
+  eol = "↵",
+  nbsp = "␣",
+  trail = "‧",
+  extends = "⟩",
+  precedes = "⟨",
+}
+
 -- Interface
 vim.opt.cursorline = true
 vim.opt.fillchars = { vert = "│" }
 vim.opt.laststatus = 3
+vim.opt.listchars = listchars
 vim.opt.number = true
 vim.opt.scrolloff = 8
 vim.opt.shortmess:append "c"
