@@ -23,6 +23,7 @@
   "nvim-web-devicons": { "branch": "master", "commit": "05e1072f63f6c194ac6e867b567e6b437d3d4622" },
   "playground": { "branch": "master", "commit": "8a887bcf66017bd775a0fb19c9d8b7a4d6759c48" },
   "plenary.nvim": { "branch": "master", "commit": "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
+  "telescope-fzf-native.nvim": { "branch": "main", "commit": "fab3e2212e206f4f8b3bbaa656e129443c9b802e" },
   "telescope.nvim": { "branch": "master", "commit": "a606bd10c79ec5989c76c49cc6f736e88b63f0da" },
   "todo-comments.nvim": { "branch": "main", "commit": "c1760010f46992165995aaa52ca967f473a2e8e6" },
   "tokyonight.nvim": { "branch": "main", "commit": "8a619f0cf3ed9051081d9fc0cd4f852a7355f546" },

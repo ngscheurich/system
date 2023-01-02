@@ -6,16 +6,30 @@ local function find(source)
   end
 end
 
-M.dependencies = { "nvim-lua/plenary.nvim" }
+M.dependencies = {
+  "nvim-lua/plenary.nvim",
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+}
 
 function M.config()
-  require("telescope").setup({
+  local telescope = require("telescope")
+
+  telescope.setup({
     defaults = {
       prompt_prefix = " ❯ ",
       selection_caret = " ❯ ",
       entry_prefix = "   ",
     },
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+      },
+    },
   })
+
+  telescope.load_extension("fzf")
 end
 
 M.keys = {
