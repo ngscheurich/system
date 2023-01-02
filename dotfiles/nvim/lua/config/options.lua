@@ -20,7 +20,7 @@ vim.opt.laststatus = 3
 vim.opt.listchars = listchars
 vim.opt.number = true
 vim.opt.scrolloff = 8
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append("c")
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = "yes"
@@ -29,11 +29,11 @@ vim.opt.splitright = true
 vim.opt.termguicolors = true
 
 -- Indentation
-vim.opt.expandtab   = true
-vim.opt.shiftwidth  = indent
+vim.opt.expandtab = true
+vim.opt.shiftwidth = indent
 vim.opt.smartindent = true
 vim.opt.softtabstop = indent
-vim.opt.tabstop     = indent
+vim.opt.tabstop = indent
 
 -- Search
 vim.opt.grepprg = "rg --vimgrep"
