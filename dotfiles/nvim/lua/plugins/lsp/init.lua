@@ -16,6 +16,7 @@ function M.config()
         workspace = { checkThirdParty = false },
       },
     },
+    tsserver = {},
   }
 
   require("neodev").setup({})
