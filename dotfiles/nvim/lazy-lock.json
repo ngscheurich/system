@@ -6,7 +6,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "flit.nvim": { "branch": "main", "commit": "be110f9814a45788d10537fd59b3c76d956bb7ad" },
   "gitsigns.nvim": { "branch": "main", "commit": "2ab3bdf0a40bab53033048c6be75bda86316b55d" },
-  "lazy.nvim": { "branch": "main", "commit": "45d669f61c8fc239712e794e1e2c5af1f737ee0a" },
+  "lazy.nvim": { "branch": "main", "commit": "0fadb5e1cec709de839ecd6937b338b9201734ad" },
   "leap.nvim": { "branch": "main", "commit": "e0145906c5f004b23eb6ec876fad55ffd3382ec9" },
   "lualine.nvim": { "branch": "master", "commit": "32a7382a75a52e8ad05f4cec7eeb8bbfbe80d461" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "aa25b4153d2f2636c3b3a8c8360349d2b29e7ae3" },
