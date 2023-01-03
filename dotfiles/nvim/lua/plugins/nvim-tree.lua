@@ -9,11 +9,11 @@ function M.config()
       icons = {
         glyphs = vim.tbl_deep_extend("force", nonicons.glyphs, {
           git = {
-            unstaged = "",
+            unstaged = "",
             staged = "",
-            unmerged = "",
-            renamed = "",
-            untracked = "",
+            unmerged = "",
+            renamed = "⇒",
+            untracked = "?",
           },
         }),
       },
