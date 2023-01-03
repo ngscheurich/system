@@ -1,11 +1,21 @@
 local M = { "nvim-tree/nvim-tree.lua" }
 
 function M.config()
+  local nonicons = require("nvim-nonicons.extentions.nvim-tree")
+
   require("nvim-tree").setup({
     hijack_directories = { enable = false },
     renderer = {
       icons = {
-        glyphs = require("nvim-nonicons.extentions.nvim-tree").glyphs,
+        glyphs = vim.tbl_deep_extend("force", nonicons.glyphs, {
+          git = {
+            unstaged = "",
+            staged = "",
+            unmerged = "",
+            renamed = "",
+            untracked = "",
+          },
+        }),
       },
     },
   })
@@ -13,7 +23,7 @@ end
 
 M.cmd = {
   "NvimTreeToggle",
-  "NvimTreeFindFileToggle"
+  "NvimTreeFindFileToggle",
 }
 
 M.keys = {
