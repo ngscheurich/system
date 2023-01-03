@@ -8,26 +8,39 @@ M.build = ":TSUpdate"
 
 function M.config()
   require("nvim-treesitter.configs").setup({
+    highlight = { enable = true },
+    indent = { enable = true },
+
     ensure_installed = {
       "bash",
+      "c",
       "css",
       "diff",
+      "eex",
       "elixir",
+      "erlang",
+      "fennel",
+      "fish",
       "gitignore",
+      "graphql",
       "help",
       "html",
       "javascript",
       "json",
       "lua",
+      "make",
       "markdown",
+      "mermaid",
+      "nix",
       "query",
       "regex",
+      "rust",
       "sql",
       "toml",
+      "tsx",
+      "typescript",
       "yaml",
     },
-    highlight = { enable = true },
-    indent = { enable = true },
   })
 end
 
