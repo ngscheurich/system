@@ -1,7 +1,7 @@
 local M = { "nvim-lualine/lualine.nvim" }
 
 function M.config()
-  local icons = require("nvim-nonicons")
+  local nonicons = require("nvim-nonicons")
 
   require("lualine").setup({
     options = {
@@ -13,7 +13,7 @@ function M.config()
       lualine_b = {
         {
           "branch",
-          icon = icons.get("git-branch"),
+          icon = nonicons.get("git-branch"),
         },
       },
     },
