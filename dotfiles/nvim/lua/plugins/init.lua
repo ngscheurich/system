@@ -18,7 +18,6 @@ return {
   "tpope/vim-fugitive",
 
   -- Miscellaneous
-  { "NvChad/nvim-colorizer.lua", config = true },
   "tpope/vim-abolish",
   "tpope/vim-eunuch",
   "tpope/vim-projectionist",
