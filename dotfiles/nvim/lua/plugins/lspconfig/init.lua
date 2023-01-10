@@ -2,6 +2,7 @@ local M = { "neovim/nvim-lspconfig" }
 
 M.dependencies = {
   "folke/neodev.nvim",
+  "smjonas/inc-rename.nvim",
   "williamboman/mason-lspconfig.nvim",
   "williamboman/mason.nvim",
 }
@@ -10,12 +11,14 @@ function M.config()
   local servers = {
     bashls = {},
     elixirls = {},
+    rnix = {},
     sumneko_lua = {
       Lua = {
         telemetry = { enable = false },
         workspace = { checkThirdParty = false },
       },
     },
+    tailwindcss = {},
     tsserver = {},
   }
 
@@ -23,12 +26,14 @@ function M.config()
   require("mason").setup()
 
   local function on_attach(client, buffer)
-    require("plugins.lsp.keymaps").setup(client, buffer)
-    require("plugins.lsp.formatting").setup(client, buffer)
+    require("nvim-navic").attach(client, buffer)
 
-    vim.opt_local.foldmethod = "expr"
-    vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
-    vim.opt.foldlevel = 99
+    require("plugins.lspconfig.keymaps").setup(client, buffer)
+    require("plugins.lspconfig.formatting").setup(client, buffer)
+
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.wo.foldlevel = 99
   end
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
