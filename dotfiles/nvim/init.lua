@@ -23,10 +23,11 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 -- Load core config
-require("config.abbrevs")
-require("config.commands")
-require("config.keymaps")
-require("config.options")
+require("core.abbrevs")
+require("core.commands")
+require("core.keymaps")
+require("core.options")
+require("core.signs")
 
 -- Load plugin manager
 require("lazy").setup("plugins", {
