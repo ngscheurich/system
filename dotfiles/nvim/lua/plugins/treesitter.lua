@@ -23,6 +23,7 @@ function M.config()
       "fish",
       "gitignore",
       "graphql",
+      "heex",
       "help",
       "html",
       "javascript",
