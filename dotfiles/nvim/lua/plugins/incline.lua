@@ -3,7 +3,6 @@ return {
 
   config = {
     hide = {
-      focused_win = true,
       only_win = true,
     },
   },
