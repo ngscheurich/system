@@ -1,5 +1,7 @@
 local M = { "folke/tokyonight.nvim" }
 
+M.cond = _G.colorscheme == "tokyonight"
+
 function M.config()
   require("tokyonight").setup({
     style = "night",
