@@ -12,6 +12,12 @@ function M.pairs()
   require("mini.pairs").setup({})
 end
 
+function M.starter()
+  require("mini.starter").setup({
+    footer = "",
+  })
+end
+
 function M.surround()
   require("mini.surround").setup({
     mappings = {
@@ -30,6 +36,7 @@ function M.config()
   M.align()
   M.comment()
   M.pairs()
+  M.starter()
   M.surround()
 end
 
