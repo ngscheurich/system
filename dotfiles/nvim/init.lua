@@ -29,6 +29,9 @@ require("core.keymaps")
 require("core.options")
 require("core.signs")
 
+-- Set constants
+_G.colorscheme = "tokyonight"
+
 -- Load plugin manager
 require("lazy").setup("plugins", {
   change_detection = {
