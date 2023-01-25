@@ -179,7 +179,7 @@ Build the system:
 
 Switch to the new system generation:
 
-    $ /tmp/nix-build/sw/bin/darwin-rebuild switch --flake /etc/system#weatherwax
+    $ /tmp/nix-build/sw/bin/darwin-rebuild switch --flake /etc/system#[HOSTNAME]
 
 Log out and back in for all changes to take effect.
 
