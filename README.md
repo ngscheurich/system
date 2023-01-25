@@ -5,6 +5,8 @@ email: nick@scheurich.haus
 url: https://scheurich.haus/system
 ---
 
+![Untitled](https://user-images.githubusercontent.com/423798/214494353-eb1f2dde-b612-4b76-a16f-e4a2436bede2.png)
+
 # Contents
 
 - [Prelude](#prelude)
