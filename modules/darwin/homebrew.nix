@@ -34,6 +34,7 @@
       "amethyst"
       "appcleaner"
       "bartender"
+      "cleanshot"
       "daisydisk"
       "dash"
       "discord"
