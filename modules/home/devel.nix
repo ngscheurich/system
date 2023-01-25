@@ -40,5 +40,6 @@
 
     # Libraries
     glib
+    gum
   ];
 }
