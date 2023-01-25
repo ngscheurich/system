@@ -143,14 +143,6 @@ Home Manager has the capability to configure some of the programs that I use, bu
 - [skhd], a simple hotkey daemon for macOS
 - [yabai], a tiling window manager for macOS
 
-## Neovim
-
-Neovim is sort of the centerpiece of most of my systems, and has the most elaborate and volatile configuration that I maintain.
-
-The core config files are written in Fennel with the help of [Hotpot]. I use [Conjure] for interactively evaluating source code. Maximum respect to [Oliver Caldwell] for introducing me to Fennel through Conjure and [Aniseed], and for being an overall great person.
-
-In addition to taking advantage of some wondrous built-in features like the native LSP client and Tree-sitter integration, I use a host of plugins (managed by [Packer]). I don’t think it would be practical to enumerate them here; the most up-to-date list can be viewed in the the main [package file].
-
 [aniseed]: https://github.com/Olical/aniseed
 [apple m1 pro]: https://en.wikipedia.org/wiki/Apple_M1_Pro_and_M1_Max
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
@@ -159,7 +151,6 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [bat]: https://github.com/sharkdp/bat
 [cmake]: https://cmake.org/
 [command-line interface]: https://en.wikipedia.org/wiki/Command-line_interface
-[conjure]: https://github.com/Olical/conjure
 [direnv]: https://direnv.net/
 [dotfiles]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 [emacs]: https://www.gnu.org/software/emacs/
@@ -174,7 +165,6 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [gnu privacy guard]: https://gnupg.org/
 [gnu stow]: https://www.gnu.org/software/stow/
 [home manager]: https://github.com/nix-community/home-manager
-[hotpot]: https://github.com/rktjmp/hotpot.nvim
 [karabiner-elements]: https://karabiner-elements.pqrs.org/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [lazygit]: https://github.com/jesseduffield/lazygit
@@ -183,10 +173,7 @@ In addition to taking advantage of some wondrous built-in features like the nati
 [nix-darwin]: https://github.com/LnL7/nix-darwin
 [nix]: https://nixos.org/
 [nixos]: https://en.wikipedia.org/wiki/NixOS
-[oliver caldwell]: https://github.com/Olical
 [overlay]: https://github.com/nix-community/neovim-nightly-overlay
-[package file]: dotfiles/nvim/fnl/conf/pack/init.fnl
-[packer]: https://github.com/wbthomason/packer.nvim
 [ranger]: https://ranger.github.io
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix
