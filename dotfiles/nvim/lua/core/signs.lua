@@ -1,6 +1,8 @@
 local function set_sign_text(severity, text)
-  local cmd = string.format("sign define DiagnosticSign%s text=%s", severity, text)
-  vim.cmd(cmd)
+  vim.fn.sign_define(
+    "DiagnosticSign" .. severity,
+    { text = text, texthl = "Diagnostic" .. severity }
+  )
 end
 
 set_sign_text("Error", "")
