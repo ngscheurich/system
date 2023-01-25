@@ -28,6 +28,9 @@
     casks = [
       "1password"
       "1password-cli"
+      "affinity-designer"
+      "affinity-photo"
+      "affinity-publisher"
       "amethyst"
       "appcleaner"
       "bartender"
