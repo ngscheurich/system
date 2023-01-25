@@ -25,6 +25,9 @@
     # Containerization/virtualization
     docker-machine
 
+    # Hardware
+    tio
+
     # Build tools
     autoconf
     automake
