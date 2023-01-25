@@ -19,7 +19,9 @@ return {
           with_markers = false,
         },
       },
-      hijack_netrw_behavior = "disabled",
+      filesystem = {
+        hijack_netrw_behavior = "disabled",
+      },
       window = {
         width = 30,
       },
