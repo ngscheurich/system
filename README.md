@@ -1,13 +1,10 @@
----
-title: System Configurations
-author: N. G. Scheurich
-email: nick@scheurich.haus
-url: https://scheurich.haus/system
----
+#  /etc/system
 
 ![Untitled](https://user-images.githubusercontent.com/423798/214494353-eb1f2dde-b612-4b76-a16f-e4a2436bede2.png)
 
-# Contents
+This repository contains system- and application-level configurations for the computers I use. Wanderers beware: it is ever-evolving and fraught with great peril.
+
+## Contents
 
 - [Prelude](#prelude)
 - [Systems](#systems)
@@ -16,7 +13,7 @@ url: https://scheurich.haus/system
 - [Dotfiles](#dotfiles)
 - [Quickstart](#quickstart)
 
-# Prelude 
+## Prelude 
 
 _Computers, huh?_ Who would have thought? And yet, here we are. These are the configuration files for my computer systems.
 
@@ -31,9 +28,9 @@ In addition to the Nix configuration files, this repo also contains:
 - Shell scripts that do a little of this, a little of that
 - Theme files that I use to change the look of my terminal environment
 
-# Systems
+## Systems
 
-## Weatherwax
+### Weatherwax
 
 My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple M2 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
 
@@ -45,7 +42,7 @@ My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple
 | Storage          | 512 GB PCIe 4.0 ×4 SSD       |
 
 
-## Ridcully
+### Ridcully
 
 My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
 
@@ -56,7 +53,7 @@ My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1 
 | Memory           | 32 GB LPDDR5                 |
 | Storage          | 1 TB PCIe 4.0 ×4 SSD         |
 
-## Twoflower
+### Twoflower
 
 Finally, I maintain a simple cloud computing environment over at [Linode].
 
@@ -67,9 +64,9 @@ Finally, I maintain a simple cloud computing environment over at [Linode].
 | Memory           | 1 GB                         |
 | Storage          | 25 GB                        |
 
-# Nix
+## Nix
 
-## Flake
+### Flake
 
 The root of my Nix configuration is a _[flake]_ whose outputs are configurations for each of my systems.
 
@@ -77,43 +74,43 @@ System-level configuration is managed by [nix-darwin] or [NixOS], depending on t
 
 Each system’s user-level packages are specified and configured using [Home Manager].
 
-## Modules
+### Modules
 
 I maintain a set of Nix modules loosely separated by area of concern. This helps prevent polluting any given system with unneeded binaries and configuration files, and helps me feel like I’ve really _got it together_, at least a little bit.
 
-### Code
+#### Code
 
 One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. I’m using an [overlay] to get the nightly version since I like test driving new features and sometimes make bad decisions. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter].
 
-### Crypt
+#### Crypt
 
 I use public key cryptography for encrypting data like emails and sensitive documents, and for authenticating ownership of Internet resources such as Git commits and domain names. This module specifies the [GNU Privacy Guard] package as well as a convenient terminal UI for it.
 
-### Devel
+#### Devel
 
 This module specifies packages that are used to build or run software. It includes [asdf] for managing certain programming languages, [Fennel] (a lovely little Lisp that compiles to Lua), and lots of build-time dependencies—[Autoconf], [Cmake], et al.
 
-### Devops 
+#### Devops 
 
 I sometimes find myself needing to engage in some light devops work and this module specifies packages that make those sorts of tasks a bit comfier on the command line.
 
-### Git
+#### Git
 
 The [Git] version control system is a key piece of my daily workflow. This specifes it along with configuration and some supplementary packages, namely [Lazygit], a Git terminal UI.
 
-### Prose
+#### Prose
 
 To make it more pleasant to read and edit natural language text, e.g. notes, documentation, short stories, I specify some packages here like [Vale] and [Glow].
 
-### Shell
+#### Shell
 
 The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for some common Unix commands: [bat], [exa], [fd], and [ripgrep].
 
-### Vim
+#### Vim
 
 Herein is specified the venerable [Vim] text editor and a simple configuration that I use to turn it into a more basic, lightweight alternative to Neovim for quick editing tasks.
 
-# Grimoire
+## Grimoire
 
 Included in this repository is the source code for _Grimoire_, a command-line interface I created for system management. I’ll let its `help` describe it briefly:
 
@@ -132,7 +129,7 @@ Included in this repository is the source code for _Grimoire_, a command-line in
         switch    Switch to a new Nix system generation
         theme     Change the system theme
 
-## Building
+### Building
 
 To build Grimoire, first install Nix then run this command from the `cli` directory:
 
@@ -140,7 +137,7 @@ To build Grimoire, first install Nix then run this command from the `cli` direct
 
 Alternatively, if you have the Rust toolchain installed, you can simply `make`.
 
-# Dotfiles
+## Dotfiles
 
 Home Manager has the capability to configure some of the programs that I use, but for those not supported and for anything but the simplest configurations I prefer to maintain a classic [dotfiles] setup. Programs configured this way include:
 
@@ -154,7 +151,9 @@ Home Manager has the capability to configure some of the programs that I use, bu
 - [skhd], a simple hotkey daemon for macOS
 - [yabai], a tiling window manager for macOS
 
-# Quickstart
+Dotfiles can be linked with Grimoire: `grim link add [NAME]`.
+
+## Quickstart
 
 ## macOS
 
