@@ -20,6 +20,7 @@
 
     # Database tools
     freetds
+    sqlite-interactive
 
     # Containerization/virtualization
     docker-machine
