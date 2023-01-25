@@ -11,7 +11,12 @@
     beam.packages.erlangR25.elixir_1_14
     erlangR25
     fennel
+    go
+    lua
     nodejs
+    python39
+    rustc
+    cargo
 
     # Database tools
     freetds
