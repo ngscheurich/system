@@ -12,6 +12,7 @@ url: https://scheurich.haus/system
 - [Nix](#nix)
 - [Grimoire](#grimoire)
 - [Dotfiles](#dotfiles)
+- [Quickstart](#quickstart)
 
 # Prelude 
 
@@ -32,16 +33,24 @@ In addition to the Nix configuration files, this repo also contains:
 
 ## Weatherwax
 
-⚠️ Temporarily out of order.
-
-## Ridcully
-
-My work computer is a 2021 [Apple MacBook Pro] that runs on the [Apple M1 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
+My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple M2 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
 
 | Component        | Description                  |
 | ---------------- | ---------------------------- |
-| Operating System | macOS 13.0 (Ventura)         |
-| CPU              | 3.2 GHz/2 GHz AArch64        |
+| Operating System | macOS 13.2 (Ventura)         |
+| CPU              | 3.49 GHz AArch64             |
+| Memory           | 16 GB LPDDR5                 |
+| Storage          | 512 GB PCIe 4.0 ×4 SSD       |
+
+
+## Ridcully
+
+My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
+
+| Component        | Description                  |
+| ---------------- | ---------------------------- |
+| Operating System | macOS 13.2 (Ventura)         |
+| CPU              | 3.2 GHz GHz AArch64          |
 | Memory           | 32 GB LPDDR5                 |
 | Storage          | 1 TB PCIe 4.0 ×4 SSD         |
 
@@ -143,8 +152,40 @@ Home Manager has the capability to configure some of the programs that I use, bu
 - [skhd], a simple hotkey daemon for macOS
 - [yabai], a tiling window manager for macOS
 
+# Quickstart
+
+## macOS
+
+Install Nix:
+
+    $ sh <(curl -L https://nixos.org/nix/install)
+
+Install [Homebrew]:
+
+    $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+Clone this repository:
+
+    $ sudo git clone https://github.com/ngscheurich/system.git /etc/system
+    $ sudo chown -R nick:staff /etc/system
+
+Set the hostname:
+
+    $ sudo scutil --set HostName [HOSTNAME]
+
+Build the system:
+
+    $ nix build /etc/system/#darwinConfigurations.[HOSTNAME].system --out-link /tmp/nix-build
+
+Switch to the new system generation:
+
+    $ /tmp/nix-build/sw/bin/darwin-rebuild switch --flake /etc/system#weatherwax
+
+Log out and back in for all changes to take effect.
+
 [aniseed]: https://github.com/Olical/aniseed
 [apple m1 pro]: https://en.wikipedia.org/wiki/Apple_M1_Pro_and_M1_Max
+[apple m2 pro]: https://en.wikipedia.org/wiki/Apple_M2
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
 [asdf]: https://asdf-vm.com/
 [autoconf]: https://www.gnu.org/software/autoconf/
@@ -165,6 +206,7 @@ Home Manager has the capability to configure some of the programs that I use, bu
 [gnu privacy guard]: https://gnupg.org/
 [gnu stow]: https://www.gnu.org/software/stow/
 [home manager]: https://github.com/nix-community/home-manager
+[homebrew]: https://brew.sh/
 [karabiner-elements]: https://karabiner-elements.pqrs.org/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [lazygit]: https://github.com/jesseduffield/lazygit
