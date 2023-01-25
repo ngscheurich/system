@@ -8,6 +8,7 @@ function M.config()
       ["?"] = { "<Cmd>WhichKey<CR>", "Keys" },
       e = { name = "explore" },
       f = { name = "find" },
+      t = { name = "toggle" },
     },
   }
 

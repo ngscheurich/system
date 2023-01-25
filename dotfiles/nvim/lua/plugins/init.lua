@@ -1,5 +1,11 @@
 return {
   -- Interface
+  {
+    "RRethy/vim-illuminate",
+    keys = {
+      { "<Leader>ti", "<Cmd>IlluminateToggle<CR>", desc = "Illuminate" },
+    },
+  },
   "rcarriga/nvim-notify",
   { "nvim-tree/nvim-web-devicons", config = true },
   { "yamatsum/nvim-nonicons", config = true },
