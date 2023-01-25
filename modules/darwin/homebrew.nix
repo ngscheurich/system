@@ -22,7 +22,6 @@
       "fsouza/prettierd/prettierd"
       "lunchy"
       "shpotify"
-      "trash"
       "wxwidgets"
     ];
 
@@ -34,6 +33,8 @@
       "bartender"
       "daisydisk"
       "dash"
+      "discord"
+      "docker"
       "dropbox"
       "fantastical"
       "figma"
@@ -47,12 +48,16 @@
       "kitty"
       "logitech-options"
       "logseq"
+      "obs"
+      "obsidian"
       "postico"
       "postman"
+      # "protonvpn"
       "raycast"
       "spotify"
       "statusfy"
       "todoist"
+      "vlc"
       "wireshark"
     ];
 
