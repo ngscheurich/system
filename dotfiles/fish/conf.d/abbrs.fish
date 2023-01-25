@@ -1,8 +1,6 @@
 if not set -q ngs_abbrs_added
   abbr cls clear
-  abbr gco git checkout
-  abbr grb git rebase
-  abbr gst git status
+  abbr g git
   abbr la exa --all --long
   abbr lg lazygit
   abbr ll exa --long

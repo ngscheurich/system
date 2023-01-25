@@ -2,11 +2,15 @@ completions/fisher.fish
 completions/fzf_configure_bindings.fish
 
 conf.d/fzf.fish
+conf.d/pisces.fish
+conf.d/plugin-bang-bang.fish
+conf.d/z.fish
 
 functions/_*
 functions/fisher.fish
 functions/fzf_configure_bindings.fish
 functions/v.fish
+functions/z.fish
 functions/z.fish
 
 fish_variables
