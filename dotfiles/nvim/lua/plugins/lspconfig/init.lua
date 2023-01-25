@@ -10,8 +10,10 @@ M.dependencies = {
 function M.config()
   local servers = {
     bashls = {},
+    clangd = {},
     elixirls = {},
     rnix = {},
+    rust_analyzer = {},
     sumneko_lua = {
       Lua = {
         telemetry = { enable = false },
