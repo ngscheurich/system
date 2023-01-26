@@ -20,6 +20,9 @@
 
   homebrew = {
     casks = [
+      "affinity-designer"
+      "affinity-photo"
+      "affinity-publisher"
       "godot"
       "playdate-simulator"
       "unity-hub"
