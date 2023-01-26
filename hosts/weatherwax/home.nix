@@ -13,9 +13,16 @@
         ../../modules/home/git.nix
         ../../modules/home/prose.nix
         ../../modules/home/shell.nix
-        ../../modules/home/term.nix
         ../../modules/home/vim.nix
       ];
     };
+  };
+
+  homebrew = {
+    casks = [
+      "godot"
+      "playdate-simulator"
+      "unity-hub"
+    ];
   };
 }
