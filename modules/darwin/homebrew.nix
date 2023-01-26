@@ -14,15 +14,6 @@
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
-      "railwaycat/emacsmacport"
-    ];
-
-    brews = [
-      "emacs-mac"
-      "fsouza/prettierd/prettierd"
-      "lunchy"
-      "shpotify"
-      "wxwidgets"
     ];
 
     casks = [
@@ -43,7 +34,6 @@
       "fantastical"
       "figma"
       "firefox"
-      "google-drive"
       "gpg-suite-no-mail"
       "hammerspoon"
       "istat-menus"
@@ -56,7 +46,6 @@
       "obsidian"
       "postico"
       "postman"
-      # "protonvpn"
       "raycast"
       "spotify"
       "statusfy"
