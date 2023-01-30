@@ -86,18 +86,6 @@
     };
   };
 
-  programs.tmux = {
-    enable = true;
-    baseIndex = 1;
-    clock24 = true;
-    escapeTime = 1;
-    keyMode = "vi";
-    resizeAmount = 20;
-    shortcut = "s";
-
-    extraConfig = builtins.readFile ./files/tmux.conf;
-  };
-
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
@@ -134,6 +122,7 @@
     starship
     thefuck
     tldr
+    tmux
     tree
     watch
     watchman
