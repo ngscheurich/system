@@ -30,7 +30,7 @@ require("core.options")
 require("core.signs")
 
 -- Set constants
-_G.colorscheme = "tokyonight"
+_G.colorscheme = "nordfox"
 
 -- Load plugin manager
 require("lazy").setup("plugins", {
@@ -38,12 +38,12 @@ require("lazy").setup("plugins", {
     notify = false,
   },
   install = {
-    colorscheme = { "tokyonight-night" },
+    colorscheme = { _G.colorscheme },
   },
   ui = {
     icons = {
       cmd = "⌘",
-      lazy = "  ",
+      lazy = "⏾ ",
       start = "",
     },
   },

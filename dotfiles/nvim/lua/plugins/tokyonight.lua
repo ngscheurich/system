@@ -1,14 +1,16 @@
 local M = { "folke/tokyonight.nvim" }
 
-M.cond = _G.colorscheme == "tokyonight"
+M.cond = _G.colorscheme == "tokyonight-night"
 
 function M.config()
-  require("tokyonight").setup({
-    style = "night",
-    sidebars = { "qf", "terminal", "help", "Outline" },
-  })
+  if _G.colorscheme == "tokyonight-night" then
+    require("tokyonight").setup({
+      style = "night",
+      sidebars = { "qf", "terminal", "help", "Outline" },
+    })
 
-  vim.cmd.colorscheme("tokyonight")
+    vim.cmd.colorscheme("tokyonight")
+  end
 end
 
 return M

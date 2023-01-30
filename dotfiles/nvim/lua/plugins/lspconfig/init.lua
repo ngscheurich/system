@@ -12,7 +12,6 @@ function M.config()
     bashls = {},
     clangd = {},
     elixirls = {},
-    rnix = {},
     rust_analyzer = {},
     sumneko_lua = {
       Lua = {
@@ -25,7 +24,10 @@ function M.config()
   }
 
   require("neodev").setup({})
-  require("mason").setup()
+
+  require("mason").setup({
+    PATH = "append",
+  })
 
   local function on_attach(client, buffer)
     require("nvim-navic").attach(client, buffer)

@@ -46,6 +46,7 @@ M.keys = {
   { "<Leader>fh", find("help_tags"), desc = "Help" },
   { "<Leader>fk", find("keymaps"), desc = "Keymaps" },
   { "<Leader>fl", find("loclist", "get_ivy"), desc = "Location list" },
+  { "<Leader>fo", find("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
   { "<Leader>fq", find("quickfix"), desc = "Quickfix list" },
 }
 

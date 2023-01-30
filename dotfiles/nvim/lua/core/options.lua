@@ -47,7 +47,6 @@ vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.pumheight = 10
 
 -- Behavior
-vim.opt.clipboard = "unnamedplus"
 vim.opt.hidden = true
 vim.opt.undofile = true
 vim.opt.updatetime = 1000

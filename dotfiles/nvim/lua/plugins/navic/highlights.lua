@@ -3,13 +3,21 @@ local M = {}
 local function get_colors()
   local colors = {}
 
-  if _G.colorscheme == "tokyonight" then
-    local tokyonight = require("tokyonight.colors")
+  if _G.colorscheme == "tokyonight-night" then
+    local palette = require("tokyonight.colors")
     colors = {
-      fg = tokyonight.default.fg,
-      bg = tokyonight.night.bg_dark,
-      icon = tokyonight.default.blue,
-      separator = tokyonight.default.comment,
+      fg = palette.default.fg,
+      bg = palette.night.bg_dark,
+      icon = palette.default.blue,
+      separator = palette.default.comment,
+    }
+  elseif _G.colorscheme == "nordfox" then
+    local palette = require('nightfox.palette').load("nightfox")
+    colors = {
+      fg = palette.fg1,
+      bg = "#20242d",
+      icon = palette.blue.dim,
+      separator = palette.separator,
     }
   end
 
