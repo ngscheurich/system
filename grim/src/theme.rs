@@ -13,7 +13,7 @@ pub fn apply(name: &str) -> io::Result<()> {
 
     if dir.exists() {
         apply_file(&dir, "kitty.conf", apply_kitty);
-        apply_file(&dir, "tmux.conf", apply_tmux);
+        apply_file(&dir, "tmux.sh", apply_tmux);
         apply_file(&dir, "nvim.lua", apply_nvim);
         success(format!("Applied {} theme", name));
     } else {
@@ -23,24 +23,42 @@ pub fn apply(name: &str) -> io::Result<()> {
     Ok(())
 }
 
-fn apply_kitty(path: PathBuf) {
-    let root = config_path("kitty");
-    let dest = PathBuf::from_iter([root.to_str().unwrap(), "colors.conf"]);
+fn apply_file(dir: &PathBuf, name: &str, cb: fn(&str, PathBuf)) {
+    let mut file = dir.clone();
+    file.push(name);
+
+    if file.exists() {
+        cb(name, file);
+    }
+}
+
+fn theme_dir(filename: &str) -> PathBuf {
+    // TODO: Create dir if not exists
+    let home = std::env::var("HOME").unwrap();
+    PathBuf::from_iter([home, ".theme".to_string(), filename.to_string()])
+}
+
+fn apply_kitty(name: &str, path: PathBuf) {
+    let dest = theme_dir(name);
     mk_symlink(&path, &dest);
 
     let cmd = format!("kitty @ set-colors -c {:?}", path);
     exec(cmd);
 }
 
-fn apply_tmux(path: PathBuf) {
-    let cmd = format!("tmux source-file {:?}", path);
+fn apply_tmux(name: &str, path: PathBuf) {
+    let dest = theme_dir(name);
+    mk_symlink(&path, &dest);
+
+    let cmd = format!("{:?}", path);
     exec(cmd);
 }
 
-fn apply_nvim(path: PathBuf) {
-    let root = config_path("nvim");
-    let dest = PathBuf::from_iter([root.to_str().unwrap(), "plugin", "colorscheme.lua"]);
+fn apply_nvim(name: &str, path: PathBuf) {
+    let dest = theme_dir(name);
     mk_symlink(&path, &dest);
+
+    // TODO: Source the file in running instances
 }
 
 fn mk_symlink(path: &PathBuf, dest: &PathBuf) {
@@ -48,15 +66,6 @@ fn mk_symlink(path: &PathBuf, dest: &PathBuf) {
         fs::remove_file(dest).expect("unable to remove link")
     }
     unix::fs::symlink(path, dest).expect("unable to create link");
-}
-
-fn apply_file(dir: &PathBuf, name: &str, cb: fn(PathBuf)) {
-    let mut file = dir.clone();
-    file.push(name);
-
-    if file.exists() {
-        cb(file);
-    }
 }
 
 pub fn list() -> io::Result<()> {
