@@ -18,6 +18,7 @@
       g = "git";
       la = "exa --all --long";
       lg = "lazygit";
+      l = "exa"; 
       ll = "exa --long";
       ls = "exa";
       lt = "exa --tree";
