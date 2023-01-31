@@ -97,6 +97,9 @@
 
       # direnv caches
       ".direnv/"
+
+      # Local tmux configs
+      ".tmux.local.conf"
     ];
 
     signing = {

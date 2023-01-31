@@ -24,6 +24,7 @@
       lt = "exa --tree";
       serve = "python -m http.server";
       ta = "tmux attach";
+      tmux = "tmucks";
       vimdiff = "nvim -d";
       weather = "curl wttr.in";
     };
