@@ -32,17 +32,4 @@ return {
   "tpope/vim-repeat",
   "tpope/vim-rsi",
   "tpope/vim-unimpaired",
-
-  {
-    "AlexvZyl/nordic.nvim",
-    -- config = function() require("nordic").load() end,
-  },
-
-  {
-    "EdenEast/nightfox.nvim",
-  },
-
-  {
-    "catppuccin/nvim",
-  },
 }
