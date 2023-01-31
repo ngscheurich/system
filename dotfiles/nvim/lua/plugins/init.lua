@@ -9,6 +9,7 @@ return {
   "rcarriga/nvim-notify",
   { "nvim-tree/nvim-web-devicons", config = true },
   { "yamatsum/nvim-nonicons", config = true },
+  { "j-hui/fidget.nvim", config = true },
 
   -- Code Intelligence
   { "smjonas/inc-rename.nvim", config = true },
