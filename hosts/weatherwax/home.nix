@@ -23,8 +23,10 @@
       "affinity-designer"
       "affinity-photo"
       "affinity-publisher"
+      "epic-games"
       "godot"
       "playdate-simulator"
+      "steam"
       "unity-hub"
     ];
   };
