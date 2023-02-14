@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     aws-vault
     awscli2
+    flyctl
     nodePackages.serverless
     ssm-session-manager-plugin
     terraform
