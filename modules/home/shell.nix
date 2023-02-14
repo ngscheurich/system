@@ -73,12 +73,12 @@
       fill = { symbol = " "; };
 
       git_branch = {
-        symbol = " ";
-        style = "red";
+        symbol = " ";
+        style = "bright-black";
         truncation_length = 32;
       };
       git_commit = { tag_symbol = " "; };
-      git_status = { style = "bold bright-red"; };
+      git_status = { style = "bold bright-black"; };
 
       nix_shell = {
         symbol = "";
