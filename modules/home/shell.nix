@@ -107,6 +107,11 @@
     ];
   };
 
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = false;
+  };
+
   programs.bat = {
     enable = true;
     config.theme = "base16";
