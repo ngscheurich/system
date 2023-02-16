@@ -128,14 +128,11 @@
     fzy
     graph-easy
     htop
-    httpie
     jq
     neofetch
-    ngrok
     ranger
     ripgrep
     slides
-    starship
     thefuck
     tldr
     tmux

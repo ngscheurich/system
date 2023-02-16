@@ -28,6 +28,11 @@
     # Hardware
     tio
 
+    # Networking
+    httpie
+    ngrok
+    websocat
+
     # Build tools
     autoconf
     automake
