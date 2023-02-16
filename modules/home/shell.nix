@@ -39,6 +39,15 @@
           sha256 = "1kaa0k9d535jnvy8vnyxd869jgs0ky6yg55ac1mxcxm8n0rh2mgq";
         };
       }
+      {
+        name = "plugin-bang-bang";
+        src = pkgs.fetchFromGitHub {
+          owner = "oh-my-fish";
+          repo = "plugin-bang-bang";
+          rev = "816c66df34e1cb94a476fa6418d46206ef84e8d3";
+          sha256 = "0dx4z0mmrwfkg8qh1yis75vwf69ng51m3icsiiw7k2cwc02mg76z";
+        };
+      }
     ];
 
     shellInit = builtins.readFile ./files/init.fish;
