@@ -28,7 +28,6 @@
       "discord"
       "docker"
       "dropbox"
-      "fantastical"
       "figma"
       "firefox"
       "gpg-suite-no-mail"
