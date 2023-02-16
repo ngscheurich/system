@@ -2,6 +2,7 @@ local M = { "neovim/nvim-lspconfig" }
 
 M.dependencies = {
   "folke/neodev.nvim",
+  "jose-elias-alvarez/null-ls.nvim",
   "smjonas/inc-rename.nvim",
   "williamboman/mason-lspconfig.nvim",
   "williamboman/mason.nvim",
@@ -13,6 +14,7 @@ function M.config()
     clangd = {},
     elixirls = {},
     rust_analyzer = {},
+    solargraph = {},
     sumneko_lua = {
       Lua = {
         telemetry = { enable = false },
@@ -26,7 +28,7 @@ function M.config()
   require("neodev").setup({})
 
   require("mason").setup({
-    PATH = "append",
+    PATH = "prepend",
   })
 
   local function on_attach(client, buffer)
@@ -57,6 +59,20 @@ function M.config()
         settings = servers[server],
       })
     end,
+  })
+
+  local null_ls = require("null-ls")
+
+  null_ls.setup({
+    sources = {
+      null_ls.builtins.diagnostics.eslint,
+      null_ls.builtins.diagnostics.stylelint,
+
+      null_ls.builtins.formatting.prettier,
+      null_ls.builtins.formatting.stylelint,
+      null_ls.builtins.formatting.stylua,
+    },
+    on_attach = on_attach,
   })
 end
 
