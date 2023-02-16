@@ -82,7 +82,7 @@
       fill = { symbol = " "; };
 
       git_branch = {
-        symbol = " ";
+        symbol = " ";
         style = "bright-black";
         truncation_length = 32;
       };
