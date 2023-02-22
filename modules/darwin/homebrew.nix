@@ -20,7 +20,6 @@
     ];
 
     brews = [
-      "emacs-mac"
     ];
 
     casks = [
@@ -35,6 +34,7 @@
       "discord"
       "docker"
       "dropbox"
+      "emacs-mac"
       "figma"
       "firefox"
       "gpg-suite-no-mail"
@@ -46,7 +46,6 @@
       "logitech-options"
       "logseq"
       "obs"
-      "obsidian"
       "postico"
       "postman"
       "raycast"
@@ -59,6 +58,7 @@
 
     masApps = {
       Slack = 803453959;
+      Xcode = 497799835;
     };
   };
 }
