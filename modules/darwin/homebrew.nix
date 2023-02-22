@@ -6,6 +6,8 @@
 
     brewPrefix = "/opt/homebrew/bin";
 
+    onActivation.cleanup = "uninstall";
+
     global.brewfile = true;
 
     taps = [
