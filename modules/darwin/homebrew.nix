@@ -14,6 +14,11 @@
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
+      "railwaycat/emacsmacport"
+    ];
+
+    brews = [
+      "emacs-mac"
     ];
 
     casks = [

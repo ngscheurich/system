@@ -83,11 +83,11 @@
 
       git_branch = {
         symbol = " ";
-        style = "bright-black";
+        style = "purple";
         truncation_length = 32;
       };
       git_commit = { tag_symbol = " "; };
-      git_status = { style = "bold bright-black"; };
+      git_status = { style = "bold purple"; };
 
       nix_shell = {
         symbol = "";
