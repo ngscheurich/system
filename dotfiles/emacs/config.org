@@ -49,19 +49,20 @@ I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[http
   (use-package modus-themes
     :init
     (setq modus-themes-mode-line '(borderless))
-    (modus-themes-load-themes)
     :config
-    (modus-themes-load-operandi)
+    (load-theme 'modus-vivendi-tinted :no-confirm)
     :bind
     ("<f5>" . modus-themes-toggle))
 #+end_src
 
 ** Typography
 
+TODO Update this
+
 My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmatapro/][PragmataPro Mono Liga]] by [[https://fsd.it/][Fabrizio Schiavi]]. I also slightly increase the leading and enable font ligatures.
 
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 130)
+  (set-face-attribute 'default nil :font "MonoLisa" :height 110)
   (setq-default line-spacing 0.25)
   (mac-auto-operator-composition-mode t)
 #+end_src
@@ -141,30 +142,31 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
   (use-package general
     :config
     (general-evil-setup)
-  
+
     (general-create-definer ngs/leader-def
-  			  :keymaps '(normal emacs)
-  			  :prefix "SPC")
+			  :keymaps '(normal emacs)
+			  :prefix "SPC")
     (ngs/leader-def
-      "f"  '(:ignore t :which-key "find")
-      "ff" '(find-file :which-key "file")
-      "fb" '(consult-buffer :which-key "buffer")
-  
+      "f"   '(:ignore t :which-key "find")
+      "ff"  '(find-file :which-key "file")
+      "fb"  '(consult-buffer :which-key "buffer")
+      "SPC" '(consult-buffer :which-key "buffer")
+
       "p"  '(:ignore t :which-key "project")
       "pf" '(projectile-find-file :which-key "find file")
       "pk" '(projectile-kill-buffers :which-key "kill buffers")
       "ps" '(projectile-switch-project :which-key "switch")
-  
+
       "g"  '(:ignore g :which-key "git")
       "gs" '(magit-status :which-key "status")
-  
+
       ;; "l"  '(:ignore l :which-key "lsp")
       ;; "lb" '(lsp-headerline-breadcrumb-mode :which-key "toggle breadcrumbs")
       ;; "lh" '(lsp-describe-thing-at-point :which-key "describe thing")
-  
+
       "t"  '(:ignore t :which-key "toggles")
       "ts" '(hydra-text-scale/body :which-key "scale text")))
-  
+
   ;; Hydra
   (use-package hydra
     :config
@@ -342,11 +344,11 @@ Code here should be documented and moved to a more appropriate place.
   (use-package centaur-tabs)
 
   ;; Full-fledged terminal emulation
-  (use-package vterm)
+  ;; (use-package vterm)
 
   ;; Display icons
-  ;; (use-package all-the-icons
-  ;;   :if (display-graphic-p))
+  (use-package all-the-icons
+     :if (display-graphic-p))
 
   ;; Git interface
   (use-package magit)
@@ -404,7 +406,6 @@ Code here should be documented and moved to a more appropriate place.
     (popper-mode +1)
     (popper-echo-mode +1))
 
-
   (use-package treemacs)
 
   (defun ngs/reload-dir-locals-for-current-buffer ()
@@ -421,6 +422,14 @@ Code here should be documented and moved to a more appropriate place.
     :config (solaire-global-mode +1))
 
   (use-package burly)
+
+  ;; TODO Move to evil-mode section.
+  (general-define-key
+   :states 'normal
+   "<up>" 'evil-window-up
+   "<down>" 'evil-window-down
+   "<left>" 'evil-window-left
+   "<right>" 'evil-window-right)
 #+end_src
 
 * Inspiration & Reference
