@@ -43,8 +43,10 @@ require("lazy").setup("plugins", {
   ui = {
     icons = {
       cmd = "⌘",
+      event = "",
+      keys = " ",
       lazy = "⏾ ",
-      start = "",
+      start = "",
     },
   },
 })
