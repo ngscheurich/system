@@ -43,13 +43,12 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 * User Interface
 ** Theme
 
-I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-operandi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-vivendi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
+I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-vivendi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-operandi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
     (setq modus-themes-mode-line '(borderless))
-    :config
     (load-theme 'modus-vivendi-tinted :no-confirm)
     :bind
     ("<f5>" . modus-themes-toggle))
@@ -57,9 +56,7 @@ I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[http
 
 ** Typography
 
-TODO Update this
-
-My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmatapro/][PragmataPro Mono Liga]] by [[https://fsd.it/][Fabrizio Schiavi]]. I also slightly increase the leading and enable font ligatures.
+My preferred monospaced programming font these days is [[https://www.monolisa.dev/][MonoLisa]] by [[https://www.facetype.org/][FaceType]]. I set this font as the default, slightly increase the leading, enable ligatures.
 
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "MonoLisa" :height 110)
@@ -68,6 +65,7 @@ My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmata
 #+end_src
 
 ** Line Numbers
+
 #+begin_src emacs-lisp
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 #+end_src
@@ -81,18 +79,20 @@ My preferred monospaced programming font is [[https://fsd.it/shop/fonts/pragmata
   (setq column-number-mode t)
 #+end_src
 
-** Projects and Workspaces
+* Projects and Workspaces
 
 #+begin_src emacs-lisp
-  (use-package projectile
-    :config
-    (projectile-mode +1)
-    :init
-    (setq projectile-switch-project-action #'projectile-dired)
-    (setq projectile-project-search-path '("~/Projects"))
-    :bind-keymap
-    ("C-c p" . projectile-command-map))
-
+  ;; Trying project.el instead of projectile
+  ;; (use-package projectile
+  ;;   :config
+  ;;   (projectile-mode +1)
+  ;;   :init
+  ;;   (setq projectile-switch-project-action #'projectile-dired)
+  ;;   (setq projectile-project-search-path '("~/Projects"))
+  ;;   :bind-keymap
+  ;;   ("C-c p" . projectile-command-map))
+  
+  ;; Maintain separate workspaces
   (use-package perspective
     :bind
     ("C-x C-b" . persp-list-buffers)
@@ -148,14 +148,14 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
 			  :prefix "SPC")
     (ngs/leader-def
       "f"   '(:ignore t :which-key "find")
-      "ff"  '(find-file :which-key "file")
+      "ff"  '(project-find-file :which-key "file")
       "fb"  '(consult-buffer :which-key "buffer")
       "SPC" '(consult-buffer :which-key "buffer")
 
       "p"  '(:ignore t :which-key "project")
-      "pf" '(projectile-find-file :which-key "find file")
-      "pk" '(projectile-kill-buffers :which-key "kill buffers")
-      "ps" '(projectile-switch-project :which-key "switch")
+      "pf" '(project-find-file :which-key "find file")
+      "pk" '(project-kill-buffers :which-key "kill buffers")
+      "ps" '(project-switch-project :which-key "switch")
 
       "g"  '(:ignore g :which-key "git")
       "gs" '(magit-status :which-key "status")
@@ -172,13 +172,13 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
     :config
     (defhydra hydra-text-scale (:timeout 4)
       "scale text"
-      ("j" text-scale-decrease "out")
-      ("k" text-scale-increase "in")))
+      ("j" text-scale-decrease "down")
+      ("k" text-scale-increase "up")))
 #+end_src
 
 * Completion
 
-In Emacs,  a /completion/ system refers to a facility meant to predict what text the user is going to to type and providing selectable candidates based on that prediction.
+In Emacs, a /completion/ system refers to a facility meant to predict what text the user is going to to type and providing selectable candidates based on that prediction.
 
 Emacs’ built-in completion systems are serviceable, but a subjectively better experience can be assembled with some excellent community packages:
 
@@ -186,11 +186,11 @@ Emacs’ built-in completion systems are serviceable, but a subjectively better 
 - [[https://github.com/minad/marginalia][Marginalia]]
 - [[https://github.com/minad/consult][Consult]]
 - [[https://github.com/oantolin/orderless][Orderless]]
-- Company
+- [[https://company-mode.github.io/][Company]]
   
 The first two packages, both by [[https://github.com/minad][Daniel Mendler]], form the foundation of my completion setup.
 
-*Vertico* enhances the default completion system with an extensible vertical selection UI, sorting configurability affordances, support for annotations, and more. It’s a great upgrade out of the box and maintain full compatibility with the built-in Emacs completion experience, thus reducing the likelihood of seeing unexpected behavior.
+*Vertico* enhances the default completion system with an extensible vertical selection UI, sorting configurability affordances, support for annotations, and more. It’s a great upgrade out of the box and maintains full compatibility with the built-in Emacs completion experience, thus reducing the likelihood of seeing unexpected behavior.
 
 #+begin_src emacs-lisp
   (use-package vertico
@@ -218,7 +218,7 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 	   ("M-s l" . consult-line)))
 #+end_src
 
-*Orderless* provides an orderless completion style that allows a completion pattern to be divided into chunks on the space character (by default) that can be matched in any order.
+*Orderless* provides an orderless completion style that allows a completion pattern to be divided into chunks that can be matched in any order.
 
 #+begin_src emacs-lisp
   (use-package orderless
@@ -226,7 +226,7 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
     (setq completion-styles '(orderless)))
 #+end_src
 
-*Company* provides an in-buffer completion interface for, e.g. completing at term at the point.
+*Company* provides an in-buffer completion interface for, e.g. completing a term at the point.
 
 #+begin_src emacs-lisp
   (use-package company
@@ -241,7 +241,9 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 
 #+begin_src emacs-lisp
   (use-package elixir-mode)
-  
+  (use-package lua-mode)
+  (use-package markdown-mode)
+
   (use-package nix-mode
     :mode "\\.nix\\'")
 #+end_src
@@ -249,8 +251,9 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 ** Syntax Checking
 
 #+begin_src emacs-lisp
-  (use-package flycheck
-    :init (global-flycheck-mode))
+  ;; Trying flymake instead
+  ;; (use-package flycheck
+  ;;   :init (global-flycheck-mode))
 #+end_src
 
 ** Language Server Protocol
@@ -259,15 +262,13 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
   (use-package eglot
     :config
     (add-to-list 'eglot-server-programs '(elixir-mode . ("elixir-ls")))
-    (add-to-list 'eglot-server-programs '(lua-mode . ("/Users/nscheurich/.local/share/nvim/mason/bin/lua-language-server")))
     :hook
-    ((elixir-mode . eglot-ensure)
-     (lua-mode . eglot-ensure)))
+    ((elixir-mode . eglot-ensure)))
 #+end_src
 
 * Org Mode
 
-Org Mode is one of those parts of Emacs (now an /official/ part) that seems almost universally lauded amongst Emacs users as well as those who have come into contact with it independently. I’m excited to start learning to use it for note taking and task tracking.
+Org Mode is one of those parts of Emacs (now an /official/ part) that seems almost universally lauded amongst Emacs users as well as those who have come into contact with it independently. I’m interested to learn more about it for note taking and task tracking.
 
 #+begin_src emacs-lisp
   (defun ngs/org-mode-visual-fill ()
@@ -316,7 +317,7 @@ Code here should be documented and moved to a more appropriate place.
   ;; Abbreviate yes/no input
   (defalias 'yes-or-no #'y-or-n-p)
 
-  ;; Show potential keybindings
+  ;; Show contextual keybindings
   (use-package which-key
     :config
     (which-key-mode))
@@ -331,7 +332,7 @@ Code here should be documented and moved to a more appropriate place.
     :config
     (direnv-mode))
 
-  ;; Rainbow delimiters
+  ;; Rainbow-colored delimiters
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -339,16 +340,23 @@ Code here should be documented and moved to a more appropriate place.
   (use-package embark
     :bind
     (("C-." . embark-act)))
+  (use-package embark-consult)
 
   ;; Buffer tabs
-  (use-package centaur-tabs)
+  (use-package centaur-tabs
+    :bind (("M-}" . centaur-tabs-forward-tab)
+	   ("M-{" . centaur-tabs-backward-tab)))
 
   ;; Full-fledged terminal emulation
-  ;; (use-package vterm)
+  (use-package vterm)
 
   ;; Display icons
   (use-package all-the-icons
-     :if (display-graphic-p))
+    :if (display-graphic-p)
+    :init (setq all-the-icons-scale-factor 1.2))
+
+  (use-package all-the-icons-dired
+    :hook dired-mode)
 
   ;; Git interface
   (use-package magit)
@@ -379,9 +387,6 @@ Code here should be documented and moved to a more appropriate place.
     :config
     (simpleclip-mode 1))
 
-  ;; Markdown editing
-  (use-package markdown-mode)
-
   ;; Snippets
   ;; https://github.com/joaotavora/yasnippet
   (use-package yasnippet)
@@ -390,8 +395,7 @@ Code here should be documented and moved to a more appropriate place.
   ;; https://github.com/pashky/restclient.el
   (use-package restclient)
 
-  (use-package lua-mode)
-
+  ;; Manage ephemeral windows
   (use-package popper
     :bind (("C-`"   . popper-toggle-latest)
 	   ("M-`"   . popper-cycle)
@@ -406,30 +410,30 @@ Code here should be documented and moved to a more appropriate place.
     (popper-mode +1)
     (popper-echo-mode +1))
 
-  (use-package treemacs)
+  ;; Tree-based file explorer
+  (use-package treemacs
+    :init (setq treemacs--icon-size 12))
 
-  (defun ngs/reload-dir-locals-for-current-buffer ()
-    "Reload directory-local variables for the current buffer."
-    (interactive)
-    (let ((enable-local-variables :all))
-      (hack-dir-local-variables-non-file-buffer)))
+  ;; Tree-sitter integration
+  (use-package tree-sitter
+    :config
+    (global-tree-sitter-mode)
+    (tree-sitter-hl-mode))
 
-
-  (use-package tree-sitter)
   (use-package tree-sitter-langs)
 
+  ;; Differentiate ephemeral windows
   (use-package solaire-mode
     :config (solaire-global-mode +1))
 
-  (use-package burly)
-
-  ;; TODO Move to evil-mode section.
+  ;; TODO Move to keybinds section
   (general-define-key
    :states 'normal
    "<up>" 'evil-window-up
    "<down>" 'evil-window-down
    "<left>" 'evil-window-left
-   "<right>" 'evil-window-right)
+   "<right>" 'evil-window-right
+   "-" 'dired-jump)
 #+end_src
 
 * Inspiration & Reference
