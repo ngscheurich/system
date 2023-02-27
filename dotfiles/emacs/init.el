@@ -3,7 +3,7 @@
 ;; Author: N. G Scheurich <nick@scheurich.haus>
 ;; URL: https://github.com/ngscheurich/dotfiles
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "27.2"))
+;; Package-Requires: ((emacs "28.2"))
 
 ;; This file is NOT part of GNU Emacs.
 

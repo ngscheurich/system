@@ -43,13 +43,15 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 * User Interface
 ** Theme
 
-I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-vivendi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-operandi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
+I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-operandi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-vivendi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
-    (setq modus-themes-mode-line '(borderless))
-    (load-theme 'modus-vivendi-tinted :no-confirm)
+    (setq modus-themes-common-palette-overrides
+	'((border-mode-line-active unspecified)
+	  (border-mode-line-inactive unspecified)))
+    (load-theme 'modus-operandi-tinted :no-confirm)
     :bind
     ("<f5>" . modus-themes-toggle))
 #+end_src
@@ -61,7 +63,6 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "MonoLisa" :height 110)
   (setq-default line-spacing 0.25)
-  (mac-auto-operator-composition-mode t)
 #+end_src
 
 ** Line Numbers
@@ -73,25 +74,12 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 ** Mode Line
 
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :init (doom-modeline-mode 1))
-  
   (setq column-number-mode t)
 #+end_src
 
 * Projects and Workspaces
 
 #+begin_src emacs-lisp
-  ;; Trying project.el instead of projectile
-  ;; (use-package projectile
-  ;;   :config
-  ;;   (projectile-mode +1)
-  ;;   :init
-  ;;   (setq projectile-switch-project-action #'projectile-dired)
-  ;;   (setq projectile-project-search-path '("~/Projects"))
-  ;;   :bind-keymap
-  ;;   ("C-c p" . projectile-command-map))
-  
   ;; Maintain separate workspaces
   (use-package perspective
     :bind
@@ -112,6 +100,7 @@ Vim’s modal text editing model was eye-opening for me, and changed the way I t
     (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
     (setq evil-want-C-u-scroll t)
+    (setq evil-undo-system 'undo-redo)
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
@@ -146,9 +135,12 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
     (general-create-definer ngs/leader-def
 			  :keymaps '(normal emacs)
 			  :prefix "SPC")
+
     (ngs/leader-def
       "f"   '(:ignore t :which-key "find")
       "ff"  '(project-find-file :which-key "file")
+      "fl"  '(consult-line :which-key "line")
+      "fr"  '(consult-recent-file :which-key "recent")
       "fb"  '(consult-buffer :which-key "buffer")
       "SPC" '(consult-buffer :which-key "buffer")
 
@@ -160,9 +152,11 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
       "g"  '(:ignore g :which-key "git")
       "gs" '(magit-status :which-key "status")
 
-      ;; "l"  '(:ignore l :which-key "lsp")
-      ;; "lb" '(lsp-headerline-breadcrumb-mode :which-key "toggle breadcrumbs")
-      ;; "lh" '(lsp-describe-thing-at-point :which-key "describe thing")
+      "h"  '(:ignore g :which-key "help")
+      "hf" '(helpful-callable :which-key "function")
+      "hc" '(helpful-command :which-key "command")
+      "hv" '(helpful-variable :which-key "variable")
+      "hk" '(helpful-key :which-key "key")
 
       "t"  '(:ignore t :which-key "toggles")
       "ts" '(hydra-text-scale/body :which-key "scale text")))
@@ -240,7 +234,7 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 ** Languages
 
 #+begin_src emacs-lisp
-  (use-package elixir-mode)
+  (use-package elixir-ts-mode)
   (use-package lua-mode)
   (use-package markdown-mode)
 
@@ -261,7 +255,7 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 #+begin_src emacs-lisp
   (use-package eglot
     :config
-    (add-to-list 'eglot-server-programs '(elixir-mode . ("elixir-ls")))
+    (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("elixir-ls")))
     :hook
     ((elixir-mode . eglot-ensure)))
 #+end_src
@@ -415,12 +409,10 @@ Code here should be documented and moved to a more appropriate place.
     :init (setq treemacs--icon-size 12))
 
   ;; Tree-sitter integration
-  (use-package tree-sitter
-    :config
-    (global-tree-sitter-mode)
-    (tree-sitter-hl-mode))
+  ;; (use-package tree-sitter
+  ;;   :config)
 
-  (use-package tree-sitter-langs)
+  ;; (use-package tree-sitter-langs)
 
   ;; Differentiate ephemeral windows
   (use-package solaire-mode
@@ -433,7 +425,36 @@ Code here should be documented and moved to a more appropriate place.
    "<down>" 'evil-window-down
    "<left>" 'evil-window-left
    "<right>" 'evil-window-right
-   "-" 'dired-jump)
+   "-" 'dired-jump
+   "gc" 'evilnc-comment-or-uncomment-lines
+   "gs" 'avy-goto-char-2
+   "f" 'evil-avy-goto-char-in-line)
+
+  ;; Prevent eldoc from resizing the echo area
+  (use-package eldoc
+    :ensure nil
+    :init
+    (setq eldoc-echo-area-use-multiline-p nil))
+
+  (add-hook 'before-save-hook 'eglot-format-buffer)
+
+  (use-package evil-nerd-commenter)
+
+  ;; Customize mode-line appearance
+  (defun my-modus-themes-custom-faces ()
+    (modus-themes-with-colors
+      (custom-set-faces
+       ;; Add "padding" to the mode lines
+       `(mode-line ((,c :box (:line-width 3 :color ,bg-mode-line-active))))
+       `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
+
+  (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
+
+  ;; Use command key as meta
+  (setq mac-command-modifier 'meta)
+
+  ;; Efficient cursor movement
+  (use-package avy)
 #+end_src
 
 * Inspiration & Reference

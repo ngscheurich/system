@@ -1,9 +1,9 @@
 ;;; early.init.el --- The Early Init File  -*- lexical-binding: t -*-
 
 ;; Author: N. G Scheurich <nick@scheurich.haus>
-;; URL: https://github.com/ngscheurich/dotfiles
+;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "27.2"))
+;; Package-Requires: ((emacs "28.2"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -41,7 +41,6 @@
 ;; compared to package.el which are enumerated in straight.el’s README:
 ;; <https://github.com/raxod502/straight.el#comparison-to-packageel>
 ;;
-;;
 ;; For more information about the Early Init file, see
 ;; <https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html>.
 
@@ -68,5 +67,7 @@
 ;; Disable GUI elements
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+(add-to-list 'default-frame-alist '(undecorated-round . t))
 
 ;;; early-init.el ends here
