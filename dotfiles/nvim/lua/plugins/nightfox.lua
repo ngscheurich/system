@@ -1,23 +1,30 @@
 local M = { "EdenEast/nightfox.nvim" }
 
-M.cond = _G.colorscheme == "nordfox"
+M.cond = _G.colorscheme == "nightfox" or _G.colorscheme == "dayfox"
 
 function M.config()
-  if _G.colorscheme == "nordfox" then
-    require("nightfox").setup({
-      palettes = {
-        nordfox = {
-          bg0 = "#20242d",
-          bg1 = "#252a33",
-          bg2 = "#2e3440",
-          bg3 = "#3b4252",
-          bg4 = "#434853",
-        },
-      },
-    })
+  require("nightfox").setup()
 
-    vim.cmd.colorscheme("nordfox")
-  end
+  vim.api.nvim_create_autocmd("Colorscheme", {
+    pattern = "*fox",
+    callback = function(tbl)
+      local colorscheme = tbl.match
+
+      local theme = require("nightfox.util.lualine")(colorscheme)
+      require('lualine').setup({ options = { theme = theme } })
+      require("plugins.navic.highlights").setup(colorscheme)
+
+      local palette = require('nightfox.palette').load(colorscheme)
+      if colorscheme == "nightfox" then
+        vim.cmd("highlight CursorLine guibg=" .. palette.bg2)
+      elseif colorscheme == "dayfox" then
+        vim.cmd("highlight CursorLine guibg=" .. palette.bg0)
+      end
+    end,
+    group = vim.api.nvim_create_augroup("NightfoxColors", {}),
+  })
+
+  vim.cmd.colorscheme(_G.colorscheme)
 end
 
 return M
