@@ -20,6 +20,12 @@ function M.config()
       elseif colorscheme == "dayfox" then
         vim.cmd("highlight CursorLine guibg=" .. palette.bg0)
       end
+
+      local job = require("plenary.job")
+      job:new({
+        command = "grim",
+        args = { "theme", "apply", colorscheme },
+      }):sync()
     end,
     group = vim.api.nvim_create_augroup("NightfoxColors", {}),
   })
