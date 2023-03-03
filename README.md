@@ -155,7 +155,7 @@ Dotfiles can be linked with Grimoire: `grim link add [NAME]`.
 
 ## Quickstart
 
-## macOS
+### macOS
 
 Install Nix:
 
