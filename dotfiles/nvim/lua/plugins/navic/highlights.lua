@@ -1,9 +1,9 @@
 local M = {}
 
-local function get_colors()
+local function get_colors(colorscheme)
   local colors = {}
 
-  if _G.colorscheme == "tokyonight-night" then
+  if colorscheme == "tokyonight-night" then
     local palette = require("tokyonight.colors")
     colors = {
       fg = palette.default.fg,
@@ -11,11 +11,11 @@ local function get_colors()
       icon = palette.default.blue,
       separator = palette.default.comment,
     }
-  elseif _G.colorscheme == "nordfox" then
-    local palette = require('nightfox.palette').load("nightfox")
+  elseif colorscheme == "nightfox" or colorscheme == "dayfox" then
+    local palette = require('nightfox.palette').load(colorscheme)
     colors = {
       fg = palette.fg1,
-      bg = "#20242d",
+      bg = palette.bg0,
       icon = palette.blue.dim,
       separator = palette.separator,
     }
@@ -28,8 +28,8 @@ local function set_highlight(group, fg, bg)
   vim.api.nvim_set_hl(0, group, { fg = fg, bg = bg })
 end
 
-function M.setup()
-  local colors = get_colors()
+function M.setup(colorscheme)
+  local colors = get_colors(colorscheme)
 
   local icons = {
     "Array",

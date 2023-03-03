@@ -15,6 +15,6 @@ return {
       highlight = true,
     })
 
-    require("plugins.navic.highlights").setup()
+    require("plugins.navic.highlights").setup(_G.colorscheme)
   end,
 }
