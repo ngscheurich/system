@@ -9,27 +9,8 @@ M.dependencies = {
 }
 
 function M.config()
-  local servers = {
-    bashls = {},
-    clangd = {},
-    elixirls = {},
-    rust_analyzer = {},
-    solargraph = {},
-    sumneko_lua = {
-      Lua = {
-        telemetry = { enable = false },
-        workspace = { checkThirdParty = false },
-      },
-    },
-    tailwindcss = {},
-    tsserver = {},
-  }
-
   require("neodev").setup({})
-
-  require("mason").setup({
-    PATH = "prepend",
-  })
+  require("mason").setup()
 
   local function on_attach(client, buffer)
     require("nvim-navic").attach(client, buffer)
@@ -46,23 +27,28 @@ function M.config()
   capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   local mason_lspconfig = require("mason-lspconfig")
+  mason_lspconfig.setup()
 
-  mason_lspconfig.setup({
-    ensure_installed = vim.tbl_keys(servers),
-  })
-
+  local servers = require("plugins.lspconfig.servers")
   mason_lspconfig.setup_handlers({
     function(server)
-      require("lspconfig")[server].setup({
+      local conf = servers[server]
+
+      local spec = {
         capabilities = capabilities,
         on_attach = on_attach,
-        settings = servers[server],
-      })
+        settings = conf.settings,
+      }
+
+      if conf.cmd ~= nil then
+        spec.cmd = conf.cmd
+      end
+
+      require("lspconfig")[server].setup(spec)
     end,
   })
 
   local null_ls = require("null-ls")
-
   null_ls.setup({
     sources = {
       null_ls.builtins.diagnostics.eslint,
