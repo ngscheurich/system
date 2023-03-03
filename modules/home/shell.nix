@@ -120,6 +120,7 @@
   home.packages = with pkgs; [
     ack
     asciinema
+    bottom
     ddgr
     exa
     fasd
