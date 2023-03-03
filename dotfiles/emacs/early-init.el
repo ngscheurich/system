@@ -68,6 +68,4 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(add-to-list 'default-frame-alist '(undecorated-round . t))
-
 ;;; early-init.el ends here

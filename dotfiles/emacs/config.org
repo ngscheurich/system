@@ -253,11 +253,11 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 ** Language Server Protocol
 
 #+begin_src emacs-lisp
-  (use-package eglot
-    :config
-    (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("elixir-ls")))
-    :hook
-    ((elixir-mode . eglot-ensure)))
+    (use-package eglot
+      :config
+      (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("/Users/nick/Projects/elixir-ls/release/language_server.sh")))
+      :hook
+      ((elixir-mode . eglot-ensure)))
 #+end_src
 
 * Org Mode
@@ -449,6 +449,8 @@ Code here should be documented and moved to a more appropriate place.
        `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
 
   (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
+
+  (my-modus-themes-custom-faces)
 
   ;; Use command key as meta
   (setq mac-command-modifier 'meta)
