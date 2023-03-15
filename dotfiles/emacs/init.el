@@ -60,7 +60,7 @@
   :bind
   ("<f5>" . modus-themes-toggle))
 
-Customize mode-line appearance
+;; Customize mode-line appearance
 (defun my-modus-themes-custom-faces ()
   (modus-themes-with-colors
     (custom-set-faces
@@ -70,6 +70,13 @@ Customize mode-line appearance
 
 (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
 (my-modus-themes-custom-faces)
+
+;; (use-package spaceline
+;;   :init
+;;   (setq powerline-default-separator 'slant)
+;;   :config
+;;   (require 'spaceline-config)
+;;   (spaceline-spacemacs-theme))
 
 ;; Typography
 (set-face-attribute 'default nil :font "MonoLisa" :height 110)
@@ -117,6 +124,7 @@ Customize mode-line appearance
   (ngs/leader-def
     "f"   '(:ignore t :which-key "find")
     "ff"  '(project-find-file :which-key "file")
+
     "fl"  '(consult-line :which-key "line")
     "fr"  '(consult-recent-file :which-key "recent")
     "fb"  '(consult-buffer :which-key "buffer")
@@ -166,12 +174,15 @@ Customize mode-line appearance
 
 ;; Completion Overlay Region FUnction
 (use-package corfu
+  :load-path "/etc/system/dotfiles/emacs/straight/build/corfu/extensions"
   :custom
   (corfu-auto t)
   :bind
   (:map corfu-map ("SPC" . corfu-insert-separator))
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  (require 'corfu-popupinfo)
+  (corfu-popupinfo-mode))
 
 ;; Orderless completion style
 (use-package orderless
@@ -188,7 +199,7 @@ Customize mode-line appearance
 ;; Do I still need this with Emacs 29?
 (use-package eglot
   :config
-  (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("/Users/nick/Projects/elixir-ls/release/language_server.sh")))
+  (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("/Users/nscheurich/Projects/elixir-ls/release/language_server.sh")))
   :hook
   ((elixir-mode . eglot-ensure)
    (lua-mode . eglot-ensure)))
@@ -372,18 +383,31 @@ Customize mode-line appearance
 ;; Hide title bar
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 
+;; "Buffers Encapsulated in Frames Realise Advanced Management of Emacs"
+;; Isolate buffers per frame
+(use-package beframe
+  :after consult
+  :config
+  ;; See https://protesilaos.com/emacs/beframe#h:1c2d3d64-aa7b-4585-a418-ccedbb548b38
+  ;; (defvar consult-buffer-sources)
+  ;; (declare-function consult--buffer-state "consult")
+
+  ;; (with-eval-after-load 'consult
+  ;;   (defface beframe-buffer
+  ;;     '((t :inherit font-lock-string-face))
+  ;;     "Face for `consult' framed buffers.")
+
+  ;;   (defvar beframe-consult-source
+  ;;     `(:name     "Frame-specific buffers (current frame)"
+  ;; 	:narrow   ?F
+  ;; 	:category buffer
+  ;; 	:face     beframe-buffer
+  ;; 	:history  beframe-history
+  ;; 	:items    ,#'beframe-buffer-names
+  ;; 	:action   ,#'switch-to-buffer
+  ;; 	:state    ,#'consult--buffer-state))
+
+  ;;   (add-to-list 'consult-buffer-sources 'beframe-consult-source))
+  (beframe-mode 1))
+
 ;;; init.el ends here
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("e7820b899036ae7e966dcaaec29fd6b87aef253748b7de09e74fdc54407a7a02" "de8f2d8b64627535871495d6fe65b7d0070c4a1eb51550ce258cd240ff9394b0" "1781e8bccbd8869472c09b744899ff4174d23e4f7517b8a6c721100288311fa5" default)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mode-line ((((class color) (min-colors 256)) :box (:line-width 3 :color "#cab9b2"))))
- '(mode-line-inactive ((((class color) (min-colors 256)) :box (:line-width 3 :color "#dfd9cf")))))
