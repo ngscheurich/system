@@ -30,24 +30,13 @@
 
 ;;; Code:
 
-;; Tell Emacs a little about myself
-(setq user-full-name "Nicholas Scheurich"
-      user-mail-address "nick@scheurich.haus")
+(org-babel-load-file
+  (expand-file-name "config.org" user-emacs-directory))
 
-;; Package manageement
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+;; Use command key as meta
+(setq mac-command-modifier 'meta)
 
-(setq inhibit-startup-message t)
-(setq ring-bell-function 'ignore)
-
-;; Make <escape> quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-;; Remap help prefix
-(global-set-key (kbd "s-h") 'help-command)
-
-;; Map Option key to Super
+;; Map option key to super
 (setq mac-option-modifier 'super)
 
 ;; Themes
@@ -56,7 +45,7 @@
   (setq modus-themes-common-palette-overrides
 	'((border-mode-line-active unspecified)
 	  (border-mode-line-inactive unspecified)))
-  (load-theme 'modus-operandi-tinted :no-confirm)
+  (load-theme 'modus-vivendi-tinted :no-confirm)
   :bind
   ("<f5>" . modus-themes-toggle))
 
@@ -71,18 +60,8 @@
 (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
 (my-modus-themes-custom-faces)
 
-;; (use-package spaceline
-;;   :init
-;;   (setq powerline-default-separator 'slant)
-;;   :config
-;;   (require 'spaceline-config)
-;;   (spaceline-spacemacs-theme))
-
-;; Typography
-(set-face-attribute 'default nil :font "MonoLisa" :height 110)
-(setq-default line-spacing 0.25)
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
-(setq column-number-mode t)
+(use-package minions)
+(use-package keycast)
 
 ;; Maintain separate workspaces
 (use-package perspective
@@ -91,26 +70,9 @@
   :init
   (persp-mode))
 
-;; Vim emulation
-(use-package evil
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-undo-system 'undo-redo)
-  :bind
-  (:map evil-normal-state-map
-	("<up>" . 'evil-window-up)
-	("<down>" . 'evil-window-down)
-	("<left>" . 'evil-window-left)
-	("<right>" . 'evil-window-right)
-	("-" . dired-jump))
-  :config
-  (evil-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
+(use-package emacs
+  :custom
+  (message-kill-buffer-query nil "Don't ask to confirm buffer kill"))
 
 ;; General
 (use-package general
@@ -123,17 +85,17 @@
 
   (ngs/leader-def
     "f"   '(:ignore t :which-key "find")
+    "SPC" '(consult-buffer :which-key "buffer")
+    "/"   '(consult-line :which-key "line")
     "ff"  '(project-find-file :which-key "file")
-
     "fl"  '(consult-line :which-key "line")
     "fr"  '(consult-recent-file :which-key "recent")
     "fb"  '(consult-buffer :which-key "buffer")
-    "SPC" '(consult-buffer :which-key "buffer")
 
     "p"  '(:ignore t :which-key "project")
     "pf" '(project-find-file :which-key "find file")
     "pk" '(project-kill-buffers :which-key "kill buffers")
-    "ps" '(project-switch-project :which-key "switch")
+    "pp" '(project-switch-project :which-key "switch")
 
     "g"  '(:ignore g :which-key "git")
     "gs" '(magit-status :which-key "status")
@@ -147,62 +109,8 @@
     "hm" '(describe-mode :which-key "mode")
     "hv" '(helpful-variable :which-key "variable")
 
-    "t"  '(:ignore t :which-key "toggles")))
-
-;; Hydra
-(use-package hydra
-  :config
-  (defhydra hydra-text-scale (:timeout 4)
-    "scale text"
-    ("j" text-scale-decrease "down")
-    ("k" text-scale-increase "up")))
-
-;; VERTical Interactive COmpletion
-(use-package vertico
-  :init
-  (vertico-mode))
-
-;; Annotate completion candidates
-(use-package marginalia
-  :init
-  (marginalia-mode))
-
-;; Interesting completion lists
-(use-package consult
-  :bind (("C-x b" . consult-buffer)
-	 ("M-s l" . consult-line)))
-
-;; Completion Overlay Region FUnction
-(use-package corfu
-  :load-path "/etc/system/dotfiles/emacs/straight/build/corfu/extensions"
-  :custom
-  (corfu-auto t)
-  :bind
-  (:map corfu-map ("SPC" . corfu-insert-separator))
-  :init
-  (global-corfu-mode)
-  (require 'corfu-popupinfo)
-  (corfu-popupinfo-mode))
-
-;; Orderless completion style
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless)))
-
-;; Languages
-(use-package elixir-ts-mode)
-(use-package lua-mode)
-(use-package markdown-mode)
-(use-package nix-mode
-  :mode "\\.nix\\'")
-
-;; Do I still need this with Emacs 29?
-(use-package eglot
-  :config
-  (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("/Users/nscheurich/Projects/elixir-ls/release/language_server.sh")))
-  :hook
-  ((elixir-mode . eglot-ensure)
-   (lua-mode . eglot-ensure)))
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(treemacs :which-key "treemacs")))
 
 ;; Wrap lines nicely when editing prose
 (add-hook 'text-mode-hook 'visual-line-mode)
@@ -266,7 +174,9 @@
 ;; Buffer tabs
 (use-package centaur-tabs
   :bind (("M-}" . centaur-tabs-forward-tab)
-	 ("M-{" . centaur-tabs-backward-tab)))
+	 ("M-{" . centaur-tabs-backward-tab))
+  :init
+  (centaur-tabs-mode))
 
 ;; Full-fledged terminal emulation
 (use-package vterm)
@@ -274,7 +184,7 @@
 ;; Display icons
 (use-package all-the-icons
   :if (display-graphic-p)
-  :init (setq all-the-icons-scale-factor 1.2))
+  :init (setq all-the-icons-scale-factor 1.0))
 
 (use-package all-the-icons-dired
   :hook dired-mode)
@@ -303,7 +213,7 @@
   :config
   (simpleclip-mode 1))
 
-;; Use ELisp-powered snippets
+;; TODO: Use ELisp-powered snippets
 ;; (use-package yasnippet)
 
 ;; REST client
@@ -325,7 +235,7 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-;; Differentiate ephemeral windows
+;; Visually differentiate ephemeral windows
 (use-package solaire-mode
   :config (solaire-global-mode +1))
 
@@ -343,19 +253,16 @@
 (add-hook 'before-save-hook 'eglot-format-buffer)
 
 ;; Efficient commenting
-(use-package evil-nerd-commenter
-  :after (general)
-  :config
-  (general-nmap  "gc" 'evilnc-comment-or-uncomment-lines))
+(use-package evil-nerd-commenter)
+  ;; :after (general)
+  ;; :config
+  ;; (general-nmap  "gc" 'evilnc-comment-or-uncomment-lines))
 
-;; Use command key as meta
-(setq mac-command-modifier 'meta)
-
-;; Efficient cursor use
+;; Efficient cursor movement
 (use-package avy
   :bind (:map evil-normal-state-map
-	("s" . 'avy-goto-char-2)
-	("f"  . 'evil-avy-goto-char-in-line)))
+	     ("s" . 'avy-goto-char-2)
+	     ("f"  . 'evil-avy-goto-char-in-line)))
 
 ;; Generate tables of contents
 (use-package toc-org
@@ -368,46 +275,10 @@
   :ensure t
   :config (editorconfig-mode 1))
 
-;; Customize mode-line
-;; (setq mode-line-format
-;;       '("%e" mode-line-front-space
-;; 	(:propertize
-;; 	 ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-;; 	 display
-;; 	 (min-width
-;; 	  (5.0)))
-;; 	mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position evil-mode-line-tag
-;; 	(vc-mode vc-mode)
-;; 	"  " mode-line-modes mode-line-misc-info mode-line-end-spaces))
-
-;; Hide title bar
-(add-to-list 'default-frame-alist '(undecorated-round . t))
-
 ;; "Buffers Encapsulated in Frames Realise Advanced Management of Emacs"
 ;; Isolate buffers per frame
 (use-package beframe
-  :after consult
   :config
-  ;; See https://protesilaos.com/emacs/beframe#h:1c2d3d64-aa7b-4585-a418-ccedbb548b38
-  ;; (defvar consult-buffer-sources)
-  ;; (declare-function consult--buffer-state "consult")
-
-  ;; (with-eval-after-load 'consult
-  ;;   (defface beframe-buffer
-  ;;     '((t :inherit font-lock-string-face))
-  ;;     "Face for `consult' framed buffers.")
-
-  ;;   (defvar beframe-consult-source
-  ;;     `(:name     "Frame-specific buffers (current frame)"
-  ;; 	:narrow   ?F
-  ;; 	:category buffer
-  ;; 	:face     beframe-buffer
-  ;; 	:history  beframe-history
-  ;; 	:items    ,#'beframe-buffer-names
-  ;; 	:action   ,#'switch-to-buffer
-  ;; 	:state    ,#'consult--buffer-state))
-
-  ;;   (add-to-list 'consult-buffer-sources 'beframe-consult-source))
   (beframe-mode 1))
 
 ;;; init.el ends here

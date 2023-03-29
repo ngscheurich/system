@@ -10,6 +10,11 @@ This file is an [[https://orgmode.org/][Org Mode]] document written in a [[https
 
 From a technical perspective, when Emacs is started each code block in this document is /tangled/ (exported using to a file using =org-babel-tangle=) and then loaded using =load-file=. Note that /loading/ a file in the context of Emacs typically refers to reading the file and then evaluating its contents as Elisp code, which is the case here.
 
+** Inspiration & Reference
+
+- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a build-along configuration and video series by [[https://youtube.com/c/SystemCrafters][David Wilson]] of System Crafters
+- Words, spoken and written, from [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
+
 * Basic Settings
 
 Tell Emacs a little about myself:
@@ -40,29 +45,63 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
   (setq straight-use-package-by-default t)
 #+end_src
 
-* User Interface
-** Theme
+* Appearance
+
+** Themes
 
 I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[https://protesilaos.com/][Protesilaos Stavrou]], which are optimized for maximum color-contrast accessibility. =modus-operandi=, the dark-on-light Modus theme, is loaded by default. =<f5>= is bound to a function that lets me toggle between the light and dark (=modus-vivendi=) Modus themes. Perhaps in the future I will write a function to load one theme or the other depending on time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
+    :defer
     :init
     (setq modus-themes-common-palette-overrides
 	'((border-mode-line-active unspecified)
-	  (border-mode-line-inactive unspecified)))
-    (load-theme 'modus-operandi-tinted :no-confirm)
-    :bind
-    ("<f5>" . modus-themes-toggle))
+	  (border-mode-line-inactive unspecified))))
+#+end_src
+
+** Circadian
+
+*** TODO Write description
+
+#+begin_src emacs-lisp
+  (use-package circadian
+    :ensure t
+    :config
+    (setq circadian-themes '(("07:30" . modus-operandi-tinted)
+			     ("19:30" . modus-vivendi-tinted)))
+    (circadian-setup))
 #+end_src
 
 ** Typography
 
-My preferred monospaced programming font these days is [[https://www.monolisa.dev/][MonoLisa]] by [[https://www.facetype.org/][FaceType]]. I set this font as the default, slightly increase the leading, enable ligatures.
+*** TODO Update font description
+
+My preferred monospaced programming font these days is [[https://www.monolisa.dev/][MonoLisa]] by [[https://www.facetype.org/][FaceType]]. I set this font as the default, slightly increase the leading, and enable ligatures.
 
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "MonoLisa" :height 110)
+  (set-face-attribute 'default nil :font "Iosevka" :height 130)
   (setq-default line-spacing 0.25)
+#+end_src
+
+*** Ligatures
+
+*** TODO Write description
+*** TODO Why do I need to set load-path? (see https://github.com/mickeynp/ligature.el/wiki#iosevka)
+
+#+begin_src emacs-lisp
+  (setq ligature-path (straight--repos-dir "ligature"))
+
+  (use-package ligature
+    :load-path ligature-path
+    :config
+    (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->"
+					 "<--->" "<---->" "<!--" "<==" "<===" "<=" "=>" "=>>" "==>"
+					 "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---" "<~~"
+					 "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!==" ":=" ":-"
+					 ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:"
+					 "<******>" "++" "+++"))
+    (global-ligature-mode t))
 #+end_src
 
 ** Line Numbers
@@ -73,37 +112,117 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 
 ** Mode Line
 
+*** TODO: Write about doom-modeline
+
 #+begin_src emacs-lisp
+  (use-package doom-modeline
+    :custom
+    (doom-modeline-bar-width 0)
+    (doom-modeline-buffer-modification-icon nil)
+    (doom-modeline-height 0)
+    (doom-modeline-modal-icon t)
+    :config
+    ;; (doom-modeline-mode 1)
+    )
+
   (setq column-number-mode t)
 #+end_src
 
-* Projects and Workspaces
+* Completion
+
+In Emacs, a /completion/ system refers to a facility meant to predict what text the user is going to to type and provide a list of selection candidates based on that prediction.
+
+I augment Emacs’ built-in completion systems with some excellent community packages:
+
+- [[https://github.com/minad/vertico][Vertico]]
+- [[https://github.com/oantolin/orderless][Orderless]]
+- [[https://github.com/minad/marginalia][Marginalia]]
+- [[https://github.com/minad/consult][Consult]]
+- [[https://github.com/minad/corfu][Corfu]]
+
+** Vertico
+  
+*Vertico* (VERTical Interactive COmpletion) enhances the default completion system with an extensible vertical selection UI, sorting configurability affordances, support for annotations, and more. It’s a great upgrade out of the box and maintains full compatibility with the built-in Emacs completion experience, thus reducing the likelihood of seeing unexpected behavior.
 
 #+begin_src emacs-lisp
-  ;; Maintain separate workspaces
-  (use-package perspective
-    :bind
-    ("C-x C-b" . persp-list-buffers)
-    :custom
-    (persp-mode-prefix-key (kbd "C-x x"))
+  (use-package vertico
+    :init (vertico-mode))
+#+end_src
+
+** Marginalia
+
+*Marginalia* adds rich annotations to completion candidates, e.g.: 
+
+- Descriptions of commands
+- Filesystem details for files
+- Value and description of variables
+
+  #+begin_src emacs-lisp
+    (use-package marginalia
+      :init (marginalia-mode))
+  #+end_src
+
+** Consult
+
+*Consult* adds a set of commands that provide interesting candidate lists which can be narrowed using completion systems based on the Emacs =completing-read= API—Vertico, for instance. There are lots of great functions provided covering buffer-switching, grepping, Org navigation, and more.
+
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind (("C-x b" . consult-buffer)
+	   ("M-s l" . consult-line)))
+#+end_src
+
+** Corfu
+
+*Corfu* (Completion Overlay Region FUnction) enhances completion at point, i.e. completion that occurs at the location of the cursor, with a pop-up completion UI. I load and enable =corfu-popupinfo=, an included extension that displays information for the selected completion candidate beside the Corfu list.
+
+#+begin_src elisp
+    (defvar ngs/corfu-extensions-directory
+      (format "%sstriaght/build/corfu/extensions" user-emacs-directory)
+      "Path to Corfu’s included extensions")
+
+    (use-package corfu
+      :load-path ngs/corfu-extensions-directory
+      :custom
+      (corfu-auto t)
+      :bind
+      (:map corfu-map ("SPC" . corfu-insert-separator))
+      :init
+      (global-corfu-mode))
+      ;; (require 'corfu-popupinfo)
+      ;; (corfu-popupinfo-mode))
+#+end_src
+
+** Orderless
+
+*Orderless* provides a completion style that allows a pattern to be divided into chunks that can be matched in any order. For instance, =buf cons= and =cons buf= will both match =consult-buffer=.
+
+#+begin_src emacs-lisp
+  (use-package orderless
     :init
-    (persp-mode))
+    (setq completion-styles '(orderless)))
 #+end_src
 
 * Keybindings
 
-Vim’s modal text editing model was eye-opening for me, and changed the way I think about interacting with a machine via a keyboard. I’m excited to dive into Emacs, but having near-perfect Vim emulation is a top requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is here to help.
+Vim’s modal text editing model was eye-opening for me, and changed the way I think about interacting keyboard-based interfaces. Having near-perfect Vim emulation is a prime requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is superb.
 
 #+begin_src  emacs-lisp
   (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-undo-system 'undo-redo)
+    :custom
+    (evil-want-keybinding nil)
+    (evil-want-C-u-scroll t)
+    (evil-undo-system 'undo-redo)
+    (evil-echo-state nil)
+    :bind
+    (:map evil-normal-state-map
+	  ("<up>" . 'evil-window-up)
+	  ("<down>" . 'evil-window-down)
+	  ("<left>" . 'evil-window-left)
+	  ("<right>" . 'evil-window-right)
+	  ("-" . dired-jump))
     :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state))
+    (evil-mode 1))
 #+end_src
 
 There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are not covered by Evil. [[https://github.com/emacs-evil/evil-collection][Evil Collection]] is a community-sourced collection of Evil bindings that aims to provide a consistent Evil experience throughout Emacs.
@@ -115,131 +234,31 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
     (evil-collection-init))
 #+end_src
 
----
+** TODO: Organize this random shit
 
 #+begin_src emacs-lisp
   ;; Make <escape> quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
   ;; Remap help prefix
-  (global-set-key (kbd "s-h") 'help-command)
+  (global-set-key (kbd "C-c h") 'help-command)
 
-  ;; Map Option key to Super
-  (setq mac-option-modifier 'super)
-
-  ;; General
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    (general-create-definer ngs/leader-def
-			  :keymaps '(normal emacs)
-			  :prefix "SPC")
-
-    (ngs/leader-def
-      "f"   '(:ignore t :which-key "find")
-      "ff"  '(project-find-file :which-key "file")
-      "fl"  '(consult-line :which-key "line")
-      "fr"  '(consult-recent-file :which-key "recent")
-      "fb"  '(consult-buffer :which-key "buffer")
-      "SPC" '(consult-buffer :which-key "buffer")
-
-      "p"  '(:ignore t :which-key "project")
-      "pf" '(project-find-file :which-key "find file")
-      "pk" '(project-kill-buffers :which-key "kill buffers")
-      "ps" '(project-switch-project :which-key "switch")
-
-      "g"  '(:ignore g :which-key "git")
-      "gs" '(magit-status :which-key "status")
-
-      "h"  '(:ignore g :which-key "help")
-      "hf" '(helpful-callable :which-key "function")
-      "hc" '(helpful-command :which-key "command")
-      "hv" '(helpful-variable :which-key "variable")
-      "hk" '(helpful-key :which-key "key")
-
-      "t"  '(:ignore t :which-key "toggles")
-      "ts" '(hydra-text-scale/body :which-key "scale text")))
-
-  ;; Hydra
-  (use-package hydra
-    :config
-    (defhydra hydra-text-scale (:timeout 4)
-      "scale text"
-      ("j" text-scale-decrease "down")
-      ("k" text-scale-increase "up")))
-#+end_src
-
-* Completion
-
-In Emacs, a /completion/ system refers to a facility meant to predict what text the user is going to to type and providing selectable candidates based on that prediction.
-
-Emacs’ built-in completion systems are serviceable, but a subjectively better experience can be assembled with some excellent community packages:
-
-- [[https://github.com/minad/vertico][Vertico]]
-- [[https://github.com/minad/marginalia][Marginalia]]
-- [[https://github.com/minad/consult][Consult]]
-- [[https://github.com/oantolin/orderless][Orderless]]
-- [[https://company-mode.github.io/][Company]]
-  
-The first two packages, both by [[https://github.com/minad][Daniel Mendler]], form the foundation of my completion setup.
-
-*Vertico* enhances the default completion system with an extensible vertical selection UI, sorting configurability affordances, support for annotations, and more. It’s a great upgrade out of the box and maintains full compatibility with the built-in Emacs completion experience, thus reducing the likelihood of seeing unexpected behavior.
-
-#+begin_src emacs-lisp
-  (use-package vertico
-    :init
-    (vertico-mode))
-#+end_src
-
-*Marginalia* adds rich annotations to completion candidates. Some examples:
-
-- Descriptions of commands
-- Filesystem details for files
-- Value and description of variables
-
-  #+begin_src emacs-lisp
-    (use-package marginalia
-      :init
-      (marginalia-mode))
-  #+end_src
-
-*Consult*  adds a set of commands that provide interesting candidate lists which can be narrowed using completion systems based on the Emacs =completing-read= API—Vertico, for instance. There are lots of great commands in here covering buffer-switching, grepping, Org mode navigation, and more.
-
-#+begin_src emacs-lisp
-  (use-package consult
-    :bind (("C-x b" . consult-buffer)
-	   ("M-s l" . consult-line)))
-#+end_src
-
-*Orderless* provides an orderless completion style that allows a completion pattern to be divided into chunks that can be matched in any order.
-
-#+begin_src emacs-lisp
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless)))
-#+end_src
-
-*Company* provides an in-buffer completion interface for, e.g. completing a term at the point.
-
-#+begin_src emacs-lisp
-  (use-package company
-    :hook (prog-mode . company-mode))
-
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
+  ;; Map right Option key to Super
+  (setq mac-right-option-modifier 'super)
 #+end_src
 
 * Programming
+
 ** Languages
+
+I employ a number of programming language modes to provide syntax highlighting and other useful functions related to code I work with.
 
 #+begin_src emacs-lisp
   (use-package elixir-ts-mode)
+  (use-package json-mode)
   (use-package lua-mode)
   (use-package markdown-mode)
-
-  (use-package nix-mode
-    :mode "\\.nix\\'")
+  (use-package nix-mode :mode "\\.nix\\'")
 #+end_src
 
 ** Syntax Checking
@@ -252,17 +271,27 @@ The first two packages, both by [[https://github.com/minad][Daniel Mendler]], fo
 
 ** Language Server Protocol
 
+#+begin_src elisp
+  (defvar ngs/language-server-programs
+    '((elixir . "~/Projects/elixir-ls/release/language_server.sh"))
+    "Locations of LSP server binaries")
+
+  (defun ngs/language-server-program (language)
+    (cdr (assoc language ngs/language-server-programs)))
+#+end_src
+
 #+begin_src emacs-lisp
-    (use-package eglot
-      :config
-      (add-to-list 'eglot-server-programs '(elixir-ts-mode . ("/Users/nick/Projects/elixir-ls/release/language_server.sh")))
-      :hook
-      ((elixir-mode . eglot-ensure)))
+  (use-package eglot
+    :config
+    (add-to-list 'eglot-server-programs
+		 '(elixir-ts-mode . (ngs/language-server-program 'elixir)))
+    :hook
+    ((elixir-mode . eglot-ensure)))
 #+end_src
 
 * Org Mode
 
-Org Mode is one of those parts of Emacs (now an /official/ part) that seems almost universally lauded amongst Emacs users as well as those who have come into contact with it independently. I’m interested to learn more about it for note taking and task tracking.
+** TODO: Write-up
 
 #+begin_src emacs-lisp
   (defun ngs/org-mode-visual-fill ()
@@ -275,191 +304,3 @@ Org Mode is one of those parts of Emacs (now an /official/ part) that seems almo
     :hook (org-mode . ngs/org-mode-visual-fill))
 #+end_src
 
-* Collected Miscellany
-
-Code here should be documented and moved to a more appropriate place.
-
-#+begin_src emacs-lisp
-  ;; Wrap lines nicely when editing prose
-  (add-hook 'text-mode-hook 'visual-line-mode)
-
-  ;; Automatically pair parentheses, et al.
-  (electric-pair-mode t)
-
-  ;; Make <escape> quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-  ;; Remap help prefix
-  (global-set-key (kbd "C-c h") 'help-command)
-
-  ;; Confirm before quitting
-  (setq confirm-kill-emacs #'yes-or-no-p)
-
-  ;; Resize windows pixel-wise rather than character-wise
-  (setq window-resize-pixelwise t)
-  (setq frame-resize-pixelwise t)
-
-  ;; Save place in files
-  (save-place-mode t)
-
-  ;; Remember input between sessions
-  (savehist-mode t)
-
-  ;; Remember recent files
-  (recentf-mode t)
-
-  ;; Abbreviate yes/no input
-  (defalias 'yes-or-no #'y-or-n-p)
-
-  ;; Show contextual keybindings
-  (use-package which-key
-    :config
-    (which-key-mode))
-
-  ;; Get Emacs path from shell $PATH
-  (use-package exec-path-from-shell
-    :config
-    (exec-path-from-shell-initialize))
-
-  ;; direnv integration
-  (use-package direnv
-    :config
-    (direnv-mode))
-
-  ;; Rainbow-colored delimiters
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
-
-  ;; Emacs Mini-Buffer Actions Rooted in Keymaps
-  (use-package embark
-    :bind
-    (("C-." . embark-act)))
-  (use-package embark-consult)
-
-  ;; Buffer tabs
-  (use-package centaur-tabs
-    :bind (("M-}" . centaur-tabs-forward-tab)
-	   ("M-{" . centaur-tabs-backward-tab)))
-
-  ;; Full-fledged terminal emulation
-  (use-package vterm)
-
-  ;; Display icons
-  (use-package all-the-icons
-    :if (display-graphic-p)
-    :init (setq all-the-icons-scale-factor 1.2))
-
-  (use-package all-the-icons-dired
-    :hook dired-mode)
-
-  ;; Git interface
-  (use-package magit)
-
-  ;; Get Emacs path from shell $PATH
-  (use-package exec-path-from-shell
-    :config
-    (exec-path-from-shell-initialize))
-
-  ;; More useful *help*
-  (use-package helpful
-    :bind
-    ([remap describe-function] . #'helpful-callable)
-    ([remap describe-command] . #'helpful-command)
-    ([Remap describe-variable] . #'helpful-variable)
-    ([remap describe-key] . #'helpful-key))
-
-  ;; vim-sneak
-  (use-package evil-snipe
-    :config
-    (evil-snipe-mode +1))
-
-  ;; Wrangle copy/paste
-  (use-package simpleclip
-    :bind
-    (("M-c" . simpleclip-copy)
-     ("M-v" . simpleclip-paste))
-    :config
-    (simpleclip-mode 1))
-
-  ;; Snippets
-  ;; https://github.com/joaotavora/yasnippet
-  (use-package yasnippet)
-
-  ;; REST client
-  ;; https://github.com/pashky/restclient.el
-  (use-package restclient)
-
-  ;; Manage ephemeral windows
-  (use-package popper
-    :bind (("C-`"   . popper-toggle-latest)
-	   ("M-`"   . popper-cycle)
-	   ("C-M-`" . popper-toggle-type))
-    :init
-    (setq popper-reference-buffers
-	  '("\\*Messages\\*"
-	    "Output\\*$"
-	    "\\*Async Shell Command\\*"
-	    help-mode
-	    compilation-mode))
-    (popper-mode +1)
-    (popper-echo-mode +1))
-
-  ;; Tree-based file explorer
-  (use-package treemacs
-    :init (setq treemacs--icon-size 12))
-
-  ;; Tree-sitter integration
-  ;; (use-package tree-sitter
-  ;;   :config)
-
-  ;; (use-package tree-sitter-langs)
-
-  ;; Differentiate ephemeral windows
-  (use-package solaire-mode
-    :config (solaire-global-mode +1))
-
-  ;; TODO Move to keybinds section
-  (general-define-key
-   :states 'normal
-   "<up>" 'evil-window-up
-   "<down>" 'evil-window-down
-   "<left>" 'evil-window-left
-   "<right>" 'evil-window-right
-   "-" 'dired-jump
-   "gc" 'evilnc-comment-or-uncomment-lines
-   "gs" 'avy-goto-char-2
-   "f" 'evil-avy-goto-char-in-line)
-
-  ;; Prevent eldoc from resizing the echo area
-  (use-package eldoc
-    :ensure nil
-    :init
-    (setq eldoc-echo-area-use-multiline-p nil))
-
-  (add-hook 'before-save-hook 'eglot-format-buffer)
-
-  (use-package evil-nerd-commenter)
-
-  ;; Customize mode-line appearance
-  (defun my-modus-themes-custom-faces ()
-    (modus-themes-with-colors
-      (custom-set-faces
-       ;; Add "padding" to the mode lines
-       `(mode-line ((,c :box (:line-width 3 :color ,bg-mode-line-active))))
-       `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
-
-  (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
-
-  (my-modus-themes-custom-faces)
-
-  ;; Use command key as meta
-  (setq mac-command-modifier 'meta)
-
-  ;; Efficient cursor movement
-  (use-package avy)
-#+end_src
-
-* Inspiration & Reference
-
-- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a build-along configuration and video series by [[https://youtube.com/c/SystemCrafters][David Wilson]] of System Crafters
-- Words, spoken and written, from [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
