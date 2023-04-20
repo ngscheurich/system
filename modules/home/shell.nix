@@ -134,7 +134,6 @@
     ranger
     ripgrep
     slides
-    thefuck
     tldr
     tmux
     tree
