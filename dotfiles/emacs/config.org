@@ -53,11 +53,21 @@ I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by [[http
 
 #+begin_src emacs-lisp
   (use-package modus-themes
-    :defer
     :init
     (setq modus-themes-common-palette-overrides
-	'((border-mode-line-active unspecified)
-	  (border-mode-line-inactive unspecified))))
+	    '((border-mode-line-active unspecified)
+	      (border-mode-line-inactive unspecified))))
+
+  ;; Customize mode-line appearance
+  (defun my-modus-themes-custom-faces ()
+    (modus-themes-with-colors
+     (custom-set-faces
+      ;; Thicken the mode line
+      `(mode-line ((,c :box (:line-width 3 :color ,bg-mode-line-active))))
+      `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
+
+  (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
+  (my-modus-themes-custom-faces)
 #+end_src
 
 ** Circadian
@@ -81,7 +91,7 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 
 #+begin_src emacs-lisp
   (set-face-attribute 'default nil :font "Iosevka" :height 130)
-  (setq-default line-spacing 0.25)
+  (setq-default line-spacing 0.2)
 #+end_src
 
 *** Ligatures
@@ -115,15 +125,14 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 *** TODO: Write about doom-modeline
 
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :custom
-    (doom-modeline-bar-width 0)
-    (doom-modeline-buffer-modification-icon nil)
-    (doom-modeline-height 0)
-    (doom-modeline-modal-icon t)
-    :config
-    ;; (doom-modeline-mode 1)
-    )
+  ;; (use-package doom-modeline
+  ;;   :custom
+  ;;   ;; (doom-modeline-bar-width 0)
+  ;;   (doom-modeline-buffer-modification-icon nil)
+  ;;   (doom-modeline-height 0)
+  ;;   (doom-modeline-modal-icon t)
+  ;;   :config
+  ;;   (doom-modeline-mode 1))
 
   (setq column-number-mode t)
 #+end_src
@@ -273,7 +282,7 @@ I employ a number of programming language modes to provide syntax highlighting a
 
 #+begin_src elisp
   (defvar ngs/language-server-programs
-    '((elixir . "~/Projects/elixir-ls/release/language_server.sh"))
+    '((elixir . '("~/Projects/elixir-ls/release/language_server.sh")))
     "Locations of LSP server binaries")
 
   (defun ngs/language-server-program (language)
@@ -284,7 +293,7 @@ I employ a number of programming language modes to provide syntax highlighting a
   (use-package eglot
     :config
     (add-to-list 'eglot-server-programs
-		 '(elixir-ts-mode . (ngs/language-server-program 'elixir)))
+		 '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
     :hook
     ((elixir-mode . eglot-ensure)))
 #+end_src

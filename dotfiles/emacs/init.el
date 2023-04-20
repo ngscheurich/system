@@ -39,27 +39,7 @@
 ;; Map option key to super
 (setq mac-option-modifier 'super)
 
-;; Themes
-(use-package modus-themes
-  :init
-  (setq modus-themes-common-palette-overrides
-	'((border-mode-line-active unspecified)
-	  (border-mode-line-inactive unspecified)))
-  (load-theme 'modus-vivendi-tinted :no-confirm)
-  :bind
-  ("<f5>" . modus-themes-toggle))
-
-;; Customize mode-line appearance
-(defun my-modus-themes-custom-faces ()
-  (modus-themes-with-colors
-    (custom-set-faces
-     ;; Thicken the mode line
-     `(mode-line ((,c :box (:line-width 3 :color ,bg-mode-line-active))))
-     `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
-
-(add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
-(my-modus-themes-custom-faces)
-
+;; TODO
 (use-package minions)
 (use-package keycast)
 
@@ -116,7 +96,11 @@
 (add-hook 'text-mode-hook 'visual-line-mode)
 
 ;; Automatically pair parentheses, et al.
-(electric-pair-mode t)
+;; (electric-pair-mode t)
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  :hook (prog-mode . smartparens-mode))
 
 ;; Make <escape> quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -174,9 +158,9 @@
 ;; Buffer tabs
 (use-package centaur-tabs
   :bind (("M-}" . centaur-tabs-forward-tab)
-	 ("M-{" . centaur-tabs-backward-tab))
-  :init
-  (centaur-tabs-mode))
+	 ("M-{" . centaur-tabs-backward-tab)))
+  ;; :init
+  ;; (centaur-tabs-mode))
 
 ;; Full-fledged terminal emulation
 (use-package vterm)
@@ -214,7 +198,7 @@
   (simpleclip-mode 1))
 
 ;; TODO: Use ELisp-powered snippets
-;; (use-package yasnippet)
+(use-package yasnippet)
 
 ;; REST client
 ;; https://github.com/pashky/restclient.el
@@ -281,4 +265,33 @@
   :config
   (beframe-mode 1))
 
+;; Font ligatures
+(use-package ligature
+  :load-path "path-to-ligature-repo"
+  :config
+  ;; Enable all Iosevka ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
+                                       "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
+                                       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
+                                       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
+(use-package poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("8d8207a39e18e2cc95ebddf62f841442d36fcba01a2a9451773d4ed30b632443" "b54376ec363568656d54578d28b95382854f62b74c32077821fdfd604268616a" "a9abd706a4183711ffcca0d6da3808ec0f59be0e8336868669dc3b10381afb6f" "b99e334a4019a2caa71e1d6445fc346c6f074a05fcbb989800ecbe54474ae1b0" "60ada0ff6b91687f1a04cc17ad04119e59a7542644c7c59fc135909499400ab8" "5b9a45080feaedc7820894ebbfe4f8251e13b66654ac4394cb416fef9fdca789" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" "ae426fc51c58ade49774264c17e666ea7f681d8cae62570630539be3d06fd964" "afa47084cb0beb684281f480aa84dab7c9170b084423c7f87ba755b15f6776ef" "a589c43f8dd8761075a2d6b8d069fc985660e731ae26f6eddef7068fece8a414" "49acd691c89118c0768c4fb9a333af33e3d2dca48e6f79787478757071d64e68" "4ff1c4d05adad3de88da16bd2e857f8374f26f9063b2d77d38d14686e3868d8d" "2e05569868dc11a52b08926b4c1a27da77580daa9321773d92822f7a639956ce" "02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
