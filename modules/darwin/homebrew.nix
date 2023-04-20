@@ -16,12 +16,10 @@
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
-      "railwaycat/emacsmacport"
-      "d12frosted/emacs-plus"
     ];
 
     brews = [
-      "emacs-plus@29"
+      "zellij"
     ];
 
     casks = [
@@ -36,8 +34,6 @@
       "discord"
       "docker"
       "dropbox"
-      # "emacs-mac"
-      "emacs-plus@29"
       "figma"
       "firefox"
       "gpg-suite-no-mail"
