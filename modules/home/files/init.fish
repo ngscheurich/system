@@ -18,4 +18,3 @@ set -gx SCRIPTS_DIR /etc/system/scripts
 fish_add_path "$LOCAL_BIN_DIR"
 fish_add_path '/Applications/kitty.app/Contents/MacOS/'
 
-thefuck --alias | source
