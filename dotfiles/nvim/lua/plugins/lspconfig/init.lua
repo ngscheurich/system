@@ -1,5 +1,18 @@
 local M = { "neovim/nvim-lspconfig" }
 
+M.ft = {
+  "bash",
+  "c",
+  "css",
+  "elixir",
+  "html",
+  "javascript",
+  "lua",
+  "ruby",
+  "rust",
+  "typescript",
+}
+
 M.dependencies = {
   "folke/neodev.nvim",
   "jose-elias-alvarez/null-ls.nvim",
@@ -13,10 +26,10 @@ function M.config()
   require("mason").setup()
 
   local function on_attach(client, buffer)
-    require("nvim-navic").attach(client, buffer)
+    -- require("nvim-navic").attach(client, buffer)
 
-    require("plugins.lspconfig.keymaps").setup(client, buffer)
-    require("plugins.lspconfig.formatting").setup(client, buffer)
+    require("plugins.lspconfig.keymaps").on_attach(client, buffer)
+    require("plugins.lspconfig.formatting").on_attach(client, buffer)
 
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
@@ -32,19 +45,25 @@ function M.config()
   local servers = require("plugins.lspconfig.servers")
   mason_lspconfig.setup_handlers({
     function(server)
-      local conf = servers[server]
+      if server ~= "rnix" then
+        local conf = servers[server]
+        local settings = {}
+        if conf and conf.settings then
+          settings = conf.settings
+        end
 
-      local spec = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = conf.settings,
-      }
+        local spec = {
+          capabilities = capabilities,
+          on_attach = on_attach,
+          settings = settings,
+        }
 
-      if conf.cmd ~= nil then
-        spec.cmd = conf.cmd
+        if conf.cmd ~= nil then
+          spec.cmd = conf.cmd
+        end
+
+        require("lspconfig")[server].setup(spec)
       end
-
-      require("lspconfig")[server].setup(spec)
     end,
   })
 

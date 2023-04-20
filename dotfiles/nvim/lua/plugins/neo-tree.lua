@@ -25,6 +25,9 @@ return {
       window = {
         width = 30,
       },
+      source_selector = {
+        winbar = true,
+      },
     })
   end,
 

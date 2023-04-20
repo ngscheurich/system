@@ -4,7 +4,7 @@ return {
   clangd = {},
 
   elixirls = {
-    cmd = { "/Users/nick/Projects/elixir-ls/release/language_server.sh" },
+    cmd = { "/Users/nscheurich/Projects/elixir-ls/release/language_server.sh" },
   },
 
   lua_ls = {
@@ -12,7 +12,7 @@ return {
       Lua = {
         telemetry = { enable = false },
         workspace = { checkThirdParty = false },
-      }
+      },
     },
   },
 

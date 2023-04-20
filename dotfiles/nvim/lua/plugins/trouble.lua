@@ -1,4 +1,6 @@
-local M = { "folke/trouble.nvim" }
+M = { "folke/trouble.nvim" }
+
+M.cmd = "Trouble"
 
 M.config = {
   signs = {

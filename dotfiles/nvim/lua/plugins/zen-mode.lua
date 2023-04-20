@@ -1,6 +1,8 @@
 return {
   "folke/zen-mode.nvim",
 
+  cmd = "ZenMode",
+
   config = {
     window = {
       options = {
@@ -16,6 +18,4 @@ return {
       },
     },
   },
-
-  cmd = "ZenMode",
 }

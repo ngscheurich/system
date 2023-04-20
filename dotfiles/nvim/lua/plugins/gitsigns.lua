@@ -1,35 +1,37 @@
-local M = { "lewis6991/gitsigns.nvim" }
+return {
+  "lewis6991/gitsigns.nvim",
 
-function M.config()
-  local gitsigns = require("gitsigns")
+  event = "VeryLazy",
 
-  gitsigns.setup({
-    signs = {
-      add = { text = "┃" },
-      change = { text = "┃" },
-      changedelete = { text = "┃" },
-      delete = { text = "┃" },
-      topdelete = { text = "┃" },
-      untracked = { text = "┇" },
-    },
-  })
+  config = function()
+    local gitsigns = require("gitsigns")
 
-  local mappings = {
-    ["<Leader>g"] = {
-      name = "git",
+    gitsigns.setup({
+      signs = {
+        add = { text = "┃" },
+        change = { text = "┃" },
+        changedelete = { text = "┃" },
+        delete = { text = "┃" },
+        topdelete = { text = "┃" },
+        untracked = { text = "┇" },
+      },
+    })
 
-      b = { gitsigns.toggle_current_line_blame, "Line blame (toggle)" },
-      d = { gitsigns.toggle_deleted, "Deleted (toggle)" },
-      h = { gitsigns.toggle_linehl, "Line highlight (toggle)" },
-      p = { gitsigns.preview_hunk, "Preview hunk" },
-      r = { gitsigns.reset_hunk, "Reset hunk" },
-    },
+    local mappings = {
+      ["<Leader>g"] = {
+        name = "git",
 
-    ["]c"] = { gitsigns.next_hunk, "Next hunk" },
-    ["[c"] = { gitsigns.prev_hunk, "Previous hunk" },
-  }
+        b = { gitsigns.toggle_current_line_blame, "Line blame (toggle)" },
+        d = { gitsigns.toggle_deleted, "Deleted (toggle)" },
+        h = { gitsigns.toggle_linehl, "Line highlight (toggle)" },
+        p = { gitsigns.preview_hunk, "Preview hunk" },
+        r = { gitsigns.reset_hunk, "Reset hunk" },
+      },
 
-  require("which-key").register(mappings)
-end
+      ["]c"] = { gitsigns.next_hunk, "Next hunk" },
+      ["[c"] = { gitsigns.prev_hunk, "Previous hunk" },
+    }
 
-return M
+    require("which-key").register(mappings)
+  end,
+}

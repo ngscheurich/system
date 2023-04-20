@@ -1,7 +1,7 @@
 return {
   "NvChad/nvim-colorizer.lua",
 
-  event = "BufReadPre",
+  ft = { "html", "css", "javascript", "svg" },
 
   config = {
     user_default_options = {

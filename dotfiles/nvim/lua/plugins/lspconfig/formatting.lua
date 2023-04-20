@@ -1,5 +1,5 @@
 return {
-  setup = function(client, buffer)
+  on_attach = function(client, buffer)
     if client.supports_method("textDocument/formatting") then
       vim.api.nvim_create_autocmd("BufWritePre", {
         buffer = buffer,
