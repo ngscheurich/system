@@ -49,4 +49,68 @@ return {
       require("output_panel").setup()
     end,
   },
+
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    cond = _G.colorscheme == "catppuccin",
+    config = function()
+      vim.cmd("colorscheme " .. _G.colorscheme)
+    end,
+  },
+
+  {
+    "RRethy/nvim-base16",
+    cond = _G.colorscheme == "base16-tomorrow-night",
+    config = function()
+      local apply_colors = function()
+        local light_bg = {
+          "CursorLineNr",
+          "GitGutterAdd",
+          "GitGutterChange",
+          "GitGutterChangeDelete",
+          "GitGutterDelete",
+          "LineNr",
+          "SignColumn",
+        }
+        for _, group in ipairs(light_bg) do
+          vim.cmd(string.format("hi %s guibg=#212326", group))
+        end
+
+        local dark_bg = {
+          "NeoTreeNormal",
+          "NeoTreeNormalNC",
+          "NormalFloat",
+          "Trouble",
+        }
+        for _, group in ipairs(dark_bg) do
+          vim.cmd(string.format("hi %s guibg=#1b1c1f", group))
+        end
+
+        -- vim.cmd("hi GitGutterAdd          guifg=#b5bd68")
+        -- vim.cmd("hi GitGutterChange       guifg=#f0c574")
+        -- vim.cmd("hi GitGutterDelete       guifg=#cc6666")
+        -- vim.cmd("hi GitGutterChangeDelete guifg=#80a1bd")
+
+        vim.cmd("hi TSVariable guifg=#c5c8c6")
+        vim.cmd("hi MatchParen guibg=NONE gui=underline")
+        vim.cmd("hi VertSplit guifg=#212326")
+      end
+
+      vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+        pattern = { colorscheme },
+        callback = apply_colors,
+      })
+
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = { "help" },
+        callback = function()
+          vim.opt_local.signcolumn = "no"
+        end,
+      })
+
+      vim.cmd("colorscheme " .. _G.colorscheme)
+      -- vim.cmd("highlight VertSplit guifg=#363a41")
+    end,
+  },
 }

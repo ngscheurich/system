@@ -30,7 +30,7 @@ require("core.options")
 require("core.signs")
 
 -- Set constants
-_G.colorscheme = "tokyonight"
+_G.colorscheme = "base16-tomorrow-night"
 
 -- Load plugin manager
 require("lazy").setup("plugins", {
