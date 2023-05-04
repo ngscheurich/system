@@ -16,6 +16,7 @@ return {
     require("neo-tree").setup({
       default_component_configs = {
         indent = {
+          with_expanders = true,
           with_markers = false,
         },
       },
@@ -32,7 +33,7 @@ return {
   end,
 
   keys = {
-    { "<Leader>ee", "<Cmd>NeoTreeFocusToggle<CR>", desc = "Sidebar" },
+    { "<Leader>ee", "<Cmd>Neotree toggle<CR>", desc = "Sidebar" },
     { "<Leader>ef", "<Cmd>NeoTreeFloatToggle<CR>", desc = "Float" },
     { "<Leader>es", "<Cmd>NeoTreeRevealInSplitToggle<CR>", desc = "Split" },
   },
