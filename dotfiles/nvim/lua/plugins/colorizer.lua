@@ -1,6 +1,7 @@
 return {
   "NvChad/nvim-colorizer.lua",
 
+  cmd = "ColorizerToggle",
   ft = { "html", "css", "javascript", "svg" },
 
   config = {
