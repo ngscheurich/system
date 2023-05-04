@@ -4,6 +4,7 @@
 
 -- Insert mode
 vim.cmd.iabbrev("Gridpoint", "GridPoint")
+vim.cmd.iabbrev("GridpointWeb", "GridPointWeb")
 
 -- Command-line mode
 vim.cmd.cabbrev("Qa", "qa")
