@@ -16,3 +16,5 @@ set("n", "<Right>", "<C-w>l")
 set("n", "<Esc>", "<Cmd>nohlsearch<CR>")
 
 set("n", "<Leader>p", "<Cmd>Lazy<CR>", { desc = "Plugins" })
+
+set("n", "<Leader>q", "<Cmd>q<CR>", { desc = "Quit" })
