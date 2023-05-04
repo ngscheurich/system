@@ -27,9 +27,10 @@ function M.config()
 
   local function on_attach(client, buffer)
     -- require("nvim-navic").attach(client, buffer)
+    -- require("nvim-navbuddy").attach(client, buffer)
 
-    require("plugins.lspconfig.keymaps").on_attach(client, buffer)
-    require("plugins.lspconfig.formatting").on_attach(client, buffer)
+    require("plugins.lsp.keymaps").on_attach(client, buffer)
+    require("plugins.lsp.formatting").on_attach(client, buffer)
 
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
@@ -42,7 +43,7 @@ function M.config()
   local mason_lspconfig = require("mason-lspconfig")
   mason_lspconfig.setup()
 
-  local servers = require("plugins.lspconfig.servers")
+  local servers = require("plugins.lsp.servers")
   mason_lspconfig.setup_handlers({
     function(server)
       if server ~= "rnix" then
@@ -58,7 +59,7 @@ function M.config()
           settings = settings,
         }
 
-        if conf.cmd ~= nil then
+        if conf ~= nil and conf.cmd ~= nil then
           spec.cmd = conf.cmd
         end
 
