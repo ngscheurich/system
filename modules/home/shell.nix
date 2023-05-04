@@ -16,8 +16,16 @@
     shellAbbrs = {
       cls = "clear";
       g = "git";
+      gg = "lazygit";
+      ga = "git add";
+      gci = "git commit";
+      gcm = "git commit -m";
+      gco = "git checkout";
+      gp = "git pull";
+      gP = "git push";
+      gF = "git push --force";
+      grb = "git rebase --interactive main";
       la = "exa --all --long";
-      lg = "lazygit";
       l = "exa"; 
       ll = "exa --long";
       ls = "exa";
@@ -27,6 +35,8 @@
       tmux = "tmucks";
       vimdiff = "nvim -d";
       weather = "curl wttr.in";
+      zj = "zellij";
+      zjr = "zellij run -- ";
     };
 
     plugins = [
