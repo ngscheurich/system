@@ -62,76 +62,68 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 
 * Defaults
 
-#+begin_src emacs-lisp
-  ;; Disable unwanted UI elements
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
+** Settings
 
-  ;; I prefer to bypass the Emacs splash screen and boot to the scratch
-  ;; buffer by default.
-  (setq inhibit-startup-message t)
-
-  ;; Disable bell-ringing
-  (setq ring-bell-function 'ignore)
-
-  ;; Keep buffers in sync with external changes
-  (global-auto-revert-mode 1)
-
-  ;; Save place in files
-  (save-place-mode t)
-
-  ;; Remember recently-visited files
-  (recentf-mode t)
-
-  ;; TODO Wrangle custom file
-  ;; TODO Wrangle transient files
-#+end_src
-
-The following customizes some basic behaviors of Emacs itself:
+There are a series of built-in customizable variables that I change to better suit my personal tastes and workflows.
 
 #+begin_src emacs-lisp
   (use-package emacs
+    :ensure nil
     :custom
     (confirm-kill-emacs #'yes-or-no-p "Confirm before quitting")
     (custom-file (locate-user-emacs-file "custom-vars.el") "Set custom file path")
-    (frame-resize-pixelwise t)
+    (frame-resize-pixelwise t "Resize frames by pixels rather than characters")
     (gc-cons-threshold (* 2 1000 1000) "Make GC pauses faster by decreasing threshold")
     (history-length 40 "Maximum number of files to keep in history")
+    (inhibit-startup-message t "Bypass the Emacs splash screen")
     (message-kill-buffer-query nil "Don't ask to confirm buffer kill")
+    (ring-bell-function 'ignore "Suppress the bell")
     (use-short-answers t "Abbreviate yes/no input")
-    (window-resize-pixelwise t))
+    (user-email-address "nick@scheurich.haus" "My email address")
+    (user-full-name "Nicholas Scheurich" "My full name")
+    (window-resize-pixelwise t "Resize windows by pixels rather than characters"))
 #+end_src
+
+** Modes
+
+=global-auto-revert-mode= automatically update the contents of certain buffers when their respective files change on disk.
+
+#+begin_src emacs-lisp
+  (global-auto-revert-mode 1)
+#+end_src
+
+=save-place-mode= saves the last position in file buffers.
+
+#+begin_src emacs-lisp
+  (save-place-mode t)
+#+end_src
+
+=recentf-mode= remembers recently-visited files, which can be selected from using the =recentf= interactive function.
+
+#+begin_src emacs-lisp
+  (recentf-mode t)
+#+end_src
+
+** Packages
 
 The =savehist= package remembers prompt inputs between sessions, thereby creating a persistent command history.
 
 #+begin_src emacs-lisp
   (use-package savehist
+    :ensure nil
     :init
     (setq history-length 40)
     (savehist-mode))
 #+end_src
 
-Tell Emacs a little about myself:
-
-#+begin_src emacs-lisp
-  (setq user-full-name "Nicholas Scheurich"
-        user-mail-address "nick@scheurich.haus")
-#+end_src
-
-I prefer to bypass the Emacs splash screen and boot to the scratch buffer by default.
-
-#+begin_src emacs-lisp
-  (setq inhibit-startup-message t)
-#+end_src
-
-TODO:
-
-#+begin_src emacs-lisp
-  (setq ring-bell-function 'ignore)
-  (electric-pair-mode t)
-#+end_src
-
 * User Interface
+
+The Emacs user interface is endlessly customizable. For starters, I disable some unwanted UI elements, namely the tool bar and scroll bar.
+
+#+begin_src emacs-lisp
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+end_src
 
 ** Typography
 
@@ -146,22 +138,13 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 
 I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by Protesilaos Stavrou, which are optimized for color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /-tinted/ variants and so load the package from ELPA.
 
-I use the [[https://github.com/GuidoSchmidt/circadian.el][circadian]] package to load the dark-on-light theme (=modus-operandi-tinted=) or the light-on-dark theme (=modus-vivendi-tinted=) based on the time of day.
-
 #+begin_src emacs-lisp
   (use-package modus-themes)
+#+end_src
 
-  (defun my-modus-themes-custom-faces ()
-    (modus-themes-with-colors
-      (custom-set-faces
-       `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
-       `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
-       `(solaire-hl-line-face ((,c :background ,bg-active)))
-       `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))))
+[[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads the dark-on-light Modus theme (=modus-operandi-tinted=) or the light-on-dark one (=modus-vivendi-tinted=) based on the time of day.
 
-  (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
-  (my-modus-themes-custom-faces)
-
+#+begin_src emacs-lisp
   (use-package circadian
     :config
     (setq circadian-themes '(("07:30" . modus-operandi-tinted)
@@ -187,8 +170,6 @@ Quickly referencing line number is a huge convenience when viewing and editing s
 
 TODO Describe ElDoc
 
-Prevent ElDoc from resizing the echo area:
-
 #+begin_src emacs-lisp
   (use-package eldoc
     :ensure nil
@@ -205,19 +186,19 @@ TODO List Vim packages that Evil emulates.
 #+begin_src  emacs-lisp
   (use-package evil
     :custom
-    ;; TODO Document customizations
-    (evil-echo-state nil)
-    (evil-undo-system 'undo-redo)
-    (evil-want-C-i-jump t)
-    (evil-want-C-u-scroll t)
-    (evil-want-Y-yank-to-eol t)
-    (evil-want-fine-undo t)
-    (evil-want-integration t)
-    (evil-want-keybinding nil)
+    (evil-echo-state nil "Don't display the Evil state in the echo area")
+    (evil-undo-system 'undo-redo "Use the Emacs-native undo/redo functionality")
+    (evil-want-C-i-jump t "'C-i' to jump to next location")
+    (evil-want-C-u-scroll t "'C-u' to scroll by half a page")
+    (evil-want-Y-yank-to-eol t "'Y' to yank to the end of the line")
+    (evil-want-keybinding nil "Don't load bindings for additional modes (see 'Evil Collection'")
     :config
     (evil-mode 1))
+#+end_src
 
-  ;; Rebind `universal-argument' to 'C-M-u' since 'C-u' now scrolls the buffer
+Since =evil-want-C-u-scroll= is set to =t=, we need to rebind the /universal argument/ keybinding (which is =C-u= by default).
+
+#+begin_src emacs-lisp
   (global-set-key (kbd "C-M-u") 'universal-argument)
 #+end_src
 
@@ -233,6 +214,8 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
 #+end_src
 
 ** Evil Commentary
+
+[[https://github.com/linktohack/evil-commentary][evil-commentary]] mimics the functionality of [[https://tpo.pe/][Tim Pope]]'s [[https://github.com/tpope/vim-commentary][commentary.vim]] plugin.
 
 #+begin_src emacs-lisp
   (use-package evil-commentary
