@@ -24,6 +24,10 @@
 (org-babel-load-file
   (expand-file-name "config.org" user-emacs-directory))
 
+(use-package which-key
+  :config
+  (which-key-mode))
+
 ;; More useful *help*
 (use-package helpful
   :bind
@@ -106,5 +110,8 @@
 
 ;; Mode line
 
+;; imenu-list
+;; https://github.com/bmag/imenu-list
+(use-package imenu-list)
 
 ;;; init.el ends here

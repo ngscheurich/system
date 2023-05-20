@@ -1,8 +1,11 @@
 #+TITLE: GNU Emacs Configuration
 #+AUTHOR: N. G. Scheurich
 #+EMAIL: nick@scheurich.haus
+#+PROPERTY: header-args :tangle ./init-org.el
 
 * Introduction
+
+TODO: Rewrite to reflect new tangling setup.
 
 This is my primary *GNU Emacs* configuration file. I say /primary/ because two other files, =early-init.el= and =init.el=, round out the whole of the configuration, though their purposes are tightly constrained and explained in more detail in each file.
 
@@ -17,7 +20,40 @@ From a technical perspective, when Emacs is started each code block in this docu
 
 * Package Management
 
-The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable for keeping the generated configuration code tidy and performant. The following installs it and ensures that packages in =use-package= forms are installed automatically using =straight.el=.
+** straight.el
+
+Emacs has a built-in packager, =package.el=, but I prefer to use [[https://github.com/radian-software/straight.el][=straight.el=]] for a few key reasons:
+
+- It affords the ability to use a specific Git revision of a package
+- It only loads the packages specified in this configuration file
+- It supports true portabilty/reproducibility via lockfiles
+- It allows me to easily make ad-hoc changes to packages
+
+There are further advantages, and some disadvantages, when compared to =package.el= which are enumerated in straight.el’s [[https://github.com/raxod502/straight.el#comparison-to-packageel][README]].
+
+#+begin_src emacs-lisp :tangle ./early-init-org.el
+  ;; Prevent package.el from loading any packages
+  (setq package-enable-at-startup nil)
+
+  ;; Bootstrap straight.el, i.e. download and install and evaluate it if
+  ;; it is not detected. See <https://github.com/raxod502/straight.el#getting-started>.
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+    (url-retrieve-synchronously
+     "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+     'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+#+end_src
+
+** use-package
+
+The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable for keeping configuration code tidy and performant. The following installs it and ensures that packages in =use-package= forms are installed automatically using =straight.el=.
 
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
@@ -27,6 +63,17 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 * Defaults
 
 #+begin_src emacs-lisp
+  ;; Disable unwanted UI elements
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+
+  ;; I prefer to bypass the Emacs splash screen and boot to the scratch
+  ;; buffer by default.
+  (setq inhibit-startup-message t)
+
+  ;; Disable bell-ringing
+  (setq ring-bell-function 'ignore)
+
   ;; Keep buffers in sync with external changes
   (global-auto-revert-mode 1)
 
@@ -35,10 +82,6 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
 
   ;; Remember recently-visited files
   (recentf-mode t)
-
-  (setq-default tab-width 2)
-  (setq-default evil-shift-width tab-width)
-  (setq-default indent-tabs-mode nil)
 
   ;; TODO Wrangle custom file
   ;; TODO Wrangle transient files
@@ -59,8 +102,7 @@ The following customizes some basic behaviors of Emacs itself:
     (window-resize-pixelwise t))
 #+end_src
 
-
-I use the savehist package to remember prompt inputs between sessions.
+The =savehist= package remembers prompt inputs between sessions, thereby creating a persistent command history.
 
 #+begin_src emacs-lisp
   (use-package savehist
@@ -89,30 +131,9 @@ TODO:
   (electric-pair-mode t)
 #+end_src
 
-* Editing
+* User Interface
 
-https://github.com/abo-abo/avy
-
-#+begin_src emacs-lisp
-  (use-package avy
-    :after evil
-    :bind (:map evil-normal-state-map
-                ("s" . 'avy-goto-char-2)
-                ("f"  . 'evil-avy-goto-char-in-line)))
-#+end_src
-
-https://github.com/rolandwalker/simpleclip
-
-#+begin_src emacs-lisp
-  (use-package simpleclip
-     :bind
-     (("M-c" . simpleclip-copy)
-      ("M-v" . simpleclip-paste))
-     :config
-     (simpleclip-mode 1))
-#+end_src
-
-* Typography
+** Typography
 
 My preferred monospaced programming font these days is [[https://www.monolisa.dev/][MonoLisa]] by [[https://www.facetype.org/][Marcus Sterz]]. I set this font as the default and slightly increase the leading.
 
@@ -121,16 +142,25 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
   (setq-default line-spacing 0.2)
 #+end_src
 
-* User Interface
-
 ** Themes
 
-I use the [[https://protesilaos.com/emacs/modus-themes][Modus (My Old Display Unexpectedly Sharpened) themes]] by Protesilaos Stavrou, which are optimized for maximum color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /tinted/ variants and so load the package from ELPA.
+I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by Protesilaos Stavrou, which are optimized for color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /-tinted/ variants and so load the package from ELPA.
 
 I use the [[https://github.com/GuidoSchmidt/circadian.el][circadian]] package to load the dark-on-light theme (=modus-operandi-tinted=) or the light-on-dark theme (=modus-vivendi-tinted=) based on the time of day.
 
 #+begin_src emacs-lisp
   (use-package modus-themes)
+
+  (defun my-modus-themes-custom-faces ()
+    (modus-themes-with-colors
+      (custom-set-faces
+       `(solaire-default-face ((,c :inherit default :background ,bg-dim :foreground ,fg-dim)))
+       `(solaire-line-number-face ((,c :inherit solaire-default-face :foreground ,fg-dim)))
+       `(solaire-hl-line-face ((,c :background ,bg-active)))
+       `(solaire-org-hide-face ((,c :background ,bg-dim :foreground ,bg-dim))))))
+
+  (add-hook 'modus-themes-after-load-theme-hook #'my-modus-themes-custom-faces)
+  (my-modus-themes-custom-faces)
 
   (use-package circadian
     :config
@@ -153,9 +183,11 @@ Quickly referencing line number is a huge convenience when viewing and editing s
   (setq column-number-mode t)
 #+end_src
 
-** Eldoc
+** ElDoc
 
-Prevent Eldoc from resizing the echo area:
+TODO Describe ElDoc
+
+Prevent ElDoc from resizing the echo area:
 
 #+begin_src emacs-lisp
   (use-package eldoc
@@ -164,69 +196,144 @@ Prevent Eldoc from resizing the echo area:
     (setq eldoc-echo-area-use-multiline-p nil))
 #+end_src
 
-** Popper
+* Evil
 
-https://github.com/karthink/popper
+Having near-perfect Vim emulation is a prime requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is superb.
 
-#+begin_src emacs-lisp
-  (use-package popper
-    :bind (("C-`"   . popper-toggle-latest)
-     ("M-`"   . popper-cycle)
-     ("C-M-`" . popper-toggle-type))
-    :init
-    (setq popper-reference-buffers
-    '("\\*Messages\\*"
-      "Output\\*$"
-      "\\*Async Shell Command\\*"
-      help-mode
-      compilation-mode))
-    (popper-mode +1)
-    (popper-echo-mode +1))
-#+end_src
+TODO List Vim packages that Evil emulates.
 
-** Solaire
-
-https://github.com/hlissner/emacs-solaire-mode
-
-#+begin_src emacs-lisp
-  ;; TODO Turn on Modus solaire-mode support
-  (use-package solaire-mode
-    :config (solaire-global-mode +1))
-#+end_src
-
-** Treemacs
-
-https://github.com/Alexander-Miller/treemacs
-
-#+begin_src emacs-lisp
-  (use-package treemacs)
-#+end_src
-
-** which-key
-
-https://github.com/justbur/emacs-which-key
-
-#+begin_src emacs-lisp
-  (use-package which-key
+#+begin_src  emacs-lisp
+  (use-package evil
+    :custom
+    ;; TODO Document customizations
+    (evil-echo-state nil)
+    (evil-undo-system 'undo-redo)
+    (evil-want-C-i-jump t)
+    (evil-want-C-u-scroll t)
+    (evil-want-Y-yank-to-eol t)
+    (evil-want-fine-undo t)
+    (evil-want-integration t)
+    (evil-want-keybinding nil)
     :config
-    (which-key-mode))
+    (evil-mode 1))
+
+  ;; Rebind `universal-argument' to 'C-M-u' since 'C-u' now scrolls the buffer
+  (global-set-key (kbd "C-M-u") 'universal-argument)
 #+end_src
 
-** Folding
+** Evil Collection
 
-<https://github.com/gregsexton/origami.el>
+There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are not covered by Evil. [[https://github.com/emacs-evil/evil-collection][Evil Collection]] is a community-sourced collection of Evil bindings that aims to provide a consistent Evil experience throughout Emacs.
 
 #+begin_src emacs-lisp
-  (use-package origami)
+  (use-package evil-collection
+    :after evil
+    :config
+    (evil-collection-init))
 #+end_src
 
-** Rainbow Delimiters
-
-https://github.com/Fanael/rainbow-delimiters
+** Evil Commentary
 
 #+begin_src emacs-lisp
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
+  (use-package evil-commentary
+    :after evil
+    :config
+    (evil-commentary-mode))
+#+end_src
+
+* Keybindings
+
+** macOS
+
+#+begin_src emacs-lisp
+  (if (eq system-type 'darwin)
+      ;; Use command key as meta
+      (setq mac-command-modifier 'meta)
+
+    ;; Leave left option alone
+    (setq mac-option-modifier 'none)
+
+    ;; Map right option key to super
+    (setq mac-right-option-modifier 'alt))
+#+end_src
+
+** General
+
+https://github.com/noctuid/general.el
+
+#+begin_src emacs-lisp
+  ;; Make <escape> quit prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+  ;; General
+  (use-package general
+    :config
+    (general-evil-setup)
+
+    (general-create-definer ngs/leader-def
+      :keymaps '(normal emacs)
+      :prefix "SPC")
+
+    (general-create-definer ngs/local-leader-def
+      :keymaps '(normal emacs)
+      :prefix ",")
+
+    (ngs/leader-def
+      "f"   '(:ignore t :which-key "find")
+      "ff"  '(project-find-file :which-key "file")
+
+      "p"  '(:ignore t :which-key "project")
+      "pf" '(project-find-file :which-key "find file")
+      "pk" '(project-kill-buffers :which-key "kill buffers")
+      "pp" '(project-switch-project :which-key "switch")
+
+      "g"  '(:ignore g :which-key "git")
+      "gs" '(magit-status :which-key "status")
+
+      "h"  '(:ignore g :which-key "help")
+      "hh" '(helpful-at-point :which-key "at point")
+      "hf" '(helpful-callable :which-key "function")
+      "hc" '(helpful-command :which-key "command")
+      "hk" '(helpful-key :which-key "key")
+      "hK" '(describe-keymap :which-key "keymap")
+      "hm" '(describe-mode :which-key "mode")
+      "hv" '(helpful-variable :which-key "variable")
+
+      "t"  '(:ignore t :which-key "toggles")
+      "tt" '(treemacs :which-key "treemacs")))
+#+end_src
+
+* Editing
+
+** Indentation
+
+By default, indent with two spaces:
+
+#+begin_src emacs-lisp
+  (setq-default tab-width 2)
+  (setq-default evil-shift-width tab-width)
+  (setq-default indent-tabs-mode nil)
+#+end_src
+
+https://github.com/abo-abo/avy
+
+#+begin_src emacs-lisp
+  (use-package avy
+    :after evil
+    :bind (:map evil-normal-state-map
+                ("s" . 'avy-goto-char-2)
+                ("f"  . 'evil-avy-goto-char-in-line)))
+#+end_src
+
+https://github.com/rolandwalker/simpleclip
+
+#+begin_src emacs-lisp
+  (use-package simpleclip
+     :bind
+     (("M-c" . simpleclip-copy)
+      ("M-v" . simpleclip-paste))
+     :config
+     (simpleclip-mode 1))
 #+end_src
 
 * Completion
@@ -238,12 +345,11 @@ The initial set of items, or /candidates/, is typically sourced based on the mos
 I augment Emacs’ built-in completion systems with some excellent community packages:
 
 - [[https://github.com/minad/vertico][Vertico]]
-- [[https://github.com/oantolin/orderless][Orderless]]
 - [[https://github.com/minad/marginalia][Marginalia]]
 - [[https://github.com/minad/consult][Consult]]
+- [[https://github.com/oantolin/orderless][Orderless]]
 - [[https://github.com/minad/corfu][Corfu]]
-
-** TODO Cape
+- [[https://github.com/minad/cape][Cape]]
 
 ** Vertico
   
@@ -272,9 +378,25 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 *Consult* adds a set of commands that provide interesting candidate sources and enhance existing ones. There are lots of great functions provided covering buffer-switching, grepping, Org navigation, and more.
 
 #+begin_src emacs-lisp
-  (use-package consult
-    :bind (("C-x b" . consult-buffer)
-	   ("M-s l" . consult-line)))
+  (use-package consult)
+
+  (ngs/leader-def
+    "SPC" '(consult-buffer :which-key "buffer")
+    "/"   '(consult-line :which-key "line")
+    "fg"  '(consult-grep :which-key "grep")
+    "fl"  '(consult-line :which-key "line")
+    "fr"  '(consult-recent-file :which-key "recent")
+    "fb"  '(consult-buffer :which-key "buffer"))
+#+end_src
+
+** Orderless
+
+*Orderless* provides a completion style that allows a pattern to be divided into chunks that can be matched in any order. For instance, =buf cons= and =cons buf= will both match =consult-buffer=.
+
+#+begin_src emacs-lisp
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)))
 #+end_src
 
 ** Corfu
@@ -298,122 +420,19 @@ I augment Emacs’ built-in completion systems with some excellent community pac
       ;; (corfu-popupinfo-mode))
 #+end_src
 
-** Orderless
+** Cape
 
-*Orderless* provides a completion style that allows a pattern to be divided into chunks that can be matched in any order. For instance, =buf cons= and =cons buf= will both match =consult-buffer=.
+https://github.com/minad/cape
 
-#+begin_src emacs-lisp
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless)))
-#+end_src
-
-* Evil
-
-Having near-perfect Vim emulation is a prime requirement for any platform with which I will be doing heavy text editing. Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs is superb.
-
-#+begin_src  emacs-lisp
-  (use-package evil
-    :custom
-    ;; TODO Document customizations
-    (evil-echo-state nil)
-    (evil-undo-system 'undo-redo)
-    (evil-want-C-i-jump t)
-    (evil-want-C-u-scroll t)
-    (evil-want-Y-yank-to-eol t)
-    (evil-want-fine-undo t)
-    (evil-want-integration t)
-    (evil-want-keybinding nil)
-    :config
-    (evil-mode 1))
-
-  ;; Rebind `universal-argument' to 'C-M-u' since 'C-u' now scrolls the buffer
-  (global-set-key (kbd "C-M-u") 'universal-argument)
-#+end_src
-
-** Evil Collection
-
-There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are not covered by Evil. [[https://github.com/emacs-evil/evil-collection][Evil Collection]] is a community-sourced collection of Evil bindings that aims to provide a consistent Evil experience throughout Emacs.
-
-TODO List Vim packages that Evil emulates.
+TODO Configure this
 
 #+begin_src emacs-lisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+  (use-package cape)
 #+end_src
 
-** Evil Commentary
+* Programming
 
-#+begin_src emacs-lisp
-  (use-package evil-commentary
-    :after evil
-    :config
-    (evil-commentary-mode))
-#+end_src
-
-* Keybindings
-
-#+begin_src emacs-lisp
-  ;; macOS-specific modifier tweaks
-  (if (eq system-type 'darwin)
-      ;; Use command key as meta
-      (setq mac-command-modifier 'meta)
-
-      ;; Map option key to super
-      (setq mac-option-modifier 'super))
-
-  ;; Make <escape> quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-  ;; Remap help prefix
-  (global-set-key (kbd "C-c h") 'help-command)
-
-  ;; Map right Option key to Super
-  (setq mac-right-option-modifier 'super)
-
-  ;; General
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    (general-create-definer ngs/leader-def
-      :keymaps '(normal emacs)
-      :prefix "SPC")
-
-    (ngs/leader-def
-      "f"   '(:ignore t :which-key "find")
-      "SPC" '(consult-buffer :which-key "buffer")
-      "/"   '(consult-line :which-key "line")
-      "ff"  '(project-find-file :which-key "file")
-      "fg"  '(consult-grep :which-key "grep")
-      "fl"  '(consult-line :which-key "line")
-      "fr"  '(consult-recent-file :which-key "recent")
-      "fb"  '(consult-buffer :which-key "buffer")
-
-      "p"  '(:ignore t :which-key "project")
-      "pf" '(project-find-file :which-key "find file")
-      "pk" '(project-kill-buffers :which-key "kill buffers")
-      "pp" '(project-switch-project :which-key "switch")
-
-      "g"  '(:ignore g :which-key "git")
-      "gs" '(magit-status :which-key "status")
-
-      "h"  '(:ignore g :which-key "help")
-      "hh" '(helpful-at-point :which-key "at point")
-      "hf" '(helpful-callable :which-key "function")
-      "hc" '(helpful-command :which-key "command")
-      "hk" '(helpful-key :which-key "key")
-      "hK" '(describe-keymap :which-key "keymap")
-      "hm" '(describe-mode :which-key "mode")
-      "hv" '(helpful-variable :which-key "variable")
-
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(treemacs :which-key "treemacs")))
-#+end_src
-
-* Languages
+** Languages
 
 I employ a number of programming language modes to provide syntax highlighting and other useful functions related to code I work with.
 
@@ -425,7 +444,7 @@ I employ a number of programming language modes to provide syntax highlighting a
   (use-package nix-mode :mode "\\.nix\\'")
 #+end_src
 
-* Language Server Protocol
+** Language Server Protocol
 
 #+begin_src elisp
   (defvar ngs/language-server-programs
@@ -457,6 +476,23 @@ https://github.com/suonlight/multi-vterm
 
 * Org Mode
 
+** Emacs Configuration
+
+TODO Explore this function more (see https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-07.org#tips)
+
+#+begin_src emacs-lisp
+  (defun ngs/org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+                        (locate-user-emacs-file "config.org"))
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
+#+end_src
+
+** Layout
+
 #+begin_src emacs-lisp
   (defun ngs/org-mode-visual-fill ()
     (setq visual-fill-column-width 100
@@ -468,3 +504,11 @@ https://github.com/suonlight/multi-vterm
     :hook (org-mode . ngs/org-mode-visual-fill))
 #+end_src
 
+** Structure Templates
+
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+#+end_src
