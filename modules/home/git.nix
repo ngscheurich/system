@@ -71,11 +71,15 @@
 
       # Project notes
       "TODO.md"
+      "TODO.org"
       "NOTES.md"
 
       # Vim
       ".netrwhist"
       "Session.vim"
+
+      # Emacs
+      ".dir-locals.el"
 
       # Secrets
       ".env"
