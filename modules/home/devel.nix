@@ -20,6 +20,7 @@
 
     # Database tools
     freetds
+    pgformatter
     sqlite-interactive
 
     # Containerization/virtualization
