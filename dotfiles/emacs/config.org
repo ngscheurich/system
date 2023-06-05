@@ -13,12 +13,15 @@ From a technical perspective, when this file is written to disk, each code block
 
 This code defines a function to check whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangle each code block in the file. It also registers an ~after-save-hook~ to call the function when a buffer is saved.
 
+TODO: Mention ~(interactive)~
+
 #+begin_src emacs-lisp
   (defun ngs/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
                         (locate-user-emacs-file "config.org"))
       (let ((org-confirm-babel-evaluate nil))
-  (org-babel-tangle))))
+        (org-babel-tangle)
+        (message "Tangled config files"))))
 
   (add-hook 'org-mode-hook (lambda ()
      (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
@@ -95,6 +98,91 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
   (setq straight-use-package-by-default t)
 #+end_src
 
+* Keybindings
+
+Make =<esc>= quit prompts.
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+** macOS
+
+#+begin_src emacs-lisp
+  (if (eq system-type 'darwin)
+      ;; Use command key as meta
+      (setq mac-command-modifier 'meta)
+
+    ;; Leave left option alone
+    (setq mac-option-modifier 'none)
+
+    ;; Map right option key to super
+    (setq mac-right-option-modifier 'alt))
+#+end_src
+
+** General
+
+https://github.com/noctuid/general.el
+
+
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-evil-setup)
+
+    (general-create-definer ngs/leader-def
+      :keymaps '(normal emacs)
+      :prefix "SPC")
+
+    (general-create-definer ngs/local-leader-def
+      :keymaps '(normal emacs)
+      :prefix ",")
+
+    (ngs/leader-def
+      "a" '(:ignore t :which-key "apps")
+      "f" '(:ignore t :which-key "find")
+      "g" '(:ignore g :which-key "git")
+      "h" '(:ignore g :which-key "help")
+      "p" '(:ignore t :which-key "project")
+      "t" '(:ignore t :which-key "toggles")
+
+      "ff"  '(project-find-file :which-key "file")
+
+      "pf" '(project-find-file :which-key "find file")
+      "pk" '(project-kill-buffers :which-key "kill buffers")
+      "pp" '(project-switch-project :which-key "switch")))
+#+end_src
+
+** Guide
+
+TODO: Describe face (=hF=?)
+
+| Key(s) | Action                  |
+|--------+-------------------------|
+| =f=    | find (prefix)           |
+| =fb=   | find buffer             |
+| =ff=   | find file               |
+| =fg=   | find text (grep)        |
+| =fl=   | find line               |
+| =fr=   | find recent file        |
+| =h=    | help (prefix)           |
+| =hK=   | describe keymap         |
+| =hc=   | describe callable       |
+| =hf=   | describe function       |
+| =hh=   | describe thing at point |
+| =hk=   | describe key            |
+| =hm=   | describe mode           |
+| =hv=   | describe variable       |
+
+#+TBLFM: $1=hk]
+
+** Hydra
+
+#+begin_src emacs-lisp
+i
+  (use-package hydra)
+#+end_src
+
 * User Interface
 
 The Emacs user interface is endlessly customizable. For starters I disable some unwanted elements, namely the tool and scroll bars.
@@ -122,7 +210,7 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 
 ** Themes
 
-I use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by Protesilaos Stavrou, which are optimized for color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /-tinted/ variants and so load the package from ELPA.
+I primarily use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by Protesilaos Stavrou, which are optimized for color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /-tinted/ variants and so load the package from ELPA.
 
 I also define a custom function to run after the themes load: ~ngs/modus-themes-custom-faces~. This function updates certain faces to simulate a bit of padding in the mode line.
 
@@ -147,6 +235,27 @@ The [[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads th
                              ("19:30" . modus-vivendi-tinted)))
     (circadian-setup))
 #+end_src
+
+*** TODO Other themes
+
+#+begin_src emacs-lisp
+  (defun ngs/switch-theme (new-theme)
+    (let ((current-theme (car custom-enabled-themes)))
+      (disable-theme current-theme))
+    (load-theme new-theme t))
+
+  (defhydra hydra-theme-switch (:timeout 4)
+    "switch theme"
+    ("d" (ngs/switch-theme 'leuven-dark) "leuven-dark")
+    ("l" (ngs/switch-theme 'leuven) "leuven")
+    ("o" (ngs/switch-theme 'modus-operandi-tinted) "modus-operandi")
+    ("v" (ngs/switch-theme 'modus-vivendi-tinted) "modus-vivendi"))
+
+  (ngs/leader-def
+    "tc" '(hydra-theme-switch/body :which-key "switch theme"))
+#+end_src
+
+#+RESULTS:
 
 ** Line Numbers
 
@@ -208,12 +317,13 @@ I augment Emacs’ built-in completion systems with some excellent community pac
   (use-package consult)
 
   (ngs/leader-def
-    "SPC" '(consult-buffer :which-key "buffer")
     "/"   '(consult-line :which-key "line")
+    "SPC" '(consult-buffer :which-key "buffer")
+    "fb"  '(consult-buffer :which-key "buffer")
     "fg"  '(consult-grep :which-key "grep")
+    "fi"  '(consult-imenu :which-key "items")
     "fl"  '(consult-line :which-key "line")
-    "fr"  '(consult-recent-file :which-key "recent")
-    "fb"  '(consult-buffer :which-key "buffer"))
+    "fr"  '(consult-recent-file :which-key "recent"))
 #+end_src
 
 ** Orderless
@@ -315,18 +425,38 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
 #+end_src
 
 * Discoverability
+
+Emacs’ discoverability is unparalleled, and I will write more about it later. ← TODO
+
+** Getting Help
+
+#+begin_src emacs-lisp
+  (ngs/leader-def
+    "hK" '(describe-keymap :which-key "keymap")
+    "hm" '(describe-mode :which-key "mode"))
+#+end_src
+
+[[https://github.com/Wilfred/helpful][Helpful]]
+
+#+begin_src emacs-lisp
+  (use-package helpful
+    :config
+    (ngs/leader-def
+      "hh" '(helpful-at-point :which-key "at point")
+      "hf" '(helpful-callable :which-key "function")
+      "hc" '(helpful-command :which-key "command")
+      "hk" '(helpful-key :which-key "key")
+      "hv" '(helpful-variable :which-key "variable")))
+#+end_src
+
 ** which-key
+
+[[https://github.com/justbur/emacs-which-key][which-key]]
 
 #+begin_src emacs-lisp
   (use-package which-key
     :config
     (which-key-mode 1))
-#+end_src
-
-** helpful
-
-#+begin_src emacs-lisp
-  (use-package helpful)
 #+end_src
 
 * Workspace
@@ -357,90 +487,6 @@ TODO: Elaborate
     (winum-mode)
     (winum-set-keymap-prefix (kbd "C-c")))
 #+end_src
-
-* Keybindings
-** macOS
-
-#+begin_src emacs-lisp
-  (if (eq system-type 'darwin)
-      ;; Use command key as meta
-      (setq mac-command-modifier 'meta)
-
-    ;; Leave left option alone
-    (setq mac-option-modifier 'none)
-
-    ;; Map right option key to super
-    (setq mac-right-option-modifier 'alt))
-#+end_src
-
-** General
-
-https://github.com/noctuid/general.el
-
-#+begin_src emacs-lisp
-  ;; Make <escape> quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-  ;; General
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    (general-create-definer ngs/leader-def
-      :keymaps '(normal emacs)
-      :prefix "SPC")
-
-    (general-create-definer ngs/local-leader-def
-      :keymaps '(normal emacs)
-      :prefix ",")
-
-    (ngs/leader-def
-      "f"   '(:ignore t :which-key "find")
-      "ff"  '(project-find-file :which-key "file")
-
-      "p"  '(:ignore t :which-key "project")
-      "pf" '(project-find-file :which-key "find file")
-      "pk" '(project-kill-buffers :which-key "kill buffers")
-      "pp" '(project-switch-project :which-key "switch")
-
-      "g"  '(:ignore g :which-key "git")
-      "gs" '(magit-status :which-key "status")
-
-      "h"  '(:ignore g :which-key "help")
-      "hh" '(helpful-at-point :which-key "at point")
-      "hf" '(helpful-callable :which-key "function")
-      "hc" '(helpful-command :which-key "command")
-      "hk" '(helpful-key :which-key "key")
-      "hK" '(describe-keymap :which-key "keymap")
-      "hm" '(describe-mode :which-key "mode")
-      "hv" '(helpful-variable :which-key "variable")
-
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(treemacs :which-key "treemacs")))
-#+end_src
-
-** Guide
-
-TODO: Describe face (=hF=?)
-
-| Key(s) | Action                  |
-|--------+-------------------------|
-| =f=    | find (prefix)           |
-| =fb=   | find buffer             |
-| =ff=   | find file               |
-| =fg=   | find text (grep)        |
-| =fl=   | find line               |
-| =fr=   | find recent file        |
-| =h=    | help (prefix)           |
-| =hK=   | describe keymap         |
-| =hc=   | describe callable       |
-| =hf=   | describe function       |
-| =hh=   | describe thing at point |
-| =hk=   | describe key            |
-| =hm=   | describe mode           |
-| =hv=   | describe variable       |
-
-#+TBLFM: $1=hk]
 
 * Editing
 ** Indentation
@@ -545,11 +591,11 @@ TODO: https://github.com/suonlight/multi-vterm
 ** Keybindings
 
 #+begin_src emacs-lisp
-  (use-package org
-    :ensure nil
-    :config
-    (ngs/local-leader-def
-      "l" '(org-insert-link :which-key "insert-link")))
+;;  (use-package org
+;;   :ensure nil
+;;    :config
+;;    (ngs/local-leader-def
+;;      "l" '(org-insert-link :which-key "insert-link")))
 #+end_src
 
 ** Configuration
@@ -597,14 +643,29 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
   (use-package magit
     :config
     (ngs/leader-def
-      "g" '(:ignore t :which-key "git")
       "gb" '(magit-blame :which-key "blame")
       "gl" '(magit-log :which-key "log")
       "gs" '(magit-status :which-key "git")))
 #+end_src
 
-* TODOs
-** Modes
+* Unsorted
+** Text Scale Hydra
+
+#+begin_src emacs-lisp
+  (use-package default-text-scale)
+
+  (defhydra hydra-text-scale (:timeout 4)
+    "scale text"
+    ("=" default-text-scale-increase "larger")
+    ("-" default-text-scale-decrease "smaller")
+    ("0" default-text-scale-reset "reset")
+    ("q" nil "quit" :exit t))
+
+  (ngs/leader-def
+    "ts" '(hydra-text-scale/body :which-key "scale text"))
+#+end_src
+
+** recentf-mode
 
 =recentf-mode= remembers recently-visited files, which can be selected from using the =recentf= interactive function.
 
@@ -612,15 +673,15 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
   (recentf-mode t)
 #+end_src
 
+** winner-mode
+
 =winner-mode= allows the user to undo and redo window layout changes, which is super handy when dealing with Emacs’s often unpredictable windowing system.
 
 #+begin_src emacs-lisp
   (winner-mode 1)
 #+end_src
 
-** Packages
-
-*** savehist
+** savehist
 
 The built-in =savehist= package remembers prompt inputs between sessions, thereby creating a persistent command history.
 
@@ -632,9 +693,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
     (savehist-mode))
 #+end_src
 
-*** ElDoc
-
-TODO Describe ElDoc
+** ElDoc
 
 #+begin_src emacs-lisp
   (use-package eldoc
