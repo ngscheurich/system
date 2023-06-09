@@ -9,5 +9,6 @@
     glow
     md-tangle
     vale
+    nodePackages_latest.mermaid-cli
   ];
 }
