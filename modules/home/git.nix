@@ -98,6 +98,7 @@
 
       # Miscellaneous project files
       "requests.http"
+      ".sqllsrc.json"
 
       # direnv caches
       ".direnv/"
