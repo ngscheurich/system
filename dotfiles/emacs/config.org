@@ -18,7 +18,7 @@ TODO: Mention ~(interactive)~
 #+begin_src emacs-lisp
   (defun ngs/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
-                        (locate-user-emacs-file "config.org"))
+                       (locate-user-emacs-file "config.org"))
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle)
         (message "Tangled config files"))))
@@ -124,7 +124,6 @@ Make =<esc>= quit prompts.
 
 https://github.com/noctuid/general.el
 
-
 #+begin_src emacs-lisp
   (use-package general
     :config
@@ -139,14 +138,14 @@ https://github.com/noctuid/general.el
       :prefix ",")
 
     (ngs/leader-def
-      "a" '(:ignore t :which-key "apps")
-      "f" '(:ignore t :which-key "find")
+      "a" '(:ignore a :which-key "apps")
+      "f" '(:ignore f :which-key "find")
       "g" '(:ignore g :which-key "git")
-      "h" '(:ignore g :which-key "help")
-      "p" '(:ignore t :which-key "project")
+      "h" '(:ignore h :which-key "help")
+      "p" '(:ignore p :which-key "project")
       "t" '(:ignore t :which-key "toggles")
 
-      "ff"  '(project-find-file :which-key "file")
+      "ff"  '(project-find-file :which-key "files")
 
       "pf" '(project-find-file :which-key "find file")
       "pk" '(project-kill-buffers :which-key "kill buffers")
@@ -236,7 +235,7 @@ The [[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads th
     (circadian-setup))
 #+end_src
 
-*** TODO Other themes
+*** TODO Other themes (default, leuven, zenburn)
 
 #+begin_src emacs-lisp
   (defun ngs/switch-theme (new-theme)
@@ -317,13 +316,14 @@ I augment Emacs’ built-in completion systems with some excellent community pac
   (use-package consult)
 
   (ngs/leader-def
-    "/"   '(consult-line :which-key "line")
-    "SPC" '(consult-buffer :which-key "buffer")
-    "fb"  '(consult-buffer :which-key "buffer")
+    "/"   '(consult-line :which-key "lines")
+    "SPC" '(consult-buffer :which-key "buffers")
+    "fb"  '(consult-buffer :which-key "buffers")
     "fg"  '(consult-grep :which-key "grep")
     "fi"  '(consult-imenu :which-key "items")
-    "fl"  '(consult-line :which-key "line")
-    "fr"  '(consult-recent-file :which-key "recent"))
+    "fl"  '(consult-line :which-key "lines")
+    "fr"  '(consult-recent-file :which-key "recents")
+    "fq"  '(consult-flymake :which-key "errors"))
 #+end_src
 
 ** Orderless
@@ -341,20 +341,21 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 [[https://github.com/minad/corfu][Corfu]] (Completion Overlay Region FUnction) enhances completion at point, i.e. completion that occurs at the location of the cursor, with a pop-up completion UI. I load and enable =corfu-popupinfo=, an included extension that displays information for the selected completion candidate beside the candidate list.
 
 #+begin_src elisp
-    (defvar ngs/corfu-extensions-directory
-      (format "%sstriaght/build/corfu/extensions" user-emacs-directory)
-      "Path to Corfu’s included extensions")
+  (defvar ngs/corfu-extensions-directory
+    (format "%sstraight/build/corfu/extensions" user-emacs-directory)
+    "Path to Corfu’s included extensions")
 
-    (use-package corfu
-      :load-path ngs/corfu-extensions-directory
-      :custom
-      (corfu-auto t)
-      :bind
-      (:map corfu-map ("SPC" . corfu-insert-separator))
-      :init
-      (global-corfu-mode))
-      ;; (require 'corfu-popupinfo)
-      ;; (corfu-popupinfo-mode))
+  (use-package corfu
+    :load-path ngs/corfu-extensions-directory
+    :custom
+    (corfu-auto t)
+    :bind
+    (:map corfu-map ("SPC" . corfu-insert-separator))
+    :init
+    (global-corfu-mode)
+    (require 'corfu-popupinfo)
+    (corfu-popupinfo-mode)
+    (setq corfu-popupinfo-delay '(0.5 . 0.2)))
 #+end_src
 
 ** Cape
@@ -413,15 +414,66 @@ There are parts of Emacs, e.g. =help-mode=, =M-x calendar=, Eshell, which are no
     (evil-collection-init))
 #+end_src
 
+** evil-surround
+
+[[https://github.com/emacs-evil/evil-surround][evil-surround]]
+
+#+begin_src emacs-lisp
+  (use-package evil-surround
+    :after evil
+    :config
+    (global-evil-surround-mode 1))
+#+end_src
+
 ** evil-commentary
 
 [[https://github.com/linktohack/evil-commentary][evil-commentary]] mimics the functionality of [[https://tpo.pe/][Tim Pope]]'s [[https://github.com/tpope/vim-commentary][commentary.vim]] plugin.
 
 #+begin_src emacs-lisp
   (use-package evil-commentary
+    :diminish
     :after evil
     :config
     (evil-commentary-mode))
+#+end_src
+
+** evil-cleverparens
+
+[[https://github.com/emacs-evil/evil-cleverparens][evil-cleverparens]]
+
+#+begin_src emacs-lisp
+  (use-package evil-cleverparens
+    :diminish
+    :after evil
+    :config
+    (evil-cleverparens-mode))
+#+end_src
+
+* Workspace
+** Perspective
+
+[[https://github.com/nex3/perspective-el][Perspective]] provides multiple named workspaces.
+
+TODO: Elaborate
+
+#+begin_src emacs-lisp
+  (use-package perspective
+    :custom
+    (persp-mode-prefix-key (kbd "C-x x"))
+    :init (persp-mode))
+#+end_src
+
+** Frames
+** Buffers
+** Windows
+** winum
+
+[[https://github.com/deb0ch/emacs-winum][winum]] assigns a number to each window and provides functions for switching windows by number. It can also number frames.
+
+#+begin_src emacs-lisp
+  (use-package winum
+    :config
+    (winum-mode))
 #+end_src
 
 * Discoverability
@@ -455,37 +507,9 @@ Emacs’ discoverability is unparalleled, and I will write more about it later. 
 
 #+begin_src emacs-lisp
   (use-package which-key
+    :diminish
     :config
     (which-key-mode 1))
-#+end_src
-
-* Workspace
-** Perspective
-
-[[https://github.com/nex3/perspective-el][Perspective]] provides multiple named workspaces.
-
-TODO: Elaborate
-
-#+begin_src emacs-lisp
-  (use-package perspective
-    :custom
-    (persp-mode-prefix-key (kbd "C-x x"))
-    :init (persp-mode))
-
-#+end_src
-
-** Frames
-** Buffers
-** Windows
-** winum
-
-[[https://github.com/deb0ch/emacs-winum][winum]] assigns a number to each window and provides functions for switching windows by number. It can also number frames.
-
-#+begin_src emacs-lisp
-  (use-package winum
-    :config
-    (winum-mode)
-    (winum-set-keymap-prefix (kbd "C-c")))
 #+end_src
 
 * Editing
@@ -506,7 +530,7 @@ https://github.com/abo-abo/avy
     :after evil
     :bind (:map evil-normal-state-map
                 ("s" . 'avy-goto-char-2)
-                ("f"  . 'evil-avy-goto-char-in-line)))
+                ("f" . 'avy-goto-char-in-line)))
 #+end_src
 
 https://github.com/rolandwalker/simpleclip
@@ -542,9 +566,23 @@ https://github.com/rolandwalker/simpleclip
 #+end_src
 
 * Programming
-** Languages
+** Elixir
 
-I employ a number of programming language modes to provide syntax highlighting and other useful functions related to code I work with.
+#+begin_src emacs-lisp
+  (use-package exunit
+    :diminish
+    :hook (elixir-ts-mode . exunit-mode)
+    :config
+    (ngs/local-leader-def
+      "t" '(:ignore t :which-key "test")
+      "ta" '(exunit-verify-all :which-key "all")
+      "tb" '(exunit-verify :which-key "buffer")
+      "td" '(exunit-debug :which-key "debug")
+      "ts" '(exunit-verify-single :which-key "single")
+      "tt" '(exunit-rerun :which-key "rerun")))
+#+end_src
+
+** Other Languages
 
 #+begin_src emacs-lisp
   (use-package elixir-ts-mode)
@@ -563,17 +601,22 @@ I employ a number of programming language modes to provide syntax highlighting a
 
   (defun ngs/language-server-program (language)
     (cdr (assoc language ngs/language-server-programs)))
-#+end_src
 
-#+begin_src emacs-lisp
   (use-package eglot
     :config
     (add-to-list 'eglot-server-programs
-     '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
+                 '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
     (add-to-list 'eglot-server-programs
-     '(sql-mode  "sql-language-server" "up" "--method" "stdio"))
+                 '(sql-mode  "sql-language-server" "up" "--method" "stdio"))
+    (general-define-key
+     :states 'normal
+     :keymaps 'eglot-mode-map
+     "K" 'eldoc-box-help-at-point)
+    (ngs/local-leader-def
+      "k" 'eldoc-doc-buffer
+      "f" 'eglot-format-buffer)
     :hook
-    ((elixir-mode . eglot-ensure)
+    ((elixir-ts-mode . eglot-ensure)
      (sql-mode . eglot-ensure)))
 #+end_src
 
@@ -679,6 +722,9 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
 
 #+begin_src emacs-lisp
   (winner-mode 1)
+  (ngs/leader-def
+    "u" '(winner-undo :which-key "winner-undo")
+    "r" '(winner-redo :which-key "winner-redo"))
 #+end_src
 
 ** savehist
@@ -698,6 +744,76 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 #+begin_src emacs-lisp
   (use-package eldoc
     :ensure nil
+    :diminish
     :init
     (setq eldoc-echo-area-use-multiline-p nil))
+
+  (use-package eldoc-box)
+#+end_src
+
+* Scratch
+
+#+begin_src emacs-lisp
+  ;; The :hook keyword allows adding functions onto package hooks. The
+  ;; following are equivalent:
+
+  ;; (use-package company
+  ;;   :hook (prog-mode . company-mode))
+
+  ;; (use-package company
+  ;;   :commands company-mode
+  ;;   :init
+  ;;   (add-hook 'prog-mode-hook #'company-mode))
+
+  (use-package delight)
+
+  (use-package diminish
+    :config
+    (diminish 'auto-revert-mode)
+    (diminish 'visual-line-mode)
+    (diminish 'evil-collection-unimpaired-mode))
+
+  (use-package popper)
+  
+  (use-package flymake-diagnostic-at-point
+    :after flymake
+    :hook (flymake-mode . flymake-diagnostic-at-point-mode)
+    :init
+    (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
+
+  (use-package eldoc-box
+    :config
+    (general-define-key
+     :states 'normal
+     :keymap global-map
+            "K" 'eldoc-box-help-at-point))
+ 
+  ;; ;; * Mode Keybindings
+  ;; (general-define-key
+  ;;  :states 'normal
+  ;;  :keymaps 'emacs-lisp-mode-map
+  ;;  ;; or xref equivalent
+  ;;  "K" 'elisp-slime-nav-describe-elisp-thing-at-point)
+  ;; ;; `general-def' can be used instead for `evil-define-key'-like syntax
+  ;; (general-def 'normal emacs-lisp-mode-map
+  ;;   "K" 'elisp-slime-nav-describe-elisp-thing-at-point)
+
+  ;; https://github.com/jdtsmith/kind-icon
+  (use-package kind-icon
+    :after corfu
+    :custom
+    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+    :config
+    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+  (defun corfu-enable-always-in-minibuffer ()
+    "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+    (unless (or (bound-and-true-p mct--active)
+                (bound-and-true-p vertico--input)
+                (eq (current-local-map) read-passwd-map))
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay '(0 . 0))
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 #+end_src
