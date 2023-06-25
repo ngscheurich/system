@@ -4,7 +4,7 @@ return {
   clangd = {},
 
   elixirls = {
-    cmd = { "/Users/nscheurich/Projects/elixir-ls/release/language_server.sh" },
+    cmd = { "~/Projects/elixir-ls/release/language_server.sh" },
   },
 
   lua_ls = {
