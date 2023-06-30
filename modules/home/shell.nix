@@ -85,14 +85,14 @@
         "$character"
       ];
 
-      character = { vimcmd_symbol = "[🅽 ](bold blue)"; };
+      character = { vimcmd_symbol = "[┃](bold blue)"; };
 
       directory = { read_only = ""; };
 
       fill = { symbol = " "; };
 
       git_branch = {
-        symbol = " ";
+        symbol = " ";
         style = "purple";
         truncation_length = 32;
       };
@@ -100,7 +100,7 @@
       git_status = { style = "bold purple"; };
 
       nix_shell = {
-        symbol = "";
+        symbol = "";
         format = "[$symbol nix]($style) ";
         style = "blue";
       };
