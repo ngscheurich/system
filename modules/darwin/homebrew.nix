@@ -50,6 +50,7 @@
       "raycast"
       "spotify"
       "statusfy"
+      "tidal"
       "todoist"
       "vlc"
       "wireshark"
