@@ -17,11 +17,12 @@ TODO: Mention ~(interactive)~
 
 #+begin_src emacs-lisp
   (defun ngs/org-babel-tangle-config ()
+    (interactive)
     (when (string-equal (buffer-file-name)
-                       (locate-user-emacs-file "config.org"))
+                        "/private/etc/system/dotfiles/emacs/config.org")
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle)
-        (message "Tangled config files"))))
+        (message "Tangled config files."))))
 
   (add-hook 'org-mode-hook (lambda ()
      (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
@@ -147,6 +148,8 @@ https://github.com/noctuid/general.el
 
       "ff"  '(project-find-file :which-key "files")
 
+      "hF" '(describe-face :which-key "faces")
+
       "pf" '(project-find-file :which-key "find file")
       "pk" '(project-kill-buffers :which-key "kill buffers")
       "pp" '(project-switch-project :which-key "switch")))
@@ -178,7 +181,6 @@ TODO: Describe face (=hF=?)
 ** Hydra
 
 #+begin_src emacs-lisp
-i
   (use-package hydra)
 #+end_src
 
@@ -216,13 +218,17 @@ I also define a custom function to run after the themes load: ~ngs/modus-themes-
 #+begin_src emacs-lisp
   (use-package modus-themes
     :init
-    (defun ngs/modus-themes-custom-faces ()
-      (modus-themes-with-colors
-        (custom-set-faces
-         `(mode-line ((,c :box (:line-width 3 :color ,bg-mode-line-active))))
-         `(mode-line-inactive ((,c :box (:line-width 3 :color ,bg-mode-line-inactive)))))))
+    (defun ngs-modus-themes-custom-faces ()
+      (interactive)
+      (let ((width (if current-prefix-arg
+                       current-prefix-arg
+                     4)))
+        (modus-themes-with-colors
+          (custom-set-faces
+           `(mode-line ((,c :box (:line-width ,width :color ,bg-mode-line-active))))
+           `(mode-line-inactive ((,c :box (:line-width ,width :color ,bg-mode-line-inactive))))))))
     :hook
-    (modus-themes-after-load . #'ngs/modus-themes-custom-faces))
+    (modus-themes-after-load . ngs-modus-themes-custom-faces))
 #+end_src
 
 The [[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads the dark-on-light Modus theme (=modus-operandi-tinted=) or the light-on-dark one (=modus-vivendi-tinted=) based on the time of day.
@@ -274,6 +280,14 @@ Quickly referencing line numbers is a huge convenience when viewing and editing 
 
 #+begin_src emacs-lisp
   (use-package centaur-tabs
+    :general
+    ("M-}" 'centaur-tabs-forward-tab
+     "M-{" 'centaur-tabs-backward-tab
+     "C-M-{" 'centaur-tabs-backward-group
+     "C-M-}" 'centaur-tabs-forward-group)
+    (general-nmap
+      "gt" 'centaur-tabs-forward-tab
+      "gT" 'centaur-tabs-forward-tab)
     :config
     (centaur-tabs-mode t))
 #+end_src
@@ -386,13 +400,14 @@ TODO: https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-set-init
     (evil-want-C-u-scroll t "'C-u' to scroll by half a page")
     (evil-want-Y-yank-to-eol t "'Y' to yank to the end of the line")
     (evil-want-keybinding nil "Don't load bindings for additional modes (see 'Evil Collection'")
-    :bind
-    (:map evil-normal-state-map
-          ("<up>" . 'evil-window-up)
-          ("<down>" . 'evil-window-down)
-          ("<left>" . 'evil-window-left)
-          ("<right>" . 'evil-window-right)
-          ("-" . dired-jump))
+    ;; TODO: Why does this ~:bind~ put evil-mode into a weird state?
+    ;; :bind
+    ;; (:map evil-normal-state-map
+    ;;       ("<up>" . 'evil-window-up)
+    ;;       ("<down>" . 'evil-window-down)
+    ;;       ("<left>" . 'evil-window-left)
+    ;;       ("<right>" . 'evil-window-right)
+    ;;       ("-" . dired-jump))
     :config
     (evil-mode 1))
 #+end_src
@@ -631,15 +646,6 @@ TODO: https://github.com/suonlight/multi-vterm
 #+end_src
 
 * Org Mode
-** Keybindings
-
-#+begin_src emacs-lisp
-;;  (use-package org
-;;   :ensure nil
-;;    :config
-;;    (ngs/local-leader-def
-;;      "l" '(org-insert-link :which-key "insert-link")))
-#+end_src
 
 ** Configuration
 
@@ -754,40 +760,37 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 * Scratch
 
 #+begin_src emacs-lisp
-  ;; The :hook keyword allows adding functions onto package hooks. The
-  ;; following are equivalent:
-
-  ;; (use-package company
-  ;;   :hook (prog-mode . company-mode))
-
-  ;; (use-package company
-  ;;   :commands company-mode
-  ;;   :init
-  ;;   (add-hook 'prog-mode-hook #'company-mode))
-
-  (use-package delight)
-
+  ;; Hide some minor modes in the mode line
   (use-package diminish
     :config
     (diminish 'auto-revert-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'evil-collection-unimpaired-mode)
+    (diminish 'evil-commentary-mode)
+    (diminish 'evil-goggles-mode)
     (diminish 'visual-line-mode)
-    (diminish 'evil-collection-unimpaired-mode))
+    (diminish 'which-key-mode))
 
-  (use-package popper)
-  
+  ;; Treat certain buffers as ephemeral
+  (use-package popper
+    :config
+    (popper-mode))
+
+  ;; TODO: Describe.
   (use-package flymake-diagnostic-at-point
     :after flymake
     :hook (flymake-mode . flymake-diagnostic-at-point-mode)
     :init
     (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
 
+  ;; Display docs at point
   (use-package eldoc-box
     :config
     (general-define-key
      :states 'normal
      :keymap global-map
-            "K" 'eldoc-box-help-at-point))
- 
+     "K" 'eldoc-box-help-at-point))
+
   ;; ;; * Mode Keybindings
   ;; (general-define-key
   ;;  :states 'normal
@@ -806,6 +809,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
     :config
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
+  ;; Enable Corfu in the minibuffer
   (defun corfu-enable-always-in-minibuffer ()
     "Enable Corfu in the minibuffer if Vertico/Mct are not active."
     (unless (or (bound-and-true-p mct--active)
@@ -815,5 +819,58 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
                   corfu-popupinfo-delay '(0 . 0))
       (corfu-mode 1)))
+
   (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+  ;; Window navigation with arrow keys
+  (general-nmap
+   "<up>" 'evil-window-up
+   "<down>" 'evil-window-down
+   "<left>" 'evil-window-left
+   "<right>" 'evil-window-right)
+
+  ;; Project tree
+  (use-package treemacs)
+  (use-package treemacs-nerd-icons
+    :config
+    (treemacs-load-theme "nerd-icons"))
+
+  ;; Nerd icons
+  (use-package nerd-icons)
+
+  ;; Use nerd icons in dired
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
+
+  ;; Paredit mode
+  (use-package paredit
+    :general
+    (:states '(normal insert)
+      "C-M-]" 'paredit-forward-slurp-sexp
+      "C-M-[" 'paredit-backward-slurp-sexp)
+    :hook
+    (emacs-lisp-mode . paredit-mode))
+
+  ;; Narrowing keybinds
+  (ngs/leader-def
+    "n"  '(:ignore n :which-key "narrow")
+    "ne" '(sp-narrow-to-sexp n :which-key "sexp")
+    "nn" '(narrow-to-defun :which-key "defun")
+    "np" '(narrow-to-page n :which-key "page")
+    "nr" '(narrow-to-region n :which-key "region")
+    "nw" '(widen n :which-key "widen"))
+
+  ;; Highlight acted-upon text
+  (use-package evil-goggles
+    :ensure t
+    :init
+    :config
+    (evil-goggles-mode)
+    (evil-goggles-use-diff-faces))
+
+  ;; Search result info in mode line
+  (use-package anzu
+    :config
+    (anzu-mode))
 #+end_src
