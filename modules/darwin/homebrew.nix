@@ -16,9 +16,14 @@
       "homebrew/cask-versions"
       "homebrew/core"
       "homebrew/services"
+      "d12frosted/emacs-plus"
     ];
 
     brews = [
+      {
+        name = "emacs-plus@29";
+        args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
+      }
       "zellij"
     ];
 
