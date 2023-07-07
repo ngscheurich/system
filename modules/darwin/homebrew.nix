@@ -52,6 +52,7 @@
       "obs"
       "postico"
       "postman"
+      "protonvpn"
       "raycast"
       "spotify"
       "statusfy"
