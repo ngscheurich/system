@@ -168,7 +168,7 @@ Install [Homebrew]:
 Clone this repository:
 
     $ sudo git clone https://github.com/ngscheurich/system.git /etc/system
-    $ sudo chown -R nick:staff /etc/system
+    $ sudo chown -R $(whoami):staff /etc/system
 
 Set the hostname:
 
