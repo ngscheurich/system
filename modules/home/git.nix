@@ -49,7 +49,6 @@
 
       # Logs and databases
       "*.log"
-      "*.sql"
       "*.sqlite"
 
       # OS generated files
