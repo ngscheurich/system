@@ -388,8 +388,10 @@ I’ve been a [[https://www.vim.org/][Vim]] (or [[https://neovim.io/][Neovim]]) 
 
 Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs, is superb. It does a great job of emulating Vim’s text editing modes, while also implementing a command-line mode and many common Vim commands, e.g. ~:write~, ~:normal~, ~:registers~, ~read~, ~:!shell-command~. Importantly, it also offers an API for defining one’s own motions, text objects, etc.
 
+Since =evil-want-C-u-scroll= is set to =t=, we need to rebind the /universal argument/ keybinding (which is =C-u= by default).
+
 TODO: List Vim packages that Evil emulates, e.g. unimpaired.vim.
-TODO: https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-set-initial-state
+TODO: Some buffers should start in a state other than normal, e.g. shell buffers in insert? See https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-set-initial-state.
 
 #+begin_src  emacs-lisp
   (use-package evil
@@ -399,23 +401,17 @@ TODO: https://evil.readthedocs.io/en/latest/settings.html#elispobj-evil-set-init
     (evil-want-C-i-jump t "'C-i' to jump to next location")
     (evil-want-C-u-scroll t "'C-u' to scroll by half a page")
     (evil-want-Y-yank-to-eol t "'Y' to yank to the end of the line")
-    (evil-want-keybinding nil "Don't load bindings for additional modes (see 'Evil Collection'")
-    ;; TODO: Why does this ~:bind~ put evil-mode into a weird state?
-    ;; :bind
-    ;; (:map evil-normal-state-map
-    ;;       ("<up>" . 'evil-window-up)
-    ;;       ("<down>" . 'evil-window-down)
-    ;;       ("<left>" . 'evil-window-left)
-    ;;       ("<right>" . 'evil-window-right)
-    ;;       ("-" . dired-jump))
+    (evil-want-keybinding nil "Don't load bindings for additional modes (see 'Evil Collection')")
+    :general
+    (general-nmap
+      "<up>" 'evil-window-up
+      "<down>" 'evil-window-down
+      "<left>" 'evil-window-left
+      "<right>" 'evil-window-right
+      "-" 'dired-jump)
     :config
+    (global-set-key (kbd "C-M-u") 'universal-argument)
     (evil-mode 1))
-#+end_src
-
-Since =evil-want-C-u-scroll= is set to =t=, we need to rebind the /universal argument/ keybinding (which is =C-u= by default).
-
-#+begin_src emacs-lisp
-  (global-set-key (kbd "C-M-u") 'universal-argument)
 #+end_src
 
 ** Evil Collection
@@ -766,10 +762,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
     (diminish 'auto-revert-mode)
     (diminish 'eldoc-mode)
     (diminish 'evil-collection-unimpaired-mode)
-    (diminish 'evil-commentary-mode)
-    (diminish 'evil-goggles-mode)
-    (diminish 'visual-line-mode)
-    (diminish 'which-key-mode))
+    (diminish 'visual-line-mode))
 
   ;; Treat certain buffers as ephemeral
   (use-package popper
@@ -790,16 +783,6 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
      :states 'normal
      :keymap global-map
      "K" 'eldoc-box-help-at-point))
-
-  ;; ;; * Mode Keybindings
-  ;; (general-define-key
-  ;;  :states 'normal
-  ;;  :keymaps 'emacs-lisp-mode-map
-  ;;  ;; or xref equivalent
-  ;;  "K" 'elisp-slime-nav-describe-elisp-thing-at-point)
-  ;; ;; `general-def' can be used instead for `evil-define-key'-like syntax
-  ;; (general-def 'normal emacs-lisp-mode-map
-  ;;   "K" 'elisp-slime-nav-describe-elisp-thing-at-point)
 
   ;; https://github.com/jdtsmith/kind-icon
   (use-package kind-icon
@@ -822,13 +805,6 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
   (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
-  ;; Window navigation with arrow keys
-  (general-nmap
-   "<up>" 'evil-window-up
-   "<down>" 'evil-window-down
-   "<left>" 'evil-window-left
-   "<right>" 'evil-window-right)
-
   ;; Project tree
   (use-package treemacs)
   (use-package treemacs-nerd-icons
@@ -845,6 +821,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
   ;; Paredit mode
   (use-package paredit
+    :diminish
     :general
     (:states '(normal insert)
       "C-M-]" 'paredit-forward-slurp-sexp
@@ -863,7 +840,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
   ;; Highlight acted-upon text
   (use-package evil-goggles
-    :ensure t
+    :diminish
     :init
     :config
     (evil-goggles-mode)
@@ -873,4 +850,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
   (use-package anzu
     :config
     (anzu-mode))
+
+  (use-package eldoc
+    :diminish)
 #+end_src
