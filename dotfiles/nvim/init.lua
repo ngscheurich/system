@@ -29,8 +29,9 @@ require("core.keymaps")
 require("core.options")
 require("core.signs")
 
--- Set constants
-_G.colorscheme = "base16-tomorrow-night"
+-- Load colorscheme setting
+vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme")
+_G.colorscheme = require("nvim-theme")
 
 -- Load plugin manager
 require("lazy").setup("plugins", {

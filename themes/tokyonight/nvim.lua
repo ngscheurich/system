@@ -1,1 +1,1 @@
-_G.colorscheme = "tokyonight-night"
+return "tokyonight"
