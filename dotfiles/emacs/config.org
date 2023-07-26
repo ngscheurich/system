@@ -571,9 +571,9 @@ https://github.com/rolandwalker/simpleclip
 [[https://github.com/wbolster/emacs-direnv][emacs-direnv]] provides [[https://direnv.net/][direnv]] integration by updating ~process-environment~ and ~exec-path~ based on ~direnv~’s evaluation.
 
 #+begin_src emacs-lisp
-  (use-package direnv
-    :config
-    (direnv-mode))
+  ;; (use-package direnv
+  ;;   :config
+  ;;   (direnv-mode))
 #+end_src
 
 * Programming
@@ -606,17 +606,13 @@ https://github.com/rolandwalker/simpleclip
 ** Language Server Protocol
 
 #+begin_src elisp
-  (defvar ngs/language-server-programs
-    '((elixir . '("~/Projects/elixir-ls/release/language_server.sh")))
-    "Locations of LSP server binaries")
-
   (defun ngs/language-server-program (language)
     (cdr (assoc language ngs/language-server-programs)))
 
   (use-package eglot
     :config
-    (add-to-list 'eglot-server-programs
-                 '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
+    ;; (add-to-list 'eglot-server-programs
+    ;;              '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
     (add-to-list 'eglot-server-programs
                  '(sql-mode  "sql-language-server" "up" "--method" "stdio"))
     (general-define-key
@@ -756,6 +752,39 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 * Scratch
 
 #+begin_src emacs-lisp
+  ;; Make buffers frame-local
+  ;; See https://protesilaos.com/emacs/beframe
+  (use-package beframe
+    :config
+    ;; This is the default value.  Write here the names of buffers that
+    ;; should not be beframed.
+    (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+
+    (beframe-mode 1)
+
+    ;; Bind Beframe commands to a prefix key, such as C-c b:
+    (define-key global-map (kbd "C-c b") beframe-prefix-map)
+
+    (defvar consult-buffer-sources)
+    (declare-function consult--buffer-state "consult")
+
+    (with-eval-after-load 'consult
+      (defface beframe-buffer
+        '((t :inherit font-lock-string-face))
+        "Face for `consult' framed buffers.")
+
+      (defvar beframe-consult-source
+        `( :name     "Frame buffers"
+           :narrow   ?F
+           :category buffer
+           :face     beframe-buffer
+           :history  beframe-history
+           :items    ,#'beframe-buffer-names
+           :action   ,#'switch-to-buffer
+           :state    ,#'consult--buffer-state))
+
+      (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
+
   ;; Hide some minor modes in the mode line
   (use-package diminish
     :config
@@ -824,8 +853,8 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
     :diminish
     :general
     (:states '(normal insert)
-      "C-M-]" 'paredit-forward-slurp-sexp
-      "C-M-[" 'paredit-backward-slurp-sexp)
+             "C-M-]" 'paredit-forward-slurp-sexp
+             "C-M-[" 'paredit-backward-slurp-sexp)
     :hook
     (emacs-lisp-mode . paredit-mode))
 
@@ -853,4 +882,15 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
   (use-package eldoc
     :diminish)
+
+  (use-package envrc
+    :config
+    (with-eval-after-load 'envrc
+      (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))
+    (envrc-global-mode))
+
+  (use-package projectile
+    :config
+    (projectile-mode +1)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 #+end_src
