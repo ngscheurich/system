@@ -7,7 +7,7 @@
 {
   home.packages = with pkgs; [
     # Core
-    neovim-nightly
+    neovim
     tree-sitter
 
     # Tools

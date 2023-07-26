@@ -80,7 +80,7 @@ I maintain a set of Nix modules loosely separated by area of concern. This helps
 
 #### Code
 
-One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. I’m using an [overlay] to get the nightly version since I like test driving new features and sometimes make bad decisions. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter].
+One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter].
 
 #### Crypt
 
@@ -216,7 +216,6 @@ Log out and back in for all changes to take effect.
 [nix-darwin]: https://github.com/LnL7/nix-darwin
 [nix]: https://nixos.org/
 [nixos]: https://en.wikipedia.org/wiki/NixOS
-[overlay]: https://github.com/nix-community/neovim-nightly-overlay
 [ranger]: https://ranger.github.io
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix

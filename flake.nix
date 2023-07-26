@@ -13,8 +13,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-utils.url = "github:numtide/flake-utils";
-
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
@@ -22,8 +20,6 @@
       inherit (inputs.flake-utils.lib) eachSystemMap;
 
       defaultSystems = [ "aarch64-darwin" "x86_64-linux" ];
-
-      overlays = [ inputs.neovim-nightly.overlay ];
 
       mkDarwinSystem =
         { system ? "aarch64-darwin"
@@ -34,7 +30,7 @@
         , extraModules ? [ ]
         }: darwin.lib.darwinSystem {
           inherit system;
-          inputs = { inherit overlays; };
+          inherit inputs;
           modules = baseModules ++ extraModules;
         };
 
@@ -47,7 +43,7 @@
         , extraModules ? [ ]
         }: nixpkgs.lib.nixosSystem {
           inherit system;
-          inputs = { inherit overlays; };
+          inherit inputs;
           modules = baseModules ++ extraModules;
         };
     in

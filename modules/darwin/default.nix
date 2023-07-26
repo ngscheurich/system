@@ -25,7 +25,6 @@
 
   nixpkgs = {
     config.allowUnfree = true;
-    overlays = inputs.overlays;
   };
 
   programs.zsh.enable = true;
