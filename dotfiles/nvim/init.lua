@@ -30,7 +30,7 @@ require("core.options")
 require("core.signs")
 
 -- Load colorscheme setting
-vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme")
+vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
 _G.colorscheme = require("nvim-theme")
 
 -- Load plugin manager
