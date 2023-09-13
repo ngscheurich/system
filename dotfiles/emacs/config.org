@@ -7,19 +7,29 @@
 
 This is my personal *GNU Emacs* configuration. It’s an [[https://orgmode.org/][Org Mode]] document written in a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] style, with text meant for computer interpretation, i.e. /code/, intermingled with plain-language text meant to be parsed by humans. I find that this paradigm works nicely here, as it allows me to colocate my thoughts about parts of the setup along with the Emacs Lisp (Elisp) configuration code itself.
 
-From a technical perspective, when this file is written to disk, each code block in the document is /tangled/ (exported using to a file using ~org-babel-tangle~). Most blocks are exported to the default Emacs initialization file, =init.el=. This process is elaborated on in the following section.
+From a technical perspective, when this file is written to disk, each code block in the document is /tangled/ (exported using to a file using ~org-babel-tangle~). Most blocks are exported to the default Emacs initialization file, =init.el=. This process is elaborated on further in the [[*Configuration Tangling][Configuration Tangling]] section.
+
+** Inspiration & Reference
+
+Configuring Emacs can be quite the journey, and one that I’ve only just recently embarked* upon. If not for amazing prior art and community support I may not have even set foot on the road. From the official manual to [[https://www.reddit.com/r/emacs/][r/emacs]], there is a wealth of support out there for the budding Emacs user. I’d like to call out a few particularly helpful folks and resources.
+
+- Words, spoken and written, by [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
+- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a video series and config by [[https://daviwil.com/][David Wilson]] of [[https://youtube.com/c/SystemCrafters][System Crafters]]
+- [[https://www.masteringemacs.org/][Mastering Emacs]], a book and blog series by [[https://www.masteringemacs.org/about][Mickey Petersen]]
+- [[https://github.com/jasonmj/.emacs.d][Configuration]] by and conversation with [[https://github.com/jasonmj][Jason Johnson]]
+
+Lastly, thanks to [[https://github.com/jkwascom][Joshua Wascom]], whose mentorship helped me understand the value of investing in customizable, well-integrated tools.
+
+\* This is not meant to be an [[https://github.com/oantolin/embark][Embark]] pun, but the reader may think of it that way if they so choose.
 
 ** Configuration Tangling
 
-This code defines a function to check whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangle each code block in the file. It also registers an ~after-save-hook~ to call the function when a buffer is saved.
-
-TODO: Mention ~(interactive)~
+The following code defines a function that checks whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangles each code block in the file. It also registers an ~after-save-hook~ to call the function when a buffer is saved.
 
 #+begin_src emacs-lisp
   (defun ngs/org-babel-tangle-config ()
-    (interactive)
     (when (string-equal (buffer-file-name)
-                        "/private/etc/system/dotfiles/emacs/config.org")
+                        "/etc/system/dotfiles/emacs/config.org")
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle)
         (message "Tangled config files."))))
@@ -27,11 +37,6 @@ TODO: Mention ~(interactive)~
   (add-hook 'org-mode-hook (lambda ()
      (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
 #+end_src
-
-** Inspiration & Reference
-
-- [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a configuration and video series by [[https://daviwil.com/][David Wilson]] of [[https://youtube.com/c/SystemCrafters][System Crafters]]
-- Words, spoken and written, by [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
 
 * The Basics
 
@@ -41,7 +46,6 @@ Emacs has a series of high-level, built-in customizable variables that I change 
   (use-package emacs
     :ensure nil
     :custom
-    (confirm-kill-emacs #'yes-or-no-p "Confirm before quitting")
     (custom-file (locate-user-emacs-file "custom-vars.el") "Set custom file path")
     (frame-resize-pixelwise t "Resize frames by pixels rather than characters")
     (gc-cons-threshold (* 2 1000 1000) "Make GC pauses faster by decreasing threshold")
@@ -50,7 +54,7 @@ Emacs has a series of high-level, built-in customizable variables that I change 
     (message-kill-buffer-query nil "Don't ask to confirm buffer kill")
     (ring-bell-function 'ignore "Suppress the bell")
     (use-short-answers t "Abbreviate yes/no input")
-    (user-email-address "nick@scheurich.haus" "My email address")
+    (user-email-address "nick@scheurich.haus" "My personal email address")
     (user-full-name "Nicholas Scheurich" "My full name")
     (window-resize-pixelwise t "Resize windows by pixels rather than characters"))
 #+end_src
@@ -143,40 +147,10 @@ https://github.com/noctuid/general.el
       "f" '(:ignore f :which-key "find")
       "g" '(:ignore g :which-key "git")
       "h" '(:ignore h :which-key "help")
-      "p" '(:ignore p :which-key "project")
       "t" '(:ignore t :which-key "toggles")
 
-      "ff"  '(project-find-file :which-key "files")
-
-      "hF" '(describe-face :which-key "faces")
-
-      "pf" '(project-find-file :which-key "find file")
-      "pk" '(project-kill-buffers :which-key "kill buffers")
-      "pp" '(project-switch-project :which-key "switch")))
+      "hF" '(describe-face :which-key "faces")))
 #+end_src
-
-** Guide
-
-TODO: Describe face (=hF=?)
-
-| Key(s) | Action                  |
-|--------+-------------------------|
-| =f=    | find (prefix)           |
-| =fb=   | find buffer             |
-| =ff=   | find file               |
-| =fg=   | find text (grep)        |
-| =fl=   | find line               |
-| =fr=   | find recent file        |
-| =h=    | help (prefix)           |
-| =hK=   | describe keymap         |
-| =hc=   | describe callable       |
-| =hf=   | describe function       |
-| =hh=   | describe thing at point |
-| =hk=   | describe key            |
-| =hm=   | describe mode           |
-| =hv=   | describe variable       |
-
-#+TBLFM: $1=hk]
 
 ** Hydra
 
@@ -221,12 +195,12 @@ I also define a custom function to run after the themes load: ~ngs/modus-themes-
     (defun ngs-modus-themes-custom-faces ()
       (interactive)
       (let ((width (if current-prefix-arg
-                       current-prefix-arg
-                     4)))
+                      current-prefix-arg
+                    4)))
         (modus-themes-with-colors
           (custom-set-faces
-           `(mode-line ((,c :box (:line-width ,width :color ,bg-mode-line-active))))
-           `(mode-line-inactive ((,c :box (:line-width ,width :color ,bg-mode-line-inactive))))))))
+          `(mode-line ((,c :box (:line-width ,width :color ,bg-mode-line-active))))
+          `(mode-line-inactive ((,c :box (:line-width ,width :color ,bg-mode-line-inactive))))))))
     :hook
     (modus-themes-after-load . ngs-modus-themes-custom-faces))
 #+end_src
@@ -237,27 +211,27 @@ The [[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads th
   (use-package circadian
     :config
     (setq circadian-themes '(("07:30" . modus-operandi-tinted)
-                             ("19:30" . modus-vivendi-tinted)))
+                            ("18:30" . modus-vivendi-tinted)))
     (circadian-setup))
 #+end_src
 
 *** TODO Other themes (default, leuven, zenburn)
 
 #+begin_src emacs-lisp
-  (defun ngs/switch-theme (new-theme)
-    (let ((current-theme (car custom-enabled-themes)))
-      (disable-theme current-theme))
-    (load-theme new-theme t))
+  ;; (defun ngs/switch-theme (new-theme)
+  ;;   (let ((current-theme (car custom-enabled-themes)))
+  ;;     (disable-theme current-theme))
+  ;;   (load-theme new-theme t))
 
-  (defhydra hydra-theme-switch (:timeout 4)
-    "switch theme"
-    ("d" (ngs/switch-theme 'leuven-dark) "leuven-dark")
-    ("l" (ngs/switch-theme 'leuven) "leuven")
-    ("o" (ngs/switch-theme 'modus-operandi-tinted) "modus-operandi")
-    ("v" (ngs/switch-theme 'modus-vivendi-tinted) "modus-vivendi"))
+  ;; (defhydra hydra-theme-switch (:timeout 4)
+  ;;   "switch theme"
+  ;;  ("d" (ngs/switch-theme 'leuven-dark) "leuven-dark")
+  ;;  ("l" (ngs/switch-theme 'leuven) "leuven")
+  ;;  ("o" (ngs/switch-theme 'modus-operandi-tinted) "modus-operandi")
+  ;;  ("v" (ngs/switch-theme 'modus-vivendi-tinted) "modus-vivendi"))
 
-  (ngs/leader-def
-    "tc" '(hydra-theme-switch/body :which-key "switch theme"))
+  ;; (ngs/leader-def
+  ;;  "tc" '(hydra-theme-switch/body :which-key "switch theme"))
 #+end_src
 
 #+RESULTS:
@@ -282,9 +256,9 @@ Quickly referencing line numbers is a huge convenience when viewing and editing 
   (use-package centaur-tabs
     :general
     ("M-}" 'centaur-tabs-forward-tab
-     "M-{" 'centaur-tabs-backward-tab
-     "C-M-{" 'centaur-tabs-backward-group
-     "C-M-}" 'centaur-tabs-forward-group)
+    "M-{" 'centaur-tabs-backward-tab
+    "C-M-{" 'centaur-tabs-backward-group
+    "C-M-}" 'centaur-tabs-forward-group)
     (general-nmap
       "gt" 'centaur-tabs-forward-tab
       "gT" 'centaur-tabs-forward-tab)
@@ -306,6 +280,7 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 
 #+begin_src emacs-lisp
   (use-package vertico
+    ;; TODO: Should be :config?
     :init (vertico-mode))
 #+end_src
 
@@ -327,17 +302,15 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 [[https://github.com/minad/consult][Consult]] adds a set of commands that provide interesting candidate sources and enhance existing ones. There are lots of great functions provided covering buffer-switching, grepping, Org navigation, and more.
 
 #+begin_src emacs-lisp
-  (use-package consult)
-
-  (ngs/leader-def
-    "/"   '(consult-line :which-key "lines")
-    "SPC" '(consult-buffer :which-key "buffers")
-    "fb"  '(consult-buffer :which-key "buffers")
-    "fg"  '(consult-grep :which-key "grep")
-    "fi"  '(consult-imenu :which-key "items")
-    "fl"  '(consult-line :which-key "lines")
-    "fr"  '(consult-recent-file :which-key "recents")
-    "fq"  '(consult-flymake :which-key "errors"))
+  (use-package consult
+    :config
+    (ngs/leader-def
+      "/"  '(consult-line :which-key "lines")
+      ","  '(consult-buffer :which-key "buffers")
+      "fg" '(consult-ripgrep :which-key "grep")
+      "fi" '(consult-imenu :which-key "items")
+      "fr" '(consult-recent-file :which-key "recents")
+      "fq" '(consult-flymake :which-key "errors")))
 #+end_src
 
 ** Orderless
@@ -476,16 +449,6 @@ TODO: Elaborate
 
 ** Frames
 ** Buffers
-** Windows
-** winum
-
-[[https://github.com/deb0ch/emacs-winum][winum]] assigns a number to each window and provides functions for switching windows by number. It can also number frames.
-
-#+begin_src emacs-lisp
-  (use-package winum
-    :config
-    (winum-mode))
-#+end_src
 
 * Discoverability
 
@@ -615,6 +578,10 @@ https://github.com/rolandwalker/simpleclip
     ;;              '(elixir-ts-mode  "~/Projects/elixir-ls/release/language_server.sh"))
     (add-to-list 'eglot-server-programs
                  '(sql-mode  "sql-language-server" "up" "--method" "stdio"))
+    (add-to-list 'eglot-server-programs
+                 '(javascript-mode  "/Users/nscheurich/.local/share/nvim/mason/bin/typescript-language-server" "--stdio"))
+    (add-to-list 'eglot-server-programs
+                 '(javascript-mode  "/Users/nscheurich/.local/share/nvim/mason/bin/tailwindcss--language-server" "--stdio"))
     (general-define-key
      :states 'normal
      :keymaps 'eglot-mode-map
@@ -752,145 +719,168 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 * Scratch
 
 #+begin_src emacs-lisp
-  ;; Make buffers frame-local
-  ;; See https://protesilaos.com/emacs/beframe
-  (use-package beframe
-    :config
-    ;; This is the default value.  Write here the names of buffers that
-    ;; should not be beframed.
-    (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+;; Make buffers frame-local
+;; See https://protesilaos.com/emacs/beframe
+(use-package beframe
+  :config
+  ;; This is the default value.  Write here the names of buffers that
+  ;; should not be beframed.
+  (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
 
-    (beframe-mode 1)
+  (beframe-mode 1)
 
-    ;; Bind Beframe commands to a prefix key, such as C-c b:
-    (define-key global-map (kbd "C-c b") beframe-prefix-map)
+  ;; Bind Beframe commands to a prefix key, such as C-c b:
+  (define-key global-map (kbd "C-c b") beframe-prefix-map)
 
-    (defvar consult-buffer-sources)
-    (declare-function consult--buffer-state "consult")
+  (defvar consult-buffer-sources)
+  (declare-function consult--buffer-state "consult")
 
-    (with-eval-after-load 'consult
-      (defface beframe-buffer
-        '((t :inherit font-lock-string-face))
-        "Face for `consult' framed buffers.")
+  (with-eval-after-load 'consult
+    (defface beframe-buffer
+      '((t :inherit font-lock-string-face))
+      "Face for `consult' framed buffers.")
 
-      (defvar beframe-consult-source
-        `( :name     "Frame buffers"
-           :narrow   ?F
-           :category buffer
-           :face     beframe-buffer
-           :history  beframe-history
-           :items    ,#'beframe-buffer-names
-           :action   ,#'switch-to-buffer
-           :state    ,#'consult--buffer-state))
+    (defvar beframe-consult-source
+      `( :name     "Frame buffers"
+         :narrow   ?F
+         :category buffer
+         :face     beframe-buffer
+         :history  beframe-history
+         :items    ,#'beframe-buffer-names
+         :action   ,#'switch-to-buffer
+         :state    ,#'consult--buffer-state))
 
-      (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
+    (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
-  ;; Hide some minor modes in the mode line
-  (use-package diminish
-    :config
-    (diminish 'auto-revert-mode)
-    (diminish 'eldoc-mode)
-    (diminish 'evil-collection-unimpaired-mode)
-    (diminish 'visual-line-mode))
+;; Hide some minor modes in the mode line
+(use-package diminish
+  :config
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'visual-line-mode))
 
-  ;; Treat certain buffers as ephemeral
-  (use-package popper
-    :config
-    (popper-mode))
+;; Treat certain buffers as ephemeral
+(use-package popper
+  :config
+  (popper-mode))
 
-  ;; TODO: Describe.
-  (use-package flymake-diagnostic-at-point
-    :after flymake
-    :hook (flymake-mode . flymake-diagnostic-at-point-mode)
-    :init
-    (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
+;; TODO: Describe.
+(use-package flymake-diagnostic-at-point
+  :after flymake
+  :hook (flymake-mode . flymake-diagnostic-at-point-mode)
+  :init
+  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
 
-  ;; Display docs at point
-  (use-package eldoc-box
-    :config
-    (general-define-key
-     :states 'normal
-     :keymap global-map
-     "K" 'eldoc-box-help-at-point))
+;; Display docs at point
+(use-package eldoc-box
+  :config
+  (general-define-key
+   :states 'normal
+   :keymap global-map
+   "K" 'eldoc-box-help-at-point))
 
-  ;; https://github.com/jdtsmith/kind-icon
-  (use-package kind-icon
-    :after corfu
-    :custom
-    (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-    :config
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+;; https://github.com/jdtsmith/kind-icon
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
-  ;; Enable Corfu in the minibuffer
-  (defun corfu-enable-always-in-minibuffer ()
-    "Enable Corfu in the minibuffer if Vertico/Mct are not active."
-    (unless (or (bound-and-true-p mct--active)
-                (bound-and-true-p vertico--input)
-                (eq (current-local-map) read-passwd-map))
-      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
-      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                  corfu-popupinfo-delay '(0 . 0))
-      (corfu-mode 1)))
+;; Enable Corfu in the minibuffer
+(defun corfu-enable-always-in-minibuffer ()
+  "Enable Corfu in the minibuffer if Vertico/Mct are not active."
+  (unless (or (bound-and-true-p mct--active)
+              (bound-and-true-p vertico--input)
+              (eq (current-local-map) read-passwd-map))
+    ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+    (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                corfu-popupinfo-delay '(0 . 0))
+    (corfu-mode 1)))
 
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+(add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
-  ;; Project tree
-  (use-package treemacs)
-  (use-package treemacs-nerd-icons
-    :config
-    (treemacs-load-theme "nerd-icons"))
+;; Project tree
+(use-package treemacs)
+(use-package treemacs-nerd-icons
+  :config
+  (treemacs-load-theme "nerd-icons"))
 
-  ;; Nerd icons
-  (use-package nerd-icons)
+;; Nerd icons
+(use-package nerd-icons)
 
-  ;; Use nerd icons in dired
-  (use-package nerd-icons-dired
-    :hook
-    (dired-mode . nerd-icons-dired-mode))
+;; Use nerd icons in dired
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
 
-  ;; Paredit mode
-  (use-package paredit
-    :diminish
-    :general
-    (:states '(normal insert)
-             "C-M-]" 'paredit-forward-slurp-sexp
-             "C-M-[" 'paredit-backward-slurp-sexp)
-    :hook
-    (emacs-lisp-mode . paredit-mode))
+;; Paredit mode
+(use-package paredit
+  :diminish
+  :general
+  (:states '(normal insert)
+           "C-M-]" 'paredit-forward-slurp-sexp
+           "C-M-[" 'paredit-backward-slurp-sexp)
+  :hook
+  (emacs-lisp-mode . paredit-mode))
 
-  ;; Narrowing keybinds
+;; Narrowing keybinds
+(ngs/leader-def
+  "n"  '(:ignore n :which-key "narrow")
+  "ne" '(sp-narrow-to-sexp n :which-key "sexp")
+  "nn" '(narrow-to-defun :which-key "defun")
+  "np" '(narrow-to-page n :which-key "page")
+  "nr" '(narrow-to-region n :which-key "region")
+  "nw" '(widen n :which-key "widen"))
+
+;; Highlight acted-upon text
+(use-package evil-goggles
+  :diminish
+  :init
+  :config
+  (evil-goggles-mode)
+  (evil-goggles-use-diff-faces))
+
+;; Search result info in mode line
+(use-package anzu
+  :config
+  (anzu-mode))
+
+(use-package eldoc
+  :diminish)
+
+(use-package envrc
+  :config
+  (with-eval-after-load 'envrc
+    (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))
+  (envrc-global-mode))
+
+(use-package project
+  :config
   (ngs/leader-def
-    "n"  '(:ignore n :which-key "narrow")
-    "ne" '(sp-narrow-to-sexp n :which-key "sexp")
-    "nn" '(narrow-to-defun :which-key "defun")
-    "np" '(narrow-to-page n :which-key "page")
-    "nr" '(narrow-to-region n :which-key "region")
-    "nw" '(widen n :which-key "widen"))
+    "pb" '(consult-project-buffer :which-key "buffers")
+    "pf" '(project-find-file :which-key "find file")
+    "pg" '(consult-ripgrep :which-key "grep")
+    "pk" '(project-kill-buffers :which-key "kill buffers")
+    "pp" '(project-switch-project :which-key "switch")
+    "pt" '(multi-vterm-project :which-key "terminal")))
 
-  ;; Highlight acted-upon text
-  (use-package evil-goggles
-    :diminish
-    :init
-    :config
-    (evil-goggles-mode)
-    (evil-goggles-use-diff-faces))
+(use-package ace-window
+  :general
+  (ngs/leader-def
+    "w"  '(ace-window :which-key "windows"))
+  :config
+  (setq aw-dispatch-always t
+        aw-minibuffer-flag t))
 
-  ;; Search result info in mode line
-  (use-package anzu
-    :config
-    (anzu-mode))
+(use-package gdscript-mode
+  :straight (gdscript-mode
+             :type git
+             :host github
+             :repo "godotengine/emacs-gdscript-mode")
+  :hook (gdscript-mode . eglot-ensure))
 
-  (use-package eldoc
-    :diminish)
-
-  (use-package envrc
-    :config
-    (with-eval-after-load 'envrc
-      (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))
-    (envrc-global-mode))
-
-  (use-package projectile
-    :config
-    (projectile-mode +1)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+(use-package org-modern
+  :hook (org-mode . org-modern-mode))
 #+end_src
