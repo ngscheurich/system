@@ -11,10 +11,10 @@ From a technical perspective, when this file is written to disk, each code block
 
 ** Inspiration & Reference
 
-Configuring Emacs can be quite the journey, and one that I’ve only just recently embarked* upon. If not for amazing prior art and community support I may not have even set foot on the road. From the official manual to [[https://www.reddit.com/r/emacs/][r/emacs]], there is a wealth of support out there for the budding Emacs user. I’d like to call out a few particularly helpful folks and resources.
+Configuring Emacs can be quite the journey and, if not for amazing prior art and community support, I may not have set foot on the road. From the official manual to [[https://www.reddit.com/r/emacs/][r/emacs]], there is a wealth of support out there for the budding Emacs user. I’d like to call out a few particularly helpful folks and resources:
 
-- Words, spoken and written, by [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
 - [[https://github.com/daviwil/emacs-from-scratch][Emacs from Scratch]], a video series and config by [[https://daviwil.com/][David Wilson]] of [[https://youtube.com/c/SystemCrafters][System Crafters]]
+- Words, spoken and written, by [[https://protesilaos.com/emacs/][Protesilaos Stavrou]], aka /Prot/
 - [[https://www.masteringemacs.org/][Mastering Emacs]], a book and blog series by [[https://www.masteringemacs.org/about][Mickey Petersen]]
 - [[https://github.com/jasonmj/.emacs.d][Configuration]] by and conversation with [[https://github.com/jasonmj][Jason Johnson]]
 
@@ -24,7 +24,7 @@ Lastly, thanks to [[https://github.com/jkwascom][Joshua Wascom]], whose mentorsh
 
 ** Configuration Tangling
 
-The following code defines a function that checks whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangles each code block in the file. It also registers an ~after-save-hook~ to call the function when a buffer is saved.
+The following code defines a function that checks whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangles each code block in the file. It also registers an ~after-save-hook~ to call the function when the buffer is saved.
 
 #+begin_src emacs-lisp
   (defun ngs/org-babel-tangle-config ()
@@ -38,29 +38,8 @@ The following code defines a function that checks whether we are currently visit
      (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
 #+end_src
 
-* The Basics
-
-Emacs has a series of high-level, built-in customizable variables that I change to better suit my personal tastes and workflows.
-
-#+begin_src emacs-lisp
-  (use-package emacs
-    :ensure nil
-    :custom
-    (custom-file (locate-user-emacs-file "custom-vars.el") "Set custom file path")
-    (frame-resize-pixelwise t "Resize frames by pixels rather than characters")
-    (gc-cons-threshold (* 2 1000 1000) "Make GC pauses faster by decreasing threshold")
-    (history-length 40 "Maximum number of files to keep in history")
-    (inhibit-startup-message t "Bypass the Emacs splash screen")
-    (message-kill-buffer-query nil "Don't ask to confirm buffer kill")
-    (ring-bell-function 'ignore "Suppress the bell")
-    (use-short-answers t "Abbreviate yes/no input")
-    (user-email-address "nick@scheurich.haus" "My personal email address")
-    (user-full-name "Nicholas Scheurich" "My full name")
-    (window-resize-pixelwise t "Resize windows by pixels rather than characters"))
-#+end_src
-
-* Package Management
-** straight.el
+** Package Management
+*** straight.el
 
 Emacs has a built-in packager, =package.el=, but I prefer to use [[https://github.com/radian-software/straight.el][=straight.el=]] for a few key reasons:
 
@@ -94,7 +73,7 @@ Finally we bootstrap =straight.el=, which involves downloading and evaluating th
     (load bootstrap-file nil 'nomessage))
 #+end_src
 
-** use-package
+*** use-package
 
 The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable for keeping configuration code tidy and performant. The following installs it and ensures that packages in =use-package= forms are installed automatically using =straight.el=.
 
@@ -103,9 +82,74 @@ The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable
   (setq straight-use-package-by-default t)
 #+end_src
 
-* Keybindings
+* The Basics
 
-Make =<esc>= quit prompts.
+Emacs has a series of high-level, built-in customizable variables that I change to better suit my personal tastes and workflows.
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :ensure nil
+    :custom
+    (custom-file (locate-user-emacs-file "custom-vars.el") "Set custom file path")
+    (frame-resize-pixelwise t "Resize frames by pixels rather than characters")
+    (gc-cons-threshold (* 2 1000 1000) "Make GC pauses faster by decreasing threshold")
+    (history-length 40 "Maximum number of files to keep in history")
+    (inhibit-startup-message t "Bypass the Emacs splash screen")
+    (message-kill-buffer-query nil "Don't ask to confirm buffer kill")
+    (ring-bell-function 'ignore "Suppress the bell")
+    (use-short-answers t "Abbreviate yes/no input")
+    (user-email-address "nick@scheurich.haus" "My personal email address")
+    (user-full-name "Nicholas Scheurich" "My full name")
+    (window-resize-pixelwise t "Resize windows by pixels rather than characters"))
+#+end_src
+
+* Keybindings
+** General
+
+Just as =use-package= provides convenient macros for managing packages, so does [[https://github.com/noctuid/general.el][General]] for defining keybindings.
+
+In addition to installing and setting up the package I also create two /definers/, keybinding macros that have defaults baked in. The two definers, ~ngs-leader-def~ and ~ngs-local-leader-def~ are meant to mimic Vim’s [[https://neovim.io/doc/user/map.html#%3CLeader%3E][<Leader>]] and [[https://neovim.io/doc/user/map.html#%3CLocalLeader%3E][<LocalLeader>]] prefix keys.
+
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-evil-setup)
+
+    (general-create-definer ngs-leader-def
+      :keymaps '(normal emacs)
+      :prefix "SPC")
+
+    (general-create-definer ngs-local-leader-def
+      :keymaps '(normal emacs)
+      :prefix ","))
+#+end_src
+
+** Groups 
+
+Here I establish some mnemonics that can be used along with the leader key to access groups of bindings.
+
+| Letter | Group   | Description                                    |
+|--------+---------+------------------------------------------------|
+| a      | apps    | Launch applications that run inside Emacs      |
+| f      | find    | Find files, strings, errors, etc.              |
+| g      | git     | Operations with the Git version control system |
+| h      | help    | Access Emacs’ rich help system                 |
+| t      | toggles | Toggle behaviors and UI elements               |
+
+#+begin_src emacs-lisp
+  (ngs/leader-def
+    "a" '(:ignore a :which-key "apps")
+    "f" '(:ignore f :which-key "find")
+    "g" '(:ignore g :which-key "git")
+    "h" '(:ignore h :which-key "help")
+    "t" '(:ignore t :which-key "toggles"))
+#+end_src
+
+Other groups are added alongside configuration for certain packages, e.g. ~p~ for =project.el=.
+
+** Prompts
+
+Classically, =<C-g>= is used to quit prompts, but I prefer to use =<esc>=.
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -113,43 +157,17 @@ Make =<esc>= quit prompts.
 
 ** macOS
 
+The following sets certain keyboard behaviors for macOS.
+
+- Use the =Command= key as =meta=
+- Let the operating system handle the left =Option= key
+- Map the right =Option= key to =super=
+
 #+begin_src emacs-lisp
   (if (eq system-type 'darwin)
-      ;; Use command key as meta
-      (setq mac-command-modifier 'meta)
-
-    ;; Leave left option alone
+    (setq mac-command-modifier 'meta)
     (setq mac-option-modifier 'none)
-
-    ;; Map right option key to super
     (setq mac-right-option-modifier 'alt))
-#+end_src
-
-** General
-
-https://github.com/noctuid/general.el
-
-#+begin_src emacs-lisp
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    (general-create-definer ngs/leader-def
-      :keymaps '(normal emacs)
-      :prefix "SPC")
-
-    (general-create-definer ngs/local-leader-def
-      :keymaps '(normal emacs)
-      :prefix ",")
-
-    (ngs/leader-def
-      "a" '(:ignore a :which-key "apps")
-      "f" '(:ignore f :which-key "find")
-      "g" '(:ignore g :which-key "git")
-      "h" '(:ignore h :which-key "help")
-      "t" '(:ignore t :which-key "toggles")
-
-      "hF" '(describe-face :which-key "faces")))
 #+end_src
 
 ** Hydra
