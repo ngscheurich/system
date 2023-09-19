@@ -27,7 +27,7 @@ Lastly, thanks to [[https://github.com/jkwascom][Joshua Wascom]], whose mentorsh
 The following code defines a function that checks whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in the ~user-emacs-directory~) and, if so, tangles each code block in the file. It also registers an ~after-save-hook~ to call the function when the buffer is saved.
 
 #+begin_src emacs-lisp
-  (defun ngs/org-babel-tangle-config ()
+  (defun ngs-org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
                         "/etc/system/dotfiles/emacs/config.org")
       (let ((org-confirm-babel-evaluate nil))
@@ -35,28 +35,28 @@ The following code defines a function that checks whether we are currently visit
         (message "Tangled config files."))))
 
   (add-hook 'org-mode-hook (lambda ()
-     (add-hook 'after-save-hook #'ngs/org-babel-tangle-config)))
+     (add-hook 'after-save-hook #'ngs-org-babel-tangle-config)))
 #+end_src
 
 ** Package Management
 *** straight.el
 
-Emacs has a built-in packager, =package.el=, but I prefer to use [[https://github.com/radian-software/straight.el][=straight.el=]] for a few key reasons:
+Emacs has a built-in packager, package.el, but I prefer [[https://github.com/radian-software/straight.el][straight.el]] for a few key reasons:
 
 - It affords the ability to use a specific Git revision of a package
 - It only loads the packages specified in this configuration file
 - It supports true portabilty/reproducibility via lockfiles
 - It allows me to easily make ad-hoc changes to packages
 
-There are further advantages, and some disadvantages, when compared to =package.el= which are enumerated in straight.el’s [[https://github.com/raxod502/straight.el#comparison-to-packageel][README]].
+There are further advantages, and some disadvantages, when compared to package.el which are enumerated in straight.el’s [[https://github.com/raxod502/straight.el#comparison-to-packageel][README]].
 
-First, we must prevent =package.el= from loading any packages.
+First, we must prevent package.el from loading any packages.
 
 #+begin_src emacs-lisp :tangle ./early-init.el
   (setq package-enable-at-startup nil)
 #+end_src
 
-Finally we bootstrap =straight.el=, which involves downloading and evaluating the installation file it if it is not detected. See <https://github.com/raxod502/straight.el#getting-started>.
+Finally we bootstrap straight.el, which involves downloading and evaluating the installation file it if it is not detected. See <https://github.com/raxod502/straight.el#getting-started>.
 
 #+begin_src emacs-lisp :tangle ./early-init.el
   (defvar bootstrap-version)
@@ -75,7 +75,7 @@ Finally we bootstrap =straight.el=, which involves downloading and evaluating th
 
 *** use-package
 
-The [[https://github.com/jwiegley/use-package][use-package]] macro is invaluable for keeping configuration code tidy and performant. The following installs it and ensures that packages in =use-package= forms are installed automatically using =straight.el=.
+The [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][use-package]] macro is invaluable for keeping configuration code tidy and performant. The following ensures that packages in =use-package= forms are installed automatically using =straight.el=.
 
 #+begin_src emacs-lisp
   (straight-use-package 'use-package)
@@ -137,7 +137,7 @@ Here I establish some mnemonics that can be used along with the leader key to ac
 | t      | toggles | Toggle behaviors and UI elements               |
 
 #+begin_src emacs-lisp
-  (ngs/leader-def
+  (ngs-leader-def
     "a" '(:ignore a :which-key "apps")
     "f" '(:ignore f :which-key "find")
     "g" '(:ignore g :which-key "git")
@@ -205,7 +205,7 @@ My preferred monospaced programming font these days is [[https://www.monolisa.de
 
 I primarily use the [[https://protesilaos.com/emacs/modus-themes][Modus themes]] by Protesilaos Stavrou, which are optimized for color-contrast accessibility. The basic Modus themes are distributed with Emacs as of version 28.1. However, I prefer the /-tinted/ variants and so load the package from ELPA.
 
-I also define a custom function to run after the themes load: ~ngs/modus-themes-custom-faces~. This function updates certain faces to simulate a bit of padding in the mode line.
+I also define a custom function to run after the themes load: ~ngs-modus-themes-custom-faces~. This function updates certain faces to simulate a bit of padding in the mode line.
 
 #+begin_src emacs-lisp
   (use-package modus-themes
@@ -236,19 +236,19 @@ The [[https://github.com/GuidoSchmidt/circadian.el][Circadian]] package loads th
 *** TODO Other themes (default, leuven, zenburn)
 
 #+begin_src emacs-lisp
-  ;; (defun ngs/switch-theme (new-theme)
+  ;; (defun ngs-switch-theme (new-theme)
   ;;   (let ((current-theme (car custom-enabled-themes)))
   ;;     (disable-theme current-theme))
   ;;   (load-theme new-theme t))
 
   ;; (defhydra hydra-theme-switch (:timeout 4)
   ;;   "switch theme"
-  ;;  ("d" (ngs/switch-theme 'leuven-dark) "leuven-dark")
-  ;;  ("l" (ngs/switch-theme 'leuven) "leuven")
-  ;;  ("o" (ngs/switch-theme 'modus-operandi-tinted) "modus-operandi")
-  ;;  ("v" (ngs/switch-theme 'modus-vivendi-tinted) "modus-vivendi"))
+  ;;  ("d" (ngs-switch-theme 'leuven-dark) "leuven-dark")
+  ;;  ("l" (ngs-switch-theme 'leuven) "leuven")
+  ;;  ("o" (ngs-switch-theme 'modus-operandi-tinted) "modus-operandi")
+  ;;  ("v" (ngs-switch-theme 'modus-vivendi-tinted) "modus-vivendi"))
 
-  ;; (ngs/leader-def
+  ;; (ngs-leader-def
   ;;  "tc" '(hydra-theme-switch/body :which-key "switch theme"))
 #+end_src
 
@@ -322,7 +322,7 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 #+begin_src emacs-lisp
   (use-package consult
     :config
-    (ngs/leader-def
+    (ngs-leader-def
       "/"  '(consult-line :which-key "lines")
       ","  '(consult-buffer :which-key "buffers")
       "fg" '(consult-ripgrep :which-key "grep")
@@ -346,12 +346,12 @@ I augment Emacs’ built-in completion systems with some excellent community pac
 [[https://github.com/minad/corfu][Corfu]] (Completion Overlay Region FUnction) enhances completion at point, i.e. completion that occurs at the location of the cursor, with a pop-up completion UI. I load and enable =corfu-popupinfo=, an included extension that displays information for the selected completion candidate beside the candidate list.
 
 #+begin_src elisp
-  (defvar ngs/corfu-extensions-directory
+  (defvar ngs-corfu-extensions-directory
     (format "%sstraight/build/corfu/extensions" user-emacs-directory)
     "Path to Corfu’s included extensions")
 
   (use-package corfu
-    :load-path ngs/corfu-extensions-directory
+    :load-path ngs-corfu-extensions-directory
     :custom
     (corfu-auto t)
     :bind
@@ -375,7 +375,7 @@ TODO: Configure this
 
 * Evil
 
-I’ve been a [[https://www.vim.org/][Vim]] (or [[https://neovim.io/][Neovim]]) user for many years. Its conception of modality really clicked with me and the /count + operator + motion/text object/ grammar is built in to my fingers at this point. I think editing the “Emacs way” probably offers a good experience but for me, comprehensive Vim emulation is a prime requirement for any platform with which I will be working primarily with text.
+I’ve been a [[https://www.vim.org/][Vim]] (or [[https://neovim.io/][Neovim]]) user for many years. Its concept of modality really clicked with me and the /count + operator + motion/text object/ grammar is built in to my fingers at this point. I think editing the “Emacs way” probably offers a good experience but for me, comprehensive Vim emulation is a prime requirement for any platform with which I will be working with text.
 
 Luckily [[https://github.com/emacs-evil/evil][Evil]], the *extensible vi layer* for Emacs, is superb. It does a great job of emulating Vim’s text editing modes, while also implementing a command-line mode and many common Vim commands, e.g. ~:write~, ~:normal~, ~:registers~, ~read~, ~:!shell-command~. Importantly, it also offers an API for defining one’s own motions, text objects, etc.
 
@@ -475,7 +475,7 @@ Emacs’ discoverability is unparalleled, and I will write more about it later. 
 ** Getting Help
 
 #+begin_src emacs-lisp
-  (ngs/leader-def
+  (ngs-leader-def
     "hK" '(describe-keymap :which-key "keymap")
     "hm" '(describe-mode :which-key "mode"))
 #+end_src
@@ -485,7 +485,7 @@ Emacs’ discoverability is unparalleled, and I will write more about it later. 
 #+begin_src emacs-lisp
   (use-package helpful
     :config
-    (ngs/leader-def
+    (ngs-leader-def
       "hh" '(helpful-at-point :which-key "at point")
       "hf" '(helpful-callable :which-key "function")
       "hc" '(helpful-command :which-key "command")
@@ -565,7 +565,7 @@ https://github.com/rolandwalker/simpleclip
     :diminish
     :hook (elixir-ts-mode . exunit-mode)
     :config
-    (ngs/local-leader-def
+    (ngs-local-leader-def
       "t" '(:ignore t :which-key "test")
       "ta" '(exunit-verify-all :which-key "all")
       "tb" '(exunit-verify :which-key "buffer")
@@ -587,8 +587,8 @@ https://github.com/rolandwalker/simpleclip
 ** Language Server Protocol
 
 #+begin_src elisp
-  (defun ngs/language-server-program (language)
-    (cdr (assoc language ngs/language-server-programs)))
+  (defun ngs-language-server-program (language)
+    (cdr (assoc language ngs-language-server-programs)))
 
   (use-package eglot
     :config
@@ -604,7 +604,7 @@ https://github.com/rolandwalker/simpleclip
      :states 'normal
      :keymaps 'eglot-mode-map
      "K" 'eldoc-box-help-at-point)
-    (ngs/local-leader-def
+    (ngs-local-leader-def
       "k" 'eldoc-doc-buffer
       "f" 'eglot-format-buffer)
     :hook
@@ -631,14 +631,14 @@ TODO: Explore this function more (see https://github.com/daviwil/emacs-from-scra
 ** Layout
 
 #+begin_src emacs-lisp
-  (defun ngs/org-mode-visual-fill ()
+  (defun ngs-org-mode-visual-fill ()
     (setq visual-fill-column-width 100
 	  visual-fill-column-center-text t)
     (visual-line-mode 1)
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
-    :hook (org-mode . ngs/org-mode-visual-fill))
+    :hook (org-mode . ngs-org-mode-visual-fill))
 #+end_src
 
 ** Structure Templates
@@ -668,7 +668,7 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
 #+begin_src emacs-lisp
   (use-package magit
     :config
-    (ngs/leader-def
+    (ngs-leader-def
       "gb" '(magit-blame :which-key "blame")
       "gl" '(magit-log :which-key "log")
       "gs" '(magit-status :which-key "git")))
@@ -687,7 +687,7 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
     ("0" default-text-scale-reset "reset")
     ("q" nil "quit" :exit t))
 
-  (ngs/leader-def
+  (ngs-leader-def
     "ts" '(hydra-text-scale/body :which-key "scale text"))
 #+end_src
 
@@ -705,7 +705,7 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
 
 #+begin_src emacs-lisp
   (winner-mode 1)
-  (ngs/leader-def
+  (ngs-leader-def
     "u" '(winner-undo :which-key "winner-undo")
     "r" '(winner-redo :which-key "winner-redo"))
 #+end_src
@@ -844,7 +844,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
   (emacs-lisp-mode . paredit-mode))
 
 ;; Narrowing keybinds
-(ngs/leader-def
+(ngs-leader-def
   "n"  '(:ignore n :which-key "narrow")
   "ne" '(sp-narrow-to-sexp n :which-key "sexp")
   "nn" '(narrow-to-defun :which-key "defun")
@@ -876,7 +876,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
 (use-package project
   :config
-  (ngs/leader-def
+  (ngs-leader-def
     "pb" '(consult-project-buffer :which-key "buffers")
     "pf" '(project-find-file :which-key "find file")
     "pg" '(consult-ripgrep :which-key "grep")
@@ -886,7 +886,7 @@ The built-in =savehist= package remembers prompt inputs between sessions, thereb
 
 (use-package ace-window
   :general
-  (ngs/leader-def
+  (ngs-leader-def
     "w"  '(ace-window :which-key "windows"))
   :config
   (setq aw-dispatch-always t
