@@ -54,6 +54,7 @@
       "postman"
       "protonvpn"
       "raycast"
+      "reaper"
       "spotify"
       "statusfy"
       "tidal"
