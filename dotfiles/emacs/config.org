@@ -15,20 +15,21 @@
   - [[#emacs][Emacs]]
   - [[#temporary-files][Temporary Files]]
 - [[#environment][Environment]]
+- [[#keybindings][Keybindings]]
+  - [[#general][General]]
 - [[#evil][Evil]]
   - [[#evil-collection][Evil Collection]]
   - [[#supplements][Supplements]]
-- [[#keybindings][Keybindings]]
-  - [[#general][General]]
 - [[#org-mode][Org Mode]]
 - [[#dired][Dired]]
   - [[#this-doesnt-even-work-][This doesn't even work... 😥]]
 - [[#version-control][Version Control]]
+- [[#terminal-emulation][Terminal Emulation]]
 
 * Preface
 This is my personal *GNU Emacs* configuration. It’s an [[https://orgmode.org/][Org Mode]] document written in a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] style, with text meant for computer interpretation, i.e. /code/, intermingled with plain-language text meant to be parsed by humans. I find that this paradigm works nicely here, as it allows me to colocate my thoughts about parts of the setup along with the Emacs Lisp (Elisp) configuration code itself.
 
-From a technical perspective, when this file is written to disk, each code block in the document is /tangled/ (exported using to a file using =org-babel-tangle=). Most blocks are exported to the default Emacs initialization file, =init.el=. This process is elaborated on further in the [[*Configuration Tangling][Configuration Tangling]] section.
+From a technical perspective, when this file is written to disk, each code block in the document is /tangled/ (exported to a file using =org-babel-tangle=). Most blocks are exported to the default Emacs initialization file, =init.el=. This process is elaborated on further in the [[*Configuration Tangling][Configuration Tangling]] section.
 
 ** Inspiration & Reference
 Configuring Emacs can be quite the journey and, if not for amazing prior art and community support, I may not have set foot on the road. From the official manual to [[https://www.reddit.com/r/emacs/][r/emacs]], there is a wealth of support out there for the budding Emacs user. I’d like to call out a few particularly helpful folks and resources:
@@ -39,8 +40,6 @@ Configuring Emacs can be quite the journey and, if not for amazing prior art and
 - [[https://github.com/jasonmj/.emacs.d][Configuration]] by and conversation with [[https://github.com/jasonmj][Jason Johnson]]
 
 Lastly, thanks to [[https://github.com/jkwascom][Joshua Wascom]], whose mentorship helped me understand the value of investing in customizable, well-integrated tools.
-
-\* This is not meant to be an [[https://github.com/oantolin/embark][Embark]] pun, but the reader may think of it that way if they so choose.
 
 * Configuration Tangling
 The following code defines a function that checks whether we are currently visiting a buffer for this file (that is to say, the =config.org= file in ~user-emacs-directory~) and, if so, tangles each code block in the file. It also attaches a hook to ~after-save-hook~ to call the function after the buffer is saved.
@@ -61,7 +60,7 @@ The following code defines a function that checks whether we are currently visit
 
 * Package Management
 ** straight.el
-Emacs has a built-in packager, package.el, but I prefer [[https://github.com/radian-software/straight.el][straight.el]] for a few key reasons:
+Emacs has a built-in package manager, package.el, but I prefer [[https://github.com/radian-software/straight.el][straight.el]] for a few key reasons:
 
 - It affords the ability to use a specific Git revision of a package
 - It only loads the packages specified in this configuration file
@@ -94,7 +93,7 @@ Finally we bootstrap straight.el, which involves downloading and evaluating the 
 #+end_src
 
 ** use-package
-The [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][~use-package~]] macro is invaluable for keeping configuration code tidy and performant. The following ensures that packages in =use-package= forms are installed automatically using =straight.el=.
+The [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][use-package]] macro is invaluable for keeping configuration code tidy and performant. The following ensures that packages in =use-package= forms are installed automatically using =straight.el=.
 
 #+begin_src emacs-lisp
 (straight-use-package 'use-package)
@@ -124,9 +123,9 @@ The [[https://www.gnu.org/software/emacs/manual/html_mono/use-package.html][~use
 #+end_src
 
 ** Temporary Files
-Emacs and its packages generate lots of ancillary files. By default, auto-save and backup files are stored alongside the files they target, which I think is utter madness. Additionally, both built-in and third-party packages are inconsistent in their decisions about where to put data. This can all lead to an Emacs session leaving behind a mess of files strewn haphazardly across your file system. We can do better.
+Emacs and its packages generate lots of ancillary files. By default, auto-save and backup files are stored alongside the files they target, polluting working directories with strange artifacts. Additionally, both built-in and third-party packages are inconsistent in their decisions about where to put data. These things can lead to an Emacs session leaving behind a mess of files strewn haphazardly across your file system. We can do better.
 
-The handy [[https://github.com/emacscollective/no-littering][no-littering]] package will take care of setting paths for /many/, but not all, built-in and third-party packages. I use the default settings, which uses =user-emacs-directory= as a base path and then sets up =etc= for configuration files and =var= for persistent data. For me, this ends up looking like:
+The handy [[https://github.com/emacscollective/no-littering][no-littering]] package will take care of setting paths for /many/, but not all, built-in and third-party packages. I use the default configuration, which uses =user-emacs-directory= as a base path and then sets up =etc= for configuration files and =var= for persistent data. For me, this ends up looking like:
 
 - =$HOME/.config/emacs/etc= for configuration files
 - =$HOME/.config/emacs/var= for persistent data
@@ -135,7 +134,7 @@ The handy [[https://github.com/emacscollective/no-littering][no-littering]] pack
 (use-package no-littering)
 #+end_src
 
-With that squared away, we can use the =no-littering-expand-var-file-name= path to set auto-save and backup files to be stored in the same place as other persistent data.
+With that squared away, we can use the =no-littering-expand-var-file-name= path to ensure auto-save and backup files are stored in the same place as other persistent data.
 
 #+begin_src emacs-lisp
 (defvar ngs-auto-save-directory
@@ -177,10 +176,39 @@ I often use [[https://direnv.net/][direnv]] to manage project-specific environme
   (envrc-global-mode))
 #+end_src
 
+* Keybindings
+** General
+Just as =use-package= provides convenient macros for managing packages, so does [[https://github.com/noctuid/general.el][General]] for defining keybindings.
+
+In addition to installing and setting up the package I also create two /definers/ meant to mimic Vim’s [[https://neovim.io/doc/user/map.html#%3CLeader%3E][<Leader>]] and [[https://neovim.io/doc/user/map.html#%3CLocalLeader%3E][<LocalLeader>]] prefix keys. The definers, =ngs-leader-def= and =ngs-local-leader-def= are mapped to the =SPC= and =,= keys, respectively.
+
+#+begin_src emacs-lisp
+(use-package general
+  :init
+  (setq general-override-states '(insert
+                                  emacs
+                                  hybrid
+                                  normal
+                                  visual
+                                  motion
+                                  operator
+                                  replace))
+  :config
+  (general-evil-setup)
+
+  (general-create-definer ngs-leader-def
+    :keymaps '(normal emacs)
+    :prefix "SPC")
+
+  (general-create-definer ngs-local-leader-def
+    :keymaps '(normal emacs)
+    :prefix ","))
+#+end_src
+
 * Evil
 I’ve been a [[https://www.vim.org/][Vim]] (or [[https://neovim.io/][Neovim]]) user for many years. Its concept of modality really clicked with me and the /count + operator + motion/text object/ grammar is built into my fingers at this point. I think editing the “Emacs way” probably offers a good experience, but for me, comprehensive Vim emulation is a prime requirement for any text-centric platform I use.
 
-Luckily [[https://github.com/emacs-evil/evil][Evil]], an *extensible vi layer* for Emacs, is superb. It does a great job of emulating Vim’s text editing modes, while also implementing a command-line mode and many common Vim commands, e.g. =:write=, =:normal=, =:registers=, =read=, =:!shell-command=. Importantly, it also offers an API for defining one’s own motions, text objects, etc.
+Luckily [[https://github.com/emacs-evil/evil][Evil]], an *extensible vi layer* for Emacs, is superb. It does a great job of emulating Vim’s text editing features, while also implementing a command-line mode that supports many common Vim commands, e.g. =:write=, =:read=, =:!shell-command=, along with Vim concepts like /registers/. Vim is more than a set of keybindings, and Evil gets that. Importantly, it also offers an API for defining one’s own motions, text objects, etc.
 
 Note that in the ~:config~ section below, the /universal argument/ keybinding is changed to =C-M-u=. This is because =C-u= is set to scroll up half a page as it does in Vim (~evil-want-C-u-scroll~).
 
@@ -247,35 +275,6 @@ It also emulates many of the keybindings from [[https://tpo.pe/][Tim Pope]]’s 
     (evil-cleverparens-mode))
 #+end_src
 
-* Keybindings
-** General
-Just as =use-package= provides convenient macros for managing packages, so does [[https://github.com/noctuid/general.el][General]] for defining keybindings.
-
-In addition to installing and setting up the package I also create two /definers/ meant to mimic Vim’s [[https://neovim.io/doc/user/map.html#%3CLeader%3E][<Leader>]] and [[https://neovim.io/doc/user/map.html#%3CLocalLeader%3E][<LocalLeader>]] prefix keys. The definers, =ngs-leader-def= and =ngs-local-leader-def= are mapped to the =SPC= and =,= keys, respectively.
-
-#+begin_src emacs-lisp
-(use-package general
-  :init
-  (setq general-override-states '(insert
-                                  emacs
-                                  hybrid
-                                  normal
-                                  visual
-                                  motion
-                                  operator
-                                  replace))
-  :config
-  (general-evil-setup)
-
-  (general-create-definer ngs-leader-def
-    :keymaps '(normal emacs)
-    :prefix "SPC")
-
-  (general-create-definer ngs-local-leader-def
-    :keymaps '(normal emacs)
-    :prefix ","))
-#+end_src
-
 * Org Mode
 #+begin_src emacs-lisp
 (use-package toc-org
@@ -304,3 +303,7 @@ The centerpiece of my version control setup is the excellent [[https://magit.vc/
     "gl" '(magit-log :which-key "log")
     "gg" '(magit-status :which-key "git")))
 #+end_src
+
+* Terminal Emulation
+Emacs programs that inherit from /comint/ (command-interpreter) mode
+are
