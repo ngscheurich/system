@@ -31,6 +31,7 @@
   programs.fish.enable = true;
 
   environment.shells = with pkgs; [ zsh fish ];
+  environment.pathsToLink = [ "/share/zsh" ];
 
   home-manager = {
     useGlobalPkgs = true;

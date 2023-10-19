@@ -6,6 +6,40 @@
 { lib, pkgs, ... }:
 
 {
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    defaultKeymap = "viins";
+    syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      cls = "clear";
+      g = "git";
+      gg = "lazygit";
+      ga = "git add";
+      gci = "git commit";
+      gcm = "git commit -m";
+      gco = "git checkout";
+      gp = "git pull";
+      gP = "git push";
+      gF = "git push --force";
+      gr = "git rebase --interactive main";
+      la = "exa --all --long";
+      l = "exa"; 
+      ll = "exa --long";
+      ls = "exa";
+      lt = "exa --tree";
+      serve = "python -m http.server";
+      ta = "tmux attach";
+      tmux = "tmucks";
+      vimdiff = "nvim -d";
+      weather = "curl wttr.in";
+      zj = "zellij";
+      zjr = "zellij run -- ";
+    };
+  };
+
   programs.fish = {
     enable = true;
 
@@ -85,7 +119,7 @@
         "$character"
       ];
 
-      character = { vimcmd_symbol = "[┃](bold blue)"; };
+      character = { vimcmd_symbol = "[🞈](bold blue)"; };
 
       directory = { read_only = ""; };
 
@@ -115,11 +149,6 @@
     defaultOptions = [
       "--color fg:7,bg:0,hl:8,fg+:3,bg+:0,gutter:8,hl+:1,info:6,prompt:2,pointer:4,marker:1,spinner:5"
     ];
-  };
-
-  programs.atuin = {
-    enable = true;
-    enableFishIntegration = false;
   };
 
   programs.bat = {
