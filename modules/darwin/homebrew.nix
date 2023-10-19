@@ -55,7 +55,6 @@
       "protonvpn"
       "raycast"
       "reaper"
-      "spotify"
       "statusfy"
       "tidal"
       "todoist"
