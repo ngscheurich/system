@@ -6,6 +6,8 @@
 -- ///// \/// \\/// \///// \\\\/// \\\\/// \///////// \\/////// \\/// \\/// \
 -- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+local util = require("ngs.util")
+
 -- Bootstrap plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -22,32 +24,19 @@ end
 
 vim.opt.runtimepath:prepend(lazypath)
 
--- Load core config
-require("core.abbrevs")
-require("core.commands")
-require("core.keymaps")
-require("core.options")
-require("core.signs")
-
 -- Load colorscheme setting
 vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
-_G.colorscheme = require("nvim-theme")
+vim.g.colorscheme = require("nvim-theme")
+
+-- Load core config
+util.foreach_module("ngs.core", function(mod)
+  require(mod)
+end)
 
 -- Load plugin manager
-require("lazy").setup("plugins", {
-  change_detection = {
-    notify = false,
-  },
+require("lazy").setup("ngs.plugins", {
+  change_detection = { notify = false },
   install = {
-    colorscheme = { _G.colorscheme },
-  },
-  ui = {
-    icons = {
-      cmd = "⌘",
-      event = "",
-      keys = " ",
-      lazy = "⏾ ",
-      start = "",
-    },
-  },
+    colorscheme = { vim.g.colorscheme },
+  }
 })
