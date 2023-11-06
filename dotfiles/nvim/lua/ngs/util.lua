@@ -1,5 +1,20 @@
 M = {}
 
+---Returns a lazy.nvim plugin spec for nvim-treesitter with the given parser
+---added to opts.ensure_installed.
+---@param parser string
+---@return table
+M.treesitter_ensure = function(parser)
+  return {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      return {
+        ensure_installed = vim.list_extend(opts.ensure_installed or {}, { parser })
+      }
+    end,
+  }
+end
+
 ---Returns a lazy.nvim plugin spec for nvim-lspconfig with the given config
 ---set as the value of opts.servers[server].
 ---@param server string
@@ -18,18 +33,21 @@ M.lspconfig_setup = function(server, config)
   }
 end
 
----Returns a lazy.nvim plugin spec for nvim-treesitter with the given parser
----added to opts.ensure_installed.
----@param parser string
+---Returns a lazy.nvim plugin spec for LuaSnip with the given snippets set
+---as the value of opts.snippets[lang].
+---@param lang string
+---@param snippets table
 ---@return table
-M.treesitter_ensure = function(parser)
+M.luasnip_add = function(lang, snippets)
   return {
-    "nvim-treesitter/nvim-treesitter",
+    "L3MON4D3/LuaSnip",
     opts = function(_, opts)
       return {
-        ensure_installed = vim.list_extend(opts.ensure_installed or {}, { parser })
+        snippets = vim.tbl_extend("error", opts.snippets or {}, {
+          [lang] = snippets
+        })
       }
-    end,
+    end
   }
 end
 
