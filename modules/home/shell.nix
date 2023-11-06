@@ -25,11 +25,11 @@
       gP = "git push";
       gF = "git push --force";
       gr = "git rebase --interactive main";
-      la = "exa --all --long";
-      l = "exa"; 
-      ll = "exa --long";
-      ls = "exa";
-      lt = "exa --tree";
+      la = "eza --all --long";
+      l = "eza"; 
+      ll = "eza --long";
+      ls = "eza";
+      lt = "eza --tree";
       serve = "python -m http.server";
       ta = "tmux attach";
       tmux = "tmucks";
@@ -59,11 +59,11 @@
       gP = "git push";
       gF = "git push --force";
       grb = "git rebase --interactive main";
-      la = "exa --all --long";
-      l = "exa"; 
-      ll = "exa --long";
-      ls = "exa";
-      lt = "exa --tree";
+      la = "eza --all --long";
+      l = "eza"; 
+      ll = "eza --long";
+      ls = "eza";
+      lt = "eza --tree";
       serve = "python -m http.server";
       ta = "tmux attach";
       tmux = "tmucks";
@@ -161,7 +161,7 @@
     asciinema
     bottom
     ddgr
-    exa
+    eza
     fasd
     fd
     figlet
