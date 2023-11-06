@@ -18,6 +18,9 @@
     rustc
     cargo
 
+    # Language support
+    rnix-lsp
+
     # Database tools
     freetds
     pgformatter
@@ -45,7 +48,7 @@
     mkcert
     ninja
     nss
-    pkgconfig
+    pkg-config
 
     # Libraries
     glib
