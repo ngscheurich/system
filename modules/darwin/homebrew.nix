@@ -24,6 +24,7 @@
         name = "emacs-plus@29";
         args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
       }
+      "llvm"
       "zellij"
     ];
 
@@ -52,10 +53,8 @@
       "obs"
       "postico"
       "postman"
-      "protonvpn"
       "raycast"
       "reaper"
-      "statusfy"
       "tidal"
       "todoist"
       "vlc"
