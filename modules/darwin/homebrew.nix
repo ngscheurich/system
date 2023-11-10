@@ -6,7 +6,7 @@
 
     brewPrefix = "/opt/homebrew/bin";
 
-    onActivation.cleanup = "uninstall";
+    onActivation.cleanup = "zap";
 
     global.brewfile = true;
 
