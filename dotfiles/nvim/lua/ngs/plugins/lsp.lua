@@ -12,13 +12,15 @@ return {
   },
 
   opts = {
-    servers = {}
+    servers = {},
   },
 
   config = function(_, opts)
     local lspconfig = require("lspconfig")
+
     require("neodev").setup({})
     require("mason").setup()
+    require("mason-lspconfig").setup({ automatic_installation = true })
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -38,13 +40,17 @@ return {
           S = { telescope.lsp_workspace_symbols, "Workspace symbols" },
           a = { vim.lsp.buf.code_action, "Actions" },
           d = { vim.diagnostic.open_float, "Diagnostics" },
-          f = { function() vim.lsp.buf.format { async = true } end, "Format" },
+          f = {
+            function()
+              vim.lsp.buf.format({ async = true })
+            end,
+            "Format",
+          },
           r = { telescope.lsp_references, "References" },
           s = { telescope.lsp_document_symbols, "Symbols" },
         },
 
         K = { vim.lsp.buf.hover, "Hover" },
-        ["<C-]>"] = { vim.lsp.buf.definition, "Go to definition" },
         ["[d"] = { vim.lsp.diagnostic.goto_prev, "Prev diagnostic" },
         ["]d"] = { vim.lsp.diagnostic.goto_next, "Next diagnostic" },
       }
@@ -53,10 +59,10 @@ return {
     end
 
     vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(event)
         on_attach(event.buffer)
-      end
+      end,
     })
-  end
+  end,
 }
