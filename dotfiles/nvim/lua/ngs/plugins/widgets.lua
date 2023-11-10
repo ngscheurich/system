@@ -22,7 +22,7 @@ return {
     end,
   },
 
-  -- File tree
+  -- Tree-based explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -33,27 +33,28 @@ return {
     },
     keys = {
       {
-        "<Leader>ee",
-        "<Cmd>Neotree action=focus source=filesystem position=left toggle=true reveal=true<CR>",
-        desc = "Sidebar",
-      },
-      {
-        "<Leader>ed",
-        "<Cmd>Neotree action=focus source=filesystem position=bottom toggle=true reveal=true<CR>",
-        desc = "Sidebar",
+        "<Leader>ef",
+        "<Cmd>Neotree action=focus source=filesystem position=left reveal=true<CR>",
+        desc = "Files",
       },
       {
         "<Leader>eb",
-        "<Cmd>Neotree action=focus source=buffers position=float toggle=true reveal=true<CR>",
-        desc = "Float",
+        "<Cmd>Neotree action=focus source=buffers position=left<CR>",
+        desc = "Buffers",
       },
       {
         "<Leader>eg",
-        "<Cmd>Neotree action=focus source=git_status position=float toggle=true reveal=true<CR>",
-        desc = "Bottom",
+        "<Cmd>Neotree action=focus source=git_status position=left<CR>",
+        desc = "Git status",
+      },
+      {
+        "<Leader>eF",
+        "<Cmd>Neotree action=focus source=filesystem position=float reveal=true<CR>",
+        desc = "Files (Floating)",
       },
     },
     opts = {
+      close_if_last_window = true,
       default_component_configs = {
         indent = {
           with_expanders = true,
