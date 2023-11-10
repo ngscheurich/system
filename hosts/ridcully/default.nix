@@ -4,11 +4,11 @@
   users = {
     knownUsers = [ "nscheurich" ];
 
-    users.nick = {
+    users.nscheurich = {
       home = "/Users/nscheurich";
       description = "N. G. Scheurich";
       shell = pkgs.fish;
-      uid = 501;
+      uid = 317732888;
     };
   };
 
