@@ -1,14 +1,14 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   users = {
     knownUsers = [ "nscheurich" ];
 
-    users.nick = {
+    users.nscheurich = {
       home = "/Users/nscheurich";
       description = "N. G. Scheurich";
       shell = pkgs.fish;
-      uid = 501;
+      uid = 317732888;
     };
   };
 
@@ -27,5 +27,11 @@
         ../../modules/home/vim.nix
       ];
     };
+  };
+
+  homebrew = {
+    brews = [
+      "postgresql@14"
+    ];
   };
 }

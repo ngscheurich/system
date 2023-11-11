@@ -38,5 +38,5 @@ require("lazy").setup("ngs.plugins", {
   change_detection = { notify = false },
   install = {
     colorscheme = { vim.g.colorscheme },
-  }
+  },
 })

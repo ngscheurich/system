@@ -104,6 +104,9 @@
 
       # Local tmux configs
       ".tmux.local.conf"
+
+      # Project-specific Zellij layouts
+      "project.kdl"
     ];
 
     signing = {

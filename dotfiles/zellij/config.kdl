@@ -194,10 +194,10 @@ simplified_ui true
 themes {
     tokyo-night-dark {
         fg 169 177 214
-        // bg 26 27 38
+        bg 26 27 38
         // Used for selection bg
         // See https://github.com/zellij-org/zellij/issues/1368
-        bg 51 70 124
+        // bg 51 70 124
         black 56 62 90
         red 249 51 87
         green 158 206 106
@@ -205,7 +205,7 @@ themes {
         blue 122 162 247
         magenta 187 154 247
         cyan 42 195 222
-        white 192 202 245
+        white 169 177 214
         orange 255 158 100
     }
 
