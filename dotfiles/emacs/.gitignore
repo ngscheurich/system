@@ -1,3 +1,4 @@
 *
 !config.org
-!/ngs-lisp/
+!ngs-lisp/
+!ngs-lisp/*
