@@ -32,16 +32,18 @@ return {
   },
 
   keys = {
-    { "<Leader>/",       find("current_buffer_fuzzy_find", "get_ivy"),            desc = "Search" },
-    { "<Leader><Space>", find("buffers", "get_dropdown", { previewer = false }),  desc = "Buffers" },
-    { "<Leader>fa",      find("autocommands"),                                    desc = "Autocommands" },
-    { "<Leader>fc",      find("commands"),                                        desc = "Commands" },
-    { "<Leader>ff",      find("find_files"),                                      desc = "Files" },
-    { "<Leader>fg",      find("live_grep"),                                       desc = "Grep" },
-    { "<Leader>fh",      find("help_tags"),                                       desc = "Help" },
-    { "<Leader>fk",      find("keymaps"),                                         desc = "Keymaps" },
-    { "<Leader>fl",      find("loclist", "get_ivy"),                              desc = "Location list" },
-    { "<Leader>fo",      find("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
-    { "<Leader>fq",      find("quickfix"),                                        desc = "Quickfix list" },
-  }
+    { "<C-F>", find("find_files"), desc = "Find files" },
+
+    { "<Leader>/", find("current_buffer_fuzzy_find", "get_ivy"), desc = "Search" },
+    { "<Leader><Space>", find("buffers", "get_dropdown", { previewer = false }), desc = "Buffers" },
+    { "<Leader>fa", find("autocommands"), desc = "Autocommands" },
+    { "<Leader>fc", find("commands"), desc = "Commands" },
+    { "<Leader>ff", find("find_files"), desc = "Files" },
+    { "<Leader>fg", find("live_grep"), desc = "Grep" },
+    { "<Leader>fh", find("help_tags"), desc = "Help" },
+    { "<Leader>fk", find("keymaps"), desc = "Keymaps" },
+    { "<Leader>fl", find("loclist", "get_ivy"), desc = "Location list" },
+    { "<Leader>fo", find("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
+    { "<Leader>fq", find("quickfix"), desc = "Quickfix list" },
+  },
 }
