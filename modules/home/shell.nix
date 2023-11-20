@@ -5,6 +5,36 @@
 
 { lib, pkgs, ... }:
 
+let
+  shellAliases = {
+    cls = "clear";
+    G = "lazygit";
+    g = "git";
+    gP = "git push";
+    ga = "git add";
+    gci = "git commit";
+    gcl = "git clone";
+    gco = "git checkout";
+    gg = "git log --all --decorate --oneline --graph";
+    gl = "git log --oneline";
+    gp = "git pull";
+    gr = "git rebase";
+    gs = "git status";
+    l = "eza";
+    ls = "eza";
+    la = "eza --all --long";
+    ll = "eza --long";
+    lt = "eza --tree";
+    serve = "python -m http.server";
+    vimdiff = "nvim -d";
+    weather = "curl wttr.in";
+    zj = "zellij";
+    zp = "zellij --layout project.kdl --session (basename $PWD)";
+    zr = "zellij run -- ";
+  };
+
+  shellAbbrs = shellAliases;
+in
 {
   programs.zsh = {
     enable = true;
@@ -13,31 +43,7 @@
     defaultKeymap = "viins";
     syntaxHighlighting.enable = true;
 
-    shellAliases = {
-      cls = "clear";
-      g = "git";
-      gg = "lazygit";
-      ga = "git add";
-      gci = "git commit";
-      gcm = "git commit -m";
-      gco = "git checkout";
-      gp = "git pull";
-      gP = "git push";
-      gF = "git push --force";
-      gr = "git rebase --interactive main";
-      la = "eza --all --long";
-      l = "eza"; 
-      ll = "eza --long";
-      ls = "eza";
-      lt = "eza --tree";
-      serve = "python -m http.server";
-      ta = "tmux attach";
-      tmux = "tmucks";
-      vimdiff = "nvim -d";
-      weather = "curl wttr.in";
-      zj = "zellij";
-      zjr = "zellij run -- ";
-    };
+    inherit shellAliases;
   };
 
   programs.fish = {
@@ -47,31 +53,7 @@
       fish_greeting = "";
     };
 
-    shellAbbrs = {
-      cls = "clear";
-      g = "git";
-      gg = "lazygit";
-      ga = "git add";
-      gci = "git commit";
-      gcm = "git commit -m";
-      gco = "git checkout";
-      gp = "git pull";
-      gP = "git push";
-      gF = "git push --force";
-      grb = "git rebase --interactive main";
-      la = "eza --all --long";
-      l = "eza"; 
-      ll = "eza --long";
-      ls = "eza";
-      lt = "eza --tree";
-      serve = "python -m http.server";
-      ta = "tmux attach";
-      tmux = "tmucks";
-      vimdiff = "nvim -d";
-      weather = "curl wttr.in";
-      zj = "zellij";
-      zjr = "zellij run -- ";
-    };
+    inherit shellAbbrs;
 
     plugins = [
       {
@@ -113,6 +95,8 @@
         "$git_metrics"
         "$git_status"
         "$fill"
+        "$elixir"
+        "$erlang"
         "$cmd_duration"
         "$line_break"
         "$jobs"
@@ -147,7 +131,7 @@
   programs.fzf = {
     enable = true;
     defaultOptions = [
-      "--color fg:7,bg:0,hl:8,fg+:3,bg+:0,gutter:8,hl+:1,info:6,prompt:2,pointer:4,marker:1,spinner:5"
+      # "--color fg:7,bg:0,hl:8,fg+:3,bg+:0,gutter:8,hl+:1,info:6,prompt:2,pointer:4,marker:1,spinner:5"
     ];
   };
 
