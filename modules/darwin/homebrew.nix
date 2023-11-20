@@ -95,6 +95,7 @@
       "postman"
       "raycast"
       "reaper"
+      "steam"
       "tidal"
       "todoist"
       "vlc"
