@@ -7,7 +7,7 @@ local rep = require("luasnip.extras").rep
 return {
   util.treesitter_ensure("elixir"),
   util.lspconfig_setup("elixirls", {
-    cmd = { vim.env.HOME .. "/.local/share/nvim/mason/bin/elixir-ls" },
+    cmd = { "elixir-ls" },
   }),
   util.luasnip_add("lua", {
     s("pry", { t({
