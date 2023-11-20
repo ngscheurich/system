@@ -2,13 +2,18 @@ return {
   "neovim/nvim-lspconfig",
 
   dependencies = {
-    "folke/neodev.nvim",
+    { "folke/neodev.nvim", opts = {} },
+    { "williamboman/mason.nvim", opts = {} },
+    {
+      "williamboman/mason-lspconfig.nvim",
+      opts = {
+        automatic_installation = { exclude = { "rnix" } },
+      },
+    },
     "folke/which-key.nvim",
-    "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/nvim-cmp",
     "nvim-telescope/telescope.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "williamboman/mason.nvim",
   },
 
   opts = {
@@ -17,10 +22,6 @@ return {
 
   config = function(_, opts)
     local lspconfig = require("lspconfig")
-
-    require("neodev").setup({})
-    require("mason").setup()
-    require("mason-lspconfig").setup({ automatic_installation = true })
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
