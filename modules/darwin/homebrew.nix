@@ -71,6 +71,7 @@
     casks = [
       "1password"
       "1password-cli"
+      "alfred"
       "amethyst"
       "appcleaner"
       "bartender"
@@ -93,7 +94,6 @@
       "obs"
       "postico"
       "postman"
-      "raycast"
       "reaper"
       "steam"
       "tidal"
