@@ -1,11 +1,11 @@
 ;;; ngs-mode-line.el --- Code for my custom mode line -*- lexical-binding: t -*-
 
-;; Copyright (C) 2023  Protesilaos Stavrou
+;; Copyright (C) 2023 N. G. Scheurich
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: N. G. Scheurich <nick@scheurich.haus>
+;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "29.0"))
+;; Package-Requires: ((emacs "30.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -55,7 +55,8 @@
     `((t
        :background ,bg
        :foreground "gray90"
-       :box (:line-width 5 :color ,bg))))
+       :box (:line-width 5 :color ,bg)
+       )))
   "Used to visually distinguish mode line constructs.")
 
 ;;;; Evil state
@@ -146,12 +147,21 @@
   (put construct 'risky-local-variable t))
 
 ;; Mode line format
-(setq mode-line-format
-      `("%e"
-        ngs-mode-line-evil-state
-        ngs-mode-line-buffer-name
-        ngs-mode-line-buffer-info
-        ngs-mode-line-major-mode
-        " "
-        ngs-mode-line-git-branch))
+(defun ngs-activate-mode-line ()
+  (interactive)
+  (setq mode-line-right-align-edge 'right-margin)
+  (setq mode-line-format
+        `("%e"
+          ;; ngs-mode-line-evil-state
+          ngs-mode-line-buffer-name
+          ngs-mode-line-buffer-info
+          mode-line-format-right-align
+          ngs-mode-line-major-mode
+          " "
+          ngs-mode-line-git-branch
+          " ")))
+
+(ngs-activate-mode-line)
+
+(provide 'ngs-mode-line)
 ;;; ngs-mode-line.el ends here
