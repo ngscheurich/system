@@ -20,7 +20,7 @@
 
     brews = [
       {
-        name = "emacs-plus@29";
+        name = "emacs-plus@30";
         args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
       }
       "llvm"
@@ -30,6 +30,7 @@
       "gmp"
       "libunistring"
       "gettext"
+      "giflib"
       "libidn2"
       "libtasn1"
       "nettle"
@@ -66,6 +67,7 @@
       "little-cms2"
       "jansson"
       "tree-sitter"
+      "webp"
     ];
 
     casks = [
