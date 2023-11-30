@@ -1,4 +1,40 @@
 return {
+  -- Start screen
+  { "echasnovski/mini.starter", version = false, config = true },
+
+  -- Notifications
+  "rcarriga/nvim-notify",
+
+  -- Buffer labels
+  {
+    "b0o/incline.nvim",
+    opts = {
+      hide = {
+        cursorline = true,
+        only_win = true,
+      },
+    },
+  },
+
+  -- Indentation guide
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    commands = { "IBLEnable", "IBLToggle" },
+    config = function()
+      require("ibl").setup({
+        enabled = false,
+        indent = { char = "┊" },
+      })
+      vim.keymap.set("n", "<Leader>ui", "<Cmd>IBLToggle<CR>", { desc = "Indent guide" })
+    end,
+  },
+
+  -- Progress indicator
+  {
+    "j-hui/fidget.nvim",
+    branch = "legacy",
+    config = true,
+  },
   -- Keymap guide
   {
     "folke/which-key.nvim",
