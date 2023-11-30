@@ -24,7 +24,6 @@
         args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
       }
       "llvm"
-      "zellij"
 
       # Emacs dependencies
       "gmp"

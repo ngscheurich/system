@@ -163,5 +163,6 @@ in
     watch
     watchman
     wget
+    zellij
   ];
 }
