@@ -16,10 +16,6 @@ return {
     "nvim-telescope/telescope.nvim",
   },
 
-  opts = {
-    servers = {},
-  },
-
   config = function(_, opts)
     local lspconfig = require("lspconfig")
 
