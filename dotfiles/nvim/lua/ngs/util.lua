@@ -9,7 +9,7 @@ M.treesitter_ensure = function(parser)
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       return {
-        ensure_installed = vim.list_extend(opts.ensure_installed or {}, { parser })
+        ensure_installed = vim.list_extend(opts.ensure_installed or {}, { parser }),
       }
     end,
   }
@@ -26,10 +26,10 @@ M.lspconfig_setup = function(server, config)
     opts = function(_, opts)
       return {
         servers = vim.tbl_extend("error", opts.servers or {}, {
-          [server] = config or {}
-        })
+          [server] = config or {},
+        }),
       }
-    end
+    end,
   }
 end
 
@@ -44,10 +44,12 @@ M.luasnip_add = function(lang, snippets)
     opts = function(_, opts)
       return {
         snippets = vim.tbl_extend("error", opts.snippets or {}, {
-          [lang] = snippets
-        })
+          [lang] = snippets,
+        }),
       }
-    end
+    end,
+  }
+end
   }
 end
 
