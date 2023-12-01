@@ -50,6 +50,22 @@ M.luasnip_add = function(lang, snippets)
     end,
   }
 end
+
+---Returns a lazy.nvim plugin spec for Conform with the given list set as
+---the value of opts.formatters_by_ft[ft].
+---@param filetype string
+---@param list table
+---@return table
+M.conform_setup = function(filetype, list)
+  return {
+    "stevearc/conform.nvim",
+    opts = function(_, opts)
+      return vim.tbl_extend("force", opts, {
+        formatters_by_ft = vim.tbl_extend("error", opts.formatters_by_ft or {}, {
+          [filetype] = list,
+        }),
+      })
+    end,
   }
 end
 

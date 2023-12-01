@@ -11,4 +11,5 @@ return {
       },
     },
   }),
+  util.conform_setup("lua", { "stylua" }),
 }
