@@ -43,6 +43,7 @@
       "godot"
       "playdate-simulator"
       "protonvpn"
+      "steam"
     ];
   };
 }
