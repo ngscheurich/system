@@ -95,7 +95,6 @@ in
         "$git_metrics"
         "$git_status"
         "$fill"
-        "$elixir"
         "$erlang"
         "$cmd_duration"
         "$line_break"
