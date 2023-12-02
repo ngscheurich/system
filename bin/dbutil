@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly VERSION="0.1.0"
+readonly LOGFILE=$PGHOST/postgresql.log
+
+cmdstart() {
+	printf "%s.... " "$1"
+}
+
+cmdfinish() {
+	printf "done\n%s\n" "$1"
+}
+
+version() {
+	echo "dbutil $VERSION"
+}
+
+help() {
+	cat <<EOF
+$(version)
+
+USAGE:
+    dbutil [OPTION]
+    dbutil [COMMAND]
+
+OPTIONS:
+    -h, --help       Print this information
+    -v, --version    Print version information
+
+COMMANDS:
+    init      Initialize and start database
+    start     Start database
+    stop      Stop database
+    status    Database status
+    remove    Remove database
+EOF
+}
+
+start() {
+	pg_ctl -o "--unix_socket_directories='$PGHOST'" -l "$LOGFILE" start
+}
+
+init() {
+	if [ -d "$PGHOST" ]; then
+		echo "Database already initialized"
+		return 0
+	fi
+
+	mkdir -p "$PGHOST"
+
+	cmdstart "initializing database"
+	initdb --auth=trust >/dev/null
+	cmdfinish "database initialized\n"
+
+	start
+	echo ""
+
+	cmdstart "creating postgres superuser"
+	createuser -s postgres
+	cmdfinish "user created"
+}
+
+stop() {
+	pg_ctl stop -D "$PGDATA"
+}
+
+status() {
+	pg_ctl status -D "$PGDATA"
+}
+
+remove() {
+	cmdstart "removing database"
+	rm -rf "$PGHOST"
+	cmdfinish "database removed"
+}
+
+case "$1" in
+"-h" | "--help")
+	help
+	;;
+"-v" | "--version")
+	version
+	;;
+"init")
+	init
+	;;
+"start")
+	start
+	;;
+"stop")
+	stop
+	;;
+"status")
+	status
+	;;
+"remove")
+	remove
+	;;
+*)
+	help
+	;;
+esac
