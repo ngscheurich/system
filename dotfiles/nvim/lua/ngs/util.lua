@@ -33,40 +33,89 @@ M.lspconfig_setup = function(server, config)
   }
 end
 
----Returns a lazy.nvim plugin spec for LuaSnip with the given snippets set
----as the value of opts.snippets[lang].
+---Returns a lazy.nvim plugin spec for LuaSnip with snippets configured for lang.
 ---@param lang string
 ---@param snippets table
 ---@return table
 M.luasnip_add = function(lang, snippets)
   return {
     "L3MON4D3/LuaSnip",
+    -- opts = function(_, opts)
+    --   return {
+    --     snippets = vim.tbl_extend("error", opts.snippets or {}, {
+    --       [lang] = snippets,
+    --     }),
+    --   }
+    -- end,
     opts = function(_, opts)
-      return {
-        snippets = vim.tbl_extend("error", opts.snippets or {}, {
-          [lang] = snippets,
-        }),
-      }
+      return M.set_opt(opts, "snippets", lang, snippets)
     end,
   }
 end
 
----Returns a lazy.nvim plugin spec for Conform with the given list set as
----the value of opts.formatters_by_ft[ft].
----@param filetype string
----@param list table
+---Returns a lazy.nvim plugin spec for Conform with formatters configured for ft.
+---@param ft string
+---@param formatters table
 ---@return table
-M.conform_setup = function(filetype, list)
+M.formatter_setup = function(ft, formatters)
   return {
     "stevearc/conform.nvim",
+    -- opts = function(_, opts)
+    --   return vim.tbl_extend("force", opts, {
+    --     formatters_by_ft = vim.tbl_extend("error", opts.formatters_by_ft or {}, {
+    --       [filetype] = list,
+    --     }),
+    --   })
+    -- end,
     opts = function(_, opts)
-      return vim.tbl_extend("force", opts, {
-        formatters_by_ft = vim.tbl_extend("error", opts.formatters_by_ft or {}, {
-          [filetype] = list,
-        }),
-      })
+      return M.set_opt(opts, "formatters_by_ft", ft, formatters)
     end,
   }
+end
+
+---Returns a lazy.nvim plugin spec for nvim-lint with linters configured for ft.
+---@param ft string
+---@param linters table
+---@return table
+M.linter_setup = function(ft, linters)
+  return {
+    "mfussenegger/nvim-lint",
+    opts = function(_, opts)
+      return M.set_opt(opts, "linters_by_ft", ft, linters)
+    end,
+  }
+end
+
+---Returns opts with key set to val under name.
+---@param opts table
+---@param name string
+---@param key string
+---@param val any
+---@return table
+M.set_opt = function(opts, name, key, val)
+  return vim.tbl_extend("force", opts, {
+    [name] = vim.tbl_extend("error", opts[name] or {}, {
+      [key] = val,
+    }),
+  })
+end
+
+---Registers an autocmd to lint the current ft buffer with nvim-lint.
+---@param ft string
+---@return nil
+M.create_lint_autocmd = function(ft)
+  local ok, lint = pcall(require, "lint")
+
+  if ok then
+    vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
+      desc = "Lints " .. ft .. "buffer",
+      group = vim.api.nvim_create_augroup("lint-buffer", { clear = false }),
+      buffer = 0,
+      callback = function()
+        lint.try_lint()
+      end,
+    })
+  end
 end
 
 ---Calls the callback function for each module under the given namespace.
