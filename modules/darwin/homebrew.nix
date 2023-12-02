@@ -89,7 +89,6 @@
       "istat-menus"
       "karabiner-elements"
       "keycastr"
-      "keymapp"
       "kitty"
       "logitech-options"
       "logseq"
