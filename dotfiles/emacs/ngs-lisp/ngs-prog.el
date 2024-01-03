@@ -1,63 +1,38 @@
-;;; ngs-prog.el -*- lexical-binding: t -*-
-
-;; Copyright (C) 2023 N. G. Scheurich
-
-;; Author: N. G. Scheurich <nick@scheurich.haus>
-;; URL: https://nick.scheurich.haus/system
-;; Version: 0.1.0
-;; Package-Requires: ((emacs "30.0"))
-
-;; This file is NOT part of GNU Emacs.
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or (at
-;; your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-;;; Code:
-
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
 
-(use-package elixir-ts-mode)
-(use-package json-mode)
-(use-package lua-mode)
-(use-package markdown-mode)
-(use-package nix-mode :mode "\\.nix\\'")
+;; Elixir
+(use-package elixir-ts-mode
+  :after eglot
+  :init
+  (add-to-list 'eglot-server-programs
+               '(elixir-ts-mode "elixir-ls"))
+  :hook (elixir-ts-mode . eglot-ensure)
+  :mode
+  (("\\.ex\\'" . elixir-ts-mode)
+   ("\\.exs\\'" . elixir-ts-mode)))
 
-(use-package gdscript-mode
-  :straight (gdscript-mode
-             :type git
-             :host github
-             :repo "godotengine/emacs-gdscript-mode")
-  :hook (gdscript-mode . eglot-ensure))
+;; TypeScript
+(use-package typescript-ts-mode
+  :after eglot
+  :init
+  (add-to-list 'eglot-server-programs
+               '(typescript-ts-mode "typescript-language-server" "--stdio"))
+  :hook (typescript-ts-mode . eglot-ensure)
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . typescript-ts-mode)))
 
 (use-package eglot
+  :ensure nil
   :config
-  ; (add-to-list 'eglot-server-programs '(elixir-ts-mode "elixir-ls"))
-  (add-to-list 'eglot-server-programs '(sql-mode "sql-language-server" "up" "--method" "stdio"))
-  (add-to-list 'eglot-server-programs '(javascript-mode "typescript-language-server" "--stdio"))
-  (add-to-list 'eglot-server-programs '(javascript-mode "tailwindcss-language-server" "--stdio"))
   (general-define-key
    :states 'normal
    :keymaps 'eglot-mode-map
    "K" 'eldoc-box-help-at-point)
   (ngs-local-leader-def
     "k" 'eldoc-doc-buffer
-    "f" 'eglot-format-buffer)
-  :hook
-  ((elixir-ts-mode . eglot-ensure)
-   (sql-mode . eglot-ensure)
-   (javascript-mode . eglot-ensure)))
+    "f" 'eglot-format-buffer))
 
 (use-package eldoc
   :ensure nil
@@ -89,5 +64,16 @@
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
+(use-package json-mode)
+(use-package lua-mode)
+(use-package markdown-mode)
+(use-package nix-mode :mode "\\.nix\\'")
+
+(use-package gdscript-mode
+  :straight (gdscript-mode
+             :type git
+             :host github
+             :repo "godotengine/emacs-gdscript-mode")
+  :hook (gdscript-mode . eglot-ensure))
+
 (provide 'ngs-prog)
-;;; ngs-prog.el ends here

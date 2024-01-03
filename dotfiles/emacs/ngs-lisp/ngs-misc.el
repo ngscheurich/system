@@ -5,7 +5,7 @@
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "30.0"))
+;; Package-Requires: ((emacs "29.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,14 +22,34 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; A collected miscellany.
+
 ;;; Code:
+
+(setq column-number-mode t)
 
 (use-package hydra)
 
-(use-package treemacs)
-(use-package treemacs-nerd-icons
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("=" default-text-scale-increase "larger")
+  ("-" default-text-scale-decrease "smaller")
+  ("0" default-text-scale-reset "reset")
+  ("q" nil "quit" :exit t))
+
+(ngs-leader-def
+  "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(use-package diminish
   :config
-  (treemacs-load-theme "nerd-icons"))
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'evil-collection-unimpaired-mode)
+  (diminish 'visual-line-mode))
+
+(use-package treemacs)
 
 (use-package paredit
   :diminish

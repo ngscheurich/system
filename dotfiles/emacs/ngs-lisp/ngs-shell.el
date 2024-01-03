@@ -1,11 +1,11 @@
-;;; init.el -*- lexical-binding: t -*-
+;;; ngs-term.el -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2023 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "29.0"))
+;; Package-Requires: ((emacs "30.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -24,29 +24,20 @@
 
 ;;; Commentary:
 
-;; The primary Emacs initialization file
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+;; Customizations for improving the command-line experience.
 
 ;;; Code:
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+; (use-package vterm)
+; (use-package multi-vterm)
+(use-package eat)
 
-;; (add-to-list 'default-frame-alist '(undecorated-round . t))
+(setq explicit-shell-file-name "/etc/profiles/per-user/nick/bin/zsh")
+(setq shell-file-name "zsh")
+(setq explicit-zsh-args '("--login" "--interactive"))
+(defun zsh-shell-mode-setup ()
+  (setq-local comint-process-echoes t))
+(add-hook 'shell-mode-hook #'zsh-shell-mode-setup)
 
-(add-to-list 'load-path (locate-user-emacs-file "ngs-lisp"))
-
-(require 'ngs-keybinds)
-(require 'ngs-buffers)
-(require 'ngs-completion)
-(require 'ngs-emacs)
-(require 'ngs-env)
-(require 'ngs-evil)
-(require 'ngs-git)
-(require 'ngs-misc)
-(require 'ngs-org)
-(require 'ngs-prog)
-(require 'ngs-term)
-(require 'ngs-theme)
-;; (require 'ngs-mode-line)
-;;; init.el ends here
+(provide 'ngs-term)
+;;; ngs-term.el ends here

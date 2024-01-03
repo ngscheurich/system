@@ -5,7 +5,7 @@
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "30.0"))
+;; Package-Requires: ((emacs "29.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,70 +22,81 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; Visual enhacements such as colors, typography, and iconography.
+
 ;;; Code:
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-(unless (eq system-type 'darwin)
-    (menu-bar-mode -1))
-
-(set-face-attribute 'default nil :font "Berkeley Mono" :height 120)
-(setq-default line-spacing 0.4)
-
+;; Modus is a family of highly-legible themes
+;; https://protesilaos.com/emacs/modus-themes
 (use-package modus-themes
   :init
-  (defun ngs-modus-themes-custom-faces ()
-    (interactive)
-    (let ((width (if current-prefix-arg
-                    current-prefix-arg
-                  4)))
-      (modus-themes-with-colors
-        (custom-set-faces
-        `(mode-line ((,c :box (:line-width ,width :color ,bg-mode-line-active))))
-        `(mode-line-inactive ((,c :box (:line-width ,width :color ,bg-mode-line-inactive)))))))))
+  (defun my-modus-themes-custom-faces ()
+    (modus-themes-with-colors
+      (custom-set-faces
+       `(mode-line ((,c :box (:line-width 4 :color ,bg-mode-line-active))))
+       `(mode-line-inactive ((,c :box (:line-width 4 :color ,bg-mode-line-inactive))))))))
 
-(use-package circadian
+(add-hook 'modus-themes-after-load-theme-hook #'ngs-modus-themes-custom-faces)
+(load-theme 'modus-vivendi-tinted t)
+(my-modus-themes-custom-faces)
+
+;; Circadian switches between light/dark themes based on time of day
+;; https://github.com/GuidoSchmidt/circadian.el
+;; (use-package circadian
+;;   :config
+;;   (setq circadian-themes '(("07:30" . modus-vivendi-tinted)
+;;                            ("18:30" . modus-vivendi-tinted)))
+;;   (circadian-setup))
+
+;; Rainbow mode highlights color values with the corresponding color
+;; https://elpa.gnu.org/packages/rainbow-mode.html
+(use-package rainbow-mode)
+
+;; Fontaine allows for detailed, on-demand font configurations
+;; https://protesilaos.com/emacs/fontaine
+(use-package fontaine
+  :init
+  (setq fontaine-presets
+        '((regular)
+          (t
+           :default-family "Berkeley Mono"
+           :default-weight regular
+           :default-height 120
+           :variable-pitch-family "IBM Plex Sans")))
+  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+  (add-hook 'enable-theme-functions #'fontaine-apply-current-preset)
   :config
-  (setq circadian-themes '(("07:30" . modus-vivendi-tinted)
-                          ("18:30" . modus-vivendi-tinted)))
-  (circadian-setup))
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular)))
 
-(add-hook 'circadian-after-load-theme-hook
-          #'(lambda (theme)
-              (print "Circadian!")
-              ;; Line numbers appearance
-              (setq linum-format 'linum-format-func)
-              ;; Cursor
-              (set-default 'cursor-type 'box)
-              (set-cursor-color "#F52503")))
+;; Increase line-spacing
+(setq-default line-spacing 0.4)
 
+;; Icons library
+;; https://github.com/rainstormstudio/nerd-icons.el
 (use-package nerd-icons)
 
+;; Icons in dired buffers
+;; https://github.com/rainstormstudio/nerd-icons-dired
 (use-package nerd-icons-dired
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
-(setq column-number-mode t)
-
-(use-package diminish
+;; Icons in completion interfaces
+;; https://github.com/rainstormstudio/nerd-icons-completion
+(use-package nerd-icons-completion
+  :after marginalia
   :config
-  (diminish 'auto-revert-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'evil-collection-unimpaired-mode)
-  (diminish 'visual-line-mode))
+  (nerd-icons-completion-mode)
+  :hook
+  (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
-(use-package default-text-scale)
-
-(defhydra hydra-text-scale (:timeout 4)
-  "scale text"
-  ("=" default-text-scale-increase "larger")
-  ("-" default-text-scale-decrease "smaller")
-  ("0" default-text-scale-reset "reset")
-  ("q" nil "quit" :exit t))
-
-(ngs-leader-def
-  "ts" '(hydra-text-scale/body :which-key "scale text"))
+;; Icons in file explorer
+;; https://github.com/rainstormstudio/treemacs-nerd-icons
+(use-package treemacs-nerd-icons
+  :config
+  (treemacs-load-theme "nerd-icons"))
 
 (provide 'ngs-theme)
 ;;; ngs-theme.el ends here

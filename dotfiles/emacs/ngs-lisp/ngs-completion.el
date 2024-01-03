@@ -1,11 +1,11 @@
-;;; ngs-competion.el -*- lexical-binding: t -*-
+;;; ngs-completion.el -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2023 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "30.0"))
+;; Package-Requires: ((emacs "29.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,14 +22,24 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; Enhancement to the built-in Emacs completion affordances.
+
 ;;; Code:
 
+;;; VERTical Interactive COmpletion
+;; https://github.com/minad/vertico
 (use-package vertico
   :init (vertico-mode))
 
+;;; Marginalia in the minibuffer
+;; https://github.com/minad/marginalia
 (use-package marginalia
   :init (marginalia-mode))
 
+;;; Consulting completing-read
+;; https://github.com/minad/consult
 (use-package consult
   :config
   (ngs-leader-def
@@ -40,10 +50,8 @@
     "fr" '(consult-recent-file :which-key "recents")
     "fq" '(consult-flymake :which-key "errors")))
 
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless)))
-
+;;; COmpletion in Region FUnction
+;; https://github.com/minad/corfu
 (defvar ngs-corfu-extensions-directory
   (format "%sstraight/build/corfu/extensions" user-emacs-directory)
   "Path to Corfu’s included extensions")
@@ -74,6 +82,12 @@
     (corfu-mode 1)))
 
 (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
+
+;;; Completion style that matches multiple regexps in any order
+;; https://github.com/oantolin/orderless
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)))
 
 (provide 'ngs-completion)
 ;;; ngs-completion.el ends here

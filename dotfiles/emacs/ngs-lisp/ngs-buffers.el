@@ -5,7 +5,7 @@
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://nick.scheurich.haus/system
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "30.0"))
+;; Package-Requires: ((emacs "29.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,14 +22,19 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; Customizations to improve buffer management.
+
 ;;; Code:
 
+;;; TODO: Can beframe replace this?
 (use-package perspective
   :custom
   (persp-mode-prefix-key (kbd "C-x x"))
   :init (persp-mode))
 
-;; Make buffers frame-local
+;;; Make buffers frame-local
 ;; See https://protesilaos.com/emacs/beframe
 (use-package beframe
   :config
@@ -62,6 +67,8 @@
 
     (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
+;;; Make certain buffers "ephemeral"
+;; https://github.com/karthink/popper
 (use-package popper
   :config
   (popper-mode))
