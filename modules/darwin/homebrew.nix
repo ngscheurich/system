@@ -20,7 +20,7 @@
 
     brews = [
       {
-        name = "emacs-plus@30";
+        name = "emacs-plus@29";
         args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
       }
       "llvm"
@@ -81,6 +81,7 @@
       "discord"
       "docker"
       "dropbox"
+      "fantastical"
       "figma"
       "firefox"
       "gpg-suite-no-mail"
@@ -90,14 +91,12 @@
       "keycastr"
       "kitty"
       "logitech-options"
-      "logseq"
       "obs"
       "obsidian"
       "postico"
       "postman"
       "raycast"
       "reaper"
-      "tidal"
       "todoist"
       "vlc"
       "wireshark"
