@@ -39,5 +39,5 @@
   (setq-local comint-process-echoes t))
 (add-hook 'shell-mode-hook #'zsh-shell-mode-setup)
 
-(provide 'ngs-term)
+(provide 'ngs-shell)
 ;;; ngs-term.el ends here
