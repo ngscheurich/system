@@ -1,5 +1,5 @@
 *
 !early-init.el
 !init.el
-!ngs-lisp/
-!ngs-lisp/*
+!lisp/
+!lisp/*
