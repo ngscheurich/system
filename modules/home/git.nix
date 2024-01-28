@@ -107,6 +107,7 @@
 
       # Project-specific Zellij layouts
       "project.kdl"
+      "layout.kdl"
     ];
 
     signing = {
