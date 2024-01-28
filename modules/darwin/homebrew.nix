@@ -11,9 +11,7 @@
     global.brewfile = true;
 
     taps = [
-      "homebrew/cask"
       "homebrew/cask-versions"
-      "homebrew/core"
       "homebrew/services"
       "d12frosted/emacs-plus"
     ];
