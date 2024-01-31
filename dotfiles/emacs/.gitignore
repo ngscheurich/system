@@ -2,4 +2,4 @@
 !early-init.el
 !init.el
 !lisp/
-!lisp/*
+!lisp/**/*
