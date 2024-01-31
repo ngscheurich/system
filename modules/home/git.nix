@@ -72,6 +72,7 @@
       "TODO.md"
       "TODO.org"
       "NOTES.md"
+      "QUERIES.sql"
 
       # Vim
       ".netrwhist"
