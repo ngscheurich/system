@@ -1,12 +1,4 @@
-local function find(source, theme, opts)
-  return function()
-    if theme then
-      require("telescope.builtin")[source](require("telescope.themes")[theme](opts))
-    else
-      require("telescope.builtin")[source]()
-    end
-  end
-end
+local pick = require("ngs.util").pick
 
 return {
   "nvim-telescope/telescope.nvim",
@@ -32,18 +24,18 @@ return {
   },
 
   keys = {
-    { "<C-F>", find("find_files"), desc = "Find files" },
+    { "<C-F>", pick("find_files"), desc = "Find files" },
 
-    { "<Leader>/", find("current_buffer_fuzzy_find", "get_ivy"), desc = "Search" },
-    { "<Leader><Space>", find("buffers", "get_dropdown", { previewer = false }), desc = "Buffers" },
-    { "<Leader>fa", find("autocommands"), desc = "Autocommands" },
-    { "<Leader>fc", find("commands"), desc = "Commands" },
-    { "<Leader>ff", find("find_files"), desc = "Files" },
-    { "<Leader>fg", find("live_grep"), desc = "Grep" },
-    { "<Leader>fh", find("help_tags"), desc = "Help" },
-    { "<Leader>fk", find("keymaps"), desc = "Keymaps" },
-    { "<Leader>fl", find("loclist", "get_ivy"), desc = "Location list" },
-    { "<Leader>fo", find("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
-    { "<Leader>fq", find("quickfix"), desc = "Quickfix list" },
+    { "<Leader>/", pick("current_buffer_fuzzy_find", "get_ivy"), desc = "Search" },
+    { "<Leader><Space>", pick("buffers", "get_dropdown", { previewer = false }), desc = "Buffers" },
+    { "<Leader>fa", pick("autocommands"), desc = "Autocommands" },
+    { "<Leader>fc", pick("commands"), desc = "Commands" },
+    { "<Leader>ff", pick("find_files"), desc = "Files" },
+    { "<Leader>fg", pick("live_grep"), desc = "Grep" },
+    { "<Leader>fh", pick("help_tags"), desc = "Help" },
+    { "<Leader>fk", pick("keymaps"), desc = "Keymaps" },
+    { "<Leader>fl", pick("loclist", "get_ivy"), desc = "Location list" },
+    { "<Leader>fo", pick("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
+    { "<Leader>fq", pick("quickfix"), desc = "Quickfix list" },
   },
 }

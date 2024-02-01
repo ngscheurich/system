@@ -167,4 +167,19 @@ function M.format_branch(branch)
   return branch
 end
 
+---Launches telescope with the given source and, optionally, theme and options.
+---@param source string
+---@param theme? string
+---@param opts? table
+---@return nil
+function M.pick(source, theme, opts)
+  return function()
+    if theme then
+      require("telescope.builtin")[source](require("telescope.themes")[theme](opts))
+    else
+      require("telescope.builtin")[source]()
+    end
+  end
+end
+
 return M
