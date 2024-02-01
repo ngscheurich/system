@@ -2,6 +2,7 @@
 
 (use-package typescript-ts-mode
   :elpaca nil
+  :after eglot
   :init
   (add-to-list 'eglot-server-programs
                '(typescript-ts-mode "typescript-language-server" "--stdio"))

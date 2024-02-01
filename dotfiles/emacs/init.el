@@ -3,7 +3,6 @@
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
 
 (require 'ngs-elpaca)
-(require 'seq)
 
 (require 'ngs-core)
 (require 'ngs-theme)
@@ -24,4 +23,6 @@
 ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 ;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
+;; (use-package seq)
+;; (use-package transient)
 (use-package yasnippet)
