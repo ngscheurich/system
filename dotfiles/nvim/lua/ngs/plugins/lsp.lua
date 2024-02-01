@@ -33,6 +33,7 @@ return {
     end
 
     local function on_attach(buffer)
+      local pick = require("ngs.util").pick
       local telescope = require("telescope.builtin")
 
       local mappings = {
@@ -48,7 +49,7 @@ return {
             "Format",
           },
           r = { telescope.lsp_references, "References" },
-          s = { telescope.lsp_document_symbols, "Symbols" },
+          s = { pick("lsp_document_symbols", "get_dropdown", { previewer = false }), "Document symbols" },
         },
 
         K = { vim.lsp.buf.hover, "Hover" },
