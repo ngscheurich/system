@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t -*-
+;;; Git VCS helpers -*- lexical-binding: t -*-
 
 (use-package magit
   :config
