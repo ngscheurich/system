@@ -11,7 +11,7 @@ return {
 
     require("lualine").setup({
       options = {
-        theme = vim.g.colorscheme or "auto",
+        theme = vim.g.theme or "auto",
         component_separators = "",
         section_separators = "",
       },
