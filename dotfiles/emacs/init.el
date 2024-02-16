@@ -1,28 +1,25 @@
-;; Emacs initialization -*- lexical-binding: t; -*-
+;; Emacs initialization -*- lexical-binding: t -*-
 
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
 
-(require 'ngs-elpaca)
+(require 'ngs-straight)
 
 (require 'ngs-core)
-(require 'ngs-theme)
-(require 'ngs-mode-line)
 (require 'ngs-keybinds)
-(require 'ngs-evil)
+
 (require 'ngs-buffers)
-(require 'ngs-dired)
 (require 'ngs-completion)
+(require 'ngs-dired)
 (require 'ngs-env)
-(require 'ngs-shell)
-(require 'ngs-discover)
-(require 'ngs-lang)
+(require 'ngs-evil)
 (require 'ngs-git)
-; (require 'ngs-org)
-; (require 'ngs-misc)
-
-;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
-
-;; (use-package seq)
-;; (use-package transient)
-(use-package yasnippet)
+(require 'ngs-help)
+(require 'ngs-lang)
+(require 'ngs-mode-line)
+(require 'ngs-navigation)
+(require 'ngs-prog)
+(require 'ngs-prose)
+(require 'ngs-shell)
+(require 'ngs-snippets)
+(require 'ngs-term)
+(require 'ngs-theme)

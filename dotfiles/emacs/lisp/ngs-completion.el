@@ -25,7 +25,7 @@
 ;;; COmpletion in Region FUnction
 ;; https://github.com/minad/corfu
 (use-package corfu
-  :load-path "~/.config/emacs/elpaca/builds/corfu/extensions"
+  :load-path "~/.config/emacs/straight/builds/corfu/extensions"
   :custom
   (corfu-auto t)
   :bind

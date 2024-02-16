@@ -11,10 +11,8 @@
 ;; Quickly switch windows
 ;; https://github.com/abo-abo/ace-window
 (use-package ace-window
-  :general
-  (ngs-leader-def
-    "w"  '(ace-window :which-key "windows"))
   :config
+  (ngs-leader-def "w" '(ace-window :which-key "windows"))
   (setq aw-dispatch-always t
         aw-minibuffer-flag t))
 

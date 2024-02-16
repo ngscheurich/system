@@ -1,7 +1,7 @@
-;; -*- lexical-binding: t -*-
+;; The TypeScript programming language -*- lexical-binding: t -*-
 
 (use-package typescript-ts-mode
-  :elpaca nil
+  :straight nil
   :after eglot
   :init
   (add-to-list 'eglot-server-programs

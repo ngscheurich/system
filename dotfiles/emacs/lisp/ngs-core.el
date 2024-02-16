@@ -2,7 +2,7 @@
 
 ;; Emacs settings
 (use-package emacs
-  :elpaca nil
+  :straight nil
   :custom
   (user-full-name "Nicholas Scheurich" "My full name")
   (user-email-address "nick@scheurich.haus" "My personal email address")
@@ -22,19 +22,19 @@
 
 ;; Keeps track of opened files
 (use-package recentf
-  :elpaca nil
+  :straight nil
   :config
   (recentf-mode t))
 
 ;; Allows undo/redo of window changes 
 (use-package winner
-  :elpaca nil
+  :straight nil
   :config
   (winner-mode 1))
 
 ;; Saves minibuffer history
 (use-package savehist
-  :elpaca nil
+  :straight nil
   :config
   (setq history-length 40)
   (savehist-mode))

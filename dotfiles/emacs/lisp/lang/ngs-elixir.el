@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;; The Elixir programming language -*- lexical-binding: t -*-
 
 (use-package elixir-ts-mode
   :after eglot

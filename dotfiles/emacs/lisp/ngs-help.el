@@ -29,4 +29,4 @@
   :config
   (which-key-mode 1))
 
-(provide 'ngs-discover)
+(provide 'ngs-help)

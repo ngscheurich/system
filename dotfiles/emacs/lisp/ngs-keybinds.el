@@ -1,7 +1,7 @@
-;;; Keyboard mappings -*- lexical-binding: t -*-
+;; Keyboard mappings -*- lexical-binding: t -*-
 
 (use-package general
-  :config
+  :init
   (general-evil-setup)
 
   (general-create-definer ngs-leader-def
@@ -25,9 +25,20 @@
     "nn" '(narrow-to-defun :which-key "defun")
     "np" '(narrow-to-page n :which-key "page")
     "nr" '(narrow-to-region n :which-key "region")
-    "nw" '(widen n :which-key "widen")))
+    "nw" '(widen n :which-key "widen"))
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (ngs-local-leader-def "f" 'eglot-format-buffer)
+  (ngs-local-leader-def "k" 'eldoc-doc-buffer))
+
+;; (defvar-keymap ngs-leader-find-map
+;;   :doc "My leader/find map."
+;;   "f" #'find-file)
+
+;; (defvar-keymap ngs-leader-map
+;;   :doc "My leader prefix map."
+;;   "f" ngs-leader-find-map)
+
+;; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (if (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)

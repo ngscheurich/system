@@ -1,6 +1,6 @@
 ;; Colors, typography, and iconography -*- lexical-binding: t -*-
 
-;; Family of highly-legible themes
+;; Highly-legible themes
 ;; https://protesilaos.com/emacs/modus-themes
 (use-package modus-themes
   :config
@@ -9,8 +9,19 @@
       (custom-set-faces
        `(mode-line ((,c :box (:line-width 4 :color ,bg-mode-line-active))))
        `(mode-line-inactive ((,c :box (:line-width 4 :color ,bg-mode-line-inactive)))))))
-  (load-theme 'modus-vivendi-tinted t)
-  (ngs-modus-themes-custom-faces))
+  (add-hook 'modus-themes-post-load-hook 'ngs-modus-themes-custom-faces)
+  (modus-themes-select 'modus-vivendi-tinted))
+
+;; Colorful and legible themes
+;; https://protesilaos.com/emacs/ef-themes
+(use-package ef-themes
+  :config
+  (defun ngs-ef-themes-custom-faces ()
+    (ef-themes-with-colors
+      (custom-set-faces
+       `(mode-line ((,c :box (:line-width 4 :color ,bg-mode-line) :background ,bg-mode-line))
+       `(mode-line-inactive ((,c :box (:line-width 4 :color ,fg-dim) :background ,fg-dim)))))))
+  (add-hook 'ef-themes-post-load-hook #'ngs-ef-themes-custom-faces))
 
 ;; Highlights color values with the corresponding color
 ;; https://elpa.gnu.org/packages/rainbow-mode.html
@@ -88,5 +99,14 @@
 (use-package treemacs-nerd-icons
   :config
   (treemacs-load-theme "nerd-icons"))
+
+;; Icons for Corfu candidates
+;; https://github.com/jdtsmith/kind-icon
+(use-package kind-icon
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 (provide 'ngs-theme)
