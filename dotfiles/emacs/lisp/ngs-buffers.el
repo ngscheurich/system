@@ -3,10 +3,7 @@
 ;; Treat certain buffers as "ephemeral"
 ;; https://github.com/karthink/popper
 (use-package popper
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
+  :config
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
@@ -14,6 +11,11 @@
           help-mode
           compilation-mode))
   (popper-mode +1)
-  (popper-echo-mode +1))
+  (popper-echo-mode +1)
+
+  :bind
+  (("C-`"   . popper-toggle)
+   ("M-`"   . popper-cycle)
+   ("C-M-`" . popper-toggle-type)))
 
 (provide 'ngs-buffers)

@@ -10,6 +10,10 @@
   (diminish 'auto-revert-mode)
   (diminish 'eldoc-mode)
   (diminish 'evil-collection-unimpaired-mode)
-  (diminish 'visual-line-mode))
+  (diminish 'evil-commentary-mode)
+  (diminish 'evil-goggles-mode)
+  (diminish 'visual-line-mode)
+  (diminish 'which-key-mode)
+  (diminish 'yas-minor-mode))
 
 (provide 'ngs-mode-line)

@@ -3,6 +3,7 @@
 ;; Emacs settings
 (use-package emacs
   :straight nil
+
   :custom
   (user-full-name "Nicholas Scheurich" "My full name")
   (user-email-address "nick@scheurich.haus" "My personal email address")
@@ -14,11 +15,26 @@
   (message-kill-buffer-query nil "Don't ask to confirm buffer kill")
   (ring-bell-function 'ignore "Suppress the bell")
   (use-short-answers t "Abbreviate yes/no input")
+
+  :bind ("C-M-u" . 'universal-argument)
+
   :config
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
+
   (unless (eq system-type 'darwin)
-    (menu-bar-mode -1)))
+    (menu-bar-mode -1))
+
+  (if (eq system-type 'darwin)
+      (setq mac-command-modifier 'meta)
+      (setq mac-option-modifier 'none)
+      (setq mac-right-option-modifier 'alt)))
+
+;; Automatically inserts closing delimeter
+(use-package elec-pair
+  :straight nil
+  :config
+  (electric-pair-mode))
 
 ;; Keeps track of opened files
 (use-package recentf
@@ -40,25 +56,25 @@
   (savehist-mode))
 
 ;; Temporary files
-(use-package no-littering
-  :config
-  (defvar ngs-auto-save-directory
-    (no-littering-expand-var-file-name "auto-save/")
-    "Directory in which auto-save files should be stored")
+;; (use-package no-littering
+;;   :config
+;;   (defvar ngs-auto-save-directory
+;;     (no-littering-expand-var-file-name "auto-save/")
+;;     "Directory in which auto-save files should be stored")
 
-  (defvar ngs-backup-directory
-    (no-littering-expand-var-file-name "backup/")
-    "Directory in which backup files should be stored")
+;;   (defvar ngs-backup-directory
+;;     (no-littering-expand-var-file-name "backup/")
+;;     "Directory in which backup files should be stored")
 
-  (mapcar (lambda (dir)
-            (unless (file-directory-p dir)
-              (make-directory dir)))
-          `(,ngs-auto-save-directory ,ngs-backup-directory))
+;;   (mapcar (lambda (dir)
+;;             (unless (file-directory-p dir)
+;;               (make-directory dir)))
+;;           `(,ngs-auto-save-directory ,ngs-backup-directory))
 
-  (setq auto-save-file-name-transforms
-        `((".*" ,ngs-auto-save-directory t)))
+;;   (setq auto-save-file-name-transforms
+;;         `((".*" ,ngs-auto-save-directory t)))
 
-  (setq backup-directory-alist
-        `((".*" . ,ngs-backup-directory))))
+;;   (setq backup-directory-alist
+;;         `((".*" . ,ngs-backup-directory))))
 
 (provide 'ngs-core)

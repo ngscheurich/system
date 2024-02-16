@@ -8,6 +8,9 @@
         denote-known-keywords '("emacs" "idea" "person" "followup")
         denote-file-type 'markdown-yaml
         denote-date-prompt-use-org-read-date t)
-  :config
-  (keymap-global-set "C-c n n" 'denote)
-  (keymap-global-set "C-c n f" 'denote-open-or-create))
+
+  :bind
+  (("C-c n n" . 'denote)
+   ("C-c n f"  . 'denote-open-or-create)))
+
+(provide 'ngs-notes)

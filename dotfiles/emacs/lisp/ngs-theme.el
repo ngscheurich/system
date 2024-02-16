@@ -1,27 +1,16 @@
 ;; Colors, typography, and iconography -*- lexical-binding: t -*-
 
+(defvar ngs-mode-line-padding 3)
+
 ;; Highly-legible themes
 ;; https://protesilaos.com/emacs/modus-themes
 (use-package modus-themes
   :config
-  (defun ngs-modus-themes-custom-faces ()
-    (modus-themes-with-colors
-      (custom-set-faces
-       `(mode-line ((,c :box (:line-width 4 :color ,bg-mode-line-active))))
-       `(mode-line-inactive ((,c :box (:line-width 4 :color ,bg-mode-line-inactive)))))))
-  (add-hook 'modus-themes-post-load-hook 'ngs-modus-themes-custom-faces)
   (modus-themes-select 'modus-vivendi-tinted))
 
 ;; Colorful and legible themes
 ;; https://protesilaos.com/emacs/ef-themes
-(use-package ef-themes
-  :config
-  (defun ngs-ef-themes-custom-faces ()
-    (ef-themes-with-colors
-      (custom-set-faces
-       `(mode-line ((,c :box (:line-width 4 :color ,bg-mode-line) :background ,bg-mode-line))
-       `(mode-line-inactive ((,c :box (:line-width 4 :color ,fg-dim) :background ,fg-dim)))))))
-  (add-hook 'ef-themes-post-load-hook #'ngs-ef-themes-custom-faces))
+(use-package ef-themes)
 
 ;; Highlights color values with the corresponding color
 ;; https://elpa.gnu.org/packages/rainbow-mode.html
@@ -37,12 +26,28 @@
            :default-family "Berkeley Mono"
            :default-weight regular
            :default-height 120
-	   :line-spacing 0.3
+           :line-spacing 0.3
            :variable-pitch-family "IBM Plex Sans")))
-  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-  (add-hook 'enable-theme-functions #'fontaine-apply-current-preset)
+
+  :hook
+  ((kill-emacs .  fontaine-store-latest-preset)
+   (enable-theme-functions  . fontaine-apply-current-preset))
+
   :config
   (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular)))
+
+;; Adjusts the font size in all Emacs frames
+;; https://github.com/purcell/default-text-scale
+(use-package default-text-scale
+  :bind ("C-c C-t" . 'hydra-text-scale/body)
+  
+  :config
+  (defhydra hydra-text-scale (:timeout 4)
+    "scale text"
+    ("=" default-text-scale-increase "larger")
+    ("-" default-text-scale-decrease "smaller")
+    ("0" default-text-scale-reset "reset")
+    ("q" nil "quit" :exit t)))
 
 ;; Font ligatures using HARFBUZZ/Cairo
 ;; https://github.com/mickeynp/ligature.el
@@ -82,6 +87,7 @@
 ;; Icons in dired buffers
 ;; https://github.com/rainstormstudio/nerd-icons-dired
 (use-package nerd-icons-dired
+  :diminish
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
@@ -97,6 +103,7 @@
 ;; Icons in file explorer
 ;; https://github.com/rainstormstudio/treemacs-nerd-icons
 (use-package treemacs-nerd-icons
+  :after treemacs
   :config
   (treemacs-load-theme "nerd-icons"))
 

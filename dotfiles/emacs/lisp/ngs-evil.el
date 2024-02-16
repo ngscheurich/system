@@ -3,7 +3,6 @@
 ;; The extensible vi layer for Emacs
 ;; https://github.com/emacs-evil/evil
 (use-package evil
-  :after general
   :custom
   (evil-echo-state nil "Don't display the Evil state in the echo area")
   (evil-undo-system 'undo-redo "Use the Emacs-native undo/redo functionality")
@@ -11,14 +10,16 @@
   (evil-want-C-u-scroll t "`C-u' to scroll by half a page")
   (evil-want-Y-yank-to-eol t "`Y' to yank to the end of the line")
   (evil-want-keybinding nil "Don't load bindings for additional modes")
+
+  :bind
+  (:map evil-normal-state-map
+    ("<up>" . 'evil-window-up)
+    ("<down>" . 'evil-window-down)
+    ("<left>" . 'evil-window-left)
+    ("<right>" . 'evil-window-right)
+    ("-" . 'dired-jump))
+
   :config
-  (global-set-key (kbd "C-M-u") 'universal-argument)
-  (general-nmap
-    "<up>" 'evil-window-up
-    "<down>" 'evil-window-down
-    "<left>" 'evil-window-left
-    "<right>" 'evil-window-right
-    "-" 'dired-jump)
   (evil-mode 1))
 
 ;; Evil bindings for additional packages and UIs
@@ -38,7 +39,6 @@
 ;; Emulates commetary.vim
 ;; https://github.com/tpope/vim-commentary
 (use-package evil-commentary
-  :diminish
   :after evil
   :config
   (evil-commentary-mode))
@@ -46,7 +46,7 @@
 ;; Gives a quick visual indicator Evil operations
 ;; https://github.com/edkolev/evil-goggles
 (use-package evil-goggles
-  :diminish
+  :after evil
   :config
   (evil-goggles-mode)
   (evil-goggles-use-diff-faces))

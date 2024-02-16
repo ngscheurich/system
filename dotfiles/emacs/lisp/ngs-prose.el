@@ -3,7 +3,7 @@
 (defun ngs-set-visual-fill ()
   (interactive)
   (setq visual-fill-column-width 100
-	visual-fill-column-center-text t)
+        visual-fill-column-center-text t)
   (visual-line-mode 1)
   (visual-fill-column-mode 1))
 

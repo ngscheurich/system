@@ -3,11 +3,11 @@
 ;; Template system
 ;; https://github.com/joaotavora/yasnippet
 (use-package yasnippet
-  :diminish
   :init
   (setq yas-snippet-dirs
-	`(,(locate-user-emacs-file "snippets")))
+        `(,(locate-user-emacs-file "snippets")))
   :config
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (diminish 'yas-minor-mode))
 
 (provide 'ngs-snippets)
