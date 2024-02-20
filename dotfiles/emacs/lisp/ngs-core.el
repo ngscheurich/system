@@ -33,20 +33,17 @@
 ;; Automatically inserts closing delimeter
 (use-package elec-pair
   :straight nil
-  :config
-  (electric-pair-mode))
+  :config (electric-pair-mode))
 
 ;; Keeps track of opened files
 (use-package recentf
   :straight nil
-  :config
-  (recentf-mode t))
+  :config (recentf-mode t))
 
 ;; Allows undo/redo of window changes 
 (use-package winner
   :straight nil
-  :config
-  (winner-mode 1))
+  :config (winner-mode 1))
 
 ;; Saves minibuffer history
 (use-package savehist
@@ -55,6 +52,12 @@
   (setq history-length 40)
   (savehist-mode))
 
+;; Built-in tab bar
+(use-package tab-bar
+  :straight nil
+  :config (tab-bar-mode))
+
+;; TODO: Is this fucking something up?
 ;; Temporary files
 ;; (use-package no-littering
 ;;   :config

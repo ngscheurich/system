@@ -26,4 +26,9 @@
   (org-imenu :host github
              :repo "rougier/org-imenu"))
 
+(use-package polymode)
+(use-package poly-markdown
+  :config
+  (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode)))
+
 (provide 'ngs-prose)
