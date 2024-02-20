@@ -72,6 +72,7 @@
       "TODO.md"
       "TODO.org"
       "NOTES.md"
+      "NOTES.org"
       "QUERIES.sql"
 
       # Vim
