@@ -16,6 +16,30 @@ return {
     },
   },
 
+  -- Tabs
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      options = {
+        mode = "tabs",
+        indicator = {
+          icon = "┃",
+        },
+        always_show_bufferline = false,
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "",
+            text_align = "left",
+            separator = false,
+          },
+        },
+      },
+    },
+  },
+
   -- Indentation guide
   {
     "lukas-reineke/indent-blankline.nvim",
