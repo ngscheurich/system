@@ -44,7 +44,8 @@ return {
 
   {
     "rcarriga/nvim-dap-ui",
-    opts = {},
+
+    -- TODO: Customize this function. This is mostly copied from the project page.
     config = function()
       local dap, dapui = require("dap"), require("dapui")
 

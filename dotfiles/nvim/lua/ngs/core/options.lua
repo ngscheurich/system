@@ -19,7 +19,7 @@ vim.opt.fillchars = { vert = "│" }
 vim.opt.laststatus = 3
 vim.opt.listchars = listchars
 vim.opt.number = true
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 12
 vim.opt.shortmess:append("c")
 vim.opt.showmode = false
 vim.opt.sidescrolloff = 8
@@ -29,6 +29,7 @@ vim.opt.splitright = true
 vim.opt.termguicolors = true
 
 -- Indentation
+vim.opt.breakindent = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = indent
 vim.opt.smartindent = true
@@ -42,10 +43,17 @@ vim.opt.inccommand = "split"
 vim.opt.smartcase = true
 
 -- Completion
-vim.opt.completeopt = { "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 vim.opt.pumheight = 10
 
+-- Folding
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
+
 -- Behavior
+vim.opt.clipboard = "unnamedplus"
 vim.opt.hidden = true
+vim.opt.timeoutlen = 250
 vim.opt.undofile = true
-vim.opt.updatetime = 1000
+vim.opt.updatetime = 250

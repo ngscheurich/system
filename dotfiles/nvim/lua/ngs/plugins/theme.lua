@@ -1,12 +1,10 @@
 return {
-  -- Icons
-  { "nvim-tree/nvim-web-devicons", config = true },
-  { "yamatsum/nvim-nonicons", config = true },
-
   -- Colorschemes
   {
     "folke/tokyonight.nvim",
     cond = vim.g.theme == "tokyonight",
+    lazy = false,
+    priority = 1000,
     config = function()
       require("tokyonight").setup({
         style = "night",
@@ -15,16 +13,16 @@ return {
       vim.cmd.colorscheme("tokyonight")
     end,
   },
+
+  -- Icons
+  { "nvim-tree/nvim-web-devicons", config = true },
+  { "yamatsum/nvim-nonicons", config = true },
+
+  -- Highlight TODO-style comments
   {
-    "miikanissi/modus-themes.nvim",
-    cond = vim.g.theme == "modus",
-    config = function()
-      require("modus-themes").setup({
-        style = "auto",
-        variant = "tinted",
-        styles = {},
-      })
-      vim.cmd.colorscheme("modus")
-    end,
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = true,
   },
 }

@@ -2,8 +2,8 @@ return {
   -- Start screen
   { "echasnovski/mini.starter", version = false, config = true },
 
-  -- Notifications
-  "rcarriga/nvim-notify",
+  -- Improve default UI elements
+  "stevearc/dressing.nvim",
 
   -- Buffer labels
   {
@@ -19,7 +19,7 @@ return {
   -- Indentation guide
   {
     "lukas-reineke/indent-blankline.nvim",
-    commands = { "IBLEnable", "IBLToggle" },
+    cmd = { "IBLEnable", "IBLToggle" },
     config = function()
       require("ibl").setup({
         enabled = false,
@@ -29,28 +29,29 @@ return {
     end,
   },
 
-  -- Progress indicator
+  -- Notifications and progress indicator
   {
     "j-hui/fidget.nvim",
-    branch = "legacy",
+    tag = "v1.0.0",
     config = true,
   },
+
   -- Keymap guide
   {
     "folke/which-key.nvim",
-
+    event = "VimEnter",
     config = function()
       require("which-key")
 
       local mappings = {
         ["<Leader>"] = {
           ["?"] = { "<Cmd>WhichKey<CR>", "Keys" },
-          e = { name = "explore" },
-          f = { name = "find" },
-          l = { name = "list" },
-          o = { name = "outline" },
-          t = { name = "test" },
-          u = { name = "toggle" },
+          e = { name = "Explore" },
+          f = { name = "Find" },
+          l = { name = "List" },
+          o = { name = "Outline" },
+          t = { name = "Test" },
+          u = { name = "UI Toggles" },
         },
       }
 
@@ -58,7 +59,18 @@ return {
     end,
   },
 
-  -- Tree-based explorer
+  -- Buffer-based file explorer
+  {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup({
+        default_file_explorer = true,
+      })
+      vim.keymap.set("n", "-", "<Cmd>Oil<CR>", { desc = "Open parent directory" })
+    end,
+  },
+
+  -- Tree-based file explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -109,7 +121,7 @@ return {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    commands = { "Trouble", "TroubleToggle" },
+    cmd = { "Trouble", "TroubleToggle" },
     keys = {
       { "\\", "<Cmd>TroubleToggle<CR>", desc = "Trouble" },
     },
@@ -122,7 +134,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-    commands = { "AerialToggle", "AerialNavToggle" },
+    cmd = { "AerialToggle", "AerialNavToggle" },
     keys = {
       { "<Leader>oo", "<Cmd>AerialToggle<CR>", desc = "Panel" },
       { "<Leader>of", "<Cmd>AerialNavToggle<CR>", desc = "Float" },

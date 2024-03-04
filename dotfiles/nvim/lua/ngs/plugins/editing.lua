@@ -11,7 +11,7 @@ return {
   },
 
   -- Edit surrounding pairs
-  "tpope/vim-surround",
+  { "echasnovski/mini.surround", version = false, config = true },
 
   -- Easily comment/uncomment
   { "echasnovski/mini.comment", version = false, config = true },

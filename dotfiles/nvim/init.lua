@@ -24,9 +24,12 @@ end
 
 vim.opt.runtimepath:prepend(lazypath)
 
--- Load colorscheme setting
+-- Load theme setting
 vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
-vim.g.theme = require("ngs-theme").name
+
+local theme = require("ngs-theme")
+vim.g.theme = theme.name
+vim.g.colorscheme = theme.colorscheme or theme.name
 
 -- Load core config
 util.foreach_module("ngs.core", function(mod)

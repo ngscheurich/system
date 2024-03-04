@@ -2,14 +2,11 @@ return {
   -- Expanded matching delimiters
   "andymass/vim-matchup",
 
-  -- Directory buffers
-  "justinmk/vim-dirvish",
-
   -- Improved substitution
   "tpope/vim-abolish",
 
   -- Commands for common Unix programs
-  "tpope/vim-eunuch",
+  { "tpope/vim-eunuch", event = "CmdlineEnter" },
 
   -- Project management
   "tpope/vim-projectionist",
@@ -17,17 +14,17 @@ return {
   -- Expanded repeat
   "tpope/vim-repeat",
 
-  -- Readline bindings
-  "tpope/vim-rsi",
+  -- Readline bindings for
+  { "tpope/vim-rsi", event = "CmdlineEnter" },
 
   -- Paired bracket mappings
   "tpope/vim-unimpaired",
 
-  -- Send text to terminal multiplexer
+  -- Send text to external target
   {
     "jpalardy/vim-slime",
     config = function()
-      vim.g.slime_target = "neovim"
+      vim.g.slime_target = "zellij"
     end,
   },
 
