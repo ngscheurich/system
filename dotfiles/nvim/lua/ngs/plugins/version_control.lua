@@ -1,6 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
+    dependencies = { "folke/which-key.nvim" },
     config = function()
       local gitsigns = require("gitsigns")
 
@@ -17,7 +18,7 @@ return {
 
       local mappings = {
         ["<Leader>g"] = {
-          name = "git",
+          name = "Git",
 
           b = { gitsigns.toggle_current_line_blame, "Line blame (toggle)" },
           d = { gitsigns.toggle_deleted, "Deleted (toggle)" },
