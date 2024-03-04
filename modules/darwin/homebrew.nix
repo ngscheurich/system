@@ -45,6 +45,7 @@
       "livebook"
       "logitech-options"
       "obs"
+      "obsidian"
       "postico"
       "postman"
       "raycast"
