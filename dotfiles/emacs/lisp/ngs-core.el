@@ -1,4 +1,4 @@
-;; Core Emacs customizations -*- lexical-binding: t -*-
+;; Core Emacs customizations -*- lexical-binding: t; -*-
 
 ;; Emacs settings
 (use-package emacs
@@ -57,27 +57,23 @@
   :straight nil
   :config (tab-bar-mode))
 
-;; TODO: Is this fucking something up?
-;; Temporary files
-;; (use-package no-littering
-;;   :config
-;;   (defvar ngs-auto-save-directory
-;;     (no-littering-expand-var-file-name "auto-save/")
-;;     "Directory in which auto-save files should be stored")
+(defvar ngs-auto-save-directory
+  (locate-user-emacs-file "var/auto-save/")
+  "Directory in which auto-save files should be stored")
 
-;;   (defvar ngs-backup-directory
-;;     (no-littering-expand-var-file-name "backup/")
-;;     "Directory in which backup files should be stored")
+(defvar ngs-backup-directory
+  (locate-user-emacs-file "var/backup/")
+  "Directory in which backup files should be stored")
 
-;;   (mapcar (lambda (dir)
-;;             (unless (file-directory-p dir)
-;;               (make-directory dir)))
-;;           `(,ngs-auto-save-directory ,ngs-backup-directory))
+(mapcar (lambda (dir)
+          (unless (file-directory-p dir)
+            (make-directory dir)))
+        `(,ngs-auto-save-directory ,ngs-backup-directory))
 
-;;   (setq auto-save-file-name-transforms
-;;         `((".*" ,ngs-auto-save-directory t)))
+(setq auto-save-file-name-transforms
+      `((".*" ,ngs-auto-save-directory t)))
 
-;;   (setq backup-directory-alist
-;;         `((".*" . ,ngs-backup-directory))))
+(setq backup-directory-alist
+      `((".*" . ,ngs-backup-directory)))
 
 (provide 'ngs-core)

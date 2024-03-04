@@ -1,4 +1,4 @@
-;; Customizations for the built-in shells -*- lexical-binding: t -*-
+;; Customizations for the built-in shells -*- lexical-binding: t; -*-
 
 (setq explicit-shell-file-name "/etc/profiles/per-user/nick/bin/zsh")
 (setq shell-file-name "zsh")

@@ -1,12 +1,13 @@
-;; A collected miscellany -*- lexical-binding: t -*-
+;; A collected miscellany -*- lexical-binding: t; -*-
 
 ;; https://github.com/alphapapa/activities.el
 (use-package activities
   :config
   (activities-mode)
-  (activities-tabs-mode)
+  ;; (activities-tabs-mode)
   ;; Prevent `edebug' default bindings from interfering.
-  (setq edebug-inhibit-emacs-lisp-mode-bindings t)
+  (setq edebug-inhibit-emacs-lisp-mode-bindings 
+t)
 
   :bind
   (("C-c a n" . activities-new)
@@ -25,12 +26,11 @@
   :init
   (setq spacious-padding-widths
         '(:internal-border-width 16
-          :header-line-width 4
-          :mode-line-width 3
-          :tab-width 4
-          :right-divider-width 16
-          :scroll-bar-width 8))
-
+                                 :header-line-width 4
+                                 :mode-line-width 3
+                                 :tab-width 4
+                                 :right-divider-width 24
+                                 :scroll-bar-width 8))
   :config
   (spacious-padding-mode))
 
@@ -72,9 +72,9 @@
 ;; 	:config	(eglot-booster-mode))
 
 ;; https://github.com/jdtsmith/indent-bars
-;; (use-package indent-bars
-;;   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
-;;   :hook (prog-mode . indent-bars-mode)) ; or whichever modes you prefer
+(use-package indent-bars
+  :straight (indent-bars :host github :repo "jdtsmith/indent-bars")
+  :hook prog-mode)
 
 ;; https://github.com/JasZhe/window-stool
 ;; https://github.com/jasonmj/.emacs.d/blob/main/config-org/editing.org#window-stool
@@ -89,14 +89,19 @@
 ;;   :straight '(bufler :host github :repo "alphapapa/bufler.el"))
 
 ;; https://github.com/jasonmj/.emacs.d/blob/main/config-org/dired.org
-;; (use-package dired-single
-;;   :after dired)
+(use-package dired-single
+  :after dired)
 
 ;; https://github.com/Fuco1/dired-hacks/tree/master?tab=readme-ov-file#dired-subtree
-;; (use-package dired-subtree
-;;   :after dired)
+(use-package dired-subtree
+  :after dired)
 
 ;; https://github.com/SpecialBomb/emacs-modern-fringes
-;; (use-package modern-fringes)
+(use-package modern-fringes
+  :config (modern-fringes-mode))
+
+;; https://github.com/radian-software/apheleia
+(use-package apheleia
+  :hook (typescript-ts-mode . apheleia-mode))
 
 (provide 'ngs-misc)

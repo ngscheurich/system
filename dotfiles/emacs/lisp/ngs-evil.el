@@ -1,4 +1,4 @@
-;; Evil mode customizations -*- lexical-binding: t -*-
+;; Evil mode customizations -*- lexical-binding: t; -*-
 
 ;; The extensible vi layer for Emacs
 ;; https://github.com/emacs-evil/evil

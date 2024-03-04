@@ -1,4 +1,4 @@
-;; The GDScript programming language -*- lexical-binding: t -*-
+;; The GDScript programming language -*- lexical-binding: t; -*-
 
 (use-package gdscript-mode
   :after eglot

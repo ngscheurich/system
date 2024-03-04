@@ -1,4 +1,4 @@
-;; Customizations for prose modes -*- lexical-binding: t -*-
+;; Customizations for prose modes -*- lexical-binding: t; -*-
 
 (defun ngs-set-visual-fill ()
   (interactive)

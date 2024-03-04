@@ -1,4 +1,4 @@
-;; Environment customizations -*- lexical-binding: t -*-
+;; Environment customizations -*- lexical-binding: t; -*-
 
 ;; Inherit environment variables from $SHELL
 ;; https://github.com/purcell/exec-path-from-shell

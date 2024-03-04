@@ -1,4 +1,4 @@
-;; Snippets support -*- lexical-binding: t -*-
+;; Snippets support; -*- lexical-binding: t -*-
 
 ;; Template system
 ;; https://github.com/joaotavora/yasnippet

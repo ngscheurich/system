@@ -1,4 +1,4 @@
-;; Customizations for programming -*- lexical-binding: t -*-
+;; Customizations for programming -*- lexical-binding: t; -*-
 
 ;; Tab settings
 (setq-default tab-width 2)

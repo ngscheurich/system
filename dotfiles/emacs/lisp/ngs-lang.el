@@ -1,4 +1,4 @@
-;; Programming languages support -*- lexical-binding: t -*-
+;; Programming languages support; -*- lexical-binding: t -*-
 
 (add-to-list 'load-path (locate-user-emacs-file "lisp/lang"))
 

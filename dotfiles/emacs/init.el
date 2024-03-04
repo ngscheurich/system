@@ -1,4 +1,4 @@
-;; Emacs initialization -*- lexical-binding: t -*-
+;; Emacs initialization -*- lexical-binding: t; -*-
 
 (add-to-list 'load-path (locate-user-emacs-file "lisp"))
 
@@ -6,6 +6,8 @@
 
 (require 'ngs-core)
 (require 'ngs-keybinds)
+
+(require 'emacs-next)
 
 (require 'ngs-buffers)
 (require 'ngs-completion)

@@ -1,4 +1,4 @@
-;; Terminal emulation -*- lexical-binding: t -*-
+;; Terminal emulation -*- lexical-binding: t; -*-
 
 ;; ;; Emulate A Terminal
 ;; ;; https://codeberg.org/akib/emacs-eat

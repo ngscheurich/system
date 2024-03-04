@@ -1,4 +1,4 @@
-;; Convenient navigation mechanisms -*- lexical-binding: t -*-
+;; Convenient navigation mechanisms -*- lexical-binding: t; -*-
 
 ;; Jump to things via a narrowing tree
 ;; https://github.com/abo-abo/avy 

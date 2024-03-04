@@ -1,4 +1,4 @@
-;; Dired customizations -*- lexical-binding: t -*-
+;; Dired customizations -*- lexical-binding: t; -*-
 
 ;; Emacs directory editor
 (use-package dired

@@ -1,4 +1,4 @@
-;; Buffer management -*- lexical-binding: t -*-
+;; Buffer management; -*- lexical-binding: t -*-
 
 ;; Treat certain buffers as "ephemeral"
 ;; https://github.com/karthink/popper

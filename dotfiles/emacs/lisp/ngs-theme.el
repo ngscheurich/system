@@ -1,4 +1,4 @@
-;; Colors, typography, and iconography -*- lexical-binding: t -*-
+;; Colors, typography, and iconography -*- lexical-binding: t; -*-
 
 (defvar ngs-mode-line-padding 3)
 
@@ -26,7 +26,7 @@
            :default-family "Berkeley Mono"
            :default-weight regular
            :default-height 120
-           :line-spacing 0.3
+           :line-spacing 0.4
            :variable-pitch-family "IBM Plex Sans")))
 
   :hook

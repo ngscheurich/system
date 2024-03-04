@@ -1,4 +1,4 @@
-;; Keyboard mappings -*- lexical-binding: t -*-
+;; Keyboard mappings -*- lexical-binding: t; -*-
 
 ;; Emacs bindings that stick around
 ;; https://github.com/abo-abo/hydra

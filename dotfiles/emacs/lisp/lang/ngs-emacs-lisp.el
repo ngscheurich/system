@@ -1,4 +1,4 @@
-;; The Emacs Lisp dialect -*- lexical-binding: t -*-
+;; The Emacs Lisp dialect; -*- lexical-binding: t -*-
 
 (use-package paredit
   :diminish

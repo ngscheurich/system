@@ -1,4 +1,4 @@
-;; Discoverability affordances -*- lexical-binding: t -*-
+;; Discoverability affordances -*- lexical-binding: t; -*-
 
 ;; Re-bind help key mapping
 (keymap-global-set "C-c h" 'help-command)

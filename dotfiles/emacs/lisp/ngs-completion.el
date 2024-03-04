@@ -1,4 +1,4 @@
-;; Enhancements to completion systems -*- lexical-binding: t -*-
+;; Enhancements to completion systems -*- lexical-binding: t; -*-
 
 ;; VERTical Interactive COmpletion
 ;; https://github.com/minad/vertico

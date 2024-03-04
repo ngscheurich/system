@@ -1,4 +1,4 @@
-;; The TypeScript programming language -*- lexical-binding: t -*-
+;; The TypeScript programming language -*- lexical-binding: t; -*-
 
 (use-package typescript-ts-mode
   :straight nil
