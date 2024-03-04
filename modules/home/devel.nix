@@ -26,9 +26,6 @@
     pgformatter
     sqlite-interactive
 
-    # Containerization/virtualization
-    docker-machine
-
     # Hardware
     tio
 
