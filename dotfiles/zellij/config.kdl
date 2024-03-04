@@ -41,9 +41,11 @@ keybinds clear-defaults=true {
         bind "Alt 8" { GoToTab 8; SwitchToMode "Normal"; }
         bind "Alt 9" { GoToTab 9; SwitchToMode "Normal"; }
     }
+
     locked {
         bind "Alt g" { SwitchToMode "Normal"; }
     }
+
     resize {
         bind "Alt n" { SwitchToMode "Normal"; }
         bind "h" "Left" { Resize "Increase Left"; }
@@ -57,6 +59,7 @@ keybinds clear-defaults=true {
         bind "=" "+" { Resize "Increase"; }
         bind "-" { Resize "Decrease"; }
     }
+
     pane {
         bind "Alt p" { SwitchToMode "Normal"; }
         bind "h" "Left" { MoveFocus "Left"; }
@@ -74,6 +77,7 @@ keybinds clear-defaults=true {
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
         bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0;}
     }
+
     move {
         bind "Alt m" { SwitchToMode "Normal"; }
         bind "n" "Tab" { MovePane; }
@@ -83,6 +87,7 @@ keybinds clear-defaults=true {
         bind "k" "Up" { MovePane "Up"; }
         bind "l" "Right" { MovePane "Right"; }
     }
+
     tab {
         bind "Alt t" { SwitchToMode "Normal"; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
@@ -102,6 +107,7 @@ keybinds clear-defaults=true {
         bind "9" { GoToTab 9; SwitchToMode "Normal"; }
         bind "Tab" { ToggleTab; }
     }
+
     scroll {
         bind "Alt s" { SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
@@ -114,6 +120,7 @@ keybinds clear-defaults=true {
         bind "d" { HalfPageScrollDown; }
         bind "u" { HalfPageScrollUp; }
     }
+
     search {
         bind "Alt s" { SwitchToMode "Normal"; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
@@ -129,23 +136,35 @@ keybinds clear-defaults=true {
         bind "w" { SearchToggleOption "Wrap"; }
         bind "o" { SearchToggleOption "WholeWord"; }
     }
+
     entersearch {
         bind "Ctrl c" "Esc" { SwitchToMode "Scroll"; }
         bind "Enter" { SwitchToMode "Search"; }
     }
+
     renametab {
         bind "Ctrl c" { SwitchToMode "Normal"; }
         bind "Esc" { UndoRenameTab; SwitchToMode "Tab"; }
     }
+
     renamepane {
         bind "Ctrl c" { SwitchToMode "Normal"; }
         bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
     }
+
     session {
         bind "Alt o" { SwitchToMode "Normal"; }
         bind "Alt s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
+        bind "w" {
+            LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            };
+            SwitchToMode "Normal"
+        }
     }
+
     shared_except "locked" {
         bind "Alt g" { SwitchToMode "Locked"; }
         bind "Alt q" { Quit; }
@@ -159,24 +178,31 @@ keybinds clear-defaults=true {
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
     }
+
     shared_except "normal" "locked" {
         bind "Enter" "Esc" { SwitchToMode "Normal"; }
     }
+
     shared_except "pane" "locked" {
         bind "Alt p" { SwitchToMode "Pane"; }
     }
+
     shared_except "resize" "locked" {
         bind "Alt n" { SwitchToMode "Resize"; }
     }
+
     shared_except "scroll" "locked" {
         bind "Alt s" { SwitchToMode "Scroll"; }
     }
+
     shared_except "session" "locked" {
         bind "Alt o" { SwitchToMode "Session"; }
     }
+
     shared_except "tab" "locked" {
         bind "Alt t" { SwitchToMode "Tab"; }
     }
+
     shared_except "move" "locked" {
         bind "Alt h" { SwitchToMode "Move"; }
     }
@@ -195,9 +221,6 @@ themes {
     tokyo-night-dark {
         fg 169 177 214
         bg 26 27 38
-        // Used for selection bg
-        // See https://github.com/zellij-org/zellij/issues/1368
-        // bg 51 70 124
         black 56 62 90
         red 249 51 87
         green 158 206 106
@@ -226,4 +249,4 @@ themes {
 
 theme "tokyo-night-dark"
 
-default_layout "compact"
+// default_layout "compact"

@@ -1,0 +1,45 @@
+layout {
+    pane size=1 borderless=true {
+        plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+            format_left  "{mode} #[fg=blue,bold]{session} {tabs}"
+            format_right "{command_whoami}@{command_hostname}  :: {command_git_branch}"
+            format_space ""
+
+            border_enabled  "false"
+            border_char     "─"
+            border_format   "#[fg=#white]{char}"
+            border_position "bottom"
+
+            hide_frame_for_single_pane "false"
+
+            mode_normal  "#[fg=blue]󰫈"
+            mode_pane    "#[fg=yellow]"
+            mode_scroll  "#[fg=yellow]🡙"
+            mode_search  "#[fg=yellow]"
+            mode_session "#[fg=yellow]󰛡"
+            mode_tab     "#[fg=yellow]"
+            mode_tmux    "#[fg=yellow]"
+
+            tab_normal   "#[fg=#6C7086] {name} "
+            tab_active   "#[fg=#9399B2,bold] {name} "
+
+            command_whoami_command  "whoami"
+            command_whoami_format   "{stdout}"
+            command_whoami_interval "10"
+
+            command_hostname_command  "hostname"
+            command_hostname_format   "{stdout}"
+            command_hostname_interval "10"
+
+            command_git_branch_command   "git rev-parse --abbrev-ref HEAD"
+            command_git_branch_format    "#[fg=blue] {stdout} "
+            command_git_branch_interval  "10"
+
+            datetime          "{format} "
+            datetime_format   "%A, %d %b %Y %H:%M"
+            datetime_timezone "America/Chicago"
+        }
+    }
+
+    pane
+}
