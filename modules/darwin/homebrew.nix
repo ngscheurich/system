@@ -53,6 +53,10 @@
       "reaper"
       "todoist"
       "vlc"
+      {
+        name = "gcenx/wine/wineskin";
+        args = { no_quarantine = true; };
+      }
       "wireshark"
     ];
 
