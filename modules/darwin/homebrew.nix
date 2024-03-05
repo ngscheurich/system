@@ -44,6 +44,7 @@
       "kitty"
       "livebook"
       "logitech-options"
+      "magicavoxel"
       "obs"
       "obsidian"
       "postico"
