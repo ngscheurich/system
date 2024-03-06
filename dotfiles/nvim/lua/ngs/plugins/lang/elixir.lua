@@ -7,7 +7,7 @@ local rep = require("luasnip.extras").rep
 return {
   util.treesitter_ensure("elixir"),
   util.lspconfig_setup("lexical", {
-    cmd = { "/Users/nick/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
+    cmd = { vim.fn.expand("~") .. "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
   }),
   util.luasnip_add("lua", {
     s("pry", { t({
