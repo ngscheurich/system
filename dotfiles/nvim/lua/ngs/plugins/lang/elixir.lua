@@ -9,7 +9,7 @@ return {
   util.lspconfig_setup("lexical", {
     cmd = { vim.fn.expand("~") .. "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
   }),
-  util.luasnip_add("lua", {
+  util.luasnip_add("elixir", {
     s("pry", { t({
       "require IEx",
       "IEx.pry()",
