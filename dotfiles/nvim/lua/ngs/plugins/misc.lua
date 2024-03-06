@@ -14,8 +14,8 @@ return {
   -- Expanded repeat
   "tpope/vim-repeat",
 
-  -- Readline bindings for
-  { "tpope/vim-rsi", event = "CmdlineEnter" },
+  -- Readline bindings for insert and command-line mode
+  { "tpope/vim-rsi" },
 
   -- Paired bracket mappings
   "tpope/vim-unimpaired",
