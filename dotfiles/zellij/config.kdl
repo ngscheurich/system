@@ -218,35 +218,20 @@ plugins {
 simplified_ui true
 
 themes {
-    tokyo-night-dark {
-        fg 169 177 214
-        bg 26 27 38
-        black 56 62 90
-        red 249 51 87
-        green 158 206 106
-        yellow 224 175 104
-        blue 122 162 247
-        magenta 187 154 247
-        cyan 42 195 222
-        white 169 177 214
-        orange 255 158 100
-    }
+    terminal {
+        fg 7
+        bg 0
+        black 8
+        red 1
+        green 2
+        yellow 3
+        blue 4
+        magenta 5
+        cyan 6
+        white 15
+        orange 11
 
-    tomorrow-night {
-        fg 197 200 198
-        bg 29 31 33
-        black 40 42 46
-        red 165 66 66
-        green 140 148 64
-        yellow 222 147 95
-        blue 95 129 157
-        magenta 133 103 143
-        cyan 94 141 135
-        white 112 120 128
-        orange 222 147 95
     }
 }
 
-theme "tokyo-night-dark"
-
-// default_layout "compact"
+theme "terminal"
