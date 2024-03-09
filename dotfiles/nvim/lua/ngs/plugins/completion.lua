@@ -1,18 +1,33 @@
+-- ===================================================================
+--  Completion Systems
+-- ===================================================================
+
+-- ===================================================================
+--  lspkind-nvim
+-- -------------------------------------------------------------------
+--  https://github.com/onsails/lspkind.nvim
+--  Pictograms for completion candidates
+-- -------------------------------------------------------------------
+local lspkind_spec = "onsails/lspkind.nvim"
+
 return {
+  -- =================================================================
+  --  nvim-cmp
+  -- -----------------------------------------------------------------
+  --  https://github.com/hrsh7th/nvim-cmp
+  --  Multi-source completion engine
+  -- -----------------------------------------------------------------
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
 
     dependencies = {
-      {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-      },
-      "hrsh7th/cmp-buffer",
+      lspkind_spec,
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
-      "onsails/lspkind.nvim",
-      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-buffer",
     },
 
     config = function()

@@ -1,4 +1,7 @@
+local ls = require("luasnip")
 local util = require("ngs.util")
+local s, i = ls.snippet, ls.insert_node
+local fmt = require("luasnip.extras.fmt").fmt
 
 return {
   util.treesitter_ensure("lua"),
@@ -12,4 +15,20 @@ return {
     },
   }),
   util.formatter_setup("lua", { "stylua" }),
+  util.luasnip_add("lua", {
+    s(
+      "nvim-plugin-info",
+      fmt(
+        [[
+      -- =================================================================
+      --  {}
+      -- -----------------------------------------------------------------
+      --  {}
+      --  {}
+      -- -----------------------------------------------------------------
+      ]],
+        { i(1), i(2), i(3) }
+      )
+    ),
+  }),
 }

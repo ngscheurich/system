@@ -1,8 +1,18 @@
+-- ===================================================================
+--  Text Editing Affordances
+-- ===================================================================
+
 return {
-  -- Intuitively jump around buffer
+  -- =================================================================
+  --  Leap
+  -- -----------------------------------------------------------------
+  --  https://github.com/ggandor/leap.nvim
+  --  Intuitively jump around buffer
+  -- -----------------------------------------------------------------
   {
     "ggandor/leap.nvim",
     dependencies = {
+      -- Enhance f/t motions with Leap
       { "ggandor/flit.nvim", config = true },
     },
     config = function()
@@ -10,28 +20,74 @@ return {
     end,
   },
 
-  -- Edit surrounding pairs
-  { "echasnovski/mini.surround", version = "*", config = true },
+  -- =================================================================
+  --  mini.surround
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
+  --  Edit surrounding pairs
+  -- -----------------------------------------------------------------
+  {
+    "echasnovski/mini.surround",
+    version = "*",
+    opts = {
+      mappings = {
+        add = "<C-s>a",
+        delete = "<C-s>d",
+        find = "<C-s>f",
+        find_left = "<C-s>F",
+        highlight = "<C-s>h",
+        replace = "<C-s>r",
+        update_n_lines = "<C-s>n",
+      },
+    },
+  },
 
-  -- Easily comment/uncomment
+  -- =================================================================
+  --  mini.comment
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-comment.md
+  --  Easily comment/uncomment lines
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.comment", version = "*", config = true },
 
-  -- Automatically insert pairs
+  -- =================================================================
+  --  mini.pairs
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
+  --  Automatically insert pairs
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.pairs", version = "*", config = true },
 
-  -- Split and join arguments
+  -- =================================================================
+  --  mini.splitjoin
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+  --  Split and join arguments
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.splitjoin", version = "*", config = true },
 
-  -- Additional a/i text objects
+  -- =================================================================
+  --  mini.ai
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+  --  Additional a/i text objects
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.ai", version = "*", config = true },
 
-  -- Align text interactively
+  -- =================================================================
+  --  mini.align
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+  --  Interactively align text
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.align", version = "*", config = true },
 
-  -- Move selected text
-  { "echasnovski/mini.move", version = "*", config = true },
-
-  -- Format text
+  -- =================================================================
+  --  conform.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/stevearc/conform.nvim
+  --  Automatically format text
+  -- -----------------------------------------------------------------
   {
     "stevearc/conform.nvim",
     opts = {

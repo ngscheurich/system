@@ -1,3 +1,7 @@
+-- ===================================================================
+--  Note-Taking Tools
+-- ===================================================================
+
 return {
   {
     "epwalsh/obsidian.nvim",
@@ -13,6 +17,7 @@ return {
       workspaces = {
         {
           name = "Notes",
+          -- TODO: Expand path
           path = "~/Notes",
         },
       },

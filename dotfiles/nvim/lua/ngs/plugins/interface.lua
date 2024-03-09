@@ -1,11 +1,30 @@
+-- ===================================================================
+--  User Interface Elements
+-- ===================================================================
+
 return {
-  -- Start screen
+  -- =================================================================
+  --  mini.starter
+  -- -----------------------------------------------------------------
+  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md
+  --  Fast and flexible start screen
+  -- -----------------------------------------------------------------
   { "echasnovski/mini.starter", version = false, config = true },
 
-  -- Improve default UI elements
+  -- =================================================================
+  --  Dressing.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/stevearc/dressing.nvim
+  --  Improve the default `vim.ui` interfaces
+  -- -----------------------------------------------------------------
   "stevearc/dressing.nvim",
 
-  -- Buffer labels
+  -- =================================================================
+  --  incline.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/b0o/incline.nvim
+  --  Show floating buffer labels
+  -- -----------------------------------------------------------------
   {
     "b0o/incline.nvim",
     opts = {
@@ -16,7 +35,12 @@ return {
     },
   },
 
-  -- Tabs
+  -- =================================================================
+  --  bufferline.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/akinsho/bufferline.nvim
+  --  Decorate tabpage indicators
+  -- -----------------------------------------------------------------
   {
     "akinsho/bufferline.nvim",
     version = "*",
@@ -25,7 +49,7 @@ return {
       options = {
         mode = "tabs",
         indicator = {
-          icon = "┃",
+          icon = "┃ ",
         },
         always_show_bufferline = false,
         offsets = {
@@ -40,10 +64,15 @@ return {
     },
   },
 
-  -- Indentation guide
+  -- =================================================================
+  --  Indent Blankline
+  -- -----------------------------------------------------------------
+  --  https://github.com/lukas-reineke/indent-blankline.nvim
+  --  Indentation guides
+  -- -----------------------------------------------------------------
   {
     "lukas-reineke/indent-blankline.nvim",
-    cmd = { "IBLEnable", "IBLToggle" },
+    main = "ibl",
     config = function()
       require("ibl").setup({
         enabled = false,
@@ -53,14 +82,30 @@ return {
     end,
   },
 
-  -- Notifications and progress indicator
+  -- =================================================================
+  --  Fidget
+  -- -----------------------------------------------------------------
+  --  https://github.com/j-hui/fidget.nvim
+  --  Notifications and progress indicator
+  -- -----------------------------------------------------------------
   {
     "j-hui/fidget.nvim",
     tag = "v1.0.0",
-    config = true,
+    opts = {
+      notification = {
+        window = {
+          winblend = 0,
+        },
+      },
+    },
   },
 
-  -- Keymap guide
+  -- =================================================================
+  --  Which Key
+  -- -----------------------------------------------------------------
+  --  https://github.com/folke/which-key.nvim
+  --  Display possibilities for incomplete keybindings
+  -- -----------------------------------------------------------------
   {
     "folke/which-key.nvim",
     event = "VimEnter",
@@ -83,7 +128,12 @@ return {
     end,
   },
 
-  -- Buffer-based file explorer
+  -- =================================================================
+  --  oil.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/stevearc/oil.nvim
+  --  Directory explorer with intuitive filesystem editing
+  -- ----------------------------------------------------------------
   {
     "stevearc/oil.nvim",
     config = function()
@@ -94,7 +144,12 @@ return {
     end,
   },
 
-  -- Tree-based file explorer
+  -- =================================================================
+  --  Neo-tree.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/nvim-neo-tree/neo-tree.nvim
+  --  Tree-based file explorer
+  -- -----------------------------------------------------------------
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -141,7 +196,12 @@ return {
     },
   },
 
-  -- Useful lists
+  -- =================================================================
+  --  Trouble
+  -- -----------------------------------------------------------------
+  --  https://github.com/folke/trouble.nvim
+  --  List viewer for diagnostics, quickfix, and more
+  -- -----------------------------------------------------------------
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -151,7 +211,12 @@ return {
     },
   },
 
-  -- Code outline
+  -- =================================================================
+  --  aerial.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/stevearc/aerial.nvim
+  --  Code outline window
+  -- -----------------------------------------------------------------
   {
     "stevearc/aerial.nvim",
     dependencies = {
@@ -163,6 +228,53 @@ return {
       { "<Leader>oo", "<Cmd>AerialToggle<CR>", desc = "Panel" },
       { "<Leader>of", "<Cmd>AerialNavToggle<CR>", desc = "Float" },
     },
+    config = true,
+  },
+
+  -- =================================================================
+  --  barbecue.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/utilyre/barbecue.nvim
+  --  Document breadcrumbs in the winbar
+  -- -----------------------------------------------------------------
+  {
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {},
+    config = function()
+      require("barbecue").setup({
+        show_dirname = false,
+        show_basename = false,
+      })
+      vim.cmd("Barbecue hide")
+      vim.keymap.set("n", "<Leader>ub", "<Cmd>Barbecue toggle<CR>", { desc = "Breadcrumbs" })
+    end,
+  },
+
+  -- =================================================================
+  --  nvim-scrollbar
+  -- -----------------------------------------------------------------
+  --  https://github.com/petertriho/nvim-scrollbar
+  --  Scrollbar with diagnostics indicators
+  -- -----------------------------------------------------------------
+  {
+    "petertriho/nvim-scrollbar",
+    config = true,
+  },
+
+  -- =================================================================
+  --  highlight-undo.nvim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tzachar/highlight-undo.nvim
+  --  Highlight undo/redo operations
+  -- -----------------------------------------------------------------
+  {
+    "tzachar/highlight-undo.nvim",
     config = true,
   },
 }

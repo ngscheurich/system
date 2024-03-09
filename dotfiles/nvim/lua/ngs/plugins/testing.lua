@@ -1,3 +1,7 @@
+-- ===================================================================
+--  Code Testing Helpers
+-- ===================================================================
+
 return {
   "nvim-neotest/neotest",
   dependencies = { "jfpedroza/neotest-elixir" },

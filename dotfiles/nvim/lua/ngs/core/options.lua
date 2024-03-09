@@ -14,6 +14,7 @@ local listchars = {
 }
 
 -- Interface
+vim.opt.conceallevel = 2
 vim.opt.cursorline = true
 vim.opt.fillchars = { vert = "│" }
 vim.opt.laststatus = 3
@@ -52,7 +53,6 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
 
 -- Behavior
-vim.opt.clipboard = "unnamedplus"
 vim.opt.hidden = true
 vim.opt.timeoutlen = 250
 vim.opt.undofile = true

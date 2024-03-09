@@ -1,3 +1,7 @@
+-- ===================================================================
+--  Statusline Setup
+-- ===================================================================
+
 local separators = { a = "", b = "", y = "", z = "" }
 
 return {
@@ -8,10 +12,14 @@ return {
   config = function()
     local git = require("ngs.util")
     local nonicons = require("nvim-nonicons")
+    local theme = "auto"
+    -- if vim.g.theme and vim.g.theme ~= "solarized-light" then
+    --   theme = vim.g.theme
+    -- end
 
     require("lualine").setup({
       options = {
-        theme = vim.g.theme or "auto",
+        theme = theme,
         component_separators = "",
         section_separators = "",
       },

@@ -1,16 +1,44 @@
+-- ===================================================================
+--  Language Server Client Setup
+-- ===================================================================
+
+-- =================================================================
+--  mason.nvim
+-- -----------------------------------------------------------------
+--  https://github.com/williamboman/mason.nvim
+--  Install/manage LSP servers, DAP servers, linters, formatters
+-- -----------------------------------------------------------------
+local mason_spec = { "williamboman/mason.nvim", config = true }
+
+-- ===================================================================
+--  neodev.nvim
+-- -------------------------------------------------------------------
+--  https://github.com/folke/neodev.nvim
+--  LSP config for Neovim configuration and plugin development
+-- -------------------------------------------------------------------
+local neodev_spec = { "folke/neodev.nvim", config = true }
+
 return {
+  -- =================================================================
+  --  nvim-lspconfig
+  -- -----------------------------------------------------------------
+  --  https://github.com/neovim/nvim-lspconfig
+  --  Configuration presets for the built-in LSP client
+  -- -----------------------------------------------------------------
   "neovim/nvim-lspconfig",
 
   dependencies = {
-    { "folke/neodev.nvim", config = true },
-    { "williamboman/mason.nvim", config = true },
+    mason_spec,
+    neodev_spec,
+
+    -- Bridge mason.nvim and nvim-lspconfig
     {
       "williamboman/mason-lspconfig.nvim",
       opts = {
         automatic_installation = { exclude = { "rnix" } },
       },
     },
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
+
     "folke/which-key.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "nvim-telescope/telescope.nvim",
@@ -60,19 +88,6 @@ return {
       }
 
       require("which-key").register(mappings, { buffer = buffer })
-
-      local client = vim.lsp.get_client_by_id(event.data.client_id)
-      if client and client.server_capabilities.documentHighlightProvider then
-        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-          buffer = event.buf,
-          callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-          buffer = event.buf,
-          callback = vim.lsp.buf.clear_references,
-        })
-      end
     end
 
     vim.api.nvim_create_autocmd("LspAttach", {
