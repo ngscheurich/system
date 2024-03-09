@@ -23,7 +23,7 @@ return {
           dark = "mocha",
         },
         color_overrides = {
-          latte = {},
+          latte = palettes.latte,
           mocha = palettes.mocha,
         },
         integrations = {
