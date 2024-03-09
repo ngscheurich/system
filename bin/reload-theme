@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+kitty @ set-colors --all --configured "$HOME/.theme/kitty.conf"

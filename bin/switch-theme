@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+readonly THEME_PATH="$HOME/.theme"
+readonly THEMES_PATH="/etc/system/themes"
+
+rm "$THEME_PATH"
+
+# shellcheck disable=SC2012
+ln -s "$THEMES_PATH/$(ls $THEMES_PATH | gum filter --limit 1)" "$THEME_PATH"
+
+reload-theme
