@@ -167,17 +167,35 @@ function M.format_branch(branch)
   return branch
 end
 
----Launches telescope with the given source and, optionally, theme and options.
----@param source string
+---Launches Telescope with the given picker, optionally, theme and options.
+---@param picker string
 ---@param theme? string
 ---@param opts? table
 ---@return nil
-function M.pick(source, theme, opts)
+function M.pick(picker, theme, opts)
+  local borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" }
+
+  if theme == "get_dropdown" then
+    borderchars = {
+      prompt = borderchars,
+      results = { "─", "│", "─", "│", "├", "┤", "┘", "└" },
+      preview = borderchars,
+    }
+  elseif theme == "get_ivy" then
+    borderchars = {
+      prompt = { "─", " ", " ", " ", "─", "─", " ", " " },
+      results = { " " },
+      preview = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+    }
+  end
+
+  opts = vim.tbl_deep_extend("error", opts or {}, { borderchars = borderchars })
+
   return function()
     if theme then
-      require("telescope.builtin")[source](require("telescope.themes")[theme](opts))
+      require("telescope.builtin")[picker](require("telescope.themes")[theme](opts))
     else
-      require("telescope.builtin")[source]()
+      require("telescope.builtin")[picker](opts)
     end
   end
 end

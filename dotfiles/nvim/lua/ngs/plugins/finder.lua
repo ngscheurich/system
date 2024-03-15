@@ -1,5 +1,5 @@
 -- ===================================================================
---  Picker???
+--  Fuzzy Finder
 -- ===================================================================
 
 local pick = require("ngs.util").pick
@@ -12,6 +12,7 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    "MunifTanjim/nui.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
@@ -23,12 +24,24 @@ return {
 
   config = function()
     local telescope = require("telescope")
+    local actions = require("telescope.actions")
+    local layout_actions = require("telescope.actions.layout")
 
     telescope.setup({
       defaults = {
         prompt_prefix = " ❯ ",
         selection_caret = " ❯ ",
         entry_prefix = "   ",
+        mappings = {
+          n = {
+            ["n"] = actions.cycle_history_next,
+            ["p"] = actions.cycle_history_prev,
+            ["P"] = layout_actions.toggle_preview,
+          },
+        },
+        file_ignore_patterns = {
+          "assets/vendor/heroicons",
+        },
       },
       extensions = {
         ["ui-select"] = {
@@ -39,18 +52,10 @@ return {
 
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "ui-select")
-
-    -- mappings = {
-    --   i = {
-    --     ["<M-k>"] = require("telescope.actions").cycle_history_next,
-    --     ["<M-j>"] = require("telescope.actions").cycle_history_prev,
-    --   },
-    -- },
   end,
 
   keys = {
     { "<C-F>", pick("find_files"), desc = "Find files" },
-
     { "<Leader>/", pick("current_buffer_fuzzy_find", "get_ivy"), desc = "Search" },
     { "<Leader><Space>", pick("buffers", "get_dropdown", { previewer = false }), desc = "Buffers" },
     { "<Leader>fa", pick("autocommands"), desc = "Autocommands" },
@@ -62,6 +67,7 @@ return {
     { "<Leader>fk", pick("keymaps"), desc = "Keymaps" },
     { "<Leader>fl", pick("loclist", "get_ivy"), desc = "Location list" },
     { "<Leader>fr", pick("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
+    { "<Leader>ft", pick("treesitter"), desc = "Tree-sitter symbols" },
     { "<Leader>fq", pick("quickfix"), desc = "Quickfix list" },
   },
 }
