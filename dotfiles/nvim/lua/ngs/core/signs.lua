@@ -1,6 +1,6 @@
-------------------------------------------------------------
--- Diagnostic Signs
-------------------------------------------------------------
+-- ===================================================================
+--  Diagnostic Signs
+-- ===================================================================
 
 local function set_sign_text(severity, text)
   vim.fn.sign_define("DiagnosticSign" .. severity, { text = text, texthl = "Diagnostic" .. severity })
