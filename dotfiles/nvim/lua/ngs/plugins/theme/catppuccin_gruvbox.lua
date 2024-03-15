@@ -27,6 +27,7 @@ return {
     mantle = "#0e1010",
     crust = "#0e1010",
   },
+
   latte = {
     rosewater = "#ae5858",
     flamingo = "#ae5858",
