@@ -3,3 +3,4 @@
 set -euo pipefail
 
 kitty @ set-colors --all --configured "$HOME/.theme/kitty.conf"
+kitty @ load-config "$XDG_CONFIG_HOME/kitty/kitty.conf"

@@ -5,9 +5,15 @@ set -euo pipefail
 readonly THEME_PATH="$HOME/.theme"
 readonly THEMES_PATH="/etc/system/themes"
 
-rm "$THEME_PATH"
+if [ -d "$THEME_PATH" ]; then
+	rm "$THEME_PATH"
+fi
 
-# shellcheck disable=SC2012
-ln -s "$THEMES_PATH/$(ls $THEMES_PATH | gum filter --limit 1)" "$THEME_PATH"
+if [ $# -eq 0 ]; then
+	# shellcheck disable=SC2012
+	ln -s "$THEMES_PATH/$(ls $THEMES_PATH | gum filter --limit 1)" "$THEME_PATH"
+else
+	ln -s "$THEMES_PATH/$1" "$THEME_PATH"
+fi
 
 reload-theme
