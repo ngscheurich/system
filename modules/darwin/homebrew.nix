@@ -17,6 +17,7 @@
     ];
 
     brews = [
+      "asyncapi"
       "llvm"
     ];
 
