@@ -15,6 +15,7 @@ let
     gci = "git commit";
     gcl = "git clone";
     gco = "git checkout";
+    gsw = "git switch";
     gg = "git log --all --decorate --oneline --graph";
     gl = "git log --oneline";
     gp = "git pull";
