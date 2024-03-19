@@ -30,7 +30,7 @@ return {
     opts = {
       hide = {
         cursorline = true,
-        only_win = true,
+        only_win = false,
       },
     },
   },
@@ -55,8 +55,8 @@ return {
         offsets = {
           {
             filetype = "neo-tree",
-            text = "",
-            text_align = "left",
+            text = "Project",
+            text_align = "center",
             separator = false,
           },
         },
