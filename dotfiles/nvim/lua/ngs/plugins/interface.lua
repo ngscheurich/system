@@ -2,6 +2,8 @@
 --  User Interface Elements
 -- ===================================================================
 
+local util = require("ngs.util")
+
 return {
   -- =================================================================
   --  mini.starter
@@ -27,12 +29,20 @@ return {
   -- -----------------------------------------------------------------
   {
     "b0o/incline.nvim",
-    opts = {
-      hide = {
-        cursorline = true,
-        only_win = false,
-      },
-    },
+    config = function()
+      local incline = require("incline")
+
+      incline.setup({
+        hide = {
+          cursorline = true,
+          only_win = false,
+        },
+      })
+
+      vim.keymap.set("n", "<Leader>uf", function()
+        incline.toggle()
+      end, { desc = "Filenames" })
+    end,
   },
 
   -- =================================================================
@@ -245,14 +255,34 @@ return {
       "SmiteshP/nvim-navic",
       "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+
     config = function()
-      require("barbecue").setup({
-        show_dirname = false,
-        show_basename = false,
-      })
+      local bbq = require("barbecue")
+      local function setup_barbecue()
+        local bg_color = util.get_highlight_group_attr("Cursorline", "bg#")
+        bbq.setup({
+          show_dirname = false,
+          show_modified = true,
+          theme = { normal = { bg = bg_color } },
+        })
+      end
+
+      setup_barbecue()
       vim.cmd("Barbecue hide")
-      vim.keymap.set("n", "<Leader>ub", "<Cmd>Barbecue toggle<CR>", { desc = "Breadcrumbs" })
+
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        desc = "Updates breadcrumbs colors on colorscheme change",
+        pattern = "*",
+        callback = setup_barbecue,
+      })
+
+      vim.keymap.set("n", "<Leader>ub", function()
+        local ok, incline = pcall(require, "incline")
+        if ok then
+          incline.toggle()
+        end
+        vim.cmd("Barbecue toggle")
+      end, { desc = "Breadcrumbs" })
     end,
   },
 

@@ -1,5 +1,7 @@
 M = {}
 
+local fn = vim.fn
+
 ---Returns a lazy.nvim plugin spec for nvim-treesitter with the given parser
 ---added to opts.ensure_installed.
 ---@param parser string
@@ -123,9 +125,9 @@ end
 ---@param cb function
 ---@return nil
 M.foreach_module = function(namespace, cb)
-  local conf = vim.fn.stdpath("config")
+  local conf = fn.stdpath("config")
   local dir = string.format("%s/lua/%s/", conf, string.gsub(namespace, "%.", "/"))
-  local paths = vim.split(vim.fn.glob(dir .. "*lua"), "\n")
+  local paths = vim.split(fn.glob(dir .. "*lua"), "\n")
 
   for _, p in ipairs(paths) do
     local name = string.sub(p, string.len(dir) + 1, string.len(p) - 4)
@@ -198,6 +200,14 @@ function M.pick(picker, theme, opts)
       require("telescope.builtin")[picker](opts)
     end
   end
+end
+
+---Returns the value of a highlight group attribute
+---@param group string
+---@param attr string
+---@return string
+function M.get_highlight_group_attr(group, attr)
+  return fn.synIDattr(fn.synIDtrans(fn.hlID(group)), attr)
 end
 
 return M
