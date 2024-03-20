@@ -122,19 +122,18 @@ return {
     config = function()
       require("which-key")
 
-      local mappings = {
-        ["<Leader>"] = {
-          ["?"] = { "<Cmd>WhichKey<CR>", "Keys" },
-          e = { name = "Explore" },
-          f = { name = "Find" },
-          l = { name = "List" },
-          o = { name = "Outline" },
-          t = { name = "Test" },
-          u = { name = "UI Toggles" },
-        },
+      local leader_mappings = {
+        ["?"] = { "<Cmd>WhichKey<CR>", "Keys" },
+        a = { name = "AI" },
+        e = { name = "Explore" },
+        f = { name = "Find" },
+        l = { name = "List" },
+        o = { name = "Outline" },
+        t = { name = "Test" },
+        u = { name = "UI Toggles" },
       }
 
-      require("which-key").register(mappings)
+      require("which-key").register(leader_mappings, { prefix = "<Leader>" })
     end,
   },
 
