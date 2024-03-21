@@ -1,5 +1,5 @@
 local ls = require("luasnip")
-local util = require("ngs.util")
+local util = require("util")
 local s, t = ls.snippet, ls.text_node
 
 return {

@@ -2,7 +2,7 @@
 -- ⌨ Keyboard Mappings
 -- ===================================================================
 
-local util = require("ngs.util")
+local util = require("util")
 
 -- Set leader keys
 vim.g.mapleader = " "

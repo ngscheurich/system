@@ -1,4 +1,4 @@
-local util = require("ngs.util")
+local util = require("util")
 
 return {
   {

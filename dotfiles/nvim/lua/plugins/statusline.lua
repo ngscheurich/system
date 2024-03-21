@@ -10,7 +10,7 @@ return {
     "yamatsum/nvim-nonicons",
   },
   config = function()
-    local git = require("ngs.util")
+    local git = require("util")
     local nonicons = require("nvim-nonicons")
     local theme = "auto"
     -- if vim.g.theme and vim.g.theme ~= "solarized-light" then

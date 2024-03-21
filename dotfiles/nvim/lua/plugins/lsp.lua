@@ -63,7 +63,7 @@ return {
 
     local function on_attach(event)
       local buffer = event.buffer
-      local pick = require("ngs.util").pick
+      local pick = require("util").pick
       local telescope = require("telescope.builtin")
 
       local mappings = {
@@ -87,7 +87,7 @@ return {
         ["]d"] = { vim.lsp.diagnostic.goto_next, "Next diagnostic" },
       }
 
-      require("which-key").register(mappings, { buffer = buffer })
+      require("which-key").register(mappings({ buffer = buffer }))
     end
 
     vim.api.nvim_create_autocmd("LspAttach", {

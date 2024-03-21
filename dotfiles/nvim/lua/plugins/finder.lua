@@ -2,7 +2,7 @@
 --  Fuzzy Finder
 -- ===================================================================
 
-local pick = require("ngs.util").pick
+local pick = require("util").pick
 
 return {
   "nvim-telescope/telescope.nvim",
@@ -32,7 +32,7 @@ return {
         prompt_prefix = " ❯ ",
         selection_caret = " ❯ ",
         entry_prefix = "   ",
-        mappings = {
+        mappi= {
           n = {
             ["n"] = actions.cycle_history_next,
             ["p"] = actions.cycle_history_prev,

@@ -16,7 +16,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      local palettes = require("ngs.plugins.theme.catppuccin_gruvbox")
+      local palettes = require("plugins.theme.catppuccin_gruvbox")
       require("catppuccin").setup({
         background = {
           light = "latte",

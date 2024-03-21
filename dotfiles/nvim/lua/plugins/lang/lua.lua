@@ -1,12 +1,12 @@
 local ls = require("luasnip")
-local util = require("ngs.util")
+local util = require("util")
 local s, i = ls.snippet, ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 return {
   util.treesitter_ensure("lua"),
   util.lspconfig_setup("lua_ls", {
-    settings = {
+    setti= {
       Lua = {
         telemetry = { enable = false },
         workspace = { checkThirdParty = false },

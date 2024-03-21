@@ -48,9 +48,11 @@ vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 vim.opt.pumheight = 10
 
 -- Folding
-vim.opt.foldmethod = "expr"
+vim.opt.foldcolumn = "0"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
+vim.opt.foldmethod = "expr"
+vim.opt.foldtext = ""
 
 -- Behavior
 vim.opt.hidden = true

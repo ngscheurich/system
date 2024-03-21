@@ -6,7 +6,7 @@
 -- ///// \/// \\/// \///// \\\\/// \\\\/// \///////// \\/////// \\/// \\/// \
 -- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-local util = require("ngs.util")
+local util = require("util")
 
 -- Bootstrap plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -32,12 +32,12 @@ vim.g.theme = theme.name
 vim.g.colorscheme = theme.colorscheme or theme.name
 
 -- Load core config
-util.foreach_module("ngs.core", function(mod)
+util.foreach_module("core", function(mod)
   require(mod)
 end)
 
 -- Load plugin manager
-require("lazy").setup("ngs.plugins", {
+require("lazy").setup("plugins", {
   change_detection = { notify = false },
   install = {
     colorscheme = { vim.g.colorscheme },

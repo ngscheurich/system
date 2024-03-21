@@ -1,5 +1,5 @@
 local ls = require("luasnip")
-local util = require("ngs.util")
+local util = require("util")
 local s, t, i = ls.snippet, ls.text_node, ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
