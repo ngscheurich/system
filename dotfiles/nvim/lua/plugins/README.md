@@ -20,7 +20,7 @@
 - [mini.align](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md): Interactively align text
 - [conform.nvim](https://github.com/stevearc/conform.nvim): Automatically format text
 ## Finder
-- [Telescope](https://github.com/nvim-telescope/telescope.nvim): Extensiblem, general-use fuzzy finder
+- [Telescope](https://github.com/nvim-telescope/telescope.nvim): Extensible fuzzy finder with handy built-in pickers
 ## Interface
 - [mini.starter](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md): Fast and flexible start screen
 - [Dressing.nvim](https://github.com/stevearc/dressing.nvim): Improve the default `vim.ui` interfaces

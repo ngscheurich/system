@@ -8,7 +8,7 @@ local pick = require("util").pick
 --  Telescope
 -- -------------------------------------------------------------------
 --  https://github.com/nvim-telescope/telescope.nvim
---  Extensiblem, general-use fuzzy finder
+--  Extensible fuzzy finder with handy built-in pickers
 -- -------------------------------------------------------------------
 return {
   "nvim-telescope/telescope.nvim",
