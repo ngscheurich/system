@@ -1,4 +1,14 @@
+-- ===================================================================
+--  Tree-sitter
+-- ===================================================================
+
 return {
+  -- =================================================================
+  --  nvim-treesitter
+  -- -----------------------------------------------------------------
+  --  https://github.com/nvim-treesitter/nvim-treesitter
+  --  Tree-sitter configurations and abstraction layer
+  -- -----------------------------------------------------------------
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -10,6 +20,12 @@ return {
     end,
   },
 
+  -- =================================================================
+  --  nvim-treesitter-textobjects
+  -- -----------------------------------------------------------------
+  --  https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  --  Syntax-aware text-objects, movements, and more
+  -- -----------------------------------------------------------------
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = { "nvim-treesitter/nvim-treesitter" },

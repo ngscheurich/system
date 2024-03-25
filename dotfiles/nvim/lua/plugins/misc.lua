@@ -3,28 +3,68 @@
 -- ===================================================================
 
 return {
-  -- Expanded matching delimiters
+  -- =================================================================
+  --  vim-matchup
+  -- -----------------------------------------------------------------
+  --  https://github.com/andymass/vim-matchup
+  --  Extend delimiter matching support
+  -- -----------------------------------------------------------------
   "andymass/vim-matchup",
 
-  -- Improved substitution
+  -- =================================================================
+  --  abolish.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-abolish
+  --  Work with several variants of a word at once
+  -- -----------------------------------------------------------------
   "tpope/vim-abolish",
 
-  -- Commands for common Unix programs
+  -- =================================================================
+  --  eunuch.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-eunuch
+  --  Commands for common Unix programs
+  -- -----------------------------------------------------------------
   { "tpope/vim-eunuch", event = "CmdlineEnter" },
 
-  -- Project management
+  -- =================================================================
+  --  projectionist.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-projectionist
+  --  Project management
+  -- -----------------------------------------------------------------
   "tpope/vim-projectionist",
 
-  -- Expanded repeat
+  -- =================================================================
+  --  repeat.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-repeat
+  --  Extend repeat action
+  -- -----------------------------------------------------------------
   "tpope/vim-repeat",
 
-  -- Readline bindings for insert and command-line mode
+  -- =================================================================
+  --  rsi.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-rsi
+  --  Readline bindings for insert and command-line mode
+  -- -----------------------------------------------------------------
   { "tpope/vim-rsi" },
 
-  -- Paired bracket mappings
+  -- =================================================================
+  --  unimpaired.vim
+  -- -----------------------------------------------------------------
+  --  https://github.com/tpope/vim-unimpaired
+  --  Convenient paired bracket mappings
+  -- -----------------------------------------------------------------
   "tpope/vim-unimpaired",
 
-  -- Send text to external target
+  -- =================================================================
+  --  vim-slime
+  -- -----------------------------------------------------------------
+  --  https://github.com/jpalardy/vim-slime
+  --  Send text from buffer to various targets
+  -- -----------------------------------------------------------------
   {
     "jpalardy/vim-slime",
     config = function()
@@ -32,7 +72,12 @@ return {
     end,
   },
 
-  -- Highlight color codes
+  -- =================================================================
+  --  colorizer.lua
+  -- -----------------------------------------------------------------
+  --  https://github.com/NvChad/nvim-colorizer.lua
+  --  Highlight color codes in buffer
+  -- -----------------------------------------------------------------
   {
     "NvChad/nvim-colorizer.lua",
     cmd = "ColorizerToggle",
