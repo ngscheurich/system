@@ -19,6 +19,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
     "MunifTanjim/nui.nvim",
+    "folke/which-key.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
@@ -49,6 +50,15 @@ return {
           "assets/vendor/heroicons",
         },
       },
+      pickers = {
+        buffers = {
+          mappings = {
+            n = {
+              ["dd"] = actions.delete_buffer,
+            },
+          },
+        },
+      },
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
@@ -58,6 +68,8 @@ return {
 
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "ui-select")
+
+    require("which-key").register({ ["<Leader>fG"] = "Git" })
   end,
 
   keys = {
@@ -75,5 +87,9 @@ return {
     { "<Leader>fr", pick("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
     { "<Leader>ft", pick("treesitter"), desc = "Tree-sitter symbols" },
     { "<Leader>fq", pick("quickfix"), desc = "Quickfix list" },
+
+    { "<Leader>fGb", pick("git_bcommits"), desc = "Buffer commits" },
+    { "<Leader>fGc", pick("git_bcommits"), desc = "Commits" },
+    { "<Leader>fGs", pick("git_status"), desc = "Status" },
   },
 }
