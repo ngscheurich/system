@@ -22,8 +22,6 @@ return {
 
       local mappings = {
         ["<Leader>g"] = {
-          name = "Git",
-
           b = { gitsigns.toggle_current_line_blame, "Line blame (toggle)" },
           d = { gitsigns.toggle_deleted, "Deleted (toggle)" },
           h = { gitsigns.toggle_linehl, "Line highlight (toggle)" },
@@ -39,5 +37,29 @@ return {
     end,
   },
 
-  "tpope/vim-fugitive",
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      local neogit = require("neogit")
+
+      neogit.setup({
+        disable_hint = true,
+        signs = {
+          hunk = { "", "" },
+          item = { "󰅂", "󰅀" },
+          section = { "󰅂", "󰅀" },
+        },
+      })
+
+      vim.keymap.set("n", "<Leader>gs", neogit.open, { desc = "Status" })
+      vim.keymap.set("n", "<Leader>gc", function()
+        neogit.open({ "commit" })
+      end, { desc = "Commit" })
+    end,
+  },
 }

@@ -127,6 +127,7 @@ return {
         a = { name = "AI" },
         e = { name = "Explore" },
         f = { name = "Find" },
+        g = { name = "Git" },
         l = { name = "List" },
         o = { name = "Outline" },
         t = { name = "Test" },
