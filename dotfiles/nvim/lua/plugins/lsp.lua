@@ -83,8 +83,6 @@ return {
           s = { pick("lsp_document_symbols", "get_dropdown", { previewer = false }), "Document symbols" },
         },
         K = { vim.lsp.buf.hover, "Hover" },
-        ["[d"] = { vim.lsp.diagnostic.goto_prev, "Prev diagnostic" },
-        ["]d"] = { vim.lsp.diagnostic.goto_next, "Next diagnostic" },
       }
 
       require("which-key").register(mappings, { buffer = buffer })

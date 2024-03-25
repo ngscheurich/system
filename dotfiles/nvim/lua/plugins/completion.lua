@@ -45,10 +45,10 @@ return {
         mapping = cmp.mapping.preset.insert({
           ["<C-Space>"] = cmp.mapping.complete({}),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<C-e>"] = cmp.mapping.close(),
+          ["<C-E>"] = cmp.mapping.close(),
 
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-F>"] = cmp.mapping.scroll_docs(4),
+          ["<C-B>"] = cmp.mapping.scroll_docs(-4),
 
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then

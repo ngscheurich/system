@@ -36,8 +36,8 @@ return {
           r = { gitsigns.reset_hunk, "Reset hunk" },
         },
 
-        ["]c"] = { gitsigns.next_hunk, "Next hunk" },
-        ["[c"] = { gitsigns.prev_hunk, "Previous hunk" },
+        ["]h"] = { gitsigns.next_hunk, "Next hunk" },
+        ["[h"] = { gitsigns.prev_hunk, "Previous hunk" },
       }
 
       require("which-key").register(mappings)

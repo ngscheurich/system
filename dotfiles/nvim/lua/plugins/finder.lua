@@ -4,6 +4,12 @@
 
 local pick = require("util").pick
 
+-- ===================================================================
+--  Telescope
+-- -------------------------------------------------------------------
+--  https://github.com/nvim-telescope/telescope.nvim
+--  Extensiblem, general-use fuzzy finder
+-- -------------------------------------------------------------------
 return {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
@@ -32,7 +38,7 @@ return {
         prompt_prefix = " ❯ ",
         selection_caret = " ❯ ",
         entry_prefix = "   ",
-        mappi= {
+        mappings = {
           n = {
             ["n"] = actions.cycle_history_next,
             ["p"] = actions.cycle_history_prev,
