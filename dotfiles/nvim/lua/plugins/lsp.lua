@@ -87,7 +87,7 @@ return {
         ["]d"] = { vim.lsp.diagnostic.goto_next, "Next diagnostic" },
       }
 
-      require("which-key").register(mappings({ buffer = buffer }))
+      require("which-key").register(mappings, { buffer = buffer })
     end
 
     vim.api.nvim_create_autocmd("LspAttach", {
