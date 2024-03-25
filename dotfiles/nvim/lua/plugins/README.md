@@ -2,6 +2,14 @@
 # Neovim Plugins
 ## Initialization
 - [lazy.nvim](https://github.com/folke/lazy.nvim): Modern plugin manager
+## AI
+- [GitHub Copilot](https://github.com/github/copilot.vim): Official GitHub Copilot integration
+## Completion
+- [lspkind-nvim](https://github.com/onsails/lspkind.nvim): Pictograms for completion candidates
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): Multi-source completion engine
+## Debugging
+- [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client
+- [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): TUI for nvim-dap
 ## Editing
 - [Leap](https://github.com/ggandor/leap.nvim): Intuitively jump around buffer
 - [mini.surround](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md): Edit surrounding pairs
@@ -13,15 +21,6 @@
 - [conform.nvim](https://github.com/stevearc/conform.nvim): Automatically format text
 ## Finder
 - [Telescope](https://github.com/nvim-telescope/telescope.nvim): Extensiblem, general-use fuzzy finder
-## Snippets
-- [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Lua-based snippet engine
-## Testing
-- [Neotest](https://github.com/nvim-neotest/neotest): Interactive testing framework
-## Statusline
-- [lualine.nvim](https://github.com/github/copilot.vim): Easy to configure statusline plugin
-## Debugging
-- [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client
-- [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): TUI for nvim-dap
 ## Interface
 - [mini.starter](https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md): Fast and flexible start screen
 - [Dressing.nvim](https://github.com/stevearc/dressing.nvim): Improve the default `vim.ui` interfaces
@@ -37,34 +36,10 @@
 - [barbecue.nvim](https://github.com/utilyre/barbecue.nvim): Document breadcrumbs in the winbar
 - [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar): Scrollbar with diagnostics indicators
 - [highlight-undo.nvim](https://github.com/tzachar/highlight-undo.nvim): Highlight undo/redo operations
-## Theme
-- [Catppuccin](https://github.com/catppuccin/catppuccin): Comprehensive, customizable colorscheme
-- [Tokyo Night](https://github.com/folke/tokyonight.nvim): Cool, dark colorschema
-- [Modus Themes](https://github.com/miikanissi/modus-themes.nvim): Highly accessible colorschemes
-- [Rosé Pine](https://github.com/rose-pine/neovim): Classy, minimalist colorscheme
-- [Solarized](https://github.com/maxmx03/solarized.nvim): Precision colors for machines and people
-- [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons): Colored icons for filetypes
-- [nvim-nonicons](https://github.com/yamatsum/nvim-nonicons): Crisp, thin icon set for nvim-web-devicons
-- [Todo Comments](https://github.com/folke/todo-comments.nvim): Highlights and indexes TODO-style comments
 ## LSP
 - [mason.nvim](https://github.com/williamboman/mason.nvim): Install/manage LSP servers, DAP servers, linters, formatters
 - [neodev.nvim](https://github.com/folke/neodev.nvim): LSP config for Neovim configuration and plugin development
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Configuration presets for the built-in LSP client
-## Notes
-- [obsidian.nvim](https://github.com/epwalsh/obsidian.nvim): Navigate and edit Obsidian notes
-## Static Analysis
-- [nvim-lint](https://github.com/mfussenegger/nvim-lint): Asynchronous linting
-## Tree-sitter
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Tree-sitter configurations and abstraction layer
-- [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects): Syntax-aware text-objects, movements, and more
-## Completion
-- [lspkind-nvim](https://github.com/onsails/lspkind.nvim): Pictograms for completion candidates
-- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): Multi-source completion engine
-## AI
-- [GitHub Copilot](https://github.com/github/copilot.vim): Official GitHub Copilot integration
-## Source Control
-- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git gutter indicators, inline blame, and more
-- [NeoGit](https://github.com/NeogitOrg/neogit): Git interface inspired by Magit
 ## Miscellaneous
 - [vim-matchup](https://github.com/andymass/vim-matchup): Extend delimiter matching support
 - [abolish.vim](https://github.com/tpope/vim-abolish): Work with several variants of a word at once
@@ -75,3 +50,28 @@
 - [unimpaired.vim](https://github.com/tpope/vim-unimpaired): Convenient paired bracket mappings
 - [vim-slime](https://github.com/jpalardy/vim-slime): Send text from buffer to various targets
 - [colorizer.lua](https://github.com/NvChad/nvim-colorizer.lua): Highlight color codes in buffer
+## Notes
+- [obsidian.nvim](https://github.com/epwalsh/obsidian.nvim): Navigate and edit Obsidian notes
+## Snippets
+- [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Lua-based snippet engine
+## Source Control
+- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim): Git gutter indicators, inline blame, and more
+- [NeoGit](https://github.com/NeogitOrg/neogit): Git interface inspired by Magit
+## Static Analysis
+- [nvim-lint](https://github.com/mfussenegger/nvim-lint): Asynchronous linting
+## Statusline
+- [lualine.nvim](https://github.com/github/copilot.vim): Easy to configure statusline plugin
+## Testing
+- [Neotest](https://github.com/nvim-neotest/neotest): Interactive testing framework
+## Theme
+- [Catppuccin](https://github.com/catppuccin/catppuccin): Comprehensive, customizable colorscheme
+- [Tokyo Night](https://github.com/folke/tokyonight.nvim): Cool, dark colorschema
+- [Modus Themes](https://github.com/miikanissi/modus-themes.nvim): Highly accessible colorschemes
+- [Rosé Pine](https://github.com/rose-pine/neovim): Classy, minimalist colorscheme
+- [Solarized](https://github.com/maxmx03/solarized.nvim): Precision colors for machines and people
+- [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons): Colored icons for filetypes
+- [nvim-nonicons](https://github.com/yamatsum/nvim-nonicons): Crisp, thin icon set for nvim-web-devicons
+- [Todo Comments](https://github.com/folke/todo-comments.nvim): Highlights and indexes TODO-style comments
+## Tree-sitter
+- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Tree-sitter configurations and abstraction layer
+- [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects): Syntax-aware text-objects, movements, and more
