@@ -8,10 +8,10 @@ defmodule NeovimPlugins do
   @xdg_config_home System.get_env("XDG_CONFIG_HOME")
   @output_path "#{@xdg_config_home}/nvim/lua/plugins/README.md"
   @file_titles %{
-    "ai" => "AI",
+    "ai" => "Artificial Intelligence",
     "analysis" => "Static Analysis",
     "init" => "Initialization",
-    "lsp" => "LSP",
+    "lsp" => "Language Server Protocol",
     "misc" => "Miscellaneous",
     "treesitter" => "Tree-sitter"
   }

@@ -2,7 +2,7 @@
 # Neovim Plugins
 ## Initialization
 - [lazy.nvim](https://github.com/folke/lazy.nvim): Modern plugin manager
-## AI
+## Artificial Intelligence
 - [GitHub Copilot](https://github.com/github/copilot.vim): Official GitHub Copilot integration
 ## Completion
 - [lspkind-nvim](https://github.com/onsails/lspkind.nvim): Pictograms for completion candidates
@@ -36,7 +36,7 @@
 - [barbecue.nvim](https://github.com/utilyre/barbecue.nvim): Document breadcrumbs in the winbar
 - [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar): Scrollbar with diagnostics indicators
 - [highlight-undo.nvim](https://github.com/tzachar/highlight-undo.nvim): Highlight undo/redo operations
-## LSP
+## Language Server Protocol
 - [mason.nvim](https://github.com/williamboman/mason.nvim): Install/manage LSP servers, DAP servers, linters, formatters
 - [neodev.nvim](https://github.com/folke/neodev.nvim): LSP config for Neovim configuration and plugin development
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig): Configuration presets for the built-in LSP client
