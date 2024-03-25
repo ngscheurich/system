@@ -214,10 +214,18 @@ return {
   -- -----------------------------------------------------------------
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = { "Trouble", "TroubleToggle" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "folke/todo-comments.nvim",
+    },
+    cmd = { "Trouble", "TroubleToggle", "TodoTrouble" },
     keys = {
       { "\\", "<Cmd>TroubleToggle<CR>", desc = "Trouble" },
+      { "<Leader>lt", "<Cmd>TodoTrouble<CR>", desc = "Todos" },
+      { "<Leader>lq", "<Cmd>Trouble quickfix<CR>", desc = "Quickfix list" },
+      { "<Leader>ll", "<Cmd>Trouble loclist<CR>", desc = "Location list" },
+      { "<Leader>ld", "<Cmd>Trouble document_diagnostics<CR>", desc = "Document diagnostics" },
+      { "<Leader>lD", "<Cmd>Trouble workspace_diagnostics<CR>", desc = "Workspace diagnostics" },
     },
   },
 
