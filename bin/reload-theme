@@ -2,5 +2,9 @@
 
 set -euo pipefail
 
-kitty @ set-colors --all --configured "$HOME/.theme/kitty.conf"
+THEME_PATH="$HOME/.theme"
+
+kitty @ set-colors --all --configured "$THEME_PATH/kitty.conf"
 kitty @ load-config "$XDG_CONFIG_HOME/kitty/kitty.conf"
+
+source "$THEME_PATH/fish.fish"
