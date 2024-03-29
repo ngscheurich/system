@@ -26,10 +26,7 @@ vim.opt.runtimepath:prepend(lazypath)
 
 -- Load theme setting
 vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
-
-local theme = require("ngs-theme")
-vim.g.theme = theme.name
-vim.g.colorscheme = theme.colorscheme or theme.name
+_G.theme = require("ngs-theme")
 
 -- Load core config
 util.foreach_module("core", function(mod)
@@ -43,3 +40,16 @@ require("lazy").setup("plugins", {
     colorscheme = { vim.g.colorscheme },
   },
 })
+
+-- Scratch
+local function send_markdown_code_block()
+  local node = vim.treesitter.get_node()
+
+  if node then
+    local range = vim.treesitter.get_range(node)
+    local first, _, _, last, _, _ = unpack(range)
+    vim.cmd(string.format("%s,%sSlimeSend", first + 1, last))
+  end
+end
+
+vim.keymap.set("n", "<C-C><C-C>", send_markdown_code_block)

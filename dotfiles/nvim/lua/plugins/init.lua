@@ -38,4 +38,13 @@ return {
       -- })
     end,
   },
+
+  {
+    "stevearc/overseer.nvim",
+    opts = {
+      templates = {
+        "builtin", "user.godot_run"
+      }
+    }
+  },
 }

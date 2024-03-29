@@ -19,9 +19,6 @@ return {
     local git = require("util")
     local nonicons = require("nvim-nonicons")
     local theme = "auto"
-    -- if vim.g.theme and vim.g.theme ~= "solarized-light" then
-    --   theme = vim.g.theme
-    -- end
 
     require("lualine").setup({
       options = {

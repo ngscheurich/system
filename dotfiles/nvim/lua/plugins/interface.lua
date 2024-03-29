@@ -86,7 +86,8 @@ return {
     config = function()
       require("ibl").setup({
         enabled = false,
-        indent = { char = "┊" },
+        -- indent = { char = "┊" },
+        scope = { show_start = false, show_end = false },
       })
       vim.keymap.set("n", "<Leader>ui", "<Cmd>IBLToggle<CR>", { desc = "Indent guide" })
     end,

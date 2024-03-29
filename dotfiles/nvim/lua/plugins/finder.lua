@@ -84,7 +84,8 @@ return {
     { "<Leader>fh", pick("help_tags"), desc = "Help" },
     { "<Leader>fk", pick("keymaps"), desc = "Keymaps" },
     { "<Leader>fl", pick("loclist", "get_ivy"), desc = "Location list" },
-    { "<Leader>fr", pick("oldfiles", "get_dropdown", { previewer = false }), desc = "Recent files" },
+    { "<Leader>fo", pick("oldfiles", "get_dropdown", { previewer = false }), desc = "Old files" },
+    { "<Leader>fr", pick("registers"), desc = "Registers" },
     { "<Leader>ft", pick("treesitter"), desc = "Tree-sitter symbols" },
     { "<Leader>fq", pick("quickfix"), desc = "Quickfix list" },
 

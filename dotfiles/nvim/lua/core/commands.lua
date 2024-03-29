@@ -19,6 +19,7 @@ vim.api.nvim_create_user_command("SwitchTheme", function()
     return vim.fn.fnamemodify(value, ":t")
   end, theme_paths)
 
+  -- TODO: Account for switching based on Catppuccin alt palettes.
   local colorschemes = {
     ["gruvbox-dark"] = "catppuccin-mocha",
     ["gruvbox-light"] = "catppuccin-latte",
