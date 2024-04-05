@@ -10,7 +10,7 @@
     enable = true;
 
     userName = "N. G. Scheurich";
-    userEmail = "nick@scheurich.me";
+    userEmail = "nick@scheurich.haus";
 
     aliases = {
       amend = "commit --amend --message";
@@ -114,7 +114,7 @@
 
     signing = {
       signByDefault = true;
-      key = "CBA4974EC069B4891D84502ECBEABCE653DD30E5";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcR6+hD9GfRhh0pny+dUOb+NzMlQdSYuyhQ4YkS4eW1";
     };
 
     extraConfig = {
@@ -181,6 +181,13 @@
       url = {
         "https://github" = {
           insteadOf = "git://github";
+        };
+      };
+
+      gpg = {
+        format = "ssh";
+        ssh = {
+          program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         };
       };
     };
