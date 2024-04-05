@@ -19,4 +19,4 @@ fish_add_path "$LOCAL_BIN_DIR"
 fish_add_path '/Applications/kitty.app/Contents/MacOS/'
 fish_add_path "$XDG_DATA_HOME/nvim/mason/bin"
 
-source "$HOME/.theme/shell.sh"
+bash -c 'source "$HOME/.theme/shell.sh"'
