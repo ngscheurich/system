@@ -7,7 +7,6 @@
 {
   home.packages = with pkgs; [
     # Languages 
-    asdf-vm
     beam.packages.erlangR25.elixir_1_15
     erlangR25
     fennel
