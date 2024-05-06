@@ -18,7 +18,7 @@ return {
   config = function()
     local git = require("util")
     local nonicons = require("nvim-nonicons")
-    local theme = "auto"
+    local theme = _G.theme.lualine or "auto"
 
     require("lualine").setup({
       options = {

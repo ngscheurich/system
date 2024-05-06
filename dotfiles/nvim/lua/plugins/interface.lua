@@ -86,7 +86,7 @@ return {
     config = function()
       require("ibl").setup({
         enabled = false,
-        -- indent = { char = "┊" },
+        indent = { char = "┊" },
         scope = { show_start = false, show_end = false },
       })
       vim.keymap.set("n", "<Leader>ui", "<Cmd>IBLToggle<CR>", { desc = "Indent guide" })
@@ -268,7 +268,14 @@ return {
     config = function()
       local bbq = require("barbecue")
       local function setup_barbecue()
-        local bg_color = util.get_highlight_group_attr("Cursorline", "bg#")
+        local bg_color
+
+        if _G.theme.colorscheme.plugins.barbecue then
+          bg_color = _G.theme.colorscheme.plugins.barbecue.bg_color
+        else
+          bg_color = util.get_highlight_group_attr("Cursorline", "bg#")
+        end
+
         bbq.setup({
           show_dirname = false,
           show_modified = true,

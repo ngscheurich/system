@@ -24,7 +24,7 @@ end
 
 vim.opt.runtimepath:prepend(lazypath)
 
--- Load theme setting
+-- Load local theme plugin
 vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
 _G.theme = require("ngs-theme")
 
