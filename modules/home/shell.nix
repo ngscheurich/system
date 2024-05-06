@@ -130,9 +130,6 @@ in
 
   programs.fzf = {
     enable = true;
-    defaultOptions = [
-      "--color fg:7,bg:#16161e,hl:8,fg+:3,bg+:#16161e,gutter:#16161e,hl+:1,info:6,prompt:2,pointer:4,marker:1,spinner:5"
-    ];
   };
 
   programs.bat = {
