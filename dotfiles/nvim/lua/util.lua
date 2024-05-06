@@ -210,4 +210,21 @@ function M.get_highlight_group_attr(group, attr)
   return fn.synIDattr(fn.synIDtrans(fn.hlID(group)), attr)
 end
 
+---Applies the globally-configured colorscheme.
+---@return nil
+function M.apply_colorscheme()
+  local colorscheme = _G.theme.colorscheme.name
+  local callback = _G.theme.callback
+
+  -- if callback then
+  --   vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  --     pattern = { colorscheme },
+  --     callback = callback,
+  --   })
+  -- end
+
+  vim.cmd.colorscheme(colorscheme)
+  pcall(callback, {})
+end
+
 return M
