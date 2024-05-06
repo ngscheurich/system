@@ -43,8 +43,17 @@ return {
     "stevearc/overseer.nvim",
     opts = {
       templates = {
-        "builtin", "user.godot_run"
-      }
-    }
+        "builtin",
+        "user.godot_run",
+      },
+    },
+  },
+  {
+    "rest-nvim/rest.nvim",
+    ft = "http",
+    dependencies = { "luarocks.nvim" },
+    config = function()
+      require("rest-nvim").setup()
+    end,
   },
 }
