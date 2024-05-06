@@ -59,3 +59,4 @@ vim.opt.hidden = true
 vim.opt.timeoutlen = 250
 vim.opt.undofile = true
 vim.opt.updatetime = 250
+vim.opt.clipboard = "unnamedplus"
