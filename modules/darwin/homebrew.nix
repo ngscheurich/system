@@ -14,18 +14,23 @@
       "homebrew/cask-versions"
       "homebrew/services"
       "railwaycat/emacsmacport"
+      "koekeishiya/formulae"
+      "FelixKratz/formulae"
     ];
 
     brews = [
       "asyncapi"
+      "koekeishiya/formulae/yabai"
+      "koekeishiya/formulae/skhd"
       "llvm"
+      "luajit"
     ];
 
     casks = [
       "1password"
       "1password-cli"
-      "amethyst"
       "appcleaner"
+      "amethyst"
       "bartender"
       "cleanshot"
       "daisydisk"
@@ -63,7 +68,6 @@
 
     masApps = {
       Slack = 803453959;
-      Things = 904280696;
       Xcode = 497799835;
     };
   };
