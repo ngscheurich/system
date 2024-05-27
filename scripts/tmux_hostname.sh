@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-readonly HOSTNAME
-
 HOSTNAME=$(hostname)
 
 if [[ $HOSTNAME =~ ^NSCH.*\.local ]]; then
