@@ -32,6 +32,7 @@ let
     zj = "zellij";
     zp = "zellij --layout project.kdl --session (basename $PWD)";
     zr = "zellij run -- ";
+    tx = "tmux";
   };
 
   shellAbbrs = shellAliases;
@@ -39,7 +40,7 @@ in
 {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     defaultKeymap = "viins";
     syntaxHighlighting.enable = true;

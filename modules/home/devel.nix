@@ -17,9 +17,6 @@
     rustc
     cargo
 
-    # Language support
-    rnix-lsp
-
     # Database tools
     freetds
     pgformatter
@@ -49,5 +46,8 @@
     # Libraries
     glib
     gum
+
+    # Image manipulation
+    imagemagick
   ];
 }
