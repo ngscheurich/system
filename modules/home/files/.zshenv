@@ -1,0 +1,19 @@
+export AWS_VAULT_KEYCHAIN_NAME=login
+export BROWSER=open
+export EDITOR=nvim
+export ERL_AFLAGS='-kernel shell_history enabled'
+export GPG_TTY=(tty)
+export KERL_CONFIGURE_OPTIONS=--without-javac
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export PLAYDATE_SDK_PATH="$HOME/Developer/PlaydateSDK/"
+export RANGER_DEVICONS_SEPARATOR='  '
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export LOCAL_BIN_DIR="$HOME/.local/bin"
+export SCRIPTS_DIR=/etc/system/scripts
+
+export PATH="$PATH:$LOCAL_BIN_DIR"
+export PATH="$PATH:/Applications/kitty.app/Contents/MacOS/"
+export PATH="$PATH:$XDG_DATA_HOME/nvim/mason/bin"
+export PATH="$PATH:/opt/homebrew/bin"

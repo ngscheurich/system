@@ -7,8 +7,8 @@
 {
   home.packages = with pkgs; [
     # Languages 
-    beam.packages.erlangR25.elixir_1_15
-    erlangR25
+    elixir
+    erlang_27
     fennel
     go
     lua
@@ -16,6 +16,9 @@
     python39
     rustc
     cargo
+
+    # Language support
+    nil
 
     # Database tools
     freetds

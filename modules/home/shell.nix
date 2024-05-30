@@ -46,6 +46,9 @@ in
     syntaxHighlighting.enable = true;
 
     inherit shellAliases;
+
+    envExtra = builtins.readFile ./files/.zshenv;
+    loginExtra = builtins.readFile ./files/.zlogin;
   };
 
   programs.fish = {
