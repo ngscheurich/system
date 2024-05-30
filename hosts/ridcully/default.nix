@@ -24,6 +24,7 @@
         ../../modules/home/git.nix
         ../../modules/home/prose.nix
         ../../modules/home/shell.nix
+        ../../modules/home/tasks.nix
         ../../modules/home/vim.nix
       ];
     };
