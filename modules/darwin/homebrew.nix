@@ -14,14 +14,11 @@
       "homebrew/cask-versions"
       "homebrew/services"
       "railwaycat/emacsmacport"
-      "koekeishiya/formulae"
-      "FelixKratz/formulae"
+      "gcenx/wine"
     ];
 
     brews = [
       "asyncapi"
-      "koekeishiya/formulae/yabai"
-      "koekeishiya/formulae/skhd"
       "llvm"
       "luajit"
     ];
