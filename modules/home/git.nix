@@ -114,7 +114,7 @@
 
     signing = {
       signByDefault = true;
-      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcR6+hD9GfRhh0pny+dUOb+NzMlQdSYuyhQ4YkS4eW1";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBzHyqJW+HIsWjMesMW/i6QPHaaQ9UsUIoONMH9yqPjN";
     };
 
     extraConfig = {
