@@ -6,11 +6,8 @@ local rep = require("luasnip.extras").rep
 
 return {
   util.treesitter_ensure("elixir"),
-  -- util.lspconfig_setup("lexical", {
-  --   cmd = { vim.fn.expand("~") .. "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
-  -- }),
-  util.lspconfig_setup("elixirls", {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/elixir-ls" },
+  util.lspconfig_setup("lexical", {
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/lexical" },
   }),
   util.luasnip_add("elixir", {
     s("pry", { t({
