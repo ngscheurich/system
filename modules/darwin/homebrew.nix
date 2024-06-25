@@ -50,6 +50,7 @@
       "magicavoxel"
       "obs"
       "obsidian"
+      "opal-composer"
       "postico"
       "postman"
       "raycast"
