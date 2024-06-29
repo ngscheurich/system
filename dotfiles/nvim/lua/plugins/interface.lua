@@ -270,8 +270,8 @@ return {
       local function setup_barbecue()
         local bg_color
 
-        if _G.theme.colorscheme.plugins.barbecue then
-          bg_color = _G.theme.colorscheme.plugins.barbecue.bg_color
+        if _G.theme.plugins.barbecue then
+          bg_color = _G.theme.plugins.barbecue.bg_color
         else
           bg_color = util.get_highlight_group_attr("Cursorline", "bg#")
         end

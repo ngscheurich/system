@@ -27,6 +27,41 @@ return {
   },
 
   -- =================================================================
+  --  Rosé Pine
+  -- -----------------------------------------------------------------
+  --   https://github.com/rose-pine/neovim
+  --   Colorscheme for the classy minimalist
+  -- -----------------------------------------------------------------
+  {
+    "rose-pine/neovim",
+    as = "rose-pine",
+    cond = vim.startswith(_G.theme.colorscheme.name, "rose-pine"),
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("rose-pine").setup(_G.theme.colorscheme.opts)
+      util.apply_colorscheme()
+    end,
+  },
+
+  -- =================================================================
+  --  Solarized
+  -- -----------------------------------------------------------------
+  --   https://github.com/maxmx03/solarized.nvim
+  --   Precision colors for machines and people
+  -- -----------------------------------------------------------------
+  {
+    "maxmx03/solarized.nvim",
+    cond = _G.theme.colorscheme.name == "solarized",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("solarized").setup(_G.theme.colorscheme.opts)
+      util.apply_colorscheme()
+    end,
+  },
+
+  -- =================================================================
   --  nvim-web-devicons
   -- -----------------------------------------------------------------
   --  https://github.com/nvim-tree/nvim-web-devicons

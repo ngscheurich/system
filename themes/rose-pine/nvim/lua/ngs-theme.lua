@@ -1,14 +1,15 @@
 return {
-	name = "solarized-dark",
+	name = "rose-pine",
+	lualine = "rose-pine",
 
 	colorscheme = {
-		name = "solarized",
+		name = "rose-pine-main",
 		opts = {},
 	},
 
 	plugins = {
 		lualine = {
-			theme = "solarized",
+			theme = "rose-pine-alt",
 		},
 	},
 

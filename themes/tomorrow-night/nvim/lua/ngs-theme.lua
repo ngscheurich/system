@@ -4,8 +4,6 @@ local darker = "#1b1c1f"
 return {
 	name = "tomorrow-night",
 
-	lualine = "auto",
-
 	colorscheme = {
 		name = "base16-tomorrow-night",
 		opts = {
