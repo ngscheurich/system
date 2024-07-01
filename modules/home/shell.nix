@@ -151,6 +151,7 @@ in
     fd
     figlet
     fzy
+    gnused
     graph-easy
     htop
     jq
