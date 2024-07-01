@@ -73,14 +73,14 @@ return {
   end,
 
   keys = {
-    { "<C-F>", pick("find_files"), desc = "Find files" },
+    { "<C-F>", pick("find_files", "get_ivy"), desc = "Find files" },
     { "<Leader>/", pick("current_buffer_fuzzy_find", "get_ivy"), desc = "Search" },
     { "<Leader><Space>", pick("buffers", "get_dropdown", { previewer = false }), desc = "Buffers" },
     { "<Leader>fa", pick("autocommands"), desc = "Autocommands" },
     { "<Leader>fc", pick("commands"), desc = "Commands" },
     { "<Leader>fd", pick("diagnostics", "get_dropdown", { previewer = false }), desc = "Diagnostics" },
-    { "<Leader>ff", pick("find_files"), desc = "Files" },
-    { "<Leader>fg", pick("live_grep"), desc = "Grep" },
+    { "<Leader>ff", pick("find_files", "get_ivy"), desc = "Files" },
+    { "<Leader>fg", pick("live_grep", "get_ivy"), desc = "Grep" },
     { "<Leader>fh", pick("help_tags"), desc = "Help" },
     { "<Leader>fk", pick("keymaps"), desc = "Keymaps" },
     { "<Leader>fl", pick("loclist", "get_ivy"), desc = "Location list" },

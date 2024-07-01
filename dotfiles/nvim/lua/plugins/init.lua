@@ -48,6 +48,7 @@ return {
       },
     },
   },
+
   {
     "rest-nvim/rest.nvim",
     ft = "http",
@@ -63,5 +64,17 @@ return {
     config = function()
       require("rest-nvim").setup()
     end,
+  },
+
+  {
+    dir = "~/Projects/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      replace_engine = {
+        ["sed"] = {
+          warn = false,
+        },
+      },
+    },
   },
 }
