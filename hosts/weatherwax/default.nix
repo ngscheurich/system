@@ -12,7 +12,7 @@
     users.nick = {
       home = "/Users/nick";
       description = "N. G. Scheurich";
-      shell = pkgs.zsh;
+      shell = pkgs.fish;
       uid = 501;
     };
   };
