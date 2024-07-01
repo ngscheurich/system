@@ -165,6 +165,7 @@ in
     watch
     watchman
     wget
+    yazi
     zellij
   ];
 }
