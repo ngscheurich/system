@@ -21,6 +21,8 @@ vim.api.nvim_create_user_command("SwitchTheme", function()
 
   local colorschemes = {
     ["rose-pine"] = "rose-pine-main",
+    ["solarized-dark"] = "solarized",
+    ["solarized-light"] = "solarized",
   }
 
   vim.ui.select(themes, {
