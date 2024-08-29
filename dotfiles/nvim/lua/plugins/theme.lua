@@ -23,24 +23,6 @@ return {
   },
 
   -- =================================================================
-  --  Rosé Pine
-  -- -----------------------------------------------------------------
-  --   https://github.com/rose-pine/neovim
-  --   Colorscheme for the classy minimalist
-  -- -----------------------------------------------------------------
-  {
-    "rose-pine/neovim",
-    as = "rose-pine",
-    cond = vim.startswith(_G.theme.colorscheme.name, "rose-pine"),
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("rose-pine").setup(_G.theme.colorscheme.opts)
-      util.apply_colorscheme()
-    end,
-  },
-
-  -- =================================================================
   --  Solarized
   -- -----------------------------------------------------------------
   --   https://github.com/maxmx03/solarized.nvim
@@ -71,23 +53,6 @@ return {
     priority = 1000,
     config = function()
       require("catppuccin").setup(_G.theme.colorscheme.opts)
-      util.apply_colorscheme()
-    end,
-  },
-
-  -- =================================================================
-  --  Kanagawa
-  -- -----------------------------------------------------------------
-  --  https://github.com/rebelot/kanagawa.nvim
-  --  Colorscheme inspired by "The Great Wave off Kanagawa"
-  -- -----------------------------------------------------------------
-  {
-    "rebelot/kanagawa.nvim",
-    cond = vim.startswith(_G.theme.colorscheme.name, "kanagawa"),
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("kanagawa").setup(_G.theme.colorscheme.opts)
       util.apply_colorscheme()
     end,
   },
