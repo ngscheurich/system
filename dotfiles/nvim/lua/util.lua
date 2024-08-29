@@ -27,7 +27,7 @@ M.lspconfig_setup = function(server, config)
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       return {
-        servers = vim.tbl_extend("error", opts.servers or {}, {
+        servers = vim.tbl_extend("force", opts.servers or {}, {
           [server] = config or {},
         }),
       }
