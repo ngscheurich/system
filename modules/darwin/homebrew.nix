@@ -15,6 +15,7 @@
       "homebrew/services"
       "railwaycat/emacsmacport"
       "gcenx/wine"
+      "nikitabobko/tap"
     ];
 
     brews = [
@@ -27,7 +28,7 @@
       "1password"
       "1password-cli"
       "appcleaner"
-      "amethyst"
+      "aerospace"
       "bartender"
       "cleanshot"
       "daisydisk"
@@ -48,7 +49,6 @@
       "livebook"
       "logitech-options"
       "magicavoxel"
-      "nikitabobko/tap/aerospace"
       "obs"
       "obsidian"
       "opal-composer"
