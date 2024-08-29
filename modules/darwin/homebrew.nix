@@ -48,6 +48,7 @@
       "livebook"
       "logitech-options"
       "magicavoxel"
+      "nikitabobko/tap/aerospace"
       "obs"
       "obsidian"
       "opal-composer"
