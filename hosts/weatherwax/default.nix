@@ -46,6 +46,7 @@
       "affinity-designer"
       "affinity-photo"
       "affinity-publisher"
+      "blender"
       "epic-games"
       "godot"
       "playdate-simulator"
