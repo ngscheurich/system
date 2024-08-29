@@ -2,7 +2,9 @@
 
 ![Untitled](https://user-images.githubusercontent.com/423798/214494353-eb1f2dde-b612-4b76-a16f-e4a2436bede2.png)
 
-This repository contains system- and application-level configurations for the computers I use. Wanderers beware: it is ever-evolving and fraught with great peril.
+This repository contains system- and application-level configurations for the
+computers I use. Wanderers beware: it is ever-evolving and fraught with great
+peril.
 
 ## Contents
 
@@ -15,11 +17,16 @@ This repository contains system- and application-level configurations for the co
 
 ## Prelude 
 
-_Computers, huh?_ Who would have thought? And yet, here we are. These are the configuration files for my computer systems.
+_Computers, huh?_ Who would have thought? And yet, here we are. These are the
+configuration files for my computer systems.
 
-I’ve published them here so that folks such as you or future I might extract some wisdom from them, or perhaps just be humorously confounded. Your mileage, as they say, may vary. Also, this proves a handy place to back them up and pull them down onto new machines.
+I’ve published them here so that folks such as you or future I might extract
+some wisdom from them, or perhaps just be humorously confounded. Your mileage,
+as they say, may vary. Also, this proves a handy place to back them up and pull
+them down onto new machines.
 
-I use [Nix], a purely functional package manager, and various tools within its ecosystem, to declaratively configure the core parts of these systems.
+I use [Nix], a purely functional package manager, and various tools within its
+ecosystem, to declaratively configure the core parts of these systems.
 
 In addition to the Nix configuration files, this repo also contains:
 
@@ -32,7 +39,9 @@ In addition to the Nix configuration files, this repo also contains:
 
 ### Weatherwax
 
-My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple M2 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
+My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple
+M2 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system
+as is possible.
 
 | Component        | Description                  |
 | ---------------- | ---------------------------- |
@@ -42,9 +51,11 @@ My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple
 | Storage          | 512 GB PCIe 4.0 ×4 SSD       |
 
 
-### Ridcully
+### Malich
 
-My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as is possible.
+My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1
+Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as
+is possible.
 
 | Component        | Description                  |
 | ---------------- | ---------------------------- |
@@ -53,66 +64,83 @@ My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1 
 | Memory           | 32 GB LPDDR5                 |
 | Storage          | 1 TB PCIe 4.0 ×4 SSD         |
 
-### Twoflower
-
-Finally, I maintain a simple cloud computing environment over at [Linode].
-
-| Component        | Description                  |
-| ---------------- | ---------------------------- |
-| Operating System | NixOS 21.11                  |
-| CPU              | 2.2 GHz x86-64 ([vCPU] core) |
-| Memory           | 1 GB                         |
-| Storage          | 25 GB                        |
-
 ## Nix
 
 ### Flake
 
-The root of my Nix configuration is a _[flake]_ whose outputs are configurations for each of my systems.
+The root of my Nix configuration is a _[flake]_ whose outputs are
+configurations for each of my systems.
 
-System-level configuration is managed by [nix-darwin] or [NixOS], depending on the platform.
+System-level configuration is managed by [nix-darwin] or [NixOS], depending on
+the platform.
 
-Each system’s user-level packages are specified and configured using [Home Manager].
+Each system’s user-level packages are specified and configured using [Home
+Manager].
 
 ### Modules
 
-I maintain a set of Nix modules loosely separated by area of concern. This helps prevent polluting any given system with unneeded binaries and configuration files, and helps me feel like I’ve really _got it together_, at least a little bit.
+I maintain a set of Nix modules loosely separated by area of concern. This
+helps prevent polluting any given system with unneeded binaries and
+configuration files, and helps me feel like I’ve really _got it together_, at
+least a little bit.
 
 #### Code
 
-One of the primary tasks I use my systems for is **source code editing**. My editor of choice is [Neovim], which is specified here. Additionally, this module specifies packages that my [Neovim configuration](#neovim) relies on for advanced editing features such as [Tree-sitter].
+One of the primary tasks I use my systems for is **source code editing**. My
+editor of choice is [Neovim], which is specified here. Additionally, this
+module specifies packages that my [Neovim configuration](#neovim) relies on for
+advanced editing features such as [Tree-sitter].
 
 #### Crypt
 
-I use public key cryptography for encrypting data like emails and sensitive documents, and for authenticating ownership of Internet resources such as Git commits and domain names. This module specifies the [GNU Privacy Guard] package as well as a convenient terminal UI for it.
+I use public key cryptography for encrypting data like emails and sensitive
+documents, and for authenticating ownership of Internet resources such as Git
+commits and domain names. This module specifies the [GNU Privacy Guard] package
+as well as a convenient terminal UI for it.
 
 #### Devel
 
-This module specifies packages that are used to build or run software. It includes [asdf] for managing certain programming languages, [Fennel] (a lovely little Lisp that compiles to Lua), and lots of build-time dependencies—[Autoconf], [Cmake], et al.
+This module specifies packages that are used to build or run software. It
+includes [asdf] for managing certain programming languages, [Fennel] (a lovely
+little Lisp that compiles to Lua), and lots of build-time
+dependencies—[Autoconf], [Cmake], et al.
 
 #### Devops 
 
-I sometimes find myself needing to engage in some light devops work and this module specifies packages that make those sorts of tasks a bit comfier on the command line.
+I sometimes find myself needing to engage in some light devops work and this
+module specifies packages that make those sorts of tasks a bit comfier on the
+command line.
 
 #### Git
 
-The [Git] version control system is a key piece of my daily workflow. This specifes it along with configuration and some supplementary packages, namely [Lazygit], a Git terminal UI.
+The [Git] version control system is a key piece of my daily workflow. This
+specifes it along with configuration and some supplementary packages, namely
+[Lazygit], a Git terminal UI.
 
 #### Prose
 
-To make it more pleasant to read and edit natural language text, e.g. notes, documentation, short stories, I specify some packages here like [Vale] and [Glow].
+To make it more pleasant to read and edit natural language text, e.g. notes,
+documentation, short stories, I specify some packages here like [Vale] and
+[Glow].
 
 #### Shell
 
-The packages specified here work to provide a rich, productive experience on the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This module also specifies [fzf] and modern replacements for some common Unix commands: [bat], [exa], [fd], and [ripgrep].
+The packages specified here work to provide a rich, productive experience on
+the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This
+module also specifies [fzf] and modern replacements for some common Unix
+commands: [bat], [exa], [fd], and [ripgrep].
 
 #### Vim
 
-Herein is specified the venerable [Vim] text editor and a simple configuration that I use to turn it into a more basic, lightweight alternative to Neovim for quick editing tasks.
+Herein is specified the venerable [Vim] text editor and a simple configuration
+that I use to turn it into a more basic, lightweight alternative to Neovim for
+quick editing tasks.
 
 ## Grimoire
 
-Included in this repository is the source code for _Grimoire_, a command-line interface I created for system management. I’ll let its `help` describe it briefly:
+Included in this repository is the source code for _Grimoire_, a command-line
+interface I created for system management. I’ll let its `help` describe it
+briefly:
 
     A book of magic spells
 
@@ -139,7 +167,10 @@ Alternatively, if you have the Rust toolchain installed, you can simply `make`.
 
 ## Dotfiles
 
-Home Manager has the capability to configure some of the programs that I use, but for those not supported and for anything but the simplest configurations I prefer to maintain a classic [dotfiles] setup. Programs configured this way include:
+Home Manager has the capability to configure some of the programs that I use,
+but for those not supported and for anything but the simplest configurations I
+prefer to maintain a classic [dotfiles] setup. Programs configured this way
+include:
 
 - [Emacs], a text editor and Lisp application environment
 - [Karabiner-Elements], a keyboard customizer for macOS
