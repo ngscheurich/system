@@ -87,8 +87,6 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.print(_G.theme.colorscheme.name)
-      vim.print(_G.theme.colorscheme.opts)
       require("kanagawa").setup(_G.theme.colorscheme.opts)
       util.apply_colorscheme()
     end,
