@@ -4,10 +4,6 @@
 
 local util = require("util")
 
-if _G.theme.colorscheme.name == "habamax" then
-  vim.cmd.colorscheme("habamax")
-end
-
 return {
   -- =================================================================
   --  nvim-base16
@@ -57,6 +53,43 @@ return {
     priority = 1000,
     config = function()
       require("solarized").setup(_G.theme.colorscheme.opts)
+      util.apply_colorscheme()
+    end,
+  },
+
+  -- =================================================================
+  --  Catppuccin
+  -- -----------------------------------------------------------------
+  --  https://github.com/catppuccin/nvim
+  --  Soothing pastel theme for (Neo)vim
+  -- -----------------------------------------------------------------
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    cond = vim.startswith(_G.theme.colorscheme.name, "catppuccin"),
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup(_G.theme.colorscheme.opts)
+      util.apply_colorscheme()
+    end,
+  },
+
+  -- =================================================================
+  --  Kanagawa
+  -- -----------------------------------------------------------------
+  --  https://github.com/rebelot/kanagawa.nvim
+  --  Colorscheme inspired by "The Great Wave off Kanagawa"
+  -- -----------------------------------------------------------------
+  {
+    "rebelot/kanagawa.nvim",
+    cond = vim.startswith(_G.theme.colorscheme.name, "kanagawa"),
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.print(_G.theme.colorscheme.name)
+      vim.print(_G.theme.colorscheme.opts)
+      require("kanagawa").setup(_G.theme.colorscheme.opts)
       util.apply_colorscheme()
     end,
   },
