@@ -7,5 +7,5 @@ set -euo pipefail
 if [ "$(tmux display-message -pF "#{session_name}")" = "popup" ]; then
 	tmux detach-client
 else
-	tmux popup -E "tmux attach -t popup || tmux new -s popup"
+	tmux popup -w80% -h80% -E "tmux attach -t popup || tmux new -s popup"
 fi
