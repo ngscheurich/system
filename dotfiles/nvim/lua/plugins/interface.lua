@@ -121,7 +121,26 @@ return {
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
-      require("which-key").add({
+      local wk = require("which-key")
+
+      wk.setup({
+        plugins = {
+          presets = {
+            operators = false,
+            motions = false,
+            text_objects = false,
+            windows = true,
+            nav = true,
+            z = true,
+            g = true,
+          },
+        },
+        icons = {
+          mappings = false,
+        },
+      })
+
+      wk.add({
         { "<Leader>?", "<Cmd>WhichKey<CR>", desc = "Keys" },
         { "<Leader>a", group = "AI" },
         { "<Leader>e", group = "Explore" },
