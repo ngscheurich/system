@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-readonly SESSION="${PWD##*/}"
-readonly LOCAL_CONF=./.tmux.local.conf
+SESSION="${PWD##*/}"
+LOCAL_CONF=./.tmux.local.conf
 
 session_exists() {
 	tmux list-sessions 2>/dev/null | grep "^$SESSION: "
