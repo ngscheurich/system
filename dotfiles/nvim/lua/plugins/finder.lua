@@ -69,7 +69,9 @@ return {
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "ui-select")
 
-    require("which-key").register({ ["<Leader>fG"] = "Git" })
+    require("which-key").add({
+      { "<Leader>fG", group = "Git" },
+    })
   end,
 
   keys = {

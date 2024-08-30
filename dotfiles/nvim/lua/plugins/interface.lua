@@ -121,21 +121,17 @@ return {
     "folke/which-key.nvim",
     event = "VimEnter",
     config = function()
-      require("which-key")
-
-      local leader_mappings = {
-        ["?"] = { "<Cmd>WhichKey<CR>", "Keys" },
-        a = { name = "AI" },
-        e = { name = "Explore" },
-        f = { name = "Find" },
-        g = { name = "Git" },
-        l = { name = "List" },
-        o = { name = "Outline" },
-        t = { name = "Test" },
-        u = { name = "UI Toggles" },
-      }
-
-      require("which-key").register(leader_mappings, { prefix = "<Leader>" })
+      require("which-key").add({
+        { "<Leader>?", "<Cmd>WhichKey<CR>", desc = "Keys" },
+        { "<Leader>a", group = "AI" },
+        { "<Leader>e", group = "Explore" },
+        { "<Leader>f", group = "Find" },
+        { "<Leader>g", group = "Git" },
+        { "<Leader>l", group = "List" },
+        { "<Leader>o", group = "Outline" },
+        { "<Leader>t", group = "Test" },
+        { "<Leader>u", group = "UI Toggles" },
+      })
     end,
   },
 

@@ -66,26 +66,27 @@ return {
       local pick = require("util").pick
       local telescope = require("telescope.builtin")
 
-      local mappings = {
-        ["<LocalLeader>"] = {
-          name = "lsp",
-          S = { telescope.lsp_workspace_symbols, "Workspace symbols" },
-          a = { vim.lsp.buf.code_action, "Actions" },
-          f = {
-            function()
-              vim.lsp.buf.format({ async = true })
-            end,
-            "Format",
-          },
-          i = { telescope.lsp_implementations, "Implementations" },
-          n = { vim.lsp.buf.rename, "Rename" },
-          r = { telescope.lsp_references, "References" },
-          s = { pick("lsp_document_symbols", "get_dropdown", { previewer = false }), "Document symbols" },
+      require("which-key").add({
+        { "<LocalLeader>", group = "lsp" },
+        { "<LocalLeader>S", telescope.lsp_workspace_symbols, desc = "Workspace symbols" },
+        { "<LocalLeader>a", vim.lsp.buf.code_action, desc = "Actions" },
+        {
+          "<LocalLeader>f",
+          function()
+            vim.lsp.buf.format({ async = true })
+          end,
+          desc = "Format",
         },
-        K = { vim.lsp.buf.hover, "Hover" },
-      }
-
-      require("which-key").register(mappings, { buffer = buffer })
+        { "<LocalLeader>i", telescope.lsp_implementations, desc = "Implementations" },
+        { "<LocalLeader>n", vim.lsp.buf.rename, desc = "Rename" },
+        { "<LocalLeader>r", telescope.lsp_references, desc = "References" },
+        {
+          "<LocalLeader>s",
+          pick("lsp_document_symbols", "get_dropdown", { previewer = false }),
+          desc = "Document symbols",
+        },
+        { "K", vim.lsp.buf.hover, desc = "Hover" },
+      }, { buffer = buffer })
     end
 
     vim.api.nvim_create_autocmd("LspAttach", {

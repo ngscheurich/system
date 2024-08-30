@@ -27,20 +27,15 @@ return {
         },
       })
 
-      local mappings = {
-        ["<Leader>g"] = {
-          b = { gitsigns.toggle_current_line_blame, "Line blame (toggle)" },
-          d = { gitsigns.toggle_deleted, "Deleted (toggle)" },
-          h = { gitsigns.toggle_linehl, "Line highlight (toggle)" },
-          p = { gitsigns.preview_hunk, "Preview hunk" },
-          r = { gitsigns.reset_hunk, "Reset hunk" },
-        },
-
-        ["]h"] = { gitsigns.next_hunk, "Next hunk" },
-        ["[h"] = { gitsigns.prev_hunk, "Previous hunk" },
-      }
-
-      require("which-key").register(mappings)
+      require("which-key").add({
+        { "<Leader>gb", gitsigns.toggle_current_line_blame, desc = "Line blame (toggle)" },
+        { "<Leader>gd", gitsigns.toggle_deleted, desc = "Deleted (toggle)" },
+        { "<Leader>gh", gitsigns.toggle_linehl, desc = "Line highlight (toggle)" },
+        { "<Leader>gp", gitsigns.preview_hunk, desc = "Preview hunk" },
+        { "<Leader>gr", gitsigns.reset_hunk, desc = "Reset hunk" },
+        { "[h", gitsigns.prev_hunk, desc = "Previous hunk" },
+        { "]h", gitsigns.next_hunk, desc = "Next hunk" },
+      })
     end,
   },
 
@@ -70,10 +65,16 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<Leader>gs", neogit.open, { desc = "Status" })
-      vim.keymap.set("n", "<Leader>gc", function()
-        neogit.open({ "commit" })
-      end, { desc = "Commit" })
+      require("which-key").add({
+        { "<Leader>gb", neogit.open, desc = "Status" },
+        {
+          "<Leader>gc",
+          function()
+            neogit.open({ "commit" })
+          end,
+          desc = "Commit",
+        },
+      })
     end,
   },
 }
