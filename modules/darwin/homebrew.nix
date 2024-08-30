@@ -58,6 +58,7 @@
       "reaper"
       "todoist"
       "vlc"
+      "whatsapp"
       {
         name = "gcenx/wine/wineskin";
         args = { no_quarantine = true; };
