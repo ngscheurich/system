@@ -66,17 +66,17 @@ return {
     end,
   },
 
-  {
-    dir = "~/Projects/nvim-spectre",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      replace_engine = {
-        ["sed"] = {
-          warn = false,
-        },
-      },
-    },
-  },
+  -- {
+  --   dir = "~/Projects/nvim-spectre",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   opts = {
+  --     replace_engine = {
+  --       ["sed"] = {
+  --         warn = false,
+  --       },
+  --     },
+  --   },
+  -- },
 
   {
     "luckasRanarison/tailwind-tools.nvim",

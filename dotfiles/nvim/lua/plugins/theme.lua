@@ -23,18 +23,18 @@ return {
   },
 
   -- =================================================================
-  --  Solarized
+  --  Nightfox
   -- -----------------------------------------------------------------
-  --   https://github.com/maxmx03/solarized.nvim
-  --   Precision colors for machines and people
+  --  https://github.com/EdenEast/nightfox.nvim
+  --  A highly-customizable theme for Vim and Neovim
   -- -----------------------------------------------------------------
   {
-    "maxmx03/solarized.nvim",
-    cond = _G.theme.colorscheme.name == "solarized",
+    "EdenEast/nightfox.nvim",
+    cond = vim.endswith(_G.theme.colorscheme.name, "fox"),
     lazy = false,
     priority = 1000,
     config = function()
-      require("solarized").setup(_G.theme.colorscheme.opts)
+      require("nightfox").setup(_G.theme.colorscheme.opts)
       util.apply_colorscheme()
     end,
   },
