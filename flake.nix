@@ -33,19 +33,6 @@
           inherit inputs;
           modules = baseModules ++ extraModules;
         };
-
-      mkNixosSystem =
-        { system ? "x86_64-linux"
-        , baseModules ? [
-            home-manager.nixosModules.home-manager
-            ./modules/nixos
-          ]
-        , extraModules ? [ ]
-        }: nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit inputs;
-          modules = baseModules ++ extraModules;
-        };
     in
     {
       darwinConfigurations = {
@@ -54,12 +41,6 @@
         };
         ridcully = mkDarwinSystem {
           extraModules = [ ./hosts/ridcully ];
-        };
-      };
-
-      nixosConfigurations = {
-        twoflower = mkNixosSystem {
-          extraModules = [ ./hosts/twoflower ];
         };
       };
 

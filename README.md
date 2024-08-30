@@ -51,7 +51,7 @@ as is possible.
 | Storage          | 512 GB PCIe 4.0 ×4 SSD       |
 
 
-### Malich
+### Ridcully
 
 My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1
 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as
