@@ -50,7 +50,9 @@ alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 alt-b = 'workspace B'
+alt-c = 'workspace C'
 alt-m = 'workspace M'
+alt-n = 'workspace N'
 alt-t = 'workspace T'
 
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -63,7 +65,9 @@ alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-b = 'move-node-to-workspace B'
+alt-shift-c = 'move-node-to-workspace C'
 alt-shift-m = 'move-node-to-workspace M'
+alt-shift-n = 'move-node-to-workspace N'
 alt-shift-t = 'move-node-to-workspace T'
 
 alt-tab = 'workspace-back-and-forth'
@@ -91,9 +95,21 @@ if.app-id = 'company.thebrowser.Browser'
 run       = 'move-node-to-workspace B'
 
 [[on-window-detected]]
-if.app-id = 'net.kovidgoyal.kitty'
-run       = 'move-node-to-workspace T'
+if.app-id = 'com.apple.MobileSMS'
+run       = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run       = 'move-node-to-workspace C'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Music'
 run       = 'move-node-to-workspace M'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run       = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run       = 'move-node-to-workspace T'
