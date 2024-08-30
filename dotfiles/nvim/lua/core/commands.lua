@@ -19,16 +19,10 @@ vim.api.nvim_create_user_command("SwitchTheme", function()
     return vim.fn.fnamemodify(value, ":t")
   end, theme_paths)
 
-  local colorschemes = {
-    ["rose-pine"] = "rose-pine-main",
-    ["solarized-dark"] = "solarized",
-    ["solarized-light"] = "solarized",
-  }
-
   vim.ui.select(themes, {
     prompt = "Select theme:",
   }, function(choice)
     io.popen(string.format("switch-theme %s", choice))
-    vim.cmd.colorscheme(colorschemes[choice] or choice)
+    vim.cmd.colorscheme(choice)
   end)
 end, {})
