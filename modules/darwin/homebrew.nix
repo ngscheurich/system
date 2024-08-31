@@ -24,6 +24,11 @@
       "llvm"
       "luajit"
       "tmux-fingers"
+      # tmux-fingers dependencies
+      "bdw-gc"
+      "libevent"
+      "libyaml"
+      "pcre2"
     ];
 
     casks = [
