@@ -181,7 +181,6 @@ include:
 - [kitty], a feature-rich GPU-based terminal emulator
 - [Lazygit], a terminal UI for Git
 - [Neovim], my primary text editor and software development tool
-- [ranger], a console file manager
 - [skhd], a simple hotkey daemon for macOS
 - [yazi], a terminal file manager
 - [zellij], a terminal workspace
@@ -264,4 +263,4 @@ Log out and back in for all changes to take effect.
 [vim]: https://www.vim.org
 [xdg]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 [yazi]: https://yazi-rs.github.io/
-[zellj]: https://zellij.dev/
+[zellij]: https://zellij.dev/
