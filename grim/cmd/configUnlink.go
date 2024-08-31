@@ -15,10 +15,10 @@ var configUnlinkCmd = &cobra.Command{
 		var opts []huh.Option[string]
 		var names []string
 
-		cfg := GetDotfilesConfig()
+		cfg := GetProgManifest()
 
 		for _, e := range cfg.Entries {
-			dest := GetDotfileDest(e)
+			dest := GetEntryFsDest(e)
 			_, err := os.Stat(dest)
 			if err == nil {
 				opts = append(opts, huh.NewOption(e.Name, e.Name))
@@ -41,7 +41,7 @@ var configUnlinkCmd = &cobra.Command{
 		for _, n := range names {
 			for _, e := range cfg.Entries {
 				if e.Name == n {
-					dest := GetDotfileDest(e)
+					dest := GetEntryFsDest(e)
 					os.Remove(dest)
 				}
 			}

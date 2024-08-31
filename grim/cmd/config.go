@@ -9,19 +9,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type DotfilesConfig struct {
-	Entries []DotfilesConfigEntry
+type ProgManifest struct {
+	Entries []ProgManifestEntry
 }
 
-type DotfilesConfigEntry struct {
+type ProgManifestEntry struct {
 	Name string
 	Path string
 	Dest string
 }
 
-func GetDotfilesConfig() DotfilesConfig {
-	var cfg DotfilesConfig
-	doc := readDotfilesConfig()
+func GetProgManifest() ProgManifest {
+	var cfg ProgManifest
+	doc := readProgManifest()
 	err := toml.Unmarshal([]byte(doc), &cfg)
 	if err != nil {
 		panic(err)
@@ -29,8 +29,8 @@ func GetDotfilesConfig() DotfilesConfig {
 	return cfg
 }
 
-func readDotfilesConfig() []byte {
-	path := fmt.Sprintf("%s/dotfiles/config.toml", SystemDir())
+func readProgManifest() []byte {
+	path := fmt.Sprintf("%s/config/entries.toml", SystemDir())
 	data, err := os.ReadFile(path)
 	if err != nil {
 		panic(err)
@@ -38,7 +38,7 @@ func readDotfilesConfig() []byte {
 	return data
 }
 
-func GetDotfileDest(e DotfilesConfigEntry) string {
+func GetEntryFsDest(e ProgManifestEntry) string {
 	dest := e.Dest
 	parts := strings.Split(dest, "$")
 	if len(parts) == 2 {

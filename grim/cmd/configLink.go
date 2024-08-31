@@ -15,12 +15,12 @@ var configLinkCmd = &cobra.Command{
 		var opts []huh.Option[string]
 		var names []string
 
-		cfg := GetDotfilesConfig()
+		cfg := GetProgManifest()
 
 		for _, e := range cfg.Entries {
-			dest := GetDotfileDest(e)
-			_, err := os.Stat(dest)
-			if err != nil {
+			dest := GetEntryFsDest(e)
+			fi, _ := os.Lstat(dest)
+			if fi == nil || fi.Mode()&os.ModeSymlink == 0 {
 				opts = append(opts, huh.NewOption(e.Name, e.Name))
 			}
 		}
@@ -41,8 +41,8 @@ var configLinkCmd = &cobra.Command{
 		for _, n := range names {
 			for _, e := range cfg.Entries {
 				if e.Name == n {
-					path := fmt.Sprintf("%s/dotfiles/%s", SystemDir(), e.Path)
-					dest := GetDotfileDest(e)
+					path := fmt.Sprintf("%s/config/%s", SystemDir(), e.Path)
+					dest := GetEntryFsDest(e)
 					err := os.Symlink(path, dest)
 					if err != nil {
 						fmt.Println(err)

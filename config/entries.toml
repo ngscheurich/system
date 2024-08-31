@@ -29,11 +29,6 @@ path = "nvim"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
-name = "Ranger"
-path = "ranger"
-dest = "$XDG_CONFIG_HOME"
-
-[[entries]]
 name = "skhd"
 path = "skhd"
 dest = "$XDG_CONFIG_HOME"
@@ -44,8 +39,8 @@ path = ".tmux.conf"
 dest = "$HOME"
 
 [[entries]]
-name = "yabai"
-path = "yabai"
+name = "Yazi"
+path = "yazi"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]

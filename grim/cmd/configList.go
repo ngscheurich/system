@@ -28,15 +28,15 @@ var configListCmd = &cobra.Command{
 			BorderStyle = lipgloss.NewStyle().Foreground(lightPurple)
 		)
 
-		cfg := GetDotfilesConfig()
+		cfg := GetProgManifest()
 
 		var rows [][]string
 
 		for _, e := range cfg.Entries {
-			dest := GetDotfileDest(e)
-			_, err := os.Stat(dest)
+			dest := GetEntryFsDest(e)
+			fi, _ := os.Lstat(dest)
 			isLinked := ""
-			if err == nil {
+			if fi != nil && fi.Mode()&os.ModeSymlink != 0 {
 				isLinked = "✓"
 			}
 			rows = append(rows, []string{e.Name, isLinked, e.Dest})
@@ -62,7 +62,7 @@ var configListCmd = &cobra.Command{
 
 				return style
 			}).
-			Headers("CONFIG", "LINKED?", "DESTINATION").
+			Headers("PROGRAM", "LINKED?", "DESTINATION").
 			Rows(rows...)
 
 		fmt.Println(t)
