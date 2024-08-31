@@ -11,17 +11,19 @@
     global.brewfile = true;
 
     taps = [
+      "gcenx/wine"
       "homebrew/cask-versions"
       "homebrew/services"
-      "railwaycat/emacsmacport"
-      "gcenx/wine"
+      "morantron/homebrew-tmux-fingers"
       "nikitabobko/tap"
+      "railwaycat/emacsmacport"
     ];
 
     brews = [
       "asyncapi"
       "llvm"
       "luajit"
+      "tmux-fingers"
     ];
 
     casks = [
