@@ -183,6 +183,7 @@ include:
 - [Neovim], my primary text editor and software development tool
 - [ranger], a console file manager
 - [skhd], a simple hotkey daemon for macOS
+- [yazi], a terminal file manager
 - [zellij], a terminal workspace
 
 These configs can be installed with Grimoire: `grim config link`.
@@ -218,7 +219,7 @@ Switch to the new system generation:
 
 Log out and back in for all changes to take effect.
 
-[aniseed]: https://github.com/Olical/aniseed
+[aerospace]: https://github.com/nikitabobko/AeroSpace
 [apple m1 pro]: https://en.wikipedia.org/wiki/Apple_M1_Pro_and_M1_Max
 [apple m2 pro]: https://en.wikipedia.org/wiki/Apple_M2
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
@@ -246,12 +247,10 @@ Log out and back in for all changes to take effect.
 [karabiner-elements]: https://karabiner-elements.pqrs.org/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [lazygit]: https://github.com/jesseduffield/lazygit
-[linode]: https://www.linode.com
 [neovim]: https://neovim.io/
 [nix-darwin]: https://github.com/LnL7/nix-darwin
 [nix]: https://nixos.org/
 [nixos]: https://en.wikipedia.org/wiki/NixOS
-[ranger]: https://ranger.github.io
 [ripgrep]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix
 [shell]: https://en.wikipedia.org/wiki/Shell_(computing)
@@ -264,4 +263,5 @@ Log out and back in for all changes to take effect.
 [vale]: https://github.com/errata-ai/vale
 [vim]: https://www.vim.org
 [xdg]: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-[yabai]: https://github.com/koekeishiya/yabai
+[yazi]: https://yazi-rs.github.io/
+[zellj]: https://zellij.dev/
