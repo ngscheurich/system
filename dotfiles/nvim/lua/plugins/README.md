@@ -7,6 +7,8 @@
 ## Completion
 - [lspkind-nvim](https://github.com/onsails/lspkind.nvim): Pictograms for completion candidates
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): Multi-source completion engine
+## Database
+- [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui): UI for working with relational databases
 ## Debugging
 - [nvim-dap](https://github.com/mfussenegger/nvim-dap): Debug Adapter Protocol client
 - [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui): TUI for nvim-dap
@@ -52,6 +54,8 @@
 - [colorizer.lua](https://github.com/NvChad/nvim-colorizer.lua): Highlight color codes in buffer
 ## Notes
 - [obsidian.nvim](https://github.com/epwalsh/obsidian.nvim): Navigate and edit Obsidian notes
+## Prose
+- [Markdown Preview for (Neo)vim](https://github.com/iamcco/markdown-preview.nvim): Preview Markdown in a browser
 ## Snippets
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip): Lua-based snippet engine
 ## Source Control
@@ -64,11 +68,9 @@
 ## Testing
 - [Neotest](https://github.com/nvim-neotest/neotest): Interactive testing framework
 ## Theme
-- [Catppuccin](https://github.com/catppuccin/catppuccin): Comprehensive, customizable colorscheme
-- [Tokyo Night](https://github.com/folke/tokyonight.nvim): Cool, dark colorschema
-- [Modus Themes](https://github.com/miikanissi/modus-themes.nvim): Highly accessible colorschemes
-- [Rosé Pine](https://github.com/rose-pine/neovim): Classy, minimalist colorscheme
-- [Solarized](https://github.com/maxmx03/solarized.nvim): Precision colors for machines and people
+- [nvim-base16]( https://github.com/RRethy/base16-nvim):  Plugin for building base16 colorschemes
+- [Nightfox](https://github.com/EdenEast/nightfox.nvim): A highly-customizable theme for Vim and Neovim
+- [Catppuccin](https://github.com/catppuccin/nvim): Soothing pastel theme for (Neo)vim
 - [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons): Colored icons for filetypes
 - [nvim-nonicons](https://github.com/yamatsum/nvim-nonicons): Crisp, thin icon set for nvim-web-devicons
 - [Todo Comments](https://github.com/folke/todo-comments.nvim): Highlights and indexes TODO-style comments
