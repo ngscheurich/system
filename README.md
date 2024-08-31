@@ -174,17 +174,18 @@ but for those not supported and for anything but the simplest configurations I
 prefer to maintain a classic [dotfiles] setup. Programs configured this way
 include:
 
+- [tmux], a terminal multiplexer
+- [Aerospace], a tiling window manager for macOS
 - [Emacs], a text editor and Lisp application environment
 - [Karabiner-Elements], a keyboard customizer for macOS
-- [Neovim], my primary text editor and software development tool
-- [Starship], a customizable cross-shell prompt
-- [fish], a command line shell for the 90s
 - [kitty], a feature-rich GPU-based terminal emulator
+- [Lazygit], a terminal UI for Git
+- [Neovim], my primary text editor and software development tool
 - [ranger], a console file manager
 - [skhd], a simple hotkey daemon for macOS
-- [yabai], a tiling window manager for macOS
+- [zellij], a terminal workspace
 
-Dotfiles can be linked with Grimoire: `grim link add [NAME]`.
+These configs can be installed with Grimoire: `grim config link`.
 
 ## Quickstart
 
