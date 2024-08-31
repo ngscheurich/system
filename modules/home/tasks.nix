@@ -6,7 +6,7 @@
 
 {
   home.packages = with pkgs; [
-    taskwarrior
+    taskwarrior3
     taskwarrior-tui
     timewarrior
   ];
