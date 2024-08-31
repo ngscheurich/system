@@ -27,6 +27,7 @@ autocmd({ "VimResized" }, {
 })
 
 command("SwitchTheme", function()
+  -- TODO: Load theme plugin if not loaded
   local path = vim.fn.globpath("/etc/system/themes", "*")
   local theme_paths = vim.split(path, "\n")
 
