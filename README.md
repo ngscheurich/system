@@ -144,26 +144,28 @@ briefly:
 
     A book of magic spells
 
-    USAGE:
-        grim [SUBCOMMAND]
+    Usage:
+      grim [command]
 
-    OPTIONS:
-        -h, --help       Print help information
-        -V, --version    Print version information
+    Available Commands:
+      completion  Generate the autocompletion script for the specified shell
+      config      Manage program configurations
+      help        Help about any command
+      switch      Switch to a new Nix system generation
+      theme       Change user theme
 
-    SUBCOMMANDS:
-        help      Print this message or the help of the given subcommand(s)
-        link      Manage program configuration links
-        switch    Switch to a new Nix system generation
-        theme     Change the system theme
+    Flags:
+      -h, --help   help for grim
+
+    Use "grim [command] --help" for more information about a command.
 
 ### Building
 
 To build Grimoire, first install Nix then run this command from the `cli` directory:
 
-    nix shell nixpkgs#cargo -c make
+    nix shell nixpkgs#go -c make
 
-Alternatively, if you have the Rust toolchain installed, you can simply `make`.
+Alternatively, if you have [Go] installed, you can simply `make`.
 
 ## Dotfiles
 
@@ -237,6 +239,7 @@ Log out and back in for all changes to take effect.
 [glow]: https://github.com/charmbracelet/glow
 [gnu privacy guard]: https://gnupg.org/
 [gnu stow]: https://www.gnu.org/software/stow/
+[go]: https://go.dev/
 [home manager]: https://github.com/nix-community/home-manager
 [homebrew]: https://brew.sh/
 [karabiner-elements]: https://karabiner-elements.pqrs.org/

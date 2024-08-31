@@ -1,10 +1,10 @@
 all: clean build install
 
 build:
-	cargo build --release
+	go build
 
 install:
-	cp target/release/grim /usr/local/bin
+	mv ./grim /usr/local/bin
 
 clean:
 ifneq ("$(wildcard /usr/local/bin/grim)", "")

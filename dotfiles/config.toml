@@ -1,0 +1,54 @@
+[[entries]]
+name = "Aerospace"
+path = "aerospace"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "Emacs"
+path = "emacs"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "Karabiner"
+path = "karabiner"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "kitty"
+path = "kitty"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "Lazygit"
+path = "lazygit"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "Neovim"
+path = "nvim"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "Ranger"
+path = "ranger"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "skhd"
+path = "skhd"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "tmux"
+path = ".tmux.conf"
+dest = "$HOME"
+
+[[entries]]
+name = "yabai"
+path = "yabai"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "zellij"
+path = "zellij"
+dest = "$XDG_CONFIG_HOME"
