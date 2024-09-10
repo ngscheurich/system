@@ -138,7 +138,7 @@ in
 
   programs.bat = {
     enable = true;
-    config.theme = "base16";
+    config.theme = "ansi";
   };
 
   home.packages = with pkgs; [
