@@ -50,24 +50,40 @@ return {
   },
 
   {
-    "rest-nvim/rest.nvim",
-    ft = "http",
-    dependencies = {
-      {
-        "vhyrro/luarocks.nvim",
-        config = true,
-        opts = {
-          rocks = { "lua-curl", "nvim-nio", "mimetypes", "xml2lua" },
-        },
-      },
-    },
+    "mistweaverco/kulala.nvim",
     config = function()
-      require("rest-nvim").setup()
+      local kulala = require("kulala")
+
+      kulala.setup({
+
+        icons = {
+          inlay = {
+            loading = "󰔟 ",
+            done = " ",
+            error = " ",
+          },
+        },
+      })
+
+      require("which-key").add({
+        { "<Leader>h", group = "HTTP" },
+        { "<Leader>hq", kulala.close, desc = "Close" },
+        { "<Leader>hc", kulala.copy, desc = "Copy" },
+        { "<Leader>hC", kulala.from_curl, desc = "From curl" },
+        { "<Leader>he", kulala.get_selected_env, desc = "Get selected env" },
+        { "<Leader>hi", kulala.inspect, desc = "Inspect" },
+        { "<Leader>hn", kulala.jump_next, desc = "Next" },
+        { "<Leader>hp", kulala.jump_prev, desc = "Prev" },
+        { "<Leader>hl", kulala.replay, desc = "Replay" },
+        { "<Leader>hr", kulala.run, desc = "Run" },
+        { "<Leader>ha", kulala.run_all, desc = "Run all" },
+        { "<Leader>hs", kulala.scratchpad, desc = "Scratchpad" },
+        { "<Leader>h/", kulala.search, desc = "Search" },
+        { "<Leader>h?", kulala.show_stats, desc = "Show stats" },
+        { "<Leader>ht", kulala.toggle_view, desc = "Toggle view" },
+      })
     end,
   },
-
-  -- {
-  -- },
 
   {
     "nvim-pack/nvim-spectre",
