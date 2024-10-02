@@ -1,5 +1,5 @@
 local util = require("util")
 
 return {
-  util.lspconfig_setup("tailwindcss"),
+  -- util.lspconfig_setup("tailwindcss"),
 }
