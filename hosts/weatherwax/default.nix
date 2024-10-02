@@ -36,17 +36,12 @@
   };
 
   homebrew = {
-    brews = [
-      "postgresql@14"
-      "timescaledb"
-      "timescaledb-tools"
-    ];
-
     casks = [
       "affinity-designer"
       "affinity-photo"
       "affinity-publisher"
       "blender"
+      "darktable"
       "epic-games"
       "godot"
       "playdate-simulator"
