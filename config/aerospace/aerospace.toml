@@ -12,8 +12,8 @@ default-root-container-orientation = 'auto'
 
 key-mapping.preset = 'qwerty'
 
-on-focus-changed           = ['move-mouse window-lazy-center']
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed           = []
+on-focused-monitor-changed = []
 
 [gaps]
 inner.horizontal = 10
@@ -37,8 +37,8 @@ alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
+alt-shift-minus = 'resize smart -100'
+alt-shift-equal = 'resize smart +100'
 
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
@@ -49,11 +49,13 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-b = 'workspace B'
-alt-c = 'workspace C'
-alt-m = 'workspace M'
-alt-n = 'workspace N'
-alt-t = 'workspace T'
+alt-c = 'workspace C' # Comms
+alt-d = 'workspace D' # Discord
+alt-e = 'workspace E' # Emacs
+alt-m = 'workspace M' # Music
+alt-n = 'workspace N' # Notes
+alt-t = 'workspace T' # Terminal
+alt-b = 'workspace W' # Web browser
 
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -64,11 +66,13 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
+alt-shift-d = 'move-node-to-workspace D'
+alt-shift-e = 'move-node-to-workspace E'
 alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
 alt-shift-t = 'move-node-to-workspace T'
+alt-shift-w = 'move-node-to-workspace W'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -90,26 +94,56 @@ j = ['join-with down', 'mode main']
 k = ['join-with up', 'mode main']
 l = ['join-with right', 'mode main']
 
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run       = 'move-node-to-workspace B'
+# ----------------------------------------------------------
+# App-specific settings
+# ----------------------------------------------------------
 
+# 1Password
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run       = 'layout floating'
+
+# Messages
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
 run       = 'move-node-to-workspace C'
 
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run       = 'move-node-to-workspace C'
-
+# Music
 [[on-window-detected]]
 if.app-id = 'com.apple.Music'
 run       = 'move-node-to-workspace M'
 
+# Finder
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
+if.app-id = 'com.apple.finder'
+run       = 'layout floating'
+
+# Logseq
+[[on-window-detected]]
+if.app-id = 'com.electron.logseq'
 run       = 'move-node-to-workspace N'
 
+# Discord
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run       = 'move-node-to-workspace D'
+
+# Arc
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run       = 'move-node-to-workspace W'
+
+# Slack
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run       = 'move-node-to-workspace C'
+
+# kitty
 [[on-window-detected]]
 if.app-id = 'net.kovidgoyal.kitty'
 run       = 'move-node-to-workspace T'
+
+# Emacs
+[[on-window-detected]]
+if.app-id = 'org.gnu.emacs'
+run       = 'move-node-to-workspace E'
