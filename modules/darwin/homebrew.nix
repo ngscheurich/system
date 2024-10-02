@@ -24,6 +24,7 @@
       "llvm"
       "luajit"
       "tmux-fingers"
+
       # tmux-fingers dependencies
       "bdw-gc"
       "libevent"
@@ -55,9 +56,9 @@
       "kitty"
       "livebook"
       "logitech-options"
+      "logseq"
       "magicavoxel"
       "obs"
-      "obsidian"
       "opal-composer"
       "postico"
       "postman"
