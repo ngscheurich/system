@@ -64,7 +64,6 @@
       "postman"
       "raycast"
       "reaper"
-      "todoist"
       "vlc"
       "whatsapp"
       {
