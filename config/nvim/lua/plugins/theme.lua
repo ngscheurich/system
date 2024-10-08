@@ -58,6 +58,23 @@ return {
   },
 
   -- =================================================================
+  --  Solarized
+  -- -----------------------------------------------------------------
+  --  https://github.com/maxmx03/solarized.nvim
+  --  Precision colors for machines and people
+  -- -----------------------------------------------------------------
+  {
+    "maxmx03/solarized.nvim",
+    cond = vim.startswith(_G.theme.colorscheme.name, "solarized"),
+    lazy = false,
+    priority = 1000,
+    config = function(_, opts)
+      require("solarized").setup(opts)
+      vim.cmd.colorscheme("solarized")
+    end,
+  },
+
+  -- =================================================================
   --  nvim-web-devicons
   -- -----------------------------------------------------------------
   --  https://github.com/nvim-tree/nvim-web-devicons
