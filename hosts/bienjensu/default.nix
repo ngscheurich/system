@@ -1,19 +1,24 @@
 { pkgs, ... }:
 
 {
-  users = {
-    knownUsers = [ "nscheurich" ];
+  networking = {
+    hostName = "weatherwax";
+    computerName = "Weatherwax";
+  };
 
-    users.nscheurich = {
-      home = "/Users/nscheurich";
+  users = {
+    knownUsers = [ "nick" ];
+
+    users.nick = {
+      home = "/Users/nick";
       description = "N. G. Scheurich";
       shell = pkgs.fish;
-      uid = 317732888;
+      uid = 501;
     };
   };
 
   home-manager.users = {
-    nscheurich = {
+    nick = {
       home.stateVersion = "22.11";
 
       imports = [
@@ -35,6 +40,18 @@
       "postgresql@14"
       "timescaledb"
       "timescaledb-tools"
+    ];
+
+    casks = [
+      "affinity-designer"
+      "affinity-photo"
+      "affinity-publisher"
+      "blender"
+      "epic-games"
+      "godot"
+      "playdate-simulator"
+      "protonvpn"
+      "steam"
     ];
   };
 }

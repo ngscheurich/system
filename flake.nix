@@ -36,11 +36,11 @@
     in
     {
       darwinConfigurations = {
-        weatherwax = mkDarwinSystem {
-          extraModules = [ ./hosts/weatherwax ];
+        bienjensu = mkDarwinSystem {
+          extraModules = [ ./hosts/bienjensu ];
         };
-        ridcully = mkDarwinSystem {
-          extraModules = [ ./hosts/ridcully ];
+        wattson = mkDarwinSystem {
+          extraModules = [ ./hosts/wattson ];
         };
       };
 
