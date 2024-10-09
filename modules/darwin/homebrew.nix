@@ -11,21 +11,27 @@
     global.brewfile = true;
 
     taps = [
+      "d12frosted/emacs-plus"
       "gcenx/wine"
       "homebrew/cask-versions"
       "homebrew/services"
       "morantron/homebrew-tmux-fingers"
       "nikitabobko/tap"
-      "railwaycat/emacsmacport"
     ];
 
     brews = [
       "asyncapi"
       "llvm"
       "luajit"
+
+      {
+        name = "emacs-plus";
+        args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
+      }
+
       "tmux-fingers"
 
-      # tmux-fingers dependencies
+      # tmux-fingers deps
       "bdw-gc"
       "libevent"
       "libyaml"
@@ -44,7 +50,6 @@
       "discord"
       "docker"
       "dropbox"
-      "emacs-mac"
       "fantastical"
       "figma"
       "firefox"
