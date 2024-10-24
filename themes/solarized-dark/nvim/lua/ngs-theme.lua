@@ -3,10 +3,16 @@ return {
 
 	colorscheme = {
 		name = "solarized",
-		opts = {},
+		opts = {
+			variant = "winter",
+		},
 	},
 
-	plugins = {},
+	plugins = {
+		lualine = {
+			theme = "solarized",
+		},
+	},
 
 	callback = function()
 		vim.o.background = "dark"
