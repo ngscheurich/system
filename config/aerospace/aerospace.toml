@@ -16,12 +16,12 @@ on-focus-changed           = []
 on-focused-monitor-changed = []
 
 [gaps]
-inner.horizontal = 10
-inner.vertical =   10
-outer.left =       10
-outer.bottom =     10
-outer.top =        10
-outer.right =      10
+inner.horizontal = 8
+inner.vertical =   8
+outer.left =       8
+outer.bottom =     8
+outer.top =        8
+outer.right =      8
 
 [mode.main.binding]
 alt-slash = 'layout tiles horizontal vertical'
@@ -49,13 +49,13 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
+alt-b = 'workspace B' # Web browser
 alt-c = 'workspace C' # Comms
 alt-d = 'workspace D' # Discord
 alt-e = 'workspace E' # Emacs
 alt-m = 'workspace M' # Music
 alt-n = 'workspace N' # Notes
 alt-t = 'workspace T' # Terminal
-alt-b = 'workspace W' # Web browser
 
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -66,13 +66,13 @@ alt-shift-6 = 'move-node-to-workspace 6'
 alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
 alt-shift-d = 'move-node-to-workspace D'
 alt-shift-e = 'move-node-to-workspace E'
 alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
 alt-shift-t = 'move-node-to-workspace T'
-alt-shift-w = 'move-node-to-workspace W'
 
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -131,7 +131,7 @@ run       = 'move-node-to-workspace D'
 # Arc
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
-run       = 'move-node-to-workspace W'
+run       = 'move-node-to-workspace B'
 
 # Slack
 [[on-window-detected]]
@@ -145,5 +145,5 @@ run       = 'move-node-to-workspace T'
 
 # Emacs
 [[on-window-detected]]
-if.app-id = 'org.gnu.emacs'
+if.app-id = 'org.gnu.Emacs'
 run       = 'move-node-to-workspace E'
