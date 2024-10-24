@@ -234,6 +234,7 @@ return {
       "nvim-tree/nvim-web-devicons",
       "folke/todo-comments.nvim",
     },
+    config = true,
     cmd = { "Trouble", "TroubleToggle", "TodoTrouble" },
     keys = {
       { "\\", "<Cmd>TroubleToggle<CR>", desc = "Trouble" },
