@@ -17,15 +17,8 @@ var switchCmd = &cobra.Command{
 	Short: "Switch to a new Nix system generation",
 	Run: func(cmd *cobra.Command, args []string) {
 		platform := runtime.GOOS
-		nix_build(platform, host)
 		nix_switch(platform, host)
 	},
-}
-
-func nix_build(platform string, host string) {
-	attr := fmt.Sprintf("%s/#%sConfigurations.%s.system", SystemDir(), platform, host)
-	cmd := exec.Command("nix", "build", attr, "--out-link", outdir)
-	run_cmd(cmd)
 }
 
 func nix_switch(platform string, host string) {
@@ -48,9 +41,8 @@ func run_cmd(cmd *exec.Cmd) {
 }
 
 func darwin_switch_cmd(host string) *exec.Cmd {
-	binary := fmt.Sprintf("%s/sw/bin/darwin-rebuild", outdir)
 	flake := fmt.Sprintf("%s#%s", SystemDir(), host)
-	return exec.Command(binary, "switch", "--flake", flake)
+	return exec.Command("darwin-rebuild", "switch", "--flake", flake)
 }
 
 func nixos_switch_cmd(host string) *exec.Cmd {
