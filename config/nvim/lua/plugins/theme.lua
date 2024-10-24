@@ -68,8 +68,8 @@ return {
     cond = vim.startswith(_G.theme.colorscheme.name, "solarized"),
     lazy = false,
     priority = 1000,
-    config = function(_, opts)
-      require("solarized").setup(opts)
+    config = function()
+      require("solarized").setup(_G.theme.colorscheme.opts)
       vim.cmd.colorscheme("solarized")
     end,
   },
