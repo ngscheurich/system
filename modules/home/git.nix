@@ -27,47 +27,6 @@
     };
 
     ignores = [
-      # Based on https://gist.github.com/octocat/9257657
-
-      # Compiled source
-      "*.com"
-      "*.class"
-      "*.dll"
-      "*.exe"
-      "*.o"
-      "*.so"
-
-      # Packages
-      "*.7z"
-      "*.dmg"
-      "*.gz"
-      "*.iso"
-      "*.jar"
-      "*.rar"
-      "*.tar"
-      "*.zip"
-
-      # Logs and databases
-      "*.log"
-      "*.sqlite"
-
-      # OS generated files
-      ".DS_Store"
-      ".DS_Store?"
-      "._*"
-      ".Spotlight-V100"
-      ".Trashes"
-      "ehthumbs.db"
-      "Thumbs.db"
-
-      # Temporary files
-      "*.swp"
-      "*.swo"
-      "*~"
-
-      # Tags
-      "tags"
-
       # Project notes
       "TODO.md"
       "TODO.org"
@@ -110,6 +69,48 @@
       # Project-specific Zellij layouts
       "project.kdl"
       "layout.kdl"
+
+      #-------------------------------------------------
+      # Based on https://gist.github.com/octocat/9257657
+      # ------------------------------------------------
+      # Compiled source
+      "*.com"
+      "*.class"
+      "*.dll"
+      "*.exe"
+      "*.o"
+      "*.so"
+
+      # Packages
+      "*.7z"
+      "*.dmg"
+      "*.gz"
+      "*.iso"
+      "*.jar"
+      "*.rar"
+      "*.tar"
+      "*.zip"
+
+      # Logs and databases
+      "*.log"
+      "*.sqlite"
+
+      # OS generated files
+      ".DS_Store"
+      ".DS_Store?"
+      "._*"
+      ".Spotlight-V100"
+      ".Trashes"
+      "ehthumbs.db"
+      "Thumbs.db"
+
+      # Temporary files
+      "*.swp"
+      "*.swo"
+      "*~"
+
+      # Tags
+      "tags"
     ];
 
     signing = {
