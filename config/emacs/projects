@@ -1,0 +1,4 @@
+;;; -*- lisp-data -*-
+(("~/Projects/barista/")
+ ("/private/etc/system/")
+ ("~/Projects/lexical/"))

@@ -1,4 +1,4 @@
-;;; ngs-modality.el --- Modal keyboard setup -*- lexical-binding: t; -*-
+;;; ngs-prog.el --- Modal keyboard setup -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 N. G. Scheurich
 
@@ -26,7 +26,28 @@
 ;; Affordances for modal keyboard interaction.
 
 ;;; Code:
+(use-package envrc
+  :ensure t
+  :config (envrc-global-mode))
+
+;; Tree-sitter grammars
+(setq treesit-language-source-alist
+      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+	(heex "https://github.com/phoenixframework/tree-sitter-heex")))
+
+;; Elixir
+(use-package elixir-ts-mode
+  :ensure t
+  :after eglot
+  :init
+  (add-to-list 'eglot-server-programs
+	       `((elixir-ts-mode heex-ts-mode) . ("~/.local/share/elixir-ls/language_server.sh")))
+  (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
+  (add-hook 'heex-ts-mode-hook 'eglot-ensure)
+  :mode
+  (("\\.ex\\'" . elixir-ts-mode)
+   ("\\.exs\\'" . elixir-ts-mode)))
 
 
-(provide 'ngs-modality)
-;;; ngs-modality.el ends here
+(provide 'ngs-prog)
+;;; ngs-prog.el ends here

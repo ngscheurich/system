@@ -1,12 +1,24 @@
 ;;; GNU Emacs initialization
 
+;; Add Nix bin directories to `exec-path'
+(add-to-list 'exec-path "/run/current-system/sw/bin/")
+(add-to-list 'exec-path
+	     (format "/etc/profiles/per-user/%s/bin/" (getenv "USER")))
+
 ;; Emacs settings
 (use-package emacs
   :init
   (setopt user-full-name "Nicholas Scheurich"
           user-email-address "nick@scheurich.haus"
           history-length 40
-          custom-file (locate-user-emacs-file "custom-vars.el")))
+          custom-file (locate-user-emacs-file "custom-vars.el")
+	  shell-file-name "zsh"
+	  sh-shell "zsh"
+	  sh-shell-file "zsh"))
+
+;; Theme
+(load-theme 'modus-vivendi)
+
 
 ;; Enable package management
 (require 'package)
@@ -18,18 +30,4 @@
 
 (require 'ngs-emacs-core)
 (require 'ngs-completion)
-(require 'ngs-modality)
-
-(use-package :meow)
-
-; ;; Automatically insert closing delimeter
-; (use-package elec-pair
-;   :config (electric-pair-mode))
-;
-; ;; Allows undo/redo of window changes 
-; (use-package winner
-;   :config (winner-mode 1))
-;
-; ;; Built-in tab bar
-; (use-package tab-bar
-;   :config (tab-bar-mode))
+(require 'ngs-prog)

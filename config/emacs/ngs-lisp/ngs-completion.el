@@ -55,16 +55,10 @@
 ;; https://github.com/minad/corfu
 (use-package corfu
   :ensure t
-  ; :load-path "~/.config/emacs/straight/builds/corfu/extensions"
   :init
   (setopt corfu-auto t)
-  :bind
-  (:map corfu-map ("SPC" . corfu-insert-separator))
   :config
   (global-corfu-mode))
-  ; (require 'corfu-popupinfo)
-  ; (corfu-popupinfo-mode)
-  ; (setq corfu-popupinfo-delay '(0.5 . 0.2)))
 
 ;; Completion At Point Extensions
 ;; https://github.com/minad/cape
