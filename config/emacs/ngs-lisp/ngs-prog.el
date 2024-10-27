@@ -26,22 +26,50 @@
 ;; Affordances for modal keyboard interaction.
 
 ;;; Code:
-(use-package envrc
-  :ensure t
-  :config (envrc-global-mode))
 
 ;; Tree-sitter grammars
 (setq treesit-language-source-alist
       '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
 	(heex "https://github.com/phoenixframework/tree-sitter-heex")))
 
+;; Tab settings
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
+
+;; Display numbers in programming buffers
+(use-package display-line-numbers
+  :hook (prog-mode . display-line-numbers-mode))
+
+;; Language Server Protocol (LSP) client
+;; https://joaotavora.github.io/eglot/
+(use-package eglot
+  :bind
+  (("C-c l f" . 'eglot-format-buffer)
+   ("C-c l a" . 'eglot-code-actions)
+   ("C-c l r" . 'eglot-rename)))
+
+;; Show documentation in the minibuffer
+;; https://elpa.gnu.org/packages/eldoc.html
+(use-package eldoc
+  :init
+  (setq eldoc-echo-area-use-multiline-p nil))
+
+;; Display eldoc info in a childframe
+;; https://github.com/casouri/eldoc-box
+(use-package eldoc-box
+  :ensure t
+  :bind ("C-c d" . 'eldoc-box-help-at-point))
+
 ;; Elixir
 (use-package elixir-ts-mode
   :ensure t
   :after eglot
   :init
+  ;; (add-to-list 'eglot-server-programs
+  ;;  `((elixir-ts-mode heex-ts-mode elixir-mode) .
+  ;;    ("/etc/profiles/per-user/nscheurich/bin/nextls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t)))))))
   (add-to-list 'eglot-server-programs
-	       `((elixir-ts-mode heex-ts-mode) . ("~/.local/share/elixir-ls/language_server.sh")))
+	       `((elixir-ts-mode heex-ts-mode) . ("/Users/nscheurich/.local/share/nvim/mason/bin/lexical")))
   (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
   (add-hook 'heex-ts-mode-hook 'eglot-ensure)
   :mode
