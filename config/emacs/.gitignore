@@ -1,5 +1,6 @@
+/.cache/
 /elpa/
 /eshell/
-/.cache/
-/var/
+/transient
 /tree-sitter/
+/var/
