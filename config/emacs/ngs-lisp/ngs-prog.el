@@ -1,4 +1,4 @@
-;;; ngs-prog.el --- Modal keyboard setup -*- lexical-binding: t; -*-
+;;; ngs-prog.el --- Programming setup -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 N. G. Scheurich
 
@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 
-;; Affordances for modal keyboard interaction.
+;; Programming setup for my Emacs configuration.
 
 ;;; Code:
 
