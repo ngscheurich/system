@@ -39,6 +39,7 @@
         ../../modules/home/devel.nix
         ../../modules/home/devops.nix
         ../../modules/home/git.nix
+        ../../modules/home/mail.nix
         ../../modules/home/prose.nix
         ../../modules/home/shell.nix
         ../../modules/home/tasks.nix
