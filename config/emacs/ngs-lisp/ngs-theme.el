@@ -44,6 +44,15 @@
   (modus-themes-select 'modus-operandi-tinted))
 
 ;; =====================================================================
+;;  Ef (εὖ) themes
+;; ---------------------------------------------------------------------
+;;   Colorful and legible themes for GNU Emacs
+;;  https://protesilaos.com/emacs/ef-themes
+;; ---------------------------------------------------------------------
+(use-package ef-themes
+  :ensure t)
+
+;; =====================================================================
 ;;  Typographic Ligatures in Emacs
 ;; ---------------------------------------------------------------------
 ;;  Display typographical ligatures in Emacs 
@@ -70,7 +79,7 @@
   :ensure )
 
 ;; =====================================================================
-;; tsill pla nerd-icons-dired
+;;  nerd-icons-dired
 ;; ---------------------------------------------------------------------
 ;;  Use Nerd Font icons in dired 
 ;;  https://github.com/rainstormstudio/nerd-icons-dired
@@ -119,6 +128,27 @@
   :ensure t
   :config
   (pulsar-global-mode 1))
+
+;; =====================================================================
+;;  Spacious Padding
+;; ---------------------------------------------------------------------
+;;  Increase the padding/spacing of Emacs frames and windows 
+;;  https://protesilaos.com/emacs/spacious-padding
+;; ---------------------------------------------------------------------
+(use-package spacious-padding
+  :ensure t
+  :init
+  (setopt spacious-padding-widths
+          '(:internal-border-width 15
+            :header-line-width 4
+            :mode-line-width 6
+            :tab-width 4
+            :right-divider-width 30
+            :scroll-bar-width 8
+            :fringe-width 8)
+          spacious-padding-subtle-mode-line
+          `(:mode-line-active 'default
+            :mode-line-inactive vertical-border)))
 
 (provide 'ngs-theme)
 ;;; ngs-theme.el ends here

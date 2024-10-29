@@ -1,8 +1,4 @@
-# -*- mode: snippet -*-
-# name: conventional-headers
-# key: head
-# --
-;;; $1.el --- $2  -*- lexical-binding: t; -*-
+;;; ngs-edit.el --- Text editing helpers  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 N. G. Scheurich
 
@@ -27,11 +23,24 @@
 
 ;;; Commentary:
 
-;; $3
+;; Text editing helpers for my Emacs configuration.
 
 ;;; Code:
 
-$0
+;; =====================================================================
+;;  multiple-cursors.el 
+;; ---------------------------------------------------------------------
+;;   Mutiple cursors for Emacs
+;;  https://github.com/magnars/multiple-cursors.el
+;; ---------------------------------------------------------------------
 
-(provide '$1)
-;;; $1.el ends here
+(use-package multiple-cursors
+  :ensure t
+  :bind
+  (("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)
+   ("C-c C->" . mc/mark-all-like-this)))
+
+(provide 'ngs-edit)
+;;; ngs-edit.el ends here
