@@ -76,6 +76,14 @@
   (("\\.ex\\'" . elixir-ts-mode)
    ("\\.exs\\'" . elixir-ts-mode)))
 
+;; =====================================================================
+;;  nix-mode
+;; ---------------------------------------------------------------------
+;;  An Emacs major mode for editing Nix expressions 
+;;  https://github.com/NixOS/nix-mode
+;; ---------------------------------------------------------------------
+(use-package nix-mode
+  :mode "\\.nix\\'")
 
 (provide 'ngs-prog)
 ;;; ngs-prog.el ends here

@@ -28,6 +28,7 @@
 ;;; Code:
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-13"))
+;; (add-to-list 'default-frame-alist '(undecorated-round . t))
 (setopt cursor-type 'hbar
         default-line-spacing 0.2)
 
@@ -66,10 +67,10 @@
 ;;  https://github.com/rainstormstudio/nerd-icons.el
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons
-  :ensure t)
+  :ensure )
 
 ;; =====================================================================
-;;  nerd-icons-dired
+;; tsill pla nerd-icons-dired
 ;; ---------------------------------------------------------------------
 ;;  Use Nerd Font icons in dired 
 ;;  https://github.com/rainstormstudio/nerd-icons-dired
@@ -107,6 +108,17 @@
           kind-icon-blend-background t)
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;; =====================================================================
+;;  Pulsar
+;; ---------------------------------------------------------------------
+;;   Pulsar Unquestionably Luminates, Strictly Absent the Radiation
+;;  https://protesilaos.com/emacs/pulsar
+;; ---------------------------------------------------------------------
+(use-package pulsar
+  :ensure t
+  :config
+  (pulsar-global-mode 1))
 
 (provide 'ngs-theme)
 ;;; ngs-theme.el ends here

@@ -44,20 +44,22 @@
 (use-package consult
   :ensure t
   :bind
-  (("C-c f l" . consult-line)
-   ("C-c f b" . consult-buffer)
-   ("C-c f g" . consult-ripgrep)
-   ("C-c f i" . consult-imenu)
-   ("C-c f r" . consult-recent-file)
-   ("C-c f q" . consult-flymake)))
+  (("C-c c l" . consult-line)
+   ("C-c c b" . consult-buffer)
+   ("C-c c g" . consult-ripgrep)
+   ("C-c c i" . consult-imenu)
+   ("C-c c f" . consult-recent-file)
+   ("C-c c m" . consult-flymake)))
 
 ;;; COmpletion in Region FUnction
 ;; https://github.com/minad/corfu
 (use-package corfu
   :ensure t
+  :custom
+  (corfu-auto t "Enable automatic completion")
+  :bind
+  (:map corfu-map ("SPC" . corfu-insert-separator))
   :init
-  (setopt corfu-auto t)
-  :config
   (global-corfu-mode))
 
 ;; Completion At Point Extensions

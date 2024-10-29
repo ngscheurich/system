@@ -51,22 +51,13 @@
           ,ngs-auto-save-dir
           ,ngs-backup-dir))
 
-;; Configure Emacs
+;; Basic Emacs options
 (use-package emacs
   :init
   (setopt user-full-name "Nicholas Scheurich"
           user-email-address "nick@scheurich.me"
           history-length 40
-          custom-file (expand-file-name ngs-var-dir "custom.el")
-	        shell-file-name (ngs-home-manager-bin "zsh")
- 	        sh-shell (ngs-home-manager-bin "zsh")
-	        sh-shell-file (ngs-home-manager-bin "zsh"))
-  
-  ;; Set modifier keys for macOS
-  (if (eq system-type 'darwin)
-      (setopt mac-command-modifier 'meta
-        mac-right-command-modifier 'super
-        mac-right-option-modifier 'hyper)))
+          custom-file (expand-file-name "custom.el" ngs-var-dir)))
 
 ;; Package manager
 (use-package package
@@ -75,20 +66,16 @@
   :config
   (package-initialize))
 
-;; Work with projects
+;; Projects setup
 (use-package project
   :init
-  (setopt project-list-file (expand-file-name ngs-var-dir "projects")))
+  (setopt project-list-file (expand-file-name "projects" ngs-var-dir)))
 
 ;; Wrangle auto-save and backup files
-(setq auto-save-file-name-prefix
-      (concat ngs-auto-save-list-dir ".saves-"))
-
-(setq auto-save-file-name-transforms
-      `((".*" ,ngs-auto-save-dir t)))
-
-(setq backup-directory-alist
-      `((".*" . ,ngs-backup-dir)))
+(setopt auto-save-file-name-transforms
+        `((".*" ,ngs-auto-save-dir t))
+        backup-directory-alist
+        `((".*" . ,ngs-backup-dir)))
 
 ;; Keep track of opened files
  (use-package recentf

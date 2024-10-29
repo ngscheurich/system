@@ -1,8 +1,4 @@
-# -*- mode: snippet -*-
-# name: conventional-headers
-# key: head
-# --
-;;; $1.el --- $2  -*- lexical-binding: t; -*-
+;;; ngs-shell.el --- Shells setup  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 N. G. Scheurich
 
@@ -27,11 +23,16 @@
 
 ;;; Commentary:
 
-;; $3
+;; Shells setup for my Emacs configuration.
 
 ;;; Code:
 
-$0
+(use-package emacs
+  :init
+  (setopt shell-file-name (ngs-home-manager-bin "zsh")
+ 	        sh-shell (ngs-home-manager-bin "zsh")
+	        sh-shell-file (ngs-home-manager-bin "zsh")))
 
-(provide '$4)
-;;; $1.el ends here
+
+(provide 'ngs-shell)
+;;; ngs-shell.el ends here
