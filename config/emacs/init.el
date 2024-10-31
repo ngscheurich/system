@@ -17,6 +17,12 @@
 (require 'ngs-snippets)
 (require 'ngs-theme)
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(put 'downcase-region 'disabled nil)
+
+(use-package project
+  :bind ("C-x p r" . project-find-regexp))
+
 (use-package keycast
   :ensure t)
 
@@ -31,8 +37,13 @@
     :tail-matcher "\"\"\""
     :head-mode 'host
     :tail-mode 'host)
+  (define-innermode poly-elixir-doc-elixir-innermode
+    :mode 'elixir-ts-mode
+    :head-matcher "## Examples"
+    :tail-matcher "\"\"\""
+    :head-mode 'poly-markdown-doc-elixir-innermode
+    :tail-mode 'poly-markdown-doc-elixir-innermode)
   (define-polymode poly-elixir-markdown-mode
     :hostmode 'poly-elixir-hostmode
-    :innermodes '(poly-markdown-doc-elixir-innermode)))
-
-(put 'downcase-region 'disabled nil)
+    :innermodes '(poly-markdown-doc-elixir-innermode
+                  poly-elixir-doc-elixir-innermode)))
