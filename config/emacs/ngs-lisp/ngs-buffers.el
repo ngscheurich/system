@@ -35,8 +35,8 @@
 ;; ---------------------------------------------------------------------
 (use-package popper
   :ensure t
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
+  :bind (("C-`" . popper-toggle)
+         ("M-`" . popper-cycle)
          ("C-M-`" . popper-toggle-type))
   :init
   (setopt popper-reference-buffers

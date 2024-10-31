@@ -58,17 +58,20 @@
 ;;  Transient-based interfaces for built-in Emacs modes 
 ;;  https://github.com/kickingvegas/casual
 ;; ---------------------------------------------------------------------
-(use-package casual
+(use-package casual-suite
   :ensure t
   :bind
-  (:map dired-mode-map
+  (("M-g" . casual-avy-tmenu)
+   :map dired-mode-map
    ("C-o" . casual-dired-tmenu)
    :map ibuffer-mode-map
    ("C-o" . casual-ibuffer-tmenu)
+   :map Info-mode-map
+   ("C-o" . casual-info-tmenu)
    :map isearch-mode-map
    ("C-o" . casual-isearch-tmenu)
-   :map Info-mode-map
-   ("C-o" . casual-info-tmenu)))
+   :map reb-mode-map
+   ("C-o" . casual-re-builder-tmenu)))
 
 (provide 'ngs-help)
 ;;; ngs-help.el ends here
