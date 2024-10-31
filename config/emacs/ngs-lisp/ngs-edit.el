@@ -28,9 +28,9 @@
 ;;; Code:
 
 ;; =====================================================================
-;;  multiple-cursors.el 
+;;  multiple-cursors.el 
 ;; ---------------------------------------------------------------------
-;;   Mutiple cursors for Emacs
+;;  Mutiple cursors for Emacs
 ;;  https://github.com/magnars/multiple-cursors.el
 ;; ---------------------------------------------------------------------
 
@@ -41,6 +41,16 @@
    ("C->" . mc/mark-next-like-this)
    ("C-<" . mc/mark-previous-like-this)
    ("C-c C->" . mc/mark-all-like-this)))
+
+;; =====================================================================
+;;  expand-region.el
+;; ---------------------------------------------------------------------
+;;  Increase selected region by semantic units
+;;  https://github.com/magnars/expand-region.el
+;; ---------------------------------------------------------------------
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
 
 (provide 'ngs-edit)
 ;;; ngs-edit.el ends here

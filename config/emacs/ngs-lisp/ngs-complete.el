@@ -49,7 +49,10 @@
    ("C-c c g" . consult-ripgrep)
    ("C-c c i" . consult-imenu)
    ("C-c c f" . consult-recent-file)
-   ("C-c c m" . consult-flymake)))
+   ("C-c c m" . consult-flymake)
+   ("C-x b" . consult-buffer)
+   ("C-x p g" . consult-ripgrep)
+   ("C-c i" . consult-imenu)))
 
 ;;; COmpletion in Region FUnction
 ;; https://github.com/minad/corfu

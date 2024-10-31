@@ -76,7 +76,7 @@
 ;;  https://github.com/rainstormstudio/nerd-icons.el
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons
-  :ensure )
+  :ensure t)
 
 ;; =====================================================================
 ;;  nerd-icons-dired

@@ -30,18 +30,23 @@
 ;; Tree-sitter grammars
 (setq treesit-language-source-alist
       '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-	(heex "https://github.com/phoenixframework/tree-sitter-heex")))
+	      (heex "https://github.com/phoenixframework/tree-sitter-heex")
+        (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                  "split_parser"
+                  "tree-sitter-markdown/src")
+        (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+                         "split_parser"
+                         "tree-sitter-markdown-inline/src")))
 
-;; Tab settings
+;; Indentation settings
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 
 ;; Display numbers in programming buffers
 (use-package display-line-numbers
-  :hook (prog-mode . display-line-numbers-mode))
+  :hook prog-mode)
 
 ;; Language Server Protocol (LSP) client
-;; https://joaotavora.github.io/eglot/
 (use-package eglot
   :bind
   (("C-c l f" . 'eglot-format-buffer)
@@ -49,32 +54,57 @@
    ("C-c l r" . 'eglot-rename)))
 
 ;; Show documentation in the minibuffer
-;; https://elpa.gnu.org/packages/eldoc.html
 (use-package eldoc
   :init
   (setq eldoc-echo-area-use-multiline-p nil))
 
-;; Display eldoc info in a childframe
-;; https://github.com/casouri/eldoc-box
+;; =====================================================================
+;;  ElDoc box
+;; ---------------------------------------------------------------------
+;;  Childframe doc for eglot and anything that uses Eldoc
+;;  https://github.com/casouri/eldoc-box
+;; ---------------------------------------------------------------------
 (use-package eldoc-box
   :ensure t
   :bind ("C-c d" . 'eldoc-box-help-at-point))
 
-;; Elixir
+;; =====================================================================
+;;  elixir-ts-mode
+;; ---------------------------------------------------------------------
+;;  Elixir major mode using Tree-sitter 
+;;  https://github.com/wkirschbaum/elixir-ts-mode
+;; ---------------------------------------------------------------------
 (use-package elixir-ts-mode
   :ensure t
   :after eglot
   :init
-  ;; (add-to-list 'eglot-server-programs
-  ;;  `((elixir-ts-mode heex-ts-mode elixir-mode) .
-  ;;    ("/etc/profiles/per-user/nscheurich/bin/nextls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t)))))))
   (add-to-list 'eglot-server-programs
-	       `((elixir-ts-mode heex-ts-mode) . ("/Users/nscheurich/.local/share/nvim/mason/bin/lexical")))
+	             `((elixir-ts-mode heex-ts-mode) .
+                 ("/Users/nscheurich/.local/share/nvim/mason/bin/lexical")))
   (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
   (add-hook 'heex-ts-mode-hook 'eglot-ensure)
   :mode
   (("\\.ex\\'" . elixir-ts-mode)
    ("\\.exs\\'" . elixir-ts-mode)))
+
+;; =====================================================================
+;;  exunit
+;; ---------------------------------------------------------------------
+;;  Emacs ExUnit test runner
+;;  https://github.com/ananthakumaran/exunit.el
+;; ---------------------------------------------------------------------
+(use-package exunit
+  :ensure t
+  :hook elixir-ts-mode)
+
+;; =====================================================================
+;;  markdown-ts-mode
+;; ---------------------------------------------------------------------
+;;  Markdown major mode using Tree-sitter 
+;;  https://github.com/LionyxML/markdown-ts-mode
+;; ---------------------------------------------------------------------
+(use-package markdown-ts-mode
+  :ensure t)
 
 ;; =====================================================================
 ;;  nix-mode
