@@ -55,7 +55,7 @@
 ;; =====================================================================
 ;;  Typographic Ligatures in Emacs
 ;; ---------------------------------------------------------------------
-;;  Display typographical ligatures in Emacs 
+;;  Display typographical ligatures in Emacs
 ;;  https://github.com/mickeynp/ligature.el
 ;; ---------------------------------------------------------------------
 (use-package ligature
@@ -81,7 +81,7 @@
 ;; =====================================================================
 ;;  nerd-icons-dired
 ;; ---------------------------------------------------------------------
-;;  Use Nerd Font icons in dired 
+;;  Use Nerd Font icons in dired
 ;;  https://github.com/rainstormstudio/nerd-icons-dired
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons-dired
@@ -92,7 +92,7 @@
 ;; =====================================================================
 ;;  nerd-icons-completion
 ;; ---------------------------------------------------------------------
-;;  User Nerd Font icons in completion interfaces 
+;;  User Nerd Font icons in completion interfaces
 ;;  https://github.com/rainstormstudio/nerd-icons-completion
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons-completion
@@ -106,7 +106,7 @@
 ;; =====================================================================
 ;;  kind-icon
 ;; ---------------------------------------------------------------------
-;;  Completion kind text/icon prefix labelling for in-region completion 
+;;  Completion kind text/icon prefix labelling for in-region completion
 ;;  https://github.com/jdtsmith/kind-icon
 ;; ---------------------------------------------------------------------
 (use-package kind-icon
@@ -132,7 +132,7 @@
 ;; =====================================================================
 ;;  Spacious Padding
 ;; ---------------------------------------------------------------------
-;;  Increase the padding/spacing of Emacs frames and windows 
+;;  Increase the padding/spacing of Emacs frames and windows
 ;;  https://protesilaos.com/emacs/spacious-padding
 ;; ---------------------------------------------------------------------
 (use-package spacious-padding

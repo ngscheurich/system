@@ -17,6 +17,9 @@
 (require 'ngs-snippets)
 (require 'ngs-theme)
 
+(require 'ngs-meow)
+(require 'ngs-evil)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (put 'downcase-region 'disabled nil)
 
