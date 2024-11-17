@@ -1,4 +1,4 @@
-#  /etc/system
+# /etc/system
 
 ![A collection of terminal emulator windows runnning neofetch, btm, and Neovim](https://user-images.githubusercontent.com/423798/214494353-eb1f2dde-b612-4b76-a16f-e4a2436bede2.png)
 
@@ -37,7 +37,7 @@ In addition to the Nix configuration files, this repo also contains:
 
 ## Systems
 
-### Weatherwax
+### Bienjensu
 
 My personal computer is a 2023 14” [Apple MacBook Pro] that runs on the [Apple
 M2 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system
@@ -51,7 +51,7 @@ as is possible.
 | Storage          | 512 GB PCIe 4.0 ×4 SSD       |
 
 
-### Ridcully
+### Wattson
 
 My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1
 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as
