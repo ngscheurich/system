@@ -53,6 +53,7 @@
       "fantastical"
       "figma"
       "firefox"
+      "ghostty"
       "gpg-suite-no-mail"
       "hammerspoon"
       "istat-menus"
