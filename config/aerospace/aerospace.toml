@@ -103,6 +103,41 @@ l = ['join-with right', 'mode main']
 if.app-id = 'com.1password.1password'
 run       = 'layout floating'
 
+# Arc
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run       = 'move-node-to-workspace B'
+
+# Discord
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run       = 'move-node-to-workspace D'
+
+# Emacs
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+run       = 'move-node-to-workspace E'
+
+# Finder
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run       = 'layout floating'
+
+# Ghostty
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run       = 'move-node-to-workspace T'
+
+# kitty
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run       = 'move-node-to-workspace T'
+
+# Logseq
+[[on-window-detected]]
+if.app-id = 'com.electron.logseq'
+run       = 'move-node-to-workspace N'
+
 # Messages
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
@@ -113,37 +148,7 @@ run       = 'move-node-to-workspace C'
 if.app-id = 'com.apple.Music'
 run       = 'move-node-to-workspace M'
 
-# Finder
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run       = 'layout floating'
-
-# Logseq
-[[on-window-detected]]
-if.app-id = 'com.electron.logseq'
-run       = 'move-node-to-workspace N'
-
-# Discord
-[[on-window-detected]]
-if.app-id = 'com.hnc.Discord'
-run       = 'move-node-to-workspace D'
-
-# Arc
-[[on-window-detected]]
-if.app-id = 'company.thebrowser.Browser'
-run       = 'move-node-to-workspace B'
-
 # Slack
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run       = 'move-node-to-workspace C'
-
-# kitty
-[[on-window-detected]]
-if.app-id = 'net.kovidgoyal.kitty'
-run       = 'move-node-to-workspace T'
-
-# Emacs
-[[on-window-detected]]
-if.app-id = 'org.gnu.Emacs'
-run       = 'move-node-to-workspace E'
