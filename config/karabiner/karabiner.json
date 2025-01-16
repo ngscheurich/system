@@ -20,7 +20,6 @@
                     },
                     {
                         "description": "left_control + h/j/k/l → arrow keys",
-                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
