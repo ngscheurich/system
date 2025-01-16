@@ -6,23 +6,6 @@ local util = require("util")
 
 return {
   -- =================================================================
-  --  nvim-base16
-  -- -----------------------------------------------------------------
-  --   https://github.com/RRethy/base16-nvim
-  --   Plugin for building base16 colorschemes
-  -- -----------------------------------------------------------------
-  {
-    "RRethy/base16-nvim",
-    cond = vim.startswith(_G.theme.colorscheme.name, "base16"),
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("base16-colorscheme").with_config(_G.theme.colorscheme.opts)
-      util.apply_colorscheme()
-    end,
-  },
-
-  -- =================================================================
   --  Nightfox
   -- -----------------------------------------------------------------
   --  https://github.com/EdenEast/nightfox.nvim
@@ -58,19 +41,19 @@ return {
   },
 
   -- =================================================================
-  --  Solarized
+  --  Tokyo Night
   -- -----------------------------------------------------------------
-  --  https://github.com/maxmx03/solarized.nvim
-  --  Precision colors for machines and people
+  --  https://github.com/folke/tokyonight.nvim
+  --  Clean, dark theme with support lots of plugins
   -- -----------------------------------------------------------------
   {
-    "maxmx03/solarized.nvim",
-    cond = vim.startswith(_G.theme.colorscheme.name, "solarized"),
+    "folke/tokyonight.nvim",
+    cond = vim.startswith(_G.theme.colorscheme.name, "tokyonight"),
     lazy = false,
     priority = 1000,
     config = function()
-      require("solarized").setup(_G.theme.colorscheme.opts)
-      vim.cmd.colorscheme("solarized")
+      require("tokyonight").setup(_G.theme.colorscheme.opts)
+      vim.cmd.colorscheme("tokyonight")
     end,
   },
 
