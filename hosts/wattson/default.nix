@@ -50,9 +50,6 @@
 
   homebrew = {
     brews = [
-      "postgresql@14"
-      "timescaledb"
-      "timescaledb-tools"
       "xcode-build-server"
     ];
 
