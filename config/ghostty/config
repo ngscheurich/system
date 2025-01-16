@@ -1,7 +1,7 @@
 adjust-cell-height = 40%
 
 font-family = PragmataPro Mono Liga
-font-size = 14
+font-size = 13
 
 font-codepoint-map = U+E5FA-U+E6B7 = Symbols Nerd Font
 font-codepoint-map = U+E700-U+E8EF = Symbols Nerd Font
