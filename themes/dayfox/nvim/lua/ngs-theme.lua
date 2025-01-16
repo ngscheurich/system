@@ -8,5 +8,7 @@ return {
 
 	plugins = {},
 
-	callback = function() end,
+	callback = function()
+		vim.cmd("hi CursorLine guibg=#e4dcd4")
+	end,
 }

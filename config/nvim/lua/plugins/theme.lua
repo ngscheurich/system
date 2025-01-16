@@ -13,47 +13,13 @@ return {
   -- -----------------------------------------------------------------
   {
     "EdenEast/nightfox.nvim",
-    cond = vim.endswith(_G.theme.colorscheme.name, "fox"),
     lazy = false,
     priority = 1000,
     config = function()
-      require("nightfox").setup(_G.theme.colorscheme.opts)
-      util.apply_colorscheme()
-    end,
-  },
-
-  -- =================================================================
-  --  Catppuccin
-  -- -----------------------------------------------------------------
-  --  https://github.com/catppuccin/nvim
-  --  Soothing pastel theme for (Neo)vim
-  -- -----------------------------------------------------------------
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    cond = vim.startswith(_G.theme.colorscheme.name, "catppuccin"),
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("catppuccin").setup(_G.theme.colorscheme.opts)
-      util.apply_colorscheme()
-    end,
-  },
-
-  -- =================================================================
-  --  Tokyo Night
-  -- -----------------------------------------------------------------
-  --  https://github.com/folke/tokyonight.nvim
-  --  Clean, dark theme with support lots of plugins
-  -- -----------------------------------------------------------------
-  {
-    "folke/tokyonight.nvim",
-    cond = vim.startswith(_G.theme.colorscheme.name, "tokyonight"),
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("tokyonight").setup(_G.theme.colorscheme.opts)
-      vim.cmd.colorscheme("tokyonight")
+      if vim.endswith(_G.theme.colorscheme.name, "fox") then
+        require("nightfox").setup(_G.theme.colorscheme.opts)
+        util.apply_colorscheme()
+      end
     end,
   },
 
