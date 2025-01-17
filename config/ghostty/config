@@ -22,6 +22,20 @@ font-codepoint-map = U+EE00-U+EE0B = Symbols Nerd Font
 font-codepoint-map = U+F101-U+F25C = nonicons
 
 theme = nightfox
+keybind = cmd+p=text:\x13p
+keybind = cmd+left=text:\x13h
+keybind = cmd+down=text:\x13j
+keybind = cmd+up=text:\x13k
+keybind = cmd+right=text:\x13l
+keybind = cmd+1=text:\x131
+keybind = cmd+2=text:\x132
+keybind = cmd+3=text:\x133
+keybind = cmd+4=text:\x134
+keybind = cmd+5=text:\x135
+keybind = cmd+6=text:\x136
+keybind = cmd+7=text:\x137
+keybind = cmd+8=text:\x138
+keybind = cmd+9=text:\x139
 
 window-padding-x = 8
 window-padding-y = 8
