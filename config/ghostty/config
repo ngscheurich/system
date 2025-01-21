@@ -1,25 +1,25 @@
 adjust-cell-height = 40%
 
 font-family = PragmataPro Mono Liga
-font-size = 13
+font-size = 15
 
-font-codepoint-map = U+E5FA-U+E6B7 = Symbols Nerd Font
-font-codepoint-map = U+E700-U+E8EF = Symbols Nerd Font
-font-codepoint-map = U+ED00-U+F2FF = Symbols Nerd Font
-font-codepoint-map = U+E200-U+E2A9 = Symbols Nerd Font
-font-codepoint-map = U+F0001-U+F1AF0 = Symbols Nerd Font
-font-codepoint-map = U+E300-U+E3E3 = Symbols Nerd Font
-font-codepoint-map = U+F400-U+F533,U+2665,U+26A1 = Symbols Nerd Font
-font-codepoint-map = U+E0A0-U+E0A2,U+E0B0-U+E0B3 = Symbols Nerd Font
-font-codepoint-map = U+E0A3,U+E0B4-U+E0C8,U+E0CA,U+E0CC-U+E0D7 = Symbols Nerd Font
-font-codepoint-map = U+23FB-U+23FE,U+2B58 = Symbols Nerd Font
-font-codepoint-map = U+F300-U+F381 = Symbols Nerd Font
-font-codepoint-map = U+E000-U+E00A = Symbols Nerd Font
-font-codepoint-map = U+EA60-U+EC1E = Symbols Nerd Font
-font-codepoint-map = U+276C-U+2771 = Symbols Nerd Font
-font-codepoint-map = U+2500-U+259F = Symbols Nerd Font
-font-codepoint-map = U+EE00-U+EE0B = Symbols Nerd Font
-font-codepoint-map = U+F101-U+F25C = nonicons
+# font-codepoint-map = U+E5FA-U+E6B7 = Symbols Nerd Font
+# font-codepoint-map = U+E700-U+E8EF = Symbols Nerd Font
+# font-codepoint-map = U+ED00-U+F2FF = Symbols Nerd Font
+# font-codepoint-map = U+E200-U+E2A9 = Symbols Nerd Font
+# font-codepoint-map = U+F0001-U+F1AF0 = Symbols Nerd Font
+# font-codepoint-map = U+E300-U+E3E3 = Symbols Nerd Font
+# font-codepoint-map = U+F400-U+F533,U+2665,U+26A1 = Symbols Nerd Font
+# font-codepoint-map = U+E0A0-U+E0A2,U+E0B0-U+E0B3 = Symbols Nerd Font
+# font-codepoint-map = U+E0A3,U+E0B4-U+E0C8,U+E0CA,U+E0CC-U+E0D7 = Symbols Nerd Font
+# font-codepoint-map = U+23FB-U+23FE,U+2B58 = Symbols Nerd Font
+# font-codepoint-map = U+F300-U+F381 = Symbols Nerd Font
+# font-codepoint-map = U+E000-U+E00A = Symbols Nerd Font
+# font-codepoint-map = U+EA60-U+EC1E = Symbols Nerd Font
+# font-codepoint-map = U+276C-U+2771 = Symbols Nerd Font
+# font-codepoint-map = U+2500-U+259F = Symbols Nerd Font
+# font-codepoint-map = U+EE00-U+EE0B = Symbols Nerd Font
+# font-codepoint-map = U+F101-U+F25C = nonicons
 
 keybind = cmd+p=text:\x13p
 keybind = cmd+left=text:\x13h
@@ -36,7 +36,29 @@ keybind = cmd+7=text:\x137
 keybind = cmd+8=text:\x138
 keybind = cmd+9=text:\x139
 
-theme = light:dayfox,dark:nightfox
+# theme = light:dayfox,dark:nightfox
+
+palette = 0=#131a21
+palette = 1=#ef8891
+palette = 2=#9ce5c0
+palette = 3=#f5d595
+palette = 4=#a3b8ef
+palette = 5=#c2a2e3
+palette = 6=#abb9e0
+palette = 7=#ced4df
+palette = 8=#40474e
+palette = 9=#ef8891
+palette = 10=#9ce5c0
+palette = 11=#f5d595
+palette = 12=#a3b8ef
+palette = 13=#c2a2e3
+palette = 14=#abb9e0
+palette = 15=#d3d9e4
+background = #131a21
+foreground = #ced4df
+cursor-color = #a3b8ef
+selection-background = #40474e
+selection-foreground = #ced4df
 
 window-padding-x = 8
 window-padding-y = 8

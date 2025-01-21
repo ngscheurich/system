@@ -8,7 +8,7 @@
 --  https://github.com/onsails/lspkind.nvim
 --  Pictograms for completion candidates
 -- -------------------------------------------------------------------
-local lspkind_spec = "onsails/lspkind.nvim"
+-- local lspkind_spec = "onsails/lspkind.nvim"
 
 return {
   -- =================================================================
@@ -22,7 +22,7 @@ return {
     event = "InsertEnter",
 
     dependencies = {
-      lspkind_spec,
+      -- lspkind_spec,
       "L3MON4D3/LuaSnip",
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
@@ -33,7 +33,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
+      -- local lspkind = require("lspkind")
 
       local opts = {
         snippet = {
@@ -78,14 +78,15 @@ return {
           { name = "buffer", option = { keyword_length = 4 } },
         }),
 
-        formatting = {
-          format = lspkind.cmp_format({
-            before = require("tailwind-tools.cmp").lspkind_format,
-          }),
-        },
+        -- formatting = {
+        --   format = lspkind.cmp_format({
+        --     before = require("tailwind-tools.cmp").lspkind_format,
+        --   }),
+        -- },
       }
 
-      cmp.setup(opts)
+      cmp.setup(vim.tbl_deep_extend("force", opts, require("nvchad.cmp")))
+
       cmp.setup.filetype({ "sql" }, {
         sources = {
           { name = "vim-dadbod-completion" },

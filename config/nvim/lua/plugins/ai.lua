@@ -11,6 +11,7 @@ return {
   -- -----------------------------------------------------------------
   {
     "github/copilot.vim",
+    enable = false,
     config = function()
       vim.cmd("Copilot disable")
 

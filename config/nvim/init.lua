@@ -33,13 +33,19 @@ util.foreach_module("core", function(mod)
   require(mod)
 end)
 
+vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+
 -- Load plugin manager
 require("lazy").setup("plugins", {
   change_detection = { notify = false },
   install = {
-    colorscheme = { vim.g.colorscheme },
+    colorscheme = { "nvchad" },
   },
 })
+
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+  dofile(vim.g.base46_cache .. v)
+end
 
 -- Scratch
 local function send_markdown_code_block()

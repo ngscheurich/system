@@ -2,26 +2,42 @@
 --  Colors and Iconography
 -- ===================================================================
 
-local util = require("util")
+-- local util = require("util")
 
 return {
-  -- =================================================================
-  --  Nightfox
-  -- -----------------------------------------------------------------
-  --  https://github.com/EdenEast/nightfox.nvim
-  --  A highly-customizable theme for Vim and Neovim
-  -- -----------------------------------------------------------------
+
   {
-    "EdenEast/nightfox.nvim",
-    lazy = false,
-    priority = 1000,
+    "NvChad/ui",
     config = function()
-      if vim.endswith(_G.theme.colorscheme.name, "fox") then
-        require("nightfox").setup(_G.theme.colorscheme.opts)
-        util.apply_colorscheme()
-      end
+      require("nvchad")
     end,
   },
+
+  {
+    "NvChad/base46",
+    lazy = true,
+    build = function()
+      require("base46").load_all_highlights()
+    end,
+  },
+
+  -- -- =================================================================
+  -- --  Nightfox
+  -- -- -----------------------------------------------------------------
+  -- --  https://github.com/EdenEast/nightfox.nvim
+  -- --  A highly-customizable theme for Vim and Neovim
+  -- -- -----------------------------------------------------------------
+  -- {
+  --   "EdenEast/nightfox.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     if vim.endswith(_G.theme.colorscheme.name, "fox") then
+  --       require("nightfox").setup(_G.theme.colorscheme.opts)
+  --       util.apply_colorscheme()
+  --     end
+  --   end,
+  -- },
 
   -- =================================================================
   --  nvim-web-devicons

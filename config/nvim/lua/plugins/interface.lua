@@ -5,13 +5,13 @@
 local util = require("util")
 
 return {
-  -- =================================================================
-  --  mini.starter
-  -- -----------------------------------------------------------------
-  --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md
-  --  Fast and flexible start screen
-  -- -----------------------------------------------------------------
-  { "echasnovski/mini.starter", version = false, config = true },
+  -- -- =================================================================
+  -- --  mini.starter
+  -- -- -----------------------------------------------------------------
+  -- --  https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-starter.md
+  -- --  Fast and flexible start screen
+  -- -- -----------------------------------------------------------------
+  -- { "echasnovski/mini.starter", version = false, config = true },
 
   -- =================================================================
   --  Dressing.nvim
@@ -45,34 +45,34 @@ return {
     end,
   },
 
-  -- =================================================================
-  --  bufferline.nvim
-  -- -----------------------------------------------------------------
-  --  https://github.com/akinsho/bufferline.nvim
-  --  Decorate tabpage indicators
-  -- -----------------------------------------------------------------
-  {
-    "akinsho/bufferline.nvim",
-    version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      options = {
-        mode = "tabs",
-        indicator = {
-          icon = "┃ ",
-        },
-        always_show_bufferline = false,
-        offsets = {
-          {
-            filetype = "neo-tree",
-            text = " Explorer",
-            text_align = "left",
-            separator = false,
-          },
-        },
-      },
-    },
-  },
+  -- -- =================================================================
+  -- --  bufferline.nvim
+  -- -- -----------------------------------------------------------------
+  -- --  https://github.com/akinsho/bufferline.nvim
+  -- --  Decorate tabpage indicators
+  -- -- -----------------------------------------------------------------
+  -- {
+  --   "akinsho/bufferline.nvim",
+  --   version = "*",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   opts = {
+  --     options = {
+  --       mode = "tabs",
+  --       indicator = {
+  --         icon = "┃ ",
+  --       },
+  --       always_show_bufferline = false,
+  --       offsets = {
+  --         {
+  --           filetype = "neo-tree",
+  --           text = " Explorer",
+  --           text_align = "left",
+  --           separator = false,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- =================================================================
   --  Indent Blankline
