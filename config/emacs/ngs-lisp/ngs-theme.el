@@ -28,6 +28,7 @@
 ;;; Code:
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-13"))
+;; (set-face-attribute 'default nil :font "Iosevka Comfy-15")
 ;; (add-to-list 'default-frame-alist '(undecorated-round . t))
 (setopt cursor-type 'hbar
         default-line-spacing 0.2)
@@ -76,7 +77,7 @@
 ;;  https://github.com/rainstormstudio/nerd-icons.el
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons
-  :ensure )
+  :ensure nerd-icons)
 
 ;; =====================================================================
 ;;  nerd-icons-dired
