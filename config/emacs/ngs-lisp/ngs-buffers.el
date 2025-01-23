@@ -28,10 +28,10 @@
 ;;; Code:
 
 ;; =====================================================================
-;;  Popper
+;; Popper
 ;; ---------------------------------------------------------------------
-;;  Minor-mode to summon and dismiss buffers easily 
-;;  https://github.com/karthink/popper
+;; Minor-mode to summon and dismiss buffers easily 
+;; https://github.com/karthink/popper
 ;; ---------------------------------------------------------------------
 (use-package popper
   :ensure t

@@ -28,12 +28,11 @@
 ;;; Code:
 
 ;; =====================================================================
-;;  multiple-cursors.el 
+;; multiple-cursors.el 
 ;; ---------------------------------------------------------------------
-;;   Mutiple cursors for Emacs
-;;  https://github.com/magnars/multiple-cursors.el
+;; Mutiple cursors for Emacs
+;; https://github.com/magnars/multiple-cursors.el
 ;; ---------------------------------------------------------------------
-
 (use-package multiple-cursors
   :ensure t
   :bind

@@ -78,7 +78,7 @@
         `((".*" . ,ngs-backup-dir)))
 
 ;; Keep track of opened files
- (use-package recentf
+(use-package recentf
    :init
    (setopt recentf-save-file (expand-file-name "recentf" ngs-var-dir))
    :config (recentf-mode t))

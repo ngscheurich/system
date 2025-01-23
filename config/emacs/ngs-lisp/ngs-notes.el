@@ -1,4 +1,4 @@
-;;; ngs-snippets.el --- Snippets support  -*- lexical-binding: t; -*-
+;;; ngs-notes.el --- Note-taking  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 N. G. Scheurich
 
@@ -23,19 +23,24 @@
 
 ;;; Commentary:
 
-;; Snippets support for my Emacs configuration.
+;; Packages and functions that aid in capturing notes and ideas.
 
 ;;; Code:
 
-;;  =====================================================================
-;;; YASnippet
-;;  ---------------------------------------------------------------------
-;;  A template system for Emacs 
-;;  https://github.com/joaotavora/yasnippet
-;;  ---------------------------------------------------------------------
-(use-package yasnippet
+(use-package denote
   
-  :config (yas-global-mode 1))
+  :hook ((dired-mode . denote-dired-mode)
+         (text-mode . denote-fontify-links-mode))
+  :bind
+  (("C-c n n" . denote)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n l" . denote-link)
+   ("C-c n b" . denote-backlinks)
+   ("C-c n d" . denote-sort-dired))
+  :config
+  (setq denote-directory (expand-file-name "~/Notes")
+        denote-known-keywords nil)
+  (denote-rename-buffer-mode 1))
 
-(provide 'ngs-snippets)
-;;; ngs-snippets.el ends here
+(provide 'ngs-notes)
+;;; ngs-notes.el ends here

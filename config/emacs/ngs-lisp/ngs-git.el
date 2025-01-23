@@ -28,19 +28,19 @@
 ;;; Code:
 
 ;; =====================================================================
-;;  Magit
+;; Magit
 ;; ---------------------------------------------------------------------
-;;  A Git Porcelain inside Emacs 
-;;  https://magit.vc/
+;; A Git Porcelain inside Emacs 
+;; https://magit.vc/
 ;; ---------------------------------------------------------------------
 (use-package magit
   :ensure t)
 
 ;; =====================================================================
-;;  diff-hl
+;; diff-hl
 ;; ---------------------------------------------------------------------
-;;  Highlights uncommitted changes 
-;;  https://github.com/dgutov/diff-hl
+;; Highlights uncommitted changes 
+;; https://github.com/dgutov/diff-hl
 ;; ---------------------------------------------------------------------
 (use-package diff-hl
   :ensure t

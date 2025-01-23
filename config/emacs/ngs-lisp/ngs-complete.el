@@ -27,54 +27,76 @@
 
 ;;; Code:
 
+;; =====================================================================
+;; Vertico
+;; ---------------------------------------------------------------------
 ;; VERTical Interactive COmpletion
 ;; https://github.com/minad/vertico
+;; ---------------------------------------------------------------------
 (use-package vertico
   :ensure t
   :config (vertico-mode))
 
-;; Rich annotations for minibuffer completion 
+;; =====================================================================
+;; Marginalia
+;; ---------------------------------------------------------------------
+;; Rich annotations for minibuffer completion
 ;; https://github.com/minad/marginalia
+;; ---------------------------------------------------------------------
 (use-package marginalia
   :ensure t
   :config (marginalia-mode))
 
+;; =====================================================================
+;; Consult
+;; ---------------------------------------------------------------------
 ;; Additional completing-read sources
 ;; https://github.com/minad/consult
+;; ---------------------------------------------------------------------
 (use-package consult
   :ensure t
-  :bind
-  (("C-c c l" . consult-line)
-   ("C-c c b" . consult-buffer)
-   ("C-c c g" . consult-ripgrep)
-   ("C-c c i" . consult-imenu)
-   ("C-c c f" . consult-recent-file)
-   ("C-c c m" . consult-flymake)))
+  :bind  (("C-c c l" . consult-line)
+          ("C-c c b" . consult-buffer)
+          ("C-c c g" . consult-ripgrep)
+          ("C-c c i" . consult-imenu)
+          ("C-c c f" . consult-recent-file)
+          ("C-c c m" . consult-flymake)))
 
-;;; COmpletion in Region FUnction
+;; =====================================================================
+;; Corfu
+;; ---------------------------------------------------------------------
+;; COmpletion in Region FUnction
 ;; https://github.com/minad/corfu
+;; ---------------------------------------------------------------------
 (use-package corfu
   :ensure t
-  :custom
-  (corfu-auto t "Enable automatic completion")
   :bind
   (:map corfu-map ("SPC" . corfu-insert-separator))
-  :init
+  :init 
+  (setopt corfu-auto t) 
   (global-corfu-mode))
 
+;; =====================================================================
+;; Cape
+;; ---------------------------------------------------------------------
 ;; Completion At Point Extensions
 ;; https://github.com/minad/cape
+;; ---------------------------------------------------------------------
 (use-package cape
   :ensure t
   :config
   (add-to-list 'completion-at-point-functions #'cape-file))
 
+;; =====================================================================
+;; Orderless
+;; ---------------------------------------------------------------------
 ;; Completion style that matches multiple regexps in any order
 ;; https://github.com/oantolin/orderless
+;; ---------------------------------------------------------------------
 (use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(orderless)))
+  (setopt completion-styles '(orderless)))
 
 (provide 'ngs-complete)
 ;;; ngs-complete.el ends here

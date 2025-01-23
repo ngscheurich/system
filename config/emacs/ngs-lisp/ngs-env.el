@@ -37,15 +37,16 @@
   (format "/etc/profiles/per-user/%s/bin/%s" (getenv "USER") file))
 
 ;; =====================================================================
-;;  envrc.el
+;; envrc.el
 ;; ---------------------------------------------------------------------
-;;  Buffer-local direnv integration 
-;;  https://github.com/purcell/envrc
+;; Buffer-local direnv integration 
+;; https://github.com/purcell/envrc
 ;; ---------------------------------------------------------------------
 (use-package envrc
   :ensure t
+  :bind
+  (:map envrc-mode-map ("C-c e" . envrc-command-map))
   :config
-  (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
   (envrc-global-mode))
 
 (provide 'ngs-env)

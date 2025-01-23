@@ -3,8 +3,8 @@
 ;; Copyright (C) 2024 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
-;; URL: https://scheurich.haus/emacs
 ;; Package-Requires: ((emacs "29.4"))
+;; URL: https://scheurich.haus/emacs
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -27,17 +27,18 @@
 
 ;;; Code:
 
-(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-13"))
-;; (set-face-attribute 'default nil :font "Iosevka Comfy-15")
-;; (add-to-list 'default-frame-alist '(undecorated-round . t))
+;; TODO: Use fontaine
+(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14"))
+(set-face-attribute 'default nil :font "Iosevka Comfy-16")
+
 (setopt cursor-type 'hbar
         default-line-spacing 0.2)
 
 ;; =====================================================================
-;;  Modus Themes
+;; Modus Themes
 ;; ---------------------------------------------------------------------
-;;  Highly accessible themes for GNU Emacs
-;;  https://protesilaos.com/emacs/modus-themes
+;; Highly accessible themes for GNU Emacs
+;; https://protesilaos.com/emacs/modus-themes
 ;; ---------------------------------------------------------------------
 (use-package modus-themes
   :ensure t
@@ -45,19 +46,19 @@
   (modus-themes-select 'modus-operandi-tinted))
 
 ;; =====================================================================
-;;  Ef (εὖ) themes
+;; Ef (εὖ) themes
 ;; ---------------------------------------------------------------------
-;;   Colorful and legible themes for GNU Emacs
-;;  https://protesilaos.com/emacs/ef-themes
+;;  Colorful and legible themes for GNU Emacs
+;; https://protesilaos.com/emacs/ef-themes
 ;; ---------------------------------------------------------------------
 (use-package ef-themes
   :ensure t)
 
 ;; =====================================================================
-;;  Typographic Ligatures in Emacs
+;; Typographic Ligatures in Emacs
 ;; ---------------------------------------------------------------------
-;;  Display typographical ligatures in Emacs 
-;;  https://github.com/mickeynp/ligature.el
+;; Display typographical ligatures in Emacs 
+;; https://github.com/mickeynp/ligature.el
 ;; ---------------------------------------------------------------------
 (use-package ligature
   :ensure t
@@ -71,19 +72,19 @@
   (global-ligature-mode t))
 
 ;; =====================================================================
-;;  nerd-icons.el
+;; nerd-icons.el
 ;; ---------------------------------------------------------------------
-;;  A library for Nerd Font icons
-;;  https://github.com/rainstormstudio/nerd-icons.el
+;; A library for Nerd Font icons
+;; https://github.com/rainstormstudio/nerd-icons.el
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons
-  :ensure nerd-icons)
+  :ensure t)
 
 ;; =====================================================================
-;;  nerd-icons-dired
+;; nerd-icons-dired
 ;; ---------------------------------------------------------------------
-;;  Use Nerd Font icons in dired 
-;;  https://github.com/rainstormstudio/nerd-icons-dired
+;; Use Nerd Font icons in dired 
+;; https://github.com/rainstormstudio/nerd-icons-dired
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons-dired
   :ensure t
@@ -91,10 +92,10 @@
   (dired-mode . nerd-icons-dired-mode))
 
 ;; =====================================================================
-;;  nerd-icons-completion
+;; nerd-icons-completion
 ;; ---------------------------------------------------------------------
-;;  User Nerd Font icons in completion interfaces 
-;;  https://github.com/rainstormstudio/nerd-icons-completion
+;; User Nerd Font icons in completion interfaces 
+;; https://github.com/rainstormstudio/nerd-icons-completion
 ;; ---------------------------------------------------------------------
 (use-package nerd-icons-completion
   :ensure t
@@ -105,10 +106,10 @@
   (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
 ;; =====================================================================
-;;  kind-icon
+;; kind-icon
 ;; ---------------------------------------------------------------------
-;;  Completion kind text/icon prefix labelling for in-region completion 
-;;  https://github.com/jdtsmith/kind-icon
+;; Completion kind text/icon prefix labelling for in-region completion 
+;; https://github.com/jdtsmith/kind-icon
 ;; ---------------------------------------------------------------------
 (use-package kind-icon
   :ensure t
@@ -120,10 +121,10 @@
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;; =====================================================================
-;;  Pulsar
+;; Pulsar
 ;; ---------------------------------------------------------------------
-;;   Pulsar Unquestionably Luminates, Strictly Absent the Radiation
-;;  https://protesilaos.com/emacs/pulsar
+;; Pulsar Unquestionably Luminates, Strictly Absent the Radiation
+;; https://protesilaos.com/emacs/pulsar
 ;; ---------------------------------------------------------------------
 (use-package pulsar
   :ensure t
@@ -131,25 +132,24 @@
   (pulsar-global-mode 1))
 
 ;; =====================================================================
-;;  Spacious Padding
+;; Spacious Padding
 ;; ---------------------------------------------------------------------
-;;  Increase the padding/spacing of Emacs frames and windows 
-;;  https://protesilaos.com/emacs/spacious-padding
+;; Increase the padding/spacing of Emacs frames and windows 
+;; https://protesilaos.com/emacs/spacious-padding
 ;; ---------------------------------------------------------------------
 (use-package spacious-padding
   :ensure t
   :init
   (setopt spacious-padding-widths
-          '(:internal-border-width 15
+          '(:internal-border-width 8
             :header-line-width 4
             :mode-line-width 6
             :tab-width 4
-            :right-divider-width 30
+            :right-divider-width 16
             :scroll-bar-width 8
-            :fringe-width 8)
-          spacious-padding-subtle-mode-line
-          `(:mode-line-active 'default
-            :mode-line-inactive vertical-border)))
+            :fringe-width 8))
+  :config
+  (spacious-padding-mode))
 
 (provide 'ngs-theme)
 ;;; ngs-theme.el ends here

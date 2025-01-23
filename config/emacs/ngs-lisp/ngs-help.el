@@ -28,35 +28,35 @@
 ;;; Code:
 
 ;; =====================================================================
-;;  Helpful
+;; Helpful
 ;; ---------------------------------------------------------------------
-;;  A better Emacs *help* buffer 
-;;  https://github.com/Wilfred/helpful
+;; A better Emacs *help* buffer 
+;; https://github.com/Wilfred/helpful
 ;; ---------------------------------------------------------------------
 (use-package helpful
   :ensure 
   :bind
-  (("C-c h h" . 'helpful-at-point)
-   ("C-c h f" . 'helpful-callable)
-   ("C-c h c" . 'helpful-command)
-   ("C-c h k" . 'helpful-key)
-   ("C-c h v" . 'helpful-variable)))
+  (("C-h h" . 'helpful-at-point)
+   ("C-h f" . 'helpful-callable)
+   ("C-h c" . 'helpful-command)
+   ("C-h k" . 'helpful-key)
+   ("C-h v" . 'helpful-variable)))
 
 ;; =====================================================================
-;;  which-key
+;; which-key
 ;; ---------------------------------------------------------------------
-;;  Displays available keybinding in popup 
-;;  https://github.com/justbur/emacs-which-key
+;; Displays available keybindings in popup 
+;; https://github.com/justbur/emacs-which-key
 ;; ---------------------------------------------------------------------
 (use-package which-key
   :ensure t
   :config (which-key-mode))
 
 ;; =====================================================================
-;;  Casual
+;; Casual
 ;; ---------------------------------------------------------------------
-;;  Transient-based interfaces for built-in Emacs modes 
-;;  https://github.com/kickingvegas/casual
+;; Transient-based interfaces for built-in Emacs modes 
+;; https://github.com/kickingvegas/casual
 ;; ---------------------------------------------------------------------
 (use-package casual
   :ensure t

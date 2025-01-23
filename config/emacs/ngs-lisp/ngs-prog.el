@@ -41,7 +41,8 @@
   :hook (prog-mode . display-line-numbers-mode))
 
 ;; Language Server Protocol (LSP) client
-;; https://joaotavora.github.io/eglot/
+;; https://joaotav
+;; ora.github.io/eglot/
 (use-package eglot
   :bind
   (("C-c l f" . 'eglot-format-buffer)
@@ -77,13 +78,19 @@
    ("\\.exs\\'" . elixir-ts-mode)))
 
 ;; =====================================================================
-;;  nix-mode
+;; nix-mode
 ;; ---------------------------------------------------------------------
-;;  An Emacs major mode for editing Nix expressions 
-;;  https://github.com/NixOS/nix-mode
+;; An Emacs major mode for editing Nix expressions 
+;; https://github.com/NixOS/nix-mode
 ;; ---------------------------------------------------------------------
 (use-package nix-mode
+  :ensure t
   :mode "\\.nix\\'")
+
+
+(use-package markdown-mode
+  :ensure t
+  :mode "\\.md\\'")
 
 (provide 'ngs-prog)
 ;;; ngs-prog.el ends here
