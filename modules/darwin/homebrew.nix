@@ -65,6 +65,7 @@
       "logseq"
       "magicavoxel"
       "obs"
+      "obsidian"
       "opal-composer"
       "postico"
       "postman"
