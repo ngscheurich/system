@@ -49,5 +49,12 @@
   :config
   (envrc-global-mode))
 
+(use-package envrc
+   :ensure t
+   :config
+   (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)
+   (envrc-global-mode))
+ 
+
 (provide 'ngs-env)
 ;;; ngs-env.el ends here

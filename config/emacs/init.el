@@ -20,30 +20,9 @@
 
 (require 'wgrep)
 
-(use-package iedit
-  :ensure t
-  :bind ("C-c C-;" . iedit-mode))
-
+;; Scratchpad
 (bind-key "C-x M-f" 'find-file-other-window)
 (bind-key "C-x M-b" 'switch-to-buffer-other-window)
-  
-(use-package activities
-  :ensure t
-  :init
-  (activities-mode)
-  (activities-tabs-mode)
-  ;; Prevent `edebug' default bindings from interfering.
-  (setq edebug-inhibit-emacs-lisp-mode-bindings t)
-  :bind
-  (("C-x C-a C-n" . activities-new)
-   ("C-x C-a C-d" . activities-define)
-   ("C-x C-a C-a" . activities-resume)
-   ("C-x C-a C-s" . activities-suspend)
-   ("C-x C-a C-k" . activities-kill)
-   ("C-x C-a RET" . activities-switch)
-   ("C-x C-a b" . activities-switch-buffer)
-   ("C-x C-a g" . activities-revert)
-   ("C-x C-a l" . activities-list)))
 
 (defun ngs-duplicate-line ()
   (interactive)
@@ -54,3 +33,12 @@
   (next-line 1)
   (yank)
   (back-to-indentation))
+
+(use-package beframe
+  :ensure t
+  :init
+  ;; This is the default
+  (setopt beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+  :config
+  (beframe-mode 1)
+  (define-key global-map (kbd "C-c b") #'beframe-prefix-map))

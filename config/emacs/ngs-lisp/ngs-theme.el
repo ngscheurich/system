@@ -29,7 +29,7 @@
 
 ;; TODO: Use fontaine
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14"))
-(set-face-attribute 'default nil :font "Iosevka Comfy-16")
+(set-face-attribute 'default nil :font "Iosevka Comfy-15")
 
 (setopt cursor-type 'hbar
         default-line-spacing 0.2)

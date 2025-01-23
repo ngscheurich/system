@@ -124,6 +124,5 @@
   (meow-setup)
   (meow-global-mode 1))
 
-
 (provide 'ngs-meow)
 ;;; ngs-meow.el ends here

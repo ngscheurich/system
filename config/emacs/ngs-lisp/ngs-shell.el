@@ -29,10 +29,18 @@
 
 (use-package emacs
   :init
-  (setopt shell-file-name (ngs-home-manager-bin "zsh")
- 	        sh-shell (ngs-home-manager-bin "zsh")
-	        sh-shell-file (ngs-home-manager-bin "zsh")))
+  (setopt shell-file-name (ngs-home-manager-bin "bash")
+ 	        sh-shell (ngs-home-manager-bin "bash")
+	        sh-shell-file (ngs-home-manager-bin "bash")))
 
+;; =====================================================================
+;; Eat
+;; ---------------------------------------------------------------------
+;; Emulate A Terminal, in a region, in a buffer and in Eshell 
+;; https://codeberg.org/akib/emacs-eat
+;; ---------------------------------------------------------------------
+(use-package eat
+  :ensure t)
 
 (provide 'ngs-shell)
 ;;; ngs-shell.el ends here
