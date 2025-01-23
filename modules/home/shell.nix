@@ -38,6 +38,16 @@ let
   shellAbbrs = shellAliases;
 in
 {
+  programs.bash = {
+    enable = true;
+    inherit shellAliases;
+
+    bashrcExtra = ''
+      [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/bash"
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -86,6 +96,7 @@ in
 
   programs.starship = {
     enable = true;
+    enableBashIntegration = false;
 
     settings = {
       format = lib.concatStrings [

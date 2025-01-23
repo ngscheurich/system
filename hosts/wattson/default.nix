@@ -29,6 +29,8 @@
     };
   };
 
+  home-manager.backupFileExtension = "backup";
+
   home-manager.users = {
     nscheurich = {
       home.stateVersion = "22.11";
