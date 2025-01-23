@@ -6,6 +6,24 @@ local util = require("util")
 
 return {
   -- =================================================================
+  --  Catppuccin
+  -- -----------------------------------------------------------------
+  --  https://github.com/catppuccin/nvim
+  --  Soothing pastel theme for (Neo)vim
+  -- -----------------------------------------------------------------
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    cond = vim.startswith(_G.theme.colorscheme.name, "catppuccin"),
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup(_G.theme.colorscheme.opts)
+      util.apply_colorscheme()
+    end,
+  },
+
+  -- =================================================================
   --  Nightfox
   -- -----------------------------------------------------------------
   --  https://github.com/EdenEast/nightfox.nvim
