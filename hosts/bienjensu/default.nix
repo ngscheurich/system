@@ -34,6 +34,8 @@
     };
   };
 
+  home-manager.backupFileExtension = "backup";
+
   home-manager.users = {
     nick = {
       home.stateVersion = "22.11";
