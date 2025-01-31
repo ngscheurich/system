@@ -18,6 +18,7 @@
     cargo
 
     # Language support
+    fnlfmt
     nil
 
     # Database tools
