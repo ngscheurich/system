@@ -1,7 +1,8 @@
 {
+  "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "conjure": { "branch": "main", "commit": "95b067e1356fb5b0143c9487ffc9950ddaa7df3a" },
-  "lazy.nvim": { "branch": "main", "commit": "7527af40ddd4a93a02911be570b32609b9d4ea53" },
-  "nfnl": { "branch": "main", "commit": "b65c4cf17d4e5c9b80d8c8ab33a6774a6c64e1c2" },
-  "nvim-lspconfig": { "branch": "master", "commit": "66bc018936c6ff76beb75f89d986af6442db4001" },
-  "nvim-treesitter": { "branch": "master", "commit": "55ae57419504432ba9c229ea9b03bad621ab9ef7" }
+  "lazy.nvim": { "branch": "main", "commit": "f15a93907ddad3d9139aea465ae18336d87f5ce6" },
+  "nfnl": { "branch": "main", "commit": "264d1d6e994d698b948c5b5430a55c0e9b8e74b9" },
+  "nvim-lspconfig": { "branch": "master", "commit": "6c17f8656f667727b27f5f598463afedb7791b18" },
+  "nvim-treesitter": { "branch": "master", "commit": "a840137349fcc35b5ad2c718a9b034b93012fa43" }
 }

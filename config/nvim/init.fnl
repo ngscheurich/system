@@ -1,5 +1,5 @@
 ;; The Neovim configuration directory
-(local conf-dir (vim.fn.stdpath :config))
+(local conf-dir :/private/etc/system/config/nvim)
 
 ;; The literate config file
 (local conf-src (.. conf-dir :/README.md))
@@ -15,15 +15,13 @@
                      (vim.cmd "redraw | echo '󰑓 Tangled and reloaded config'"))
 (vim.api.nvim_create_autocmd
     [:BufWritePost]
-    {:pattern conf-src
-     :group user-group
-     :callback tangle-reload})
+    {:pattern conf-src :group user-group :callback tangle-reload})
 (vim.cmd.set (.. (.. :packpath^= (vim.fn.stdpath :data)) :/site))
 (vim.cmd "packadd nfnl")
 (local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
+(local {: assoc : get-in : merge} (autoload :nfnl.core))
 (var user-opts {})
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:conceallevel 2
    :cursorline true
    :fillchars {:vert "│" }
@@ -37,7 +35,7 @@
    :splitbelow true
    :splitright true
    :termguicolors true}))
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   (let [indent 2]
       {:breakindent true
        :expandtab true
@@ -45,15 +43,15 @@
        :smartindent true
        :softtabstop indent
        :tabstop indent})))
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:grepprg "rg --vimgrep"
    :ignorecase true
    :inccommand :split
    :smartcase true}))
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:completeopt [:menu :menuone :noinsert]
    :pumheight 10}))
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:hidden true
    :timeoutlen 250
    :undofile true
@@ -61,7 +59,7 @@
    :clipboard "unnamedplus"}))
 (each [k v (pairs user-opts)]
   (tset vim.opt k v))
-(core.assoc vim.g :mapleader " "
+(assoc vim.g :mapleader " "
                   :maplocalleader ",")
 (let [t {:<Left> :<C-w>h
          :<Down> :<C-w>j
@@ -92,21 +90,67 @@
           (vim.fn.getchar)
           (os.exit 1))))
   (vim.opt.rtp:prepend lazypath))
+(fn spec [plugin tbl]
+  "Returns `tbl` with `plugin` as the value belonging to the `1` key."
+  (assoc tbl 1 plugin))
 (let [lazy (require :lazy)]
-    (lazy.setup {:spec [
-                   {1 :Olical/nfnl :ft :fennel}
-                   {1 :nvim-treesitter/nvim-treesitter
-                    :config (fn []
-                       (let [ts (require :nvim-treesitter.configs)]
-                           (ts.setup {:highlight {:enable true}
-                                      :indent {:enable true}
-                                      :ensure_installed [:bash :css :elixir :fennel :gdscript :go
-                                                         :graphql :html :http :javascript :json :kdl
-                                                         :lua :markdown :nix :rust :scss :sql :svelte
-                                                         :typescript :xml :yaml]})))}
-                   {1 :Olical/conjure}
-                   {1 :neovim/nvim-lspconfig
-                    :opts {:servers {}}
-                    :config (fn [_ opts])}
-                 ]
-                 :checker {:enabled true}}))
+  (lazy.setup {:dev {:path "~/Projects"}
+               :spec [
+                 (spec :Olical/nfnl {:ft :fennel})
+                 (spec :ngscheurich/srcedit {:dev true :opts {}})
+                 (spec :nvim-treesitter/nvim-treesitter
+                       {:opts {:highlight {:enable true}
+                               :indent {:enable true}
+                               :ensure_installed [
+                               ;; Tree-sitter parsers
+                               :bash
+                               :css
+                               :elixir
+                               :erlang
+                               :gdscript
+                               :go
+                               :graphql
+                               :html
+                               :http
+                               :javascript
+                               :json
+                               :kdl
+                               :lua
+                               :nix
+                               :rust
+                               :scss
+                               :sql
+                               :svelte
+                               :typescript
+                               :xml
+                               :yaml
+                               ]}
+                        :config (fn [_ opts]
+                                  (let [{: setup} (require :nvim-treesitter.configs)]
+                                    (setup opts)))})
+                  (spec :neovim/nvim-lspconfig
+                        {:dependencies [:hrsh7th/cmp-nvim-lsp]
+                         :config (fn []
+                                   (let [lc (require :lspconfig)
+                                         ;; lsp-cap (vim.lsp.protocol.make_client_capabilities)
+                                         ;; cmp-lsp (require :cmp_nvim_lsp)
+                                         ;; cmp-cap (cmp-lsp.default_capabilities)
+                                         ;; cap (vim.tbl_deep_extend :force lsp-cap cmp-cap)
+                                         servers {
+                                         ;; LSP servers
+                                         :bashls {}
+                                         :lexical {}
+                                         :gdscript {}
+                                         :gopls {}
+                                         :lua_ls {}
+                                         :nil_ls {}
+                                         :rust_analyzer {}
+                                         :ts_ls {}
+                                         }]
+                                     (each [s c (pairs servers)]
+                                         ((get-in lc [s :setup]) c))))})
+                 {1 :Olical/conjure}
+               ]
+               :checker {:enabled true}}))
+(vim.cmd "colorscheme habamax")
+(vim.cmd "set conceallevel=0")

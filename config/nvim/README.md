@@ -45,7 +45,7 @@ With that, I’m ready to begin configuring Neovim. First things first: I’ll s
 
 ```fennel init.fnl +=
 ;; The Neovim configuration directory
-(local conf-dir (vim.fn.stdpath :config))
+(local conf-dir :/private/etc/system/config/nvim)
 
 ;; The literate config file
 (local conf-src (.. conf-dir :/README.md))
@@ -74,18 +74,16 @@ Next I’ll create an autocommand that executes the `tangle-reload` function aft
 ```fennel init.fnl +=
 (vim.api.nvim_create_autocmd
     [:BufWritePost]
-    {:pattern conf-src
-     :group user-group
-     :callback tangle-reload})
+    {:pattern conf-src :group user-group :callback tangle-reload})
 ```
 
-I also want access to some nfnl niceties, namely the `autoload` function and the standard (`core`) library.
+I also want access to some nfnl niceties, namely the `autoload` function and some functions from the standard (`core`) library.
 
 ```fennel init.fnl +=
 (vim.cmd.set (.. (.. :packpath^= (vim.fn.stdpath :data)) :/site))
 (vim.cmd "packadd nfnl")
 (local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
+(local {: assoc : get-in : merge} (autoload :nfnl.core))
 ```
 
 `autoload` here works a bit like VimL’s autoloading behavior (`:h autoload`) in that it will not `require` a module until it is used.
@@ -103,7 +101,7 @@ In this section, I’ll configure built-in Neovim options and functionality. Eac
 First up, I set options that affect the user interface such as turning on line numbers, displaying the sign column, and using a global status line.
 
 ```fennel init.fnl +=
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:conceallevel 2
    :cursorline true
    :fillchars {:vert "│" }
@@ -122,7 +120,7 @@ First up, I set options that affect the user interface such as turning on line n
 Next up are rules around indentation. Namely, I prefer using two spaces for indentation and for Neovim to intelligently indent new lines when possible.
 
 ```fennel init.fnl +=
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   (let [indent 2]
       {:breakindent true
        :expandtab true
@@ -135,7 +133,7 @@ Next up are rules around indentation. Namely, I prefer using two spaces for inde
 When it comes to searching, I prefer to use [ripgrep], ignore case, and preview substition commands in real-time.
 
 ```fennel init.fnl +=
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:grepprg "rg --vimgrep"
    :ignorecase true
    :inccommand :split
@@ -151,7 +149,7 @@ For completion, I set the insert mode completion option (`:h completeopt`) to:
 Furthermore, I set the popup menu’s height to 10 rows.
 
 ```fennel init.fnl +=
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:completeopt [:menu :menuone :noinsert]
    :pumheight 10}))
 ```
@@ -159,7 +157,7 @@ Furthermore, I set the popup menu’s height to 10 rows.
 Last up is miscellaneous behavior (check out the `:help` docs for each option).
 
 ```fennel init.fnl +=
-(set user-opts (core.merge user-opts
+(set user-opts (merge user-opts
   {:hidden true
    :timeoutlen 250
    :undofile true
@@ -167,7 +165,7 @@ Last up is miscellaneous behavior (check out the `:help` docs for each option).
    :clipboard "unnamedplus"}))
 ```
 
-With all of my configuration options captured in `user-opts` table, I can easily iterate over it and applu each one.
+With all of my configuration options captured in the `user-opts` table, I can iterate over it and apply each one.
 
 ```fennel init.fnl +=
 (each [k v (pairs user-opts)]
@@ -181,7 +179,7 @@ While the majority of my custom keymaps are related to plugins, and thereby hand
 Firstly, my leader key and local leader key are mapped to `<Space>` and `,`, respectively.
 
 ```fennel init.fnl +=
-(core.assoc vim.g :mapleader " "
+(assoc vim.g :mapleader " "
                   :maplocalleader ",")
 ```
 
@@ -228,19 +226,18 @@ Finally, some keymaps around the `<Esc>` key:
 
 While the core Neovim experience is excellent, I lean on a bunch of community plugins to elevate it to the next level. I’ll break these plugins up into sections:
 
-- [AI](#ai)
-- [Analysis](#analysis)
+- [Tree-sitter](#tree-sitter)
+- [LSP Client](#lsp-client)
+- [Languages](#languages)
 - [Completion](#completion)
-- [Database](#database)
-- ...
 
-Vim has a built in plugin management capabilities in its _packages_ feature (`:h packages`). While this is perfect for many cases, I’ve had an excellent experience using the [lazy.nvim] plugin manager. Some of the features that won me over include:
+Vim has built in plugin management capabilites in its _packages_ feature (`:h packages`). While this is perfect for many cases, I’ve had an excellent experience using the [lazy.nvim] plugin manager. Some of the features that won me over include:
 
 - Versatile deferred, i.e. _lazy_, loading of plugins
 - Useful UI for inspecting and managing plugins
 - Dependency management
-- A lockfile for reproducibility
 - Detailed profiling of plugin load times
+- A lockfile for reproducibility
 
 There’a a bit of bootstrapping required to get lazy.nvim installed.
 
@@ -260,53 +257,127 @@ There’a a bit of bootstrapping required to get lazy.nvim installed.
   (vim.opt.rtp:prepend lazypath))
 ```
 
-Now we can require lazy.nvim and set it up. I’ll use LMT’s [macro references] feature to inject `lazy-spec` into lazy.nvim’s setup function; that way I can build it out bit by bit throughout this section.
+lazy.nvim uses a series of tables to specify which plugins to download and configure. These tables, known as “specs”, must include the plugin’s Git repository (or local directory) as the value of the `1` key, i.e. in the first position. Since Fennel requires that numeric keys be specified explicitly, I’ll define a function that takes the repo/directory as the first argument; numeric keys look weird, y’know?
+
+```fennel init.fnl +=
+(fn spec [plugin tbl]
+  "Returns `tbl` with `plugin` as the value belonging to the `1` key."
+  (assoc tbl 1 plugin))
+```
+
+Now we can require lazy.nvim and set it up. I’ll use LMT’s [macro references] feature to inject the `lazy-spec` macro into lazy.nvim’s setup function; that way I can build it out bit by bit throughout this section.
 
 ```fennel init.fnl +=
 (let [lazy (require :lazy)]
-    (lazy.setup {:spec [
-                   {1 :Olical/nfnl :ft :fennel}
-                   <<<lazy-spec>>>
-                 ]
-                 :checker {:enabled true}}))
+  (lazy.setup {:dev {:path "~/Projects"}
+               :spec [
+                 (spec :Olical/nfnl {:ft :fennel})
+                 (spec :ngscheurich/srcedit {:dev true :opts {}})
+                 <<<lazy-spec>>>
+               ]
+               :checker {:enabled true}}))
 ```
 
-Now I have access lazy.nvim’s UI via the `:Lazy` command. Time to install some plugins.
+With that, I have access lazy.nvim’s UI via the `:Lazy` command. Time to install some plugins.
 
 ## Treesitter
 
-One crucial feature I’m missing is a syntax highlighting for Fennel–the very language I’m writing this config in! Rather than install a bespoke Fennel syntax plugin, I…
+[Tree-sitter] describes itself thusly:
 
-```fennel "lazy-spec" +=
-{1 :nvim-treesitter/nvim-treesitter
- :config (fn []
-    (let [ts (require :nvim-treesitter.configs)]
-        (ts.setup {:highlight {:enable true}
-                   :indent {:enable true}
-                   :ensure_installed [:bash :css :elixir :fennel :gdscript :go
-                                      :graphql :html :http :javascript :json :kdl
-                                      :lua :markdown :nix :rust :scss :sql :svelte
-                                      :typescript :xml :yaml]})))}
+> Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited.
+
+Neovim integrates the Tree-sitter library to enhance editor functionality around syntax highlighting, indentation, folding, and selection. The [nvim-treesitter] plugin includes configurations and abstractions that make working with the integration quite straightforward.
+
+nvim-treesitter accepts an `ensure_installed` option that allows me to list all of the language parsers I want to be available. I’ll create a `ts-parsers` macro to make the plugin spec a bit easier to grok.
+
+```fennel "ts-parsers"
+;; Tree-sitter parsers
+:bash
+:css
+:elixir
+:erlang
+:gdscript
+:go
+:graphql
+:html
+:http
+:javascript
+:json
+:kdl
+:lua
+:nix
+:rust
+:scss
+:sql
+:svelte
+:typescript
+:xml
+:yaml
 ```
 
-## Language Server Protocol
+```fennel "lazy-spec" +=
+(spec :nvim-treesitter/nvim-treesitter
+      {:opts {:highlight {:enable true}
+              :indent {:enable true}
+              :ensure_installed [
+              <<<ts-parsers>>>
+              ]}
+       :config (fn [_ opts]
+                 (let [{: setup} (require :nvim-treesitter.configs)]
+                   (setup opts)))})
+```
 
-Neovim has a robust built-in [Language Server Protocol] (LSP) client, which I set up using the [nvim-lspconfig].
+- [ ] TODO: nvim-treesitter-textobjects
+
+## LSP Client
+
+Neovim has a robust built-in [Language Server Protocol] (LSP) client that is well-integrated to provide enhanced coding capabilities. [nvim-lspconfig] is a convenient set of sensible configurations for hundreds of language servers. Similar to how I set up nvim-treesitter, I’ll create a `lang-servers` macro for configuring LSP servers up front.
+
+```fennel "lang-servers"
+;; LSP servers
+:bashls {}
+:lexical {}
+:gdscript {}
+:gopls {}
+:lua_ls {}
+:nil_ls {}
+:rust_analyzer {}
+:ts_ls {}
+```
+
+```fennel "lazy-spec" +=
+ (spec :neovim/nvim-lspconfig
+       {:dependencies [:hrsh7th/cmp-nvim-lsp]
+        :config (fn []
+                  (let [lc (require :lspconfig)
+                        ;; lsp-cap (vim.lsp.protocol.make_client_capabilities)
+                        ;; cmp-lsp (require :cmp_nvim_lsp)
+                        ;; cmp-cap (cmp-lsp.default_capabilities)
+                        ;; cap (vim.tbl_deep_extend :force lsp-cap cmp-cap)
+                        servers {
+                        <<<lang-servers>>>
+                        }]
+                    (each [s c (pairs servers)]
+                        ((get-in lc [s :setup]) c))))})
+```
+
+## Scratch
+
+```fennel init.fnl +=
+(vim.cmd "colorscheme habamax")
+(vim.cmd "set conceallevel=0")
+```
 
 ```fennel "lazy-spec" +=
 {1 :Olical/conjure}
 ```
 
-```fennel "lazy-spec" +=
-{1 :neovim/nvim-lspconfig
- :opts {:servers {}}
- :config (fn [_ opts])}
-```
-
-
 [autocommand group]: https://neovim.io/doc/user/autocmd.html#_8.-groups
 [autocommand]: https://neovim.io/doc/user/autocmd.html#_1.-introduction
+[beam]: https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)
 [clojure]: https://clojure.org/
+[elixir]: https://elixir-lang.org/
+[erlang]: https://www.erlang.org/
 [fenced code blocks]: https://spec.commonmark.org/0.31.2/#fenced-code-blocks
 [fennel]: https://fennel-lang.org/
 [git]: https://git-scm.com/
@@ -320,8 +391,10 @@ Neovim has a robust built-in [Language Server Protocol] (LSP) client, which I se
 [markdown]: https://spec.commonmark.org/0.31.2/#what-is-markdown-
 [neovim]: https://neovim.io/
 [nfnl]: https://github.com/Olical/nfnl
+[nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
 [oliver caldwell]: https://github.com/Olical
 [plugins]: #pluins
 [process]: #process
 [ripgrep]: https://github.com/BurntSushi/ripgrep
+[tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages

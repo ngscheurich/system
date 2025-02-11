@@ -8,7 +8,6 @@ tangle:
 	lmt README.md
 
 compile:
-	# TODO This needs to happen without messing with packages
 	nvim --headless +"packadd nfnl" +"lua require('nfnl.api')['compile-all-files']()" +"q!" -es
 
 install_lmt:
