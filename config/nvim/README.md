@@ -1,23 +1,19 @@
----
-title: Nick’s Literate Neovim Config
----
-
 # Neovim Configuration
+
+This is my [Neovim] configuration. It is written in a literate programming style; that is to say, with text meant for computer interpretation, i.e. _code_, intermingled with plain-language text meant to be parsed by humans. Specifically, this file is a [Markdown] document in which the computer code portions are marked up as [fenced code blocks] written primarily in the [Fennel] programming language.
 
 - [Process](#process)
 - [Initialization](#initialization)
 - [Prelude](#prelude)
 - [Core](#core)
-- [Keymaps](#keymaps)
+- [Mappings](#mappins)
 - [Plugins](#plugins)
-
-This is my [Neovim] configuration. It is written in a literate programming style; that is to say, with text meant for computer interpretation, i.e. _code_, intermingled with plain-language text meant to be parsed by humans. Specifically, this file is a [Markdown] document in which the computer code portions are marked up as [fenced code blocks] written in the [Fennel] programming language.
 
 ## Process
 
-From a technical perspective, when this file is written to disk, each code block is exported to a Fennel file. These Fennel files are compiled into [Lua] code, which is interpreted by Neovim when it starts.
+From a technical perspective, when this file is written, each code block is exported to a specified file on disk. Fennel files are compiled into [Lua] code, which is interpreted by Neovim when it starts.
 
-The process of exporting embedded code blocks is oftentimes referred to as _tangling_, and is handled in this case by [Literate Markdown Tangle] (LMT).
+The process of exporting embedded code blocks is often referred to as _tangling_, and is handled in this case by [Literate Markdown Tangle] (LMT).
 
 Compiling the tangled Fennel into Lua code is the responsibility of [nfnl], an excellent project by [Oliver Caldwell] which also provides access to a [Clojure]-inspired standard library.
 
@@ -29,19 +25,17 @@ LMT and nfnl can be installed by running `make init`. This command assumes the f
 - [Git]
 - [Go]
 
-LMT is cloned from GitHub into a temporary directory and built from source. nfnl is cloned from GitHub into a directory compatible with the Vim packages feature (`:h packages`).
+LMT is cloned into a temporary directory and built from source. nfnl is cloned into a directory compatible with the Vim packages feature (`:h packages`).
 
-nfnl expects a configuration file named `.nfnl.fnl` in this directory:
+nfnl expects a Fennel configuration file named `.nfnl.fnl` in this directory, so I’ll create it with the minimum required code:
 
 ```sh .nfnl.fnl +=
 {}
 ```
 
-`make init` also performs the first tangle and compile steps, as described [above](#process). At this point you should see compiled Lua files!
+`make init` also performs the first tangle and compile steps, as described [above](#process).
 
-## Prelude
-
-With that, I’m ready to begin configuring Neovim. First things first: I’ll set up some generally useful variables.
+## Preludeicons that, I’m ready to begin configuring Neovim. First things first: I’ll set up some generally useful variables.
 
 ```fennel init.fnl +=
 ;; The Neovim configuration directory
@@ -58,18 +52,19 @@ With that, I’m ready to begin configuring Neovim. First things first: I’ll s
 (local user-group (vim.api.nvim_create_augroup :ngs {}))
 ```
 
-The following is a function that will synchronously tangle and compile, then _source_ (`:h source`) the results. Sourcing a file will cause Neovim to run the code contained therein, effectively reloading the connfig.
+The following is a function that will synchronously tangle and compile, then _source_ (`:h source`) the results. Sourcing a file will cause Neovim to run the code contained therein, effectively reloading the config.
 
 ```fennel init.fnl +=
 (fn tangle-reload [] (: (vim.system [:make] {:cwd conf-dir}) :wait)
                      (vim.cmd (.. "source " conf-out))
-                     (vim.cmd "redraw | echo '󰑓 Tangled and reloaded config'"))
+                     (vim.cmd "redraw")
+                     (vim.notify "󰑓 Tangled and reloaded config"))
 ```
 
 > [!TIP]
-> The 󰑓 character above may not render correctly without access to certain font symbols; this will not affect functionality. 
+> The special character above may not render correctly without access to certain font symbols; this will not affect functionality. 
 
-Next I’ll create an autocommand that executes the `tangle-reload` function after the buffer representing this file is written. This gives us the effect of the Neovim session applying changes as they are made in this file!
+Next I’ll create an autocommand that executes the `tangle-reload` function after the buffer representing this file is written. This gives us the effect of the Neovim session applying changes as they are made!
 
 ```fennel init.fnl +=
 (vim.api.nvim_create_autocmd
@@ -77,67 +72,70 @@ Next I’ll create an autocommand that executes the `tangle-reload` function aft
     {:pattern conf-src :group user-group :callback tangle-reload})
 ```
 
-I also want access to some nfnl niceties, namely the `autoload` function and some functions from the standard (`core`) library.
+I also want access to some nfnl niceties from the standard (`core`) library.
 
 ```fennel init.fnl +=
 (vim.cmd.set (.. (.. :packpath^= (vim.fn.stdpath :data)) :/site))
 (vim.cmd "packadd nfnl")
-(local {: autoload} (require :nfnl.module))
-(local {: assoc : get-in : merge} (autoload :nfnl.core))
-```
-
-`autoload` here works a bit like VimL’s autoloading behavior (`:h autoload`) in that it will not `require` a module until it is used.
-
-# Core
-
-In this section, I’ll configure built-in Neovim options and functionality. Each option is described in the Neovim documentation (`:h [option]`).
-
-```fennel init.fnl +=
-(var user-opts {})
+(local {: assoc
+        : get-in
+        : merge
+        : reduce
+        : some} (require :nfnl.core))
 ```
 
 ## Options
 
-First up, I set options that affect the user interface such as turning on line numbers, displaying the sign column, and using a global status line.
+In this section, I’ll configure built-in Neovim options and functionality. Each option is described in the Neovim documentation (`:h [option]`).
+
+I’ll use LMT’s [macro references] feature to inject a `user-opts` macro into the following `each` form. This allows me to set options later in the document alongside some explanatory prose.
+
+> [!NOTE]
+> From here on out, when I refer to _macros_, I’ll be referring to LMT’s macros. Fennel has a great macro system, but that’s not what I’m using in this file.
 
 ```fennel init.fnl +=
-(set user-opts (merge user-opts
-  {:conceallevel 2
-   :cursorline true
-   :fillchars {:vert "│" }
-   :laststatus 3
-   :listchars {:tab ">-" :eol "↵" :nbsp "␣" :trail "‧" :extends "⟩" :precedes "⟨"}
-   :number true
-   :scrolloff 13
-   :showmode false
-   :sidescrolloff 8
-   :signcolumn :yes
-   :splitbelow true
-   :splitright true
-   :termguicolors true}))
+(each [k v (pairs {
+            <<<user-opts>>>
+            })]
+  (tset vim.opt k v))
 ```
 
-Next up are rules around indentation. Namely, I prefer using two spaces for indentation and for Neovim to intelligently indent new lines when possible.
+First up, I set options that alter the user interface such as turning on line numbers, displaying the sign column, and using a global status line.
 
-```fennel init.fnl +=
-(set user-opts (merge user-opts
-  (let [indent 2]
-      {:breakindent true
-       :expandtab true
-       :shiftwidth indent
-       :smartindent true
-       :softtabstop indent
-       :tabstop indent})))
+```fennel "user-opts" +=
+:conceallevel 2
+:cursorline true
+:fillchars {:vert "│" }
+:laststatus 3
+:listchars {:tab ">-" :eol "↵" :nbsp "␣" :trail "‧" :extends "⟩" :precedes "⟨"}
+:number true
+:scrolloff 13
+:showmode false
+:sidescrolloff 8
+:signcolumn :yes
+:splitbelow true
+:splitright true
+:termguicolors true
+```
+
+Next up are rules around indentation. Namely, I prefer to indent using two spaces and for Neovim to intelligently indent new lines when possible.
+
+```fennel "user-opts" +=
+:breakindent true
+:expandtab true
+:shiftwidth 2
+:smartindent true
+:softtabstop 2
+:tabstop 2
 ```
 
 When it comes to searching, I prefer to use [ripgrep], ignore case, and preview substition commands in real-time.
 
-```fennel init.fnl +=
-(set user-opts (merge user-opts
-  {:grepprg "rg --vimgrep"
-   :ignorecase true
-   :inccommand :split
-   :smartcase true}))
+```fennel "user-opts" +=
+:grepprg "rg --vimgrep"
+:ignorecase true
+:inccommand :split
+:smartcase true
 ```
 
 For completion, I set the insert mode completion option (`:h completeopt`) to:
@@ -148,42 +146,37 @@ For completion, I set the insert mode completion option (`:h completeopt`) to:
 
 Furthermore, I set the popup menu’s height to 10 rows.
 
-```fennel init.fnl +=
-(set user-opts (merge user-opts
-  {:completeopt [:menu :menuone :noinsert]
-   :pumheight 10}))
+> [!NOTE]
+> This configures Neovim’s built-in completion mechanisms, though I use a plugin for most completion scenarios.
+
+```fennel "user-opts" +=
+:completeopt [:menu :menuone :noinsert]
+:pumheight 10
 ```
 
 Last up is miscellaneous behavior (check out the `:help` docs for each option).
 
-```fennel init.fnl +=
-(set user-opts (merge user-opts
-  {:hidden true
-   :timeoutlen 250
-   :undofile true
-   :updatetime 250
-   :clipboard "unnamedplus"}))
+```fennel "user-opts" +=
+:hidden true
+:timeoutlen 250
+:undofile true
+:updatetime 250
+:clipboard :unnamedplus
 ```
 
-With all of my configuration options captured in the `user-opts` table, I can iterate over it and apply each one.
+## Mappings
 
+While the majority of my key mappings are related to plugins, and thereby handled in the [Plugins](#plugins) section, I do create a few to control native Neovim behavior.
+
+I’ll include some helper functions to make creating Mormal, Insert, and Terminal mode key mappings more succinct.
+ 
 ```fennel init.fnl +=
-(each [k v (pairs user-opts)]
-  (tset vim.opt k v))
+(fn nmap [lhs rhs opt] (vim.keymap.set :n lhs rhs opt))
+(fn imap [lhs rhs opt] (vim.keymap.set :i lhs rhs opt))
+(fn tmap [lhs rhs opt] (vim.keymap.set :t lhs rhs opt))
 ```
 
-# Keymaps
-
-While the majority of my custom keymaps are related to plugins, and thereby handled in the [plugins], I so set a few to control native Neovim behavior.
-
-Firstly, my leader key and local leader key are mapped to `<Space>` and `,`, respectively.
-
-```fennel init.fnl +=
-(assoc vim.g :mapleader " "
-                  :maplocalleader ",")
-```
-
-I have `Ctrl` plus `h`, `j`, `k`, and `l` mapped to the arrow keys, which become a very ergonomic way to navigate windows.
+The control key (`<C-`) plus `h`, `j`, `k`, and `l` are set up as arrow keys on my keyboard, which makes them a very ergonomic way to navigate windows.
 
 ```fennel init.fnl +=
 (let [t {:<Left> :<C-w>h
@@ -191,10 +184,10 @@ I have `Ctrl` plus `h`, `j`, `k`, and `l` mapped to the arrow keys, which become
          :<Up> :<C-w>k
          :<Right> :<C-w>l}]
          (each [k v (pairs t)]
-           (vim.keymap.set :n k v)))
+           (nmap k v)))
 ```
 
-I set some UI toggles, e.g. turning on and off line numbers, under the `<Leader>u` namespace. But first, since some options are toggled differently than others, I’ll create a function to handle that logic.
+I like to have some UI toggle mappings, e.g. for turning on and off line numbers, under the `<Leader>u` namespace. Since some options are toggled differently than others, I’ll create a function to handle the toggling logic.
 
 ```fennel init.fnl +=
 (fn toggle-opt [name]
@@ -204,38 +197,50 @@ I set some UI toggles, e.g. turning on and off line numbers, under the `<Leader>
   (if (= (. vim.o name) on) (tset vim.o name off) (tset vim.o name on)))	
 ```
 
-Now, for the actual UI toggle keymaps.
+Now, for the actual UI toggle mappings.
 
 ```fennel init.fnl +=
-(vim.keymap.set :n :<Leader>un (fn [] (toggle-opt :number)) {:desc "Line numbers"})
-(vim.keymap.set :n :<Leader>uw (fn [] (toggle-opt :list)) {:desc :Whitespace})
-(vim.keymap.set :n :<Leader>uc (fn [] (toggle-opt :cursorline)) {:desc :Cursorline})
+(nmap :<Leader>un (fn [] (toggle-opt :number)) {:desc "Line numbers"})
+(nmap :<Leader>uw (fn [] (toggle-opt :list)) {:desc :Whitespace})
+(nmap :<Leader>uc (fn [] (toggle-opt :cursorline)) {:desc :Cursorline})
 ```
 
-Finally, some keymaps around the `<Esc>` key:
+Finally, some mappings around the `<Esc>` key:
 
 - Press it once in Normal mode to stop highlighting search matches
 - Press it twice in Terminal mode to switch to Normal mode
 
 ```fennel init.fnl +=
-(vim.keymap.set :n :<Esc> :<Cmd>nohlsearch<CR> {:desc "Stop highlighting matches"})
-(vim.keymap.set :t :<Esc><Esc> :<C-\\><C-n> {:desc "Exit Terminal mode"})
+(nmap :<Esc> :<Cmd>nohlsearch<CR> {:desc "Stop highlighting matches"})
+(tmap :<Esc><Esc> :<C-\><C-n> {:desc "Exit Terminal mode"})
 ```
 
-# Plugins
+I set my leader key and local leader key to `<Space>` and `,` respectively. Though these settings aren’t _mappings_ per se, this seems like the most correct place for them.
 
-While the core Neovim experience is excellent, I lean on a bunch of community plugins to elevate it to the next level. I’ll break these plugins up into sections:
+```fennel init.fnl +=
+(assoc vim.g :mapleader " "
+             :maplocalleader ",")
+```
 
+## Plugins
+
+While the core Neovim experience is excellent, I lean on myriad community plugins to enhance it in various ways. I’ll break these plugins up into sections:
+
+- [Editing](#editing)
+- [Workflow](#workflow)
 - [Tree-sitter](#tree-sitter)
 - [LSP Client](#lsp-client)
-- [Languages](#languages)
 - [Completion](#completion)
+- [Picker](#picker)
+- [Appearance](#appearance)
+- [Formatting](#formatting)
+- [Linting](#linting)
 
-Vim has built in plugin management capabilites in its _packages_ feature (`:h packages`). While this is perfect for many cases, I’ve had an excellent experience using the [lazy.nvim] plugin manager. Some of the features that won me over include:
+Neovim has built in plugin management capabilites via its _packages_ feature (`:h packages`). While this is perfectly fine for many cases, I’ve had a great experience using [Folke Lemaitre]’s [lazy.nvim] plugin manager. Some of the features that I appreciate include:
 
 - Versatile deferred, i.e. _lazy_, loading of plugins
-- Useful UI for inspecting and managing plugins
-- Dependency management
+- UI for inspecting and managing plugins
+- Simple dependency management
 - Detailed profiling of plugin load times
 - A lockfile for reproducibility
 
@@ -257,36 +262,250 @@ There’a a bit of bootstrapping required to get lazy.nvim installed.
   (vim.opt.rtp:prepend lazypath))
 ```
 
-lazy.nvim uses a series of tables to specify which plugins to download and configure. These tables, known as “specs”, must include the plugin’s Git repository (or local directory) as the value of the `1` key, i.e. in the first position. Since Fennel requires that numeric keys be specified explicitly, I’ll define a function that takes the repo/directory as the first argument; numeric keys look weird, y’know?
+lazy.nvim uses a series of tables to specify which plugins to download and configure. These tables, known as _specs_, typically include the plugin’s Git repository (or local directory) as the value of the `[1]` key, i.e. in the first position. Since Fennel requires that numeric keys be specified explicitly, I’ll create a function that takes the repo name and (optionally) a table, and returns a valid plugin spec; numeric keys look a bit weird, you know?
 
 ```fennel init.fnl +=
 (fn spec [plugin tbl]
-  "Returns `tbl` with `plugin` as the value belonging to the `1` key."
-  (assoc tbl 1 plugin))
+  "Returns `plugin` if `tbl` is `nil`. Otherwise, returns `tbl` with `plugin`
+  as the value associated with the `[1]` key."
+  (case tbl
+    nil {1 plugin}
+    _ (assoc tbl 1 plugin)))
 ```
 
-Now we can require lazy.nvim and set it up. I’ll use LMT’s [macro references] feature to inject the `lazy-spec` macro into lazy.nvim’s setup function; that way I can build it out bit by bit throughout this section.
+On the topic of numeric keys I also want a helper for defining spec `keys` tables.
+
+```fennel init.fnl +=
+(fn lazy-key [desc lhs rhs]
+  {1 lhs 2 rhs :desc desc})
+```
+
+Now I can require lazy.nvim and set it up. In addition to setting some basic options and disabling some built-in Neovim plugins, I inject the `lazy-spec` macro, which I’ll use to define specs in the relevant sections below.
 
 ```fennel init.fnl +=
 (let [lazy (require :lazy)]
-  (lazy.setup {:dev {:path "~/Projects"}
+  (lazy.setup {:checker {:enabled true}
+               :dev {:path "~/Projects"}
+               :install {:colorscheme [:catppuccin]}
+               :performance {:rtp {:disabled_plugins [:gzip :netrwPlugin :tarPlugin
+                                                      :tohtml :tutor :zipPlugin]}}
                :spec [
                  (spec :Olical/nfnl {:ft :fennel})
                  (spec :ngscheurich/srcedit {:dev true :opts {}})
                  <<<lazy-spec>>>
                ]
-               :checker {:enabled true}}))
+               }))
 ```
 
-With that, I have access lazy.nvim’s UI via the `:Lazy` command. Time to install some plugins.
+With that, I have access lazy.nvim’s UI via the `:Lazy` command.
 
-## Treesitter
+I use a fair few plugins from another of [Folke][folke lemaitre]’s popular Neovim offerings, the [snacks.nvim] plugin collection. snacks.nvim is distributed as a single plugin from which component plugins can be enabled and configured as desired. I’ll set up two macros: `snacks-opts` and `snacks-keys`, which will allow me to set up each plugin and its key mappings in the section to which they belong.
+
+```fennel "lazy-spec" +=
+(spec :folke/snacks.nvim
+      {:priority 1000
+       :lazy false
+       :opts {
+       :utils {}
+       <<<snacks-opts>>>
+       }
+       :keys [
+       <<<snacks-keys>>>
+       ]})
+```
+
+Time to install some plugins.
+
+### Editing
+
+The first group of plugins I’ll set up provide enhancements to and conveneniences for editing text (source code, typically).
+
+I rely heavily on [Leap] to move around buffers quickly. It works by providing a new general-purpose cursor motion that is activated by typing a trigger key (I use the defaults of `s`, `S`, and `gs`) followed by a sequence of two characters; labels then appear on jump targets matching the character sequence. The different trigger keys search differently–forward, backward, or _everywhere_ (in all windows within a tab). I find this allows me to navigate anywhere on the screen with very little effort.
+
+```fennel "lazy-spec" +=
+(spec :ggandor/leap.nvim
+      {:config (fn []
+                 (let [leap (require :leap)]
+                   (leap.add_default_mappings)))})
+```
+
+[Evgeni Chasnovski]’s [mini.nvim] plugin library, which includes over 40 independent Lua modules aimed at improving the overall Neovim experience is indispensible and, I suspect, one of the primary inspirations for [snacks.nvim]. I appreciate the quality and simplicity of the mini.nvim plugins, Evgeni’s commitment to separation of concerns, and the fact that the modules are distributed independently. There are, of course, cautionary considerations involved when depositing many eggs into a singular basket, but I find this to be an excellent basket indeed.
+
+[mini.align] aligns text interactively.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.align {:version :* :config true})
+```
+
+[mini.pairs] automatically inserts the other half of the pair when typing things like quotes and brackets.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.pairs {:version :* :config true})
+```
+
+[mini.splitjoin] splits and joins bracketed items like lists and function arguments.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.splitjoin {:version :* :config true})
+```
+
+[mini.surround] provides actions for operating on surrounding pairs.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.surround
+      {:version :* :config true
+       :opts {:mappings {:add :Za
+                         :delete :Zd
+                         :find :Zf
+                         :find_left :ZF
+                         :highlight :Zh
+                         :replace :Zr
+                         :update_n_lines :Zn}}})
+```
+
+
+
+```fennel "lazy-spec" +=
+(spec :stevearc/aerial.nvim
+      {:config (fn []
+                 (let [{: setup} (require :aerial)]
+                   (setup {:on_attach (fn [b]
+                                        (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
+                                        (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})
+                   (nmap :<Leader>o :<Cmd>AerialToggle!<CR> {:desc :Outline})))})
+```
+
+```fennel "lazy-spec" +=
+(spec :nvim-neo-tree/neo-tree.nvim
+      {:branch :v3.x
+       :dependencies [:nvim-lua/plenary.nvim :MunifTanjim/nui.nvim]
+       :config (fn []
+                 (nmap :<Leader>e "<Cmd>Neotree reveal<CR>" {:desc :Explore}))})
+```
+
+### Workflow
+
+There are many great Neovim plugins that improve one’s general workflow.
+
+[Steven Arcangeli]’s brilliant [Oil] is a file explorer that lets you edit your filesystem like a buffer. I set it up to be used as my default file explorer so `vim .` or `:e dir/` will trigger it. I also map the `-` to open the current file’s parent directory in Oil.
+
+```fennel "lazy-spec" +=
+(spec :stevearc/oil.nvim
+      {:config (fn []
+                 (let [oil (require :oil)]
+                   (var detail false)
+
+                   (fn toggle-detail []
+                     (set detail (not detail))
+                     (if detail
+                         (oil.set_columns [:icon :permissions :size :mtime])
+                         (oil.set_columns [:icon])))
+
+                   (oil.setup {:default_file_explorer true
+                               :keymaps {:gd {:desc "Toggle detail view"
+                                              :callback toggle-detail}}})
+
+                   (nmap :- :<Cmd>Oil<CR> {:desc "Open parent directory"})))})
+```
+
+[mini.bracketed] provides mappings to move back and forth between various series of items: buffers, files, conflict markers, diagnostics, and more.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.bracketed {:version :* :config true})
+```
+
+[mini.clue] shows possible next keys for incomplete key sequences.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.clue
+      {:version :*
+      :opts {
+
+      :triggers  [{:mode :n :keys :<Leader>}
+
+                  {:mode :n :keys :g}
+                  {:mode :x :keys :g}
+
+                  {:mode :n :keys :z}
+                  ;{:mode :x :keys :z}
+                  ]
+
+      :clues [{:mode :n :keys :<Leader>f :desc :+Find}
+              {:mode :n :keys :<Leader>g :desc :+Git}
+              {:mode :n :keys :<Leader>s :desc :+Search}
+              {:mode :n :keys :<Leader>S :desc :+Sessions}
+              {:mode :n :keys :<Leader>u :desc "+UI Toggles"}
+              ]
+
+
+      }})
+```
+
+[mini.sessions] builds on top of `mksession` (`:h mksession`) to provide helpers for reading, writing, and deleting Neovim Sessions.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.sessions
+      {:version :*
+      :config (fn []
+                (let [sessions (require :mini.sessions)]
+                  (sessions.setup)
+
+                  (fn session-name []
+                    (local n (string.gsub (vim.fn.getcwd) :/ :_))
+                    n)
+
+                  (nmap :<Leader>Sw #(sessions.write (session-name)) {:desc :Write})
+                  (nmap :<Leader>Sr #(sessions.read (session-name)) {:desc :Read})
+                  (nmap :<Leader>Ss #(sessions.select) {:desc :Read}))) })
+```
+
+[rsi.vim] adds readline key mappings to insert and command-line mode.
+
+```fennel "lazy-spec" +=
+(spec :tpope/vim-rsi)
+```
+
+[unimpaired.vim] adds convenient paired bracket mappings.
+TODO: Can I add o/e bindimg to mini.bracketed?
+
+[vim-slime] sends text from the buffer to various targets, e.g. tmux.
+
+```fennel "lazy-spec" +=
+(spec :jpalardy/vim-slime {:config #(tset vim.g :slime_target :tmux)})
+```
+
+[projectionist.vim] adds commands for switching between the current file and its configured “alternate”, e.g. an implementation file and its corresponding test file. This plugin looks for a `.projections.json` file in the project directory, in which alternates can be defined.
+
+```fennel "lazy-spec" +=
+(spec :tpope/vim-projectionist)
+```
+
+The `bigfile` and `quickfile` [snacks][snacks.nvim] provide some features around loading and working with files. The former disables some performance-hungry features in very large files (1.5 MB in size or greater, by default) while the latter defers loading of plugins until the contents of the file have been rendered.
+
+```fennel "snacks-opts" +=
+:bigfile {}
+:quickfile {}
+```
+
+The [scratch snack][snacks-scratch] opens a pop-up scratch buffer with the current filetype. This can be handy for jotting things down or sketching out ideas.
+
+```fennel "snacks-opts" +=
+:scratch {}
+```
+
+The [image snack][snacks-image] snack uses the [Kitty Graphics Protocol] to display inline images.
+
+```fennel "snacks-opts" +=
+:image {}
+```
+
+### Treesitter
 
 [Tree-sitter] describes itself thusly:
 
 > Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited.
 
-Neovim integrates the Tree-sitter library to enhance editor functionality around syntax highlighting, indentation, folding, and selection. The [nvim-treesitter] plugin includes configurations and abstractions that make working with the integration quite straightforward.
+Neovim integrates the Tree-sitter library to enhance things like syntax highlighting, indentation, folding, and selection. The [nvim-treesitter] plugin includes configurations and abstractions that make working with the integration quite straightforward.
 
 nvim-treesitter accepts an `ensure_installed` option that allows me to list all of the language parsers I want to be available. I’ll create a `ts-parsers` macro to make the plugin spec a bit easier to grok.
 
@@ -299,6 +518,7 @@ nvim-treesitter accepts an `ensure_installed` option that allows me to list all 
 :gdscript
 :go
 :graphql
+:heex
 :html
 :http
 :javascript
@@ -329,14 +549,14 @@ nvim-treesitter accepts an `ensure_installed` option that allows me to list all 
 
 - [ ] TODO: nvim-treesitter-textobjects
 
-## LSP Client
+### LSP Client
 
-Neovim has a robust built-in [Language Server Protocol] (LSP) client that is well-integrated to provide enhanced coding capabilities. [nvim-lspconfig] is a convenient set of sensible configurations for hundreds of language servers. Similar to how I set up nvim-treesitter, I’ll create a `lang-servers` macro for configuring LSP servers up front.
+Neovim has a robust, built-in [Language Server Protocol] (LSP) client that is well-integrated to provide enhanced coding capabilities. [nvim-lspconfig] is a convenient set of sensible and extensible configurations for hundreds of language servers. Similar to how I set up nvim-treesitter, I’ll create a `lang-servers` macro for enumerating language server configurations. The structure here is pairs of server config names and tables of options.
 
 ```fennel "lang-servers"
 ;; LSP servers
 :bashls {}
-:lexical {}
+:lexical {:cmd [(.. vim.env.HOME "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh")]}
 :gdscript {}
 :gopls {}
 :lua_ls {}
@@ -347,13 +567,8 @@ Neovim has a robust built-in [Language Server Protocol] (LSP) client that is wel
 
 ```fennel "lazy-spec" +=
  (spec :neovim/nvim-lspconfig
-       {:dependencies [:hrsh7th/cmp-nvim-lsp]
-        :config (fn []
+       {:config (fn []
                   (let [lc (require :lspconfig)
-                        ;; lsp-cap (vim.lsp.protocol.make_client_capabilities)
-                        ;; cmp-lsp (require :cmp_nvim_lsp)
-                        ;; cmp-cap (cmp-lsp.default_capabilities)
-                        ;; cap (vim.tbl_deep_extend :force lsp-cap cmp-cap)
                         servers {
                         <<<lang-servers>>>
                         }]
@@ -361,40 +576,501 @@ Neovim has a robust built-in [Language Server Protocol] (LSP) client that is wel
                         ((get-in lc [s :setup]) c))))})
 ```
 
-## Scratch
+The installation of language server binaries is outside the scope of this configuration document. My preference is to make these programs available via [Nix], either as part of a project-specific development environment or at the user level under the auspices of [Home Manager].
+ 
+### Completion
 
-```fennel init.fnl +=
-(vim.cmd "colorscheme habamax")
-(vim.cmd "set conceallevel=0")
+_Completion_ here refers to a helpful mechanism with which the user is presented with a list of potential candidates to complete what they have typed, based on some predictive algorithm(s) run over a source of candidates. These sources can range from the straightforward, such as words in the current buffer, to the quite complex, such as symbols of certain types within a project, filtered in a context-aware manner (this latter case is often handled by a language server).
+
+Neovim has a built-in completion system, but I prefer [Blink Completion] for its customizable pop-up menu, wide variety of supported candidate sources, and code (including LSP) snippets integration. I’ve also found it to provide very helpful error messages when something is configured incorrectly, which is nearly alone worth the price of admission.
+
+```fennel "lazy-spec" +=
+(spec :saghen/blink.cmp
+      {:version :0.12.4
+       :opts {:keymap {:preset :super-tab}
+              :sources {:default [:lsp :path :snippets]}
+              :cmdline {:enabled false}
+              :completion {:ghost_text {:enabled true}
+                           :menu {:border :none
+                                  ;; :auto_show #(not= $1.mode :cmdline)
+                                  :auto_show false
+                                  }
+                           :documentation {:window {:border :single}
+                                           :auto_show true :auto_show_delay_ms 500
+                                          }}}
+       :config (fn [_ opts]
+                 (let [cmp (require :blink.cmp)]
+                   (cmp.setup opts)
+                   (imap :<C-n> #(cmp.show {:providers [:buffer]}))))})
+```
+
+### Picker
+
+Just as code completion cam help you make quick, informed decisions about text insertion by providing a narrowing list of contextual candidates, a _picker_ can provide an interface for selecting candidates from sources not directly related to the text being edited. Common picker sources include files, buffers, text search matches, and language server results–the list goes on.
+
+The aptly-named [picker snack][snacks-picker] shines for this use case. It has a huge amount of built-in sources and layouts, and is easily configured and extended. 
+
+```fennel "snacks-opts" +=
+:picker {}
+```
+
+There are a lot of useful built-in sources for `picker` and thus I define a lot of mappings for it. I group these mappings into four general categories:
+
+- Quick: Oft-used sources; require a single keypress
+- General: Generally useful sources and functions
+- Find: Pick from file/directory names; under `<Leader>f`
+- Search: Pick from the contents of files and other sources; under `<Leader>s`
+
+Here’s a table to help keep things straight with the `<Leader>` mappings:
+
+
+| Keys   | Source                 |
+|:------:|------------------------|
+| `ff`   | Files                  |
+| `fg`   | Git Files              |
+| `fp`   | Projects               |
+| `fr`   | Recent Files           |
+| `sa`   | Autocommands           |
+| `sB`   | Buffers                |
+| `s:`   | Command History        |
+| `sc`   | Commands               |
+| `sd`   | Diagnostics            |
+| `sD`   | Diagnostics (Buffer)   |
+| `sg`   | Grep                   |
+| `sh`   | Help Pages             |
+| `sH`   | Highlights             |
+| `si`   | Icons                  |
+| `sj`   | Jumps                  |
+| `sk`   | Keymaps                |
+| `sb`   | Lines (Buffer)         |
+| `sl`   | Location List          |
+| `sM`   | Man Pages              |
+| `sm`   | Marks                  |
+| `sn`   | Notification History   |
+| `sq`   | Quickfix List          |
+| `s"`   | Registers              |
+| `s/`   | Search History         |
+| `su`   | Undo History           |
+| `sw`   | Word                   |
+
+
+```fennel "snacks-keys" +=
+;; Quick
+(lazy-key "Files" :<C-f> #(Snacks.picker.git_files {:layout :ivy}))
+(lazy-key "Grep" :<C-g> #(Snacks.picker.grep {:layout :ivy}))
+(lazy-key "Lines" :<C-_> #(Snacks.picker.lines {:layout :ivy}))
+(lazy-key "Buffers" :<C-Space> #(Snacks.picker.buffers {:layout :select}))
+
+;; General
+(lazy-key "Find Files (Smart)" :<Leader><Leader> #(Snacks.picker.smart {:layout :ivy}))
+(lazy-key "Resume Picker" :<Leader>r #(Snacks.picker.resume))
+
+;; Find
+(lazy-key "Files" :<Leader>ff #(Snacks.picker.files))
+(lazy-key "Git Files" :<Leader>fg #(Snacks.picker.git_files))
+(lazy-key "Projects" :<Leader>fp #(Snacks.picker.projects))
+(lazy-key "Recent Files" :<Leader>fr #(Snacks.picker.recent))
+
+;; Search
+(lazy-key "Autocommands" :<Leader>sa #(Snacks.picker.autocmds))
+(lazy-key "Buffers" :<Leader>sB #(Snacks.picker.grep_buffers))
+(lazy-key "Command History" "<Leader>s:" #(Snacks.picker.command_history))
+(lazy-key "Commands" :<Leader>sc #(Snacks.picker.commands))
+(lazy-key "Diagnostics" :<Leader>sd #(Snacks.picker.diagnostics))
+(lazy-key "Diagnostics (Buffer)" :<Leader>sD #(Snacks.picker.diagnostics_buffer))
+(lazy-key "Grep" :<Leader>sg #(Snacks.picker.grep))
+(lazy-key "Help Pages" :<Leader>sh #(Snacks.picker.help))
+(lazy-key "Highlights" :<Leader>sH #(Snacks.picker.highlights))
+(lazy-key "Icons" :<Leader>si #(Snacks.picker.icons))
+(lazy-key "Jumps" :<Leader>sj #(Snacks.picker.jumps))
+(lazy-key "Keymaps" :<Leader>sk #(Snacks.picker.keymaps))
+(lazy-key "Lines (Buffer)" :<Leader>sb #(Snacks.picker.lines))
+(lazy-key "Location List" :<Leader>sl #(Snacks.picker.loclist))
+(lazy-key "Man Pages" :<Leader>sM #(Snacks.picker.man))
+(lazy-key "Marks" :<Leader>sm #(Snacks.picker.marks))
+(lazy-key "Notification History" :<Leader>sn #(Snacks.picker.notifications))
+(lazy-key "Quickfix List" :<Leader>sq #(Snacks.picker.qflist))
+(lazy-key "Registers" "<Leader>s\"" #(Snacks.picker.registers))
+(lazy-key "Search History" :<Leader>s/ #(Snacks.picker.search_history))
+(lazy-key "Undo History" :<Leader>su #(Snacks.picker.undo))
+(lazy-key "Word" :<Leader>sw #(Snacks.picker.grep_word))
+```
+
+### Appearance
+
+While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no denying that it is a well-crafted and _comprehensive_ colorscheme plugin. I leverage the excellent Catppuccin foundation and define my own color palette based on [Tomorrow Night].
+
+```fennel "lazy-spec" +=
+(spec :catppuccin/nvim
+      {:name :catppuccin
+       :lazy false
+       :priority 1000
+       :config (fn []
+                 (let [{: setup} (require :catppuccin)]
+                   (setup {:color_overrides {:mocha {:rosewater :#ab7e8a
+                                                     :flamingo  :#a3685a
+                                                     :pink      :#b294bb
+                                                     :mauve     :#c07d90
+                                                     :red       :#cc6566
+                                                     :maroon    :#d57d62
+                                                     :peach     :#de935f
+                                                     :yellow    :#f0c674
+                                                     :green     :#b6bd68
+                                                     :teal      :#9fbd8f
+                                                     :sky       :#8abeb7
+                                                     :sapphire  :#85b0bc
+                                                     :blue      :#82a2be
+                                                     :lavender  :#a3a7c2
+                                                     :text      :#c4c8c6
+                                                     :subtext1  :#b5b7b4
+                                                     :subtext0  :#969896
+                                                     :overlay2  :#838585
+                                                     :overlay1  :#717374
+                                                     :overlay0  :#5e6063
+                                                     :surface2  :#4a4e52
+                                                     :surface1  :#373b41
+                                                     :surface0  :#282a2e
+                                                     :base      :#1d1f21
+                                                     :mantle    :#151718
+                                                     :crust     :#0e0f10}}
+                                             :integrations {:aerial true
+                                                            :blink_cmp true}}))
+                 (vim.cmd.colorscheme :catppuccin))})
+```
+
+A “breadbcrumbs” bar surfaces your current place in a structured document (markup, code, etc.) with a left-to-right list of larger to narrower scopes, ending with your current scope on the right. [dropbar.nvim] does a great job with this sort of UI.
+
+```fennel "lazy-spec" +=
+(spec :Bekaboo/dropbar.nvim
+      {:opts {:bar {:enable false}}
+       :config (fn [_ opts]
+        (fn toggle-dropbar []
+          (if (= vim.o.winbar "")
+            (tset vim.o :winbar "%{%v:lua.dropbar()%}")
+            (tset vim.o :winbar "")))
+        (nmap :<Leader>ub toggle-dropbar {:desc :Breadcrumbs})
+        (let [{: setup} (require :dropbar)]
+          (setup opts)))})
+```
+
+[mini.icons] provides glyph icons for filetypes and various symbols, with ASCII fallbacks.
+
+```fennel "lazy-spec" +=
+(spec :echasnovski/mini.icons {:version :* :config true})
+```
+
+[colorizer.lua] highlights certain color patterns in buffer text with the corresponding color value. While I find this useful for hexidecimal color patterns like `#fe30de`,  I don’t find it useful for color names like “blue”; I configure colorizer.lua to not highlight such names.
+
+```fennel "lazy-spec" +=
+(spec :catgoose/nvim-colorizer.lua
+      {:event :BufReadPre
+       :opts {:user_default_options {:names false}}})
+```
+
+The [notifier snack][snacks-notifier] provides a modern look for `vim.notify` (`:h vim.notify`).
+
+```fennel "snacks-opts" +=
+:notifier {}
+```
+
+The [scroll snack][snacks-scroll] uses animations to smoothly scroll the buffer.
+
+```fennel "snacks-opts" +=
+:scroll {}
+```
+
+The [statuscolumn snack][snacks-statuscolumn] enables a virtual statuscolumn to the right of line numbers that can display marks, signs, folds, and Git indicators.
+
+```fennel "snacks-opts" +=
+:statuscolumn {}
+```
+
+The [input snack][snacks-input] improves the `vim.ui.input` (`:h vim.ui.input`) prompt.
+
+```fennel "snacks-opts" +=
+:input {}
+```
+
+The [indent snack][snacks-indent] shows indentation guides. I don’t enable it by default and only show guides for the current scope.
+
+```fennel "snacks-opts" +=
+:indent {:enabled false :only_scope true :only_current true}
+```
+
+```fennel "snacks-keys" +=
+(lazy-key "Indent Guides"
+          :<Leader>ui
+          (fn []
+            (if Snacks.indent.enabled
+              (Snacks.indent.disable)
+              (Snacks.indent.enable))))
 ```
 
 ```fennel "lazy-spec" +=
-{1 :Olical/conjure}
+;; TODO: Some of these settings don't seem to work...
+;; (spec :rachartier/tiny-glimmer.nvim
+;;       {:opts {:overwrite {:search {:enabled true}
+;;                           :undo {:enabled true}
+;;                           :redo {:enabled true}}}})
 ```
 
+Scrollbar with diagnostics indicators:
+
+```fennel "lazy-spec" +=
+(spec :petertriho/nvim-scrollbar {:config true})
+```
+
+Notifications and progress indicator:
+
+```fennel "lazy-spec" +=
+(spec :j-hui/fidget.nvim {:config true})
+```
+
+Floating buffer labels:
+
+```fennel "lazy-spec" +=
+(spec :b0o/incline.nvim {:config true})
+```
+
+Animate the cursor with a smear effect:
+
+```fennel "lazy-spec" +=
+(spec :sphamba/smear-cursor.nvim {:config true})
+```
+
+Decorate tabpage indicators:
+
+```fennel "lazy-spec" +=
+(spec :akinsho/bufferline.nvim
+      {:version :*
+       :after :catppuccin
+       :opts {:options {:mode :tabs
+                        :indicator {:icon "┃ "}
+                        :always_show_bufferline false
+                        :offsets [{:filetype :neo-tree
+                                   :text " Explorer"
+                                   :text_align :left
+                                   :separator false}]
+                        ;; :highlights ((. (require :catppuccin.groups.integrations.bufferline) :get))
+                        }}})
+```
+
+### Source Control
+
+Mention the `:G` command.
+
+```fennel "lazy-spec" +=
+(spec :lewis6991/gitsigns.nvim
+      {:config (fn []
+                 (let [gs (require :gitsigns)]
+                   (gs.setup {:signs {:add {:text :┃}
+                                          :change {:text :┃}
+                                          :changedelete {:text :┃}
+                                          :delete {:text :┃}
+                                          :topdelete {:text :┃}
+                                          :untracked {:text :┇}}})
+                   (nmap :<Leader>gb gs.toggle_current_line_blame {:desc "Line blame (toggle)"})
+                   (nmap :<Leader>gd gs.toggle_deleted {:desc "Deleted (toggle)"})
+                   (nmap :<Leader>gh gs.toggle_linehl {:desc "Line highlight (toggle)"})
+                   (nmap :<Leader>gp gs.preview_hunk {:desc "Preview hunk"})
+                   (nmap :<Leader>gp gs.reset_hunk {:desc "Reset hunk"})
+                   (nmap "[h" gs.prev_hunk {:desc "Previous hunk"})
+                   (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
+```
+
+```fennel "snacks-opts" +=
+:gitbrowse {}
+```
+
+```fennel "snacks-keys" +=
+(lazy-key "View on Remote" :<Leader>gB #(Snacks.gitbrowse))
+```
+
+### Status Line
+
+
+```fennel "lazy-spec" +=
+(spec :rebelot/heirline.nvim)
+```
+
+### Formatting
+
+Consistent formatting is useful in easing the cognitive burden of reading source code, as it will prevent one from encountering multiple stylistic modes within the context of, say, a single project. However, having to think about how to format text is not a useful way to spend brain cycles whilst building software. Luckily, we have a bevy of automated code-formatting tools at our disposable; I like [Conform] for its support for (and wrangling of) LSP formatting and good integration with standalone formatting tools.
+
+Conform supports a mapping of file types to lists of formatters, which I’ll define below in the `ft-formatters` macro. Any file types not included will fall back to using the respective language server, if one is running. I also configure Conform to format a buffer on save.
+
+
+```fennel "ft-formatters" +=
+:css [:prettier]
+:html [:prettier]
+:javascript [:prettier]
+:json [:prettier]
+:lua [:stylua]
+:scss [:prettier]
+:sql [:sleek]
+:typescript [:prettier]
+```
+
+```fennel "lazy-spec" +=
+(spec :stevearc/conform.nvim
+      {:opts {:formatters_by_ft {
+              <<<ft-formatters>>>
+              }
+              :format_on_save {:timeout_ms 500
+                               :lsp_fallback true}}})
+```
+
+### Linting
+
+While language servers provide a lot of code “smartness” features, I still use bespoke linting tools for a handful of file types to, [as per Wikipedia][linting]:
+
+> flag programming errors, bugs, stylistic errors and suspicious constructs
+
+My go-to plugin here is [nvim-lint].
+
+```fennel "lazy-spec" +=
+(spec :mfussenegger/nvim-lint
+      {:config (fn []
+                 (let [lint (require :lint)]
+                   (tset lint :linters_by_ft {:sh [:shellcheck]
+                                              :sql [:sqlfluff]})))})
+```
+
+### Prose
+
+```fennel "lazy-spec" +=
+(spec :OXY2DEV/markview.nvim
+      {:lazy false
+       :config (fn []
+                 (let [editor (require :markview.extras.editor)]
+                   (editor.setup)))})
+```
+
+### Artifical Intelligence
+
+This section is for text-focused, generative AI tools that I’m experimenting with. These [LLM]-based assistants can be useful (and clever, in a way), though concerns around ethics and energy consumption are front of mind when interfacing with them.
+
+[copilot.lua] provides access to code completion features powered by GitHub’s [Copilot]. This is the simplest of the AI tools that I’ve tried, not that simple is a bad thing.
+
+```fennel "lazy-spec" +=
+(spec :zbirenbaum/copilot.lua
+      {:cond false
+       :cmd :Copilot
+       :event :InsertEnter
+       :opts {:suggestion {:keymap {:accept :<Tab>
+                                    :next "<C-n>"
+                                    :prev "<C-p>"
+                                    :dismiss "<C-q>"}}}})
+```
+
+[CodeCompanion] is an LLM-agnostic coding assistant that brings all sorts of tricks to the party, including a chat-based UI, agents/tools to automatically apply suggested changes, and tons of extensibility. I have it set up to use [Anthropic] as an LLM provider, though I’m interested in exploring local solutions, e.g. with [Ollama].
+
+```fennel "lazy-spec" +=
+(spec :olimorris/codecompanion.nvim
+      {:cond false
+       :config true 
+       :dependencies [:nvim-lua/plenary.nvim
+                      :nvim-treesitter/nvim-treesitter]
+       :strategies {:chat {:adapter :anthropic}
+                    :inline {:adapter :anthropic}}})
+```
+
+### Scratch
+
+```fennel init.fnl +=
+(vim.cmd "so ~/.config/nvim/scratch.lua")
+```
+
+```fennel "lazy-spec" +=
+(spec :mistweaverco/kulala.nvim
+  {:ft [:http :rest]
+   :opts {:global_keymaps true}})
+
+(spec :Olical/conjure
+      {:config (fn []
+                (set vim.g.conjure#client#fennel#aniseed#deprecation_warning false))})
+
+;; {1 :iamcco/markdown-preview.nvim
+;;  :build (fn [] ((. vim.fn "mkdp#util#install")))
+;;  :cmd [:MarkdownPreviewToggle :MarkdownPreview :MarkdownPreviewStop]
+;;  :ft [:markdown]}
+
+(spec :brianhuster/live-preview.nvim)
+
+
+
+;; (spec :joshuavial/aider.nvim {:opts {}})
+
+(spec :kristijanhusak/vim-dadbod-ui
+      {:dependencies [{1 :tpope/vim-dadbod :lazy true}
+                      {1 :kristijanhusak/vim-dadbod-completion :ft [:sql :mysql :plsql] :lazy true}]
+       :cmd [:DBUI :DBUIToggle :DBUIAddConnection :DBUIFindBuffer]
+       :init (fn [] (tset vim.g :db_ui_use_nerd_fonts 1))})
+```
+
+[anthropic]: https://www.anthropic.com/
 [autocommand group]: https://neovim.io/doc/user/autocmd.html#_8.-groups
 [autocommand]: https://neovim.io/doc/user/autocmd.html#_1.-introduction
 [beam]: https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)
+[blink completion]: https://cmp.saghen.dev/
+[catppuccin]: https://github.com/catppuccin/nvim
 [clojure]: https://clojure.org/
+[codecompanion]: https://codecompanion.olimorris.dev/
+[colorizer.lua]: https://github.com/catgoose/nvim-colorizer.lua
+[conform]: https://github.com/stevearc/conform.nvim
+[copilot.lua]: https://github.com/zbirenbaum/copilot.lua
+[copilot]: https://github.com/features/copilot
+[dropbar.nvim]: https://github.com/Bekaboo/dropbar.nvim
 [elixir]: https://elixir-lang.org/
 [erlang]: https://www.erlang.org/
+[evgeni chasnovski]: http://www.questionflow.org/
 [fenced code blocks]: https://spec.commonmark.org/0.31.2/#fenced-code-blocks
 [fennel]: https://fennel-lang.org/
+[folke lemaitre]: https://folke.io/
 [git]: https://git-scm.com/
 [go]: https://go.dev/
+[home manager]: https://github.com/nix-community/home-manager
+[kitty-graphics-protocol]: https://sw.kovidgoyal.net/kitty/graphics-protocol/
 [language server protocol]: https://microsoft.github.io/language-server-protocol/
 [lazy.nvim]: https://github.com/folke/lazy.nvim
+[leap]: https://github.com/ggandor/leap.nvim
+[linting]: https://en.wikipedia.org/wiki/Lint_%28software%29
 [literate markdown tangle]: https://github.com/driusan/lmt
+[llm]: https://en.wikipedia.org/wiki/Large_language_model
 [lua]: https://www.lua.org/
-[macro refereneces]: https://github.com/driusan/lmt/blob/master/README.md#macro-references
+[macro references]: https://github.com/driusan/lmt/blob/master/README.md#macro-references
 [make]: https://en.wikipedia.org/wiki/Make_%28software%29
 [markdown]: https://spec.commonmark.org/0.31.2/#what-is-markdown-
+[mini.align]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+[mini.bracketed]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
+[mini.clue]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-clue.md
+[mini.icons]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-icons.md
+[mini.nvim]: https://github.com/echasnovski/mini.nvim
+[mini.pairs]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
+[mini.sessions]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
+[mini.splitjoin]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+[mini.surround]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 [neovim]: https://neovim.io/
 [nfnl]: https://github.com/Olical/nfnl
+[nix]: https://nixos.org/
+[nvim-lint]: https://github.com/mfussenegger/nvim-lint
+[nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
 [nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
+[oil]: https://github.com/stevearc/oil.nvim
 [oliver caldwell]: https://github.com/Olical
+[ollama]: https://ollama.com/
 [plugins]: #pluins
 [process]: #process
 [ripgrep]: https://github.com/BurntSushi/ripgrep
+[snacks-image]: https://github.com/folke/snacks.nvim/blob/main/docs/image.md
+[snacks-indent]: https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
+[snacks-input]: https://github.com/folke/snacks.nvim/blob/main/docs/input.md
+[snacks-notifier]: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
+[snacks-picker]: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+[snacks-scratch]: https://github.com/folke/snacks.nvim/blob/main/docs/scratch.md
+[snacks-scroll]: https://github.com/folke/snacks.nvim/blob/main/docs/scroll.md
+[snacks-statuscolumn]: https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
+[snacks.nvim]: https://github.com/folke/snacks.nvim
+[steven arcangeli]: https://github.com/stevearc
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages
