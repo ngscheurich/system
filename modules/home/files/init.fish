@@ -17,6 +17,11 @@ set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx LOCAL_BIN_DIR $HOME/.local/bin
 set -gx SCRIPTS_DIR /etc/system/scripts
 
+if [ -e "$HOME/.env" ]
+  source "$HOME/.env"
+end
+
+
 # Append directories to path
 fish_add_path "$LOCAL_BIN_DIR"
 fish_add_path '/Applications/kitty.app/Contents/MacOS/'
