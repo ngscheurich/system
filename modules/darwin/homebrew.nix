@@ -13,7 +13,6 @@
     taps = [
       "charmbracelet/tap"
       "d12frosted/emacs-plus"
-      "gcenx/wine"
       "homebrew/cask-versions"
       "homebrew/services"
       "morantron/homebrew-tmux-fingers"
@@ -23,7 +22,6 @@
     brews = [
       "asyncapi"
       "llvm"
-      "localai"
       "luajit"
       "mods"
 
@@ -78,11 +76,6 @@
       "raycast"
       "reaper"
       "vlc"
-      "whatsapp"
-      {
-        name = "gcenx/wine/wineskin";
-        args = { no_quarantine = true; };
-      }
       "wireshark"
     ];
 
