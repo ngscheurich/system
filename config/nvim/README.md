@@ -35,7 +35,11 @@ nfnl expects a Fennel configuration file named `.nfnl.fnl` in this directory, so
 
 `make init` also performs the first tangle and compile steps, as described [above](#process).
 
-## Preludeicons that, I’m ready to begin configuring Neovim. First things first: I’ll set up some generally useful variables.
+With that, I’m ready to begin configuring Neovim.
+
+## Prelude
+
+First things first: I’ll set some generally useful variables.
 
 ```fennel init.fnl +=
 ;; The Neovim configuration directory
@@ -291,7 +295,6 @@ Now I can require lazy.nvim and set it up. In addition to setting some basic opt
                                                       :tohtml :tutor :zipPlugin]}}
                :spec [
                  (spec :Olical/nfnl {:ft :fennel})
-                 (spec :ngscheurich/srcedit {:dev true :opts {}})
                  <<<lazy-spec>>>
                ]
                }))
@@ -340,7 +343,9 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
 [mini.pairs] automatically inserts the other half of the pair when typing things like quotes and brackets.
 
 ```fennel "lazy-spec" +=
-(spec :echasnovski/mini.pairs {:version :* :config true})
+(spec :echasnovski/mini.pairs
+      {:version :*
+       :opts {:skip_ts [:string]}})
 ```
 
 [mini.splitjoin] splits and joins bracketed items like lists and function arguments.
@@ -353,14 +358,14 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
 
 ```fennel "lazy-spec" +=
 (spec :echasnovski/mini.surround
-      {:version :* :config true
-       :opts {:mappings {:add :Za
-                         :delete :Zd
-                         :find :Zf
-                         :find_left :ZF
-                         :highlight :Zh
-                         :replace :Zr
-                         :update_n_lines :Zn}}})
+      {:version :*
+       :opts {:mappings {:add :\a
+                         :delete :\d
+                         :find :\f
+                         :find_left :\F
+                         :highlight :\h
+                         :replace :\r
+                         :update_n_lines :\n}}})
 ```
 
 
@@ -371,16 +376,15 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
                  (let [{: setup} (require :aerial)]
                    (setup {:on_attach (fn [b]
                                         (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
-                                        (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})
-                   (nmap :<Leader>o :<Cmd>AerialToggle!<CR> {:desc :Outline})))})
+                                        (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
+      :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
 ```
 
 ```fennel "lazy-spec" +=
 (spec :nvim-neo-tree/neo-tree.nvim
       {:branch :v3.x
        :dependencies [:nvim-lua/plenary.nvim :MunifTanjim/nui.nvim]
-       :config (fn []
-                 (nmap :<Leader>e "<Cmd>Neotree reveal<CR>" {:desc :Explore}))})
+       :keys [(lazy-key :Explore :<Leader>e "<Cmd>Neotree reveal<CR>")]})
 ```
 
 ### Workflow
@@ -403,9 +407,8 @@ There are many great Neovim plugins that improve one’s general workflow.
 
                    (oil.setup {:default_file_explorer true
                                :keymaps {:gd {:desc "Toggle detail view"
-                                              :callback toggle-detail}}})
-
-                   (nmap :- :<Cmd>Oil<CR> {:desc "Open parent directory"})))})
+                                              :callback toggle-detail}}})))
+       :keys [(lazy-key "Open parent directory" :- :<Cmd>Oil<CR>)]})
 ```
 
 [mini.bracketed] provides mappings to move back and forth between various series of items: buffers, files, conflict markers, diagnostics, and more.
@@ -419,26 +422,17 @@ There are many great Neovim plugins that improve one’s general workflow.
 ```fennel "lazy-spec" +=
 (spec :echasnovski/mini.clue
       {:version :*
-      :opts {
-
-      :triggers  [{:mode :n :keys :<Leader>}
-
-                  {:mode :n :keys :g}
-                  {:mode :x :keys :g}
-
-                  {:mode :n :keys :z}
-                  ;{:mode :x :keys :z}
-                  ]
-
-      :clues [{:mode :n :keys :<Leader>f :desc :+Find}
-              {:mode :n :keys :<Leader>g :desc :+Git}
-              {:mode :n :keys :<Leader>s :desc :+Search}
-              {:mode :n :keys :<Leader>S :desc :+Sessions}
-              {:mode :n :keys :<Leader>u :desc "+UI Toggles"}
-              ]
-
-
-      }})
+      :opts {:triggers  [{:mode :n :keys :<Leader>}
+                         {:mode :n :keys :g}
+                         {:mode :x :keys :g}
+                         {:mode :n :keys :z}
+                         {:mode :x :keys :z}]
+            :clues [{:mode :n :keys :<Leader>f :desc :+Find}
+                    {:mode :n :keys :<Leader>g :desc :+Git}
+                    {:mode :n :keys :<Leader>s :desc :+Search}
+                    {:mode :n :keys :<Leader>S :desc :+Sessions}
+                    {:mode :n :keys :<Leader>t :desc :+Test}
+                    {:mode :n :keys :<Leader>u :desc "+UI Toggles"}]}})
 ```
 
 [mini.sessions] builds on top of `mksession` (`:h mksession`) to provide helpers for reading, writing, and deleting Neovim Sessions.
@@ -648,7 +642,6 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 | `sm`   | Marks                  |
 | `sn`   | Notification History   |
 | `sq`   | Quickfix List          |
-| `st`   | Type Definitions (LSP)          |
 | `s"`   | Registers              |
 | `s/`   | Search History         |
 | `su`   | Undo History           |
@@ -696,16 +689,15 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 (lazy-key "Word" :<Leader>sw #(Snacks.picker.grep_word))
 ```
 
-
 | Keys   | Source                 |
 |:------:|------------------------|
-| `d`   | Definitions          |
-| `D`   | Declarations|
-| `i`   | Implementations          |
-| `r`   | References          |
-| `S`   | Workspace Symbols |
-| `s`   | Symbols          |
-| `t`   | Type Definitions          |
+| `d`   | Definitions             |
+| `D`   | Declarations            |
+| `i`   | Implementations         |
+| `r`   | References              |
+| `S`   | Workspace Symbols       |
+| `s`   | Symbols                 |
+| `t`   | Type Definitions        |
 
 ```fennel "snacks-keys" +=
 ;; LSP
@@ -765,20 +757,19 @@ A “breadbcrumbs” bar surfaces your current place in a structured document (m
 ```fennel "lazy-spec" +=
 (spec :Bekaboo/dropbar.nvim
       {:opts {:bar {:enable false}}
-       :config (fn [_ opts]
-        (fn toggle-dropbar []
-          (if (= vim.o.winbar "")
-            (tset vim.o :winbar "%{%v:lua.dropbar()%}")
-            (tset vim.o :winbar "")))
-        (nmap :<Leader>ub toggle-dropbar {:desc :Breadcrumbs})
-        (let [{: setup} (require :dropbar)]
-          (setup opts)))})
+       :keys [(lazy-key :Breadcrumbs
+                        :<Leader>ub
+                        (fn []
+                          (if (= vim.o.winbar "")
+                              (tset vim.o :winbar "%{%v:lua.dropbar()%}")
+                              (tset vim.o :winbar ""))))]
+       :config true})
 ```
 
 [mini.icons] provides glyph icons for filetypes and various symbols, with ASCII fallbacks.
 
 ```fennel "lazy-spec" +=
-(spec :echasnovski/mini.icons {:version :* :config true})
+(spec :echasnovski/mini.icons {:version :* :config true :lazy false})
 ```
 
 [colorizer.lua] highlights certain color patterns in buffer text with the corresponding color value. While I find this useful for hexidecimal color patterns like `#fe30de`,  I don’t find it useful for color names like “blue”; I configure colorizer.lua to not highlight such names.
@@ -830,10 +821,10 @@ The [indent snack][snacks-indent] shows indentation guides. I don’t enable it 
 
 ```fennel "lazy-spec" +=
 ;; TODO: Some of these settings don't seem to work...
-;; (spec :rachartier/tiny-glimmer.nvim
-;;       {:opts {:overwrite {:search {:enabled true}
-;;                           :undo {:enabled true}
-;;                           :redo {:enabled true}}}})
+;(spec :rachartier/tiny-glimmer.nvim
+;      {:opts {:overwrite {:search {:enabled true}
+;                          :undo {:enabled true}
+;                          :redo {:enabled true}}}})
 ```
 
 Scrollbar with diagnostics indicators:
@@ -845,7 +836,7 @@ Scrollbar with diagnostics indicators:
 Notifications and progress indicator:
 
 ```fennel "lazy-spec" +=
-(spec :j-hui/fidget.nvim {:config true})
+(spec :j-hui/fidget.nvim {:config true :event :LspProgress})
 ```
 
 Floating buffer labels:
@@ -866,15 +857,14 @@ Decorate tabpage indicators:
 (spec :akinsho/bufferline.nvim
       {:version :*
        :after :catppuccin
+       :event [:TabEnter :TabNew :TabNewEntered]
        :opts {:options {:mode :tabs
                         :indicator {:icon "┃ "}
                         :always_show_bufferline false
                         :offsets [{:filetype :neo-tree
                                    :text " Explorer"
                                    :text_align :left
-                                   :separator false}]
-                        ;; :highlights ((. (require :catppuccin.groups.integrations.bufferline) :get))
-                        }}})
+                                   :separator false}]}}})
 ```
 
 ### Source Control
@@ -962,7 +952,7 @@ My go-to plugin here is [nvim-lint].
 
 ```fennel "lazy-spec" +=
 (spec :OXY2DEV/markview.nvim
-      {:lazy false
+      {:ft [:markdown :avante]
        :config (fn []
                  (let [editor (require :markview.extras.editor)]
                    (editor.setup)))})
@@ -1041,6 +1031,29 @@ This section is for text-focused, generative AI tools that I’m experimenting w
                       {1 :kristijanhusak/vim-dadbod-completion :ft [:sql :mysql :plsql] :lazy true}]
        :cmd [:DBUI :DBUIToggle :DBUIAddConnection :DBUIFindBuffer]
        :init (fn [] (tset vim.g :db_ui_use_nerd_fonts 1))})
+
+(spec :nvim-neotest/neotest
+      {:dependencies [:nvim-neotest/nvim-nio
+                      :antoinemadec/FixCursorHold.nvim
+                      :jfpedroza/neotest-elixir]
+       :config (fn []
+                 (let [{: setup} (require :neotest)]
+                   (setup {:adapters [(require :neotest-elixir)]})))
+       ;:ft [:elixir]
+       :keys [(lazy-key :Nearest :<Leader>tn #((get-in (require :neotest) [:run :run])))
+              (lazy-key :Last :<Leader>tt #((get-in (require :neotest) [:run :run_last])))
+              (lazy-key :File :<Leader>tf #((get-in (require :neotest) [:run :run]) (vim.fn.expand :%)))
+              (lazy-key "Summary (Toggle)" :<Leader>ts #((get-in (require :neotest) [:summary :toggle])))]})
+
+(spec :folke/trouble.nvim
+      {:cmd [:Trouble]
+       :config true
+       :keys [(lazy-key "Diagnostics" :<Leader>ld "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>")
+              (lazy-key "Diagnostics (Workspace)" :<Leader>lD "<Cmd>Trouble diagnostics toggle<CR>")
+              (lazy-key "Symbols" :<Leader>ls "<Cmd>Trouble symbols toggle<CR>")
+              (lazy-key "LSP" :<Leader>lx "<Cmd>Trouble lsp toggle<CR>")
+              (lazy-key "Location List" :<Leader>ll "<Cmd>Trouble loclist toggle<CR>")
+              (lazy-key "Quickfix List" :<Leader>lq "<Cmd>Trouble qflist toggle<CR>")]})
 ```
 
 [anthropic]: https://www.anthropic.com/

@@ -107,7 +107,6 @@
                                                       :tohtml :tutor :zipPlugin]}}
                :spec [
                  (spec :Olical/nfnl {:ft :fennel})
-                 (spec :ngscheurich/srcedit {:dev true :opts {}})
                  (spec :folke/snacks.nvim
                        {:priority 1000
                         :lazy false
@@ -186,29 +185,30 @@
                                   (let [leap (require :leap)]
                                     (leap.add_default_mappings)))})
                  (spec :echasnovski/mini.align {:version :* :config true})
-                 (spec :echasnovski/mini.pairs {:version :* :config true})
+                 (spec :echasnovski/mini.pairs
+                       {:version :*
+                        :opts {:skip_ts [:string]}})
                  (spec :echasnovski/mini.splitjoin {:version :* :config true})
                  (spec :echasnovski/mini.surround
-                       {:version :* :config true
-                        :opts {:mappings {:add :Za
-                                          :delete :Zd
-                                          :find :Zf
-                                          :find_left :ZF
-                                          :highlight :Zh
-                                          :replace :Zr
-                                          :update_n_lines :Zn}}})
+                       {:version :*
+                        :opts {:mappings {:add :\a
+                                          :delete :\d
+                                          :find :\f
+                                          :find_left :\F
+                                          :highlight :\h
+                                          :replace :\r
+                                          :update_n_lines :\n}}})
                  (spec :stevearc/aerial.nvim
                        {:config (fn []
                                   (let [{: setup} (require :aerial)]
                                     (setup {:on_attach (fn [b]
                                                          (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
-                                                         (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})
-                                    (nmap :<Leader>o :<Cmd>AerialToggle!<CR> {:desc :Outline})))})
+                                                         (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
+                       :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
                  (spec :nvim-neo-tree/neo-tree.nvim
                        {:branch :v3.x
                         :dependencies [:nvim-lua/plenary.nvim :MunifTanjim/nui.nvim]
-                        :config (fn []
-                                  (nmap :<Leader>e "<Cmd>Neotree reveal<CR>" {:desc :Explore}))})
+                        :keys [(lazy-key :Explore :<Leader>e "<Cmd>Neotree reveal<CR>")]})
                  (spec :stevearc/oil.nvim
                        {:config (fn []
                                   (let [oil (require :oil)]
@@ -222,32 +222,22 @@
 
                                     (oil.setup {:default_file_explorer true
                                                 :keymaps {:gd {:desc "Toggle detail view"
-                                                               :callback toggle-detail}}})
-
-                                    (nmap :- :<Cmd>Oil<CR> {:desc "Open parent directory"})))})
+                                                               :callback toggle-detail}}})))
+                        :keys [(lazy-key "Open parent directory" :- :<Cmd>Oil<CR>)]})
                  (spec :echasnovski/mini.bracketed {:version :* :config true})
                  (spec :echasnovski/mini.clue
                        {:version :*
-                       :opts {
-
-                       :triggers  [{:mode :n :keys :<Leader>}
-
-                                   {:mode :n :keys :g}
-                                   {:mode :x :keys :g}
-
-                                   {:mode :n :keys :z}
-                                   ;{:mode :x :keys :z}
-                                   ]
-
-                       :clues [{:mode :n :keys :<Leader>f :desc :+Find}
-                               {:mode :n :keys :<Leader>g :desc :+Git}
-                               {:mode :n :keys :<Leader>s :desc :+Search}
-                               {:mode :n :keys :<Leader>S :desc :+Sessions}
-                               {:mode :n :keys :<Leader>u :desc "+UI Toggles"}
-                               ]
-
-
-                       }})
+                       :opts {:triggers  [{:mode :n :keys :<Leader>}
+                                          {:mode :n :keys :g}
+                                          {:mode :x :keys :g}
+                                          {:mode :n :keys :z}
+                                          {:mode :x :keys :z}]
+                             :clues [{:mode :n :keys :<Leader>f :desc :+Find}
+                                     {:mode :n :keys :<Leader>g :desc :+Git}
+                                     {:mode :n :keys :<Leader>s :desc :+Search}
+                                     {:mode :n :keys :<Leader>S :desc :+Sessions}
+                                     {:mode :n :keys :<Leader>t :desc :+Test}
+                                     {:mode :n :keys :<Leader>u :desc "+UI Toggles"}]}})
                  (spec :echasnovski/mini.sessions
                        {:version :*
                        :config (fn []
@@ -365,39 +355,37 @@
                                   (vim.cmd.colorscheme :catppuccin))})
                  (spec :Bekaboo/dropbar.nvim
                        {:opts {:bar {:enable false}}
-                        :config (fn [_ opts]
-                         (fn toggle-dropbar []
-                           (if (= vim.o.winbar "")
-                             (tset vim.o :winbar "%{%v:lua.dropbar()%}")
-                             (tset vim.o :winbar "")))
-                         (nmap :<Leader>ub toggle-dropbar {:desc :Breadcrumbs})
-                         (let [{: setup} (require :dropbar)]
-                           (setup opts)))})
-                 (spec :echasnovski/mini.icons {:version :* :config true})
+                        :keys [(lazy-key :Breadcrumbs
+                                         :<Leader>ub
+                                         (fn []
+                                           (if (= vim.o.winbar "")
+                                               (tset vim.o :winbar "%{%v:lua.dropbar()%}")
+                                               (tset vim.o :winbar ""))))]
+                        :config true})
+                 (spec :echasnovski/mini.icons {:version :* :config true :lazy false})
                  (spec :catgoose/nvim-colorizer.lua
                        {:event :BufReadPre
                         :opts {:user_default_options {:names false}}})
                  ;; TODO: Some of these settings don't seem to work...
-                 ;; (spec :rachartier/tiny-glimmer.nvim
-                 ;;       {:opts {:overwrite {:search {:enabled true}
-                 ;;                           :undo {:enabled true}
-                 ;;                           :redo {:enabled true}}}})
+                 ;(spec :rachartier/tiny-glimmer.nvim
+                 ;      {:opts {:overwrite {:search {:enabled true}
+                 ;                          :undo {:enabled true}
+                 ;                          :redo {:enabled true}}}})
                  (spec :petertriho/nvim-scrollbar {:config true})
-                 (spec :j-hui/fidget.nvim {:config true})
+                 (spec :j-hui/fidget.nvim {:config true :event :LspProgress})
                  (spec :b0o/incline.nvim {:config true})
                  (spec :sphamba/smear-cursor.nvim {:config true})
                  (spec :akinsho/bufferline.nvim
                        {:version :*
                         :after :catppuccin
+                        :event [:TabEnter :TabNew :TabNewEntered]
                         :opts {:options {:mode :tabs
                                          :indicator {:icon "┃ "}
                                          :always_show_bufferline false
                                          :offsets [{:filetype :neo-tree
                                                     :text " Explorer"
                                                     :text_align :left
-                                                    :separator false}]
-                                         ;; :highlights ((. (require :catppuccin.groups.integrations.bufferline) :get))
-                                         }}})
+                                                    :separator false}]}}})
                  (spec :lewis6991/gitsigns.nvim
                        {:config (fn []
                                   (let [gs (require :gitsigns)]
@@ -434,7 +422,7 @@
                                     (tset lint :linters_by_ft {:sh [:shellcheck]
                                                                :sql [:sqlfluff]})))})
                  (spec :OXY2DEV/markview.nvim
-                       {:lazy false
+                       {:ft [:markdown :avante]
                         :config (fn []
                                   (let [editor (require :markview.extras.editor)]
                                     (editor.setup)))})
@@ -487,6 +475,29 @@
                                        {1 :kristijanhusak/vim-dadbod-completion :ft [:sql :mysql :plsql] :lazy true}]
                         :cmd [:DBUI :DBUIToggle :DBUIAddConnection :DBUIFindBuffer]
                         :init (fn [] (tset vim.g :db_ui_use_nerd_fonts 1))})
+
+                 (spec :nvim-neotest/neotest
+                       {:dependencies [:nvim-neotest/nvim-nio
+                                       :antoinemadec/FixCursorHold.nvim
+                                       :jfpedroza/neotest-elixir]
+                        :config (fn []
+                                  (let [{: setup} (require :neotest)]
+                                    (setup {:adapters [(require :neotest-elixir)]})))
+                        ;:ft [:elixir]
+                        :keys [(lazy-key :Nearest :<Leader>tn #((get-in (require :neotest) [:run :run])))
+                               (lazy-key :Last :<Leader>tt #((get-in (require :neotest) [:run :run_last])))
+                               (lazy-key :File :<Leader>tf #((get-in (require :neotest) [:run :run]) (vim.fn.expand :%)))
+                               (lazy-key "Summary (Toggle)" :<Leader>ts #((get-in (require :neotest) [:summary :toggle])))]})
+
+                 (spec :folke/trouble.nvim
+                       {:cmd [:Trouble]
+                        :config true
+                        :keys [(lazy-key "Diagnostics" :<Leader>ld "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>")
+                               (lazy-key "Diagnostics (Workspace)" :<Leader>lD "<Cmd>Trouble diagnostics toggle<CR>")
+                               (lazy-key "Symbols" :<Leader>ls "<Cmd>Trouble symbols toggle<CR>")
+                               (lazy-key "LSP" :<Leader>lx "<Cmd>Trouble lsp toggle<CR>")
+                               (lazy-key "Location List" :<Leader>ll "<Cmd>Trouble loclist toggle<CR>")
+                               (lazy-key "Quickfix List" :<Leader>lq "<Cmd>Trouble qflist toggle<CR>")]})
                ]
                }))
 (vim.cmd "so ~/.config/nvim/scratch.lua")
