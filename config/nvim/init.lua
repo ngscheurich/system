@@ -192,33 +192,54 @@ do
     return Snacks.picker.grep_word()
   end
   local function _42_()
+    return Snacks.picker.lsp_definitions()
+  end
+  local function _43_()
+    return Snacks.picker.lsp_declarations()
+  end
+  local function _44_()
+    return Snacks.picker.lsp_implementations()
+  end
+  local function _45_()
+    return Snacks.picker.lsp_references()
+  end
+  local function _46_()
+    return Snacks.picker.lsp_symbols()
+  end
+  local function _47_()
+    return Snacks.picker.lsp_workspace_symbols()
+  end
+  local function _48_()
+    return Snacks.picker.type_definitions()
+  end
+  local function _49_()
     if Snacks.indent.enabled then
       return Snacks.indent.disable()
     else
       return Snacks.indent.enable()
     end
   end
-  local function _44_()
+  local function _51_()
     return Snacks.gitbrowse()
   end
-  local function _45_()
+  local function _52_()
     local leap = require("leap")
     return leap.add_default_mappings()
   end
-  local function _46_()
-    local _let_47_ = require("aerial")
-    local setup = _let_47_["setup"]
-    local function _48_(b)
+  local function _53_()
+    local _let_54_ = require("aerial")
+    local setup = _let_54_["setup"]
+    local function _55_(b)
       nmap("{", "<Cmd>AerialPrev<CR>", {buffer = b})
       return nmap("}", "<Cmd>AerialNext<CR>", {buffer = b})
     end
-    setup({on_attach = _48_})
+    setup({on_attach = _55_})
     return nmap("<Leader>o", "<Cmd>AerialToggle!<CR>", {desc = "Outline"})
   end
-  local function _49_()
+  local function _56_()
     return nmap("<Leader>e", "<Cmd>Neotree reveal<CR>", {desc = "Explore"})
   end
-  local function _50_()
+  local function _57_()
     local oil = require("oil")
     local detail = false
     local function toggle_detail()
@@ -232,36 +253,36 @@ do
     oil.setup({default_file_explorer = true, keymaps = {gd = {desc = "Toggle detail view", callback = toggle_detail}}})
     return nmap("-", "<Cmd>Oil<CR>", {desc = "Open parent directory"})
   end
-  local function _52_()
+  local function _59_()
     local sessions = require("mini.sessions")
     sessions.setup()
     local function session_name()
       local n = string.gsub(vim.fn.getcwd(), "/", "_")
       return n
     end
-    local function _53_()
+    local function _60_()
       return sessions.write(session_name())
     end
-    nmap("<Leader>Sw", _53_, {desc = "Write"})
-    local function _54_()
+    nmap("<Leader>Sw", _60_, {desc = "Write"})
+    local function _61_()
       return sessions.read(session_name())
     end
-    nmap("<Leader>Sr", _54_, {desc = "Read"})
-    local function _55_()
+    nmap("<Leader>Sr", _61_, {desc = "Read"})
+    local function _62_()
       return sessions.select()
     end
-    return nmap("<Leader>Ss", _55_, {desc = "Read"})
+    return nmap("<Leader>Ss", _62_, {desc = "Read"})
   end
-  local function _56_()
+  local function _63_()
     vim.g["slime_target"] = "tmux"
     return nil
   end
-  local function _57_(_, opts)
-    local _let_58_ = require("nvim-treesitter.configs")
-    local setup = _let_58_["setup"]
+  local function _64_(_, opts)
+    local _let_65_ = require("nvim-treesitter.configs")
+    local setup = _let_65_["setup"]
     return setup(opts)
   end
-  local function _59_()
+  local function _66_()
     local lc = require("lspconfig")
     local servers = {bashls = {}, lexical = {cmd = {(vim.env.HOME .. "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh")}}, gdscript = {}, gopls = {}, lua_ls = {}, nil_ls = {}, rust_analyzer = {}, ts_ls = {}}
     for s, c in pairs(servers) do
@@ -269,23 +290,23 @@ do
     end
     return nil
   end
-  local function _60_(_, opts)
+  local function _67_(_, opts)
     local cmp = require("blink.cmp")
     cmp.setup(opts)
-    local function _61_()
+    local function _68_()
       return cmp.show({providers = {"buffer"}})
     end
-    return imap("<C-n>", _61_)
+    return imap("<C-n>", _68_)
   end
-  local function _62_()
+  local function _69_()
     do
-      local _let_63_ = require("catppuccin")
-      local setup = _let_63_["setup"]
+      local _let_70_ = require("catppuccin")
+      local setup = _let_70_["setup"]
       setup({color_overrides = {mocha = {rosewater = "#ab7e8a", flamingo = "#a3685a", pink = "#b294bb", mauve = "#c07d90", red = "#cc6566", maroon = "#d57d62", peach = "#de935f", yellow = "#f0c674", green = "#b6bd68", teal = "#9fbd8f", sky = "#8abeb7", sapphire = "#85b0bc", blue = "#82a2be", lavender = "#a3a7c2", text = "#c4c8c6", subtext1 = "#b5b7b4", subtext0 = "#969896", overlay2 = "#838585", overlay1 = "#717374", overlay0 = "#5e6063", surface2 = "#4a4e52", surface1 = "#373b41", surface0 = "#282a2e", base = "#1d1f21", mantle = "#151718", crust = "#0e0f10"}}, integrations = {aerial = true, blink_cmp = true}})
     end
     return vim.cmd.colorscheme("catppuccin")
   end
-  local function _64_(_, opts)
+  local function _71_(_, opts)
     local function toggle_dropbar()
       if (vim.o.winbar == "") then
         vim.o["winbar"] = "%{%v:lua.dropbar()%}"
@@ -296,11 +317,11 @@ do
       end
     end
     nmap("<Leader>ub", toggle_dropbar, {desc = "Breadcrumbs"})
-    local _let_66_ = require("dropbar")
-    local setup = _let_66_["setup"]
+    local _let_73_ = require("dropbar")
+    local setup = _let_73_["setup"]
     return setup(opts)
   end
-  local function _67_()
+  local function _74_()
     local gs = require("gitsigns")
     gs.setup({signs = {add = {text = "\226\148\131"}, change = {text = "\226\148\131"}, changedelete = {text = "\226\148\131"}, delete = {text = "\226\148\131"}, topdelete = {text = "\226\148\131"}, untracked = {text = "\226\148\135"}}})
     nmap("<Leader>gb", gs.toggle_current_line_blame, {desc = "Line blame (toggle)"})
@@ -311,23 +332,23 @@ do
     nmap("[h", gs.prev_hunk, {desc = "Previous hunk"})
     return nmap("]h", gs.next_hunk, {desc = "Next hunk"})
   end
-  local function _68_()
+  local function _75_()
     local lint = require("lint")
     lint["linters_by_ft"] = {sh = {"shellcheck"}, sql = {"sqlfluff"}}
     return nil
   end
-  local function _69_()
+  local function _76_()
     local editor = require("markview.extras.editor")
     return editor.setup()
   end
-  local function _70_()
+  local function _77_()
     vim.g["conjure#client#fennel#aniseed#deprecation_warning"] = false
     return nil
   end
-  local function _71_()
+  local function _78_()
     vim.g["db_ui_use_nerd_fonts"] = 1
     return nil
   end
-  lazy.setup({checker = {enabled = true}, dev = {path = "~/Projects"}, install = {colorscheme = {"catppuccin"}}, performance = {rtp = {disabled_plugins = {"gzip", "netrwPlugin", "tarPlugin", "tohtml", "tutor", "zipPlugin"}}}, spec = {spec("Olical/nfnl", {ft = "fennel"}), spec("ngscheurich/srcedit", {dev = true, opts = {}}), spec("folke/snacks.nvim", {priority = 1000, opts = {utils = {}, bigfile = {}, quickfile = {}, scratch = {}, image = {}, picker = {}, notifier = {}, scroll = {}, statuscolumn = {}, input = {}, indent = {only_scope = true, only_current = true, enabled = false}, gitbrowse = {}}, keys = {lazy_key("Files", "<C-f>", _10_), lazy_key("Grep", "<C-g>", _11_), lazy_key("Lines", "<C-_>", _12_), lazy_key("Buffers", "<C-Space>", _13_), lazy_key("Find Files (Smart)", "<Leader><Leader>", _14_), lazy_key("Resume Picker", "<Leader>r", _15_), lazy_key("Files", "<Leader>ff", _16_), lazy_key("Git Files", "<Leader>fg", _17_), lazy_key("Projects", "<Leader>fp", _18_), lazy_key("Recent Files", "<Leader>fr", _19_), lazy_key("Autocommands", "<Leader>sa", _20_), lazy_key("Buffers", "<Leader>sB", _21_), lazy_key("Command History", "<Leader>s:", _22_), lazy_key("Commands", "<Leader>sc", _23_), lazy_key("Diagnostics", "<Leader>sd", _24_), lazy_key("Diagnostics (Buffer)", "<Leader>sD", _25_), lazy_key("Grep", "<Leader>sg", _26_), lazy_key("Help Pages", "<Leader>sh", _27_), lazy_key("Highlights", "<Leader>sH", _28_), lazy_key("Icons", "<Leader>si", _29_), lazy_key("Jumps", "<Leader>sj", _30_), lazy_key("Keymaps", "<Leader>sk", _31_), lazy_key("Lines (Buffer)", "<Leader>sb", _32_), lazy_key("Location List", "<Leader>sl", _33_), lazy_key("Man Pages", "<Leader>sM", _34_), lazy_key("Marks", "<Leader>sm", _35_), lazy_key("Notification History", "<Leader>sn", _36_), lazy_key("Quickfix List", "<Leader>sq", _37_), lazy_key("Registers", "<Leader>s\"", _38_), lazy_key("Search History", "<Leader>s/", _39_), lazy_key("Undo History", "<Leader>su", _40_), lazy_key("Word", "<Leader>sw", _41_), lazy_key("Indent Guides", "<Leader>ui", _42_), lazy_key("View on Remote", "<Leader>gB", _44_)}, lazy = false}), spec("ggandor/leap.nvim", {config = _45_}), spec("echasnovski/mini.align", {version = "*", config = true}), spec("echasnovski/mini.pairs", {version = "*", config = true}), spec("echasnovski/mini.splitjoin", {version = "*", config = true}), spec("echasnovski/mini.surround", {version = "*", config = true, opts = {mappings = {add = "Za", delete = "Zd", find = "Zf", find_left = "ZF", highlight = "Zh", replace = "Zr", update_n_lines = "Zn"}}}), spec("stevearc/aerial.nvim", {config = _46_}), spec("nvim-neo-tree/neo-tree.nvim", {branch = "v3.x", dependencies = {"nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}, config = _49_}), spec("stevearc/oil.nvim", {config = _50_}), spec("echasnovski/mini.bracketed", {version = "*", config = true}), spec("echasnovski/mini.clue", {version = "*", opts = {triggers = {{mode = "n", keys = "<Leader>"}, {mode = "n", keys = "g"}, {mode = "x", keys = "g"}, {mode = "n", keys = "z"}}, clues = {{mode = "n", keys = "<Leader>f", desc = "+Find"}, {mode = "n", keys = "<Leader>g", desc = "+Git"}, {mode = "n", keys = "<Leader>s", desc = "+Search"}, {mode = "n", keys = "<Leader>S", desc = "+Sessions"}, {mode = "n", keys = "<Leader>u", desc = "+UI Toggles"}}}}), spec("echasnovski/mini.sessions", {version = "*", config = _52_}), spec("tpope/vim-rsi"), spec("jpalardy/vim-slime", {config = _56_}), spec("tpope/vim-projectionist"), spec("nvim-treesitter/nvim-treesitter", {opts = {highlight = {enable = true}, indent = {enable = true}, ensure_installed = {"bash", "css", "elixir", "erlang", "gdscript", "go", "graphql", "heex", "html", "http", "javascript", "json", "kdl", "lua", "nix", "rust", "scss", "sql", "svelte", "typescript", "xml", "yaml"}}, config = _57_}), spec("neovim/nvim-lspconfig", {config = _59_}), spec("saghen/blink.cmp", {version = "0.12.4", opts = {keymap = {preset = "super-tab"}, sources = {default = {"lsp", "path", "snippets"}}, cmdline = {enabled = false}, completion = {ghost_text = {enabled = true}, menu = {border = "none", auto_show = false}, documentation = {window = {border = "single"}, auto_show = true, auto_show_delay_ms = 500}}}, config = _60_}), spec("catppuccin/nvim", {name = "catppuccin", priority = 1000, config = _62_, lazy = false}), spec("Bekaboo/dropbar.nvim", {opts = {bar = {enable = false}}, config = _64_}), spec("echasnovski/mini.icons", {version = "*", config = true}), spec("catgoose/nvim-colorizer.lua", {event = "BufReadPre", opts = {user_default_options = {names = false}}}), spec("petertriho/nvim-scrollbar", {config = true}), spec("j-hui/fidget.nvim", {config = true}), spec("b0o/incline.nvim", {config = true}), spec("sphamba/smear-cursor.nvim", {config = true}), spec("akinsho/bufferline.nvim", {version = "*", after = "catppuccin", opts = {options = {mode = "tabs", indicator = {icon = "\226\148\131 "}, offsets = {{filetype = "neo-tree", text = "\238\175\149 Explorer", text_align = "left", separator = false}}, always_show_bufferline = false}}}), spec("lewis6991/gitsigns.nvim", {config = _67_}), spec("rebelot/heirline.nvim"), spec("stevearc/conform.nvim", {opts = {formatters_by_ft = {css = {"prettier"}, html = {"prettier"}, javascript = {"prettier"}, json = {"prettier"}, lua = {"stylua"}, scss = {"prettier"}, sql = {"sleek"}, typescript = {"prettier"}}, format_on_save = {timeout_ms = 500, lsp_fallback = true}}}), spec("mfussenegger/nvim-lint", {config = _68_}), spec("OXY2DEV/markview.nvim", {config = _69_, lazy = false}), spec("zbirenbaum/copilot.lua", {cmd = "Copilot", event = "InsertEnter", opts = {suggestion = {keymap = {accept = "<Tab>", next = "<C-n>", prev = "<C-p>", dismiss = "<C-q>"}}}, cond = false}), spec("olimorris/codecompanion.nvim", {config = true, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"}, strategies = {chat = {adapter = "anthropic"}, inline = {adapter = "anthropic"}}, cond = false}), spec("mistweaverco/kulala.nvim", {ft = {"http", "rest"}, opts = {global_keymaps = true}}), spec("Olical/conjure", {config = _70_}), spec("brianhuster/live-preview.nvim"), spec("kristijanhusak/vim-dadbod-ui", {dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql", "plsql"}, lazy = true}}, cmd = {"DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer"}, init = _71_})}})
+  lazy.setup({checker = {enabled = true}, dev = {path = "~/Projects"}, install = {colorscheme = {"catppuccin"}}, performance = {rtp = {disabled_plugins = {"gzip", "netrwPlugin", "tarPlugin", "tohtml", "tutor", "zipPlugin"}}}, spec = {spec("Olical/nfnl", {ft = "fennel"}), spec("ngscheurich/srcedit", {dev = true, opts = {}}), spec("folke/snacks.nvim", {priority = 1000, opts = {utils = {}, bigfile = {}, quickfile = {}, scratch = {}, image = {}, picker = {}, notifier = {}, scroll = {}, statuscolumn = {}, input = {}, indent = {only_scope = true, only_current = true, enabled = false}, gitbrowse = {}}, keys = {lazy_key("Files", "<C-f>", _10_), lazy_key("Grep", "<C-g>", _11_), lazy_key("Lines", "<C-_>", _12_), lazy_key("Buffers", "<C-Space>", _13_), lazy_key("Find Files (Smart)", "<Leader><Leader>", _14_), lazy_key("Resume Picker", "<Leader>r", _15_), lazy_key("Files", "<Leader>ff", _16_), lazy_key("Git Files", "<Leader>fg", _17_), lazy_key("Projects", "<Leader>fp", _18_), lazy_key("Recent Files", "<Leader>fr", _19_), lazy_key("Autocommands", "<Leader>sa", _20_), lazy_key("Buffers", "<Leader>sB", _21_), lazy_key("Command History", "<Leader>s:", _22_), lazy_key("Commands", "<Leader>sc", _23_), lazy_key("Diagnostics", "<Leader>sd", _24_), lazy_key("Diagnostics (Buffer)", "<Leader>sD", _25_), lazy_key("Grep", "<Leader>sg", _26_), lazy_key("Help Pages", "<Leader>sh", _27_), lazy_key("Highlights", "<Leader>sH", _28_), lazy_key("Icons", "<Leader>si", _29_), lazy_key("Jumps", "<Leader>sj", _30_), lazy_key("Keymaps", "<Leader>sk", _31_), lazy_key("Lines (Buffer)", "<Leader>sb", _32_), lazy_key("Location List", "<Leader>sl", _33_), lazy_key("Man Pages", "<Leader>sM", _34_), lazy_key("Marks", "<Leader>sm", _35_), lazy_key("Notification History", "<Leader>sn", _36_), lazy_key("Quickfix List", "<Leader>sq", _37_), lazy_key("Registers", "<Leader>s\"", _38_), lazy_key("Search History", "<Leader>s/", _39_), lazy_key("Undo History", "<Leader>su", _40_), lazy_key("Word", "<Leader>sw", _41_), lazy_key("Definitions", "<LocalLeader>d", _42_), lazy_key("Declarations", "<LocalLeader>D", _43_), lazy_key("Implementations", "<LocalLeader>i", _44_), lazy_key("References", "<LocalLeader>r", _45_), lazy_key("Symbols", "<LocalLeader>s", _46_), lazy_key("Workspace Symbols", "<LocalLeader>S", _47_), lazy_key("Type Definitions", "<LocalLeader>t", _48_), lazy_key("Indent Guides", "<Leader>ui", _49_), lazy_key("View on Remote", "<Leader>gB", _51_)}, lazy = false}), spec("ggandor/leap.nvim", {config = _52_}), spec("echasnovski/mini.align", {version = "*", config = true}), spec("echasnovski/mini.pairs", {version = "*", config = true}), spec("echasnovski/mini.splitjoin", {version = "*", config = true}), spec("echasnovski/mini.surround", {version = "*", config = true, opts = {mappings = {add = "Za", delete = "Zd", find = "Zf", find_left = "ZF", highlight = "Zh", replace = "Zr", update_n_lines = "Zn"}}}), spec("stevearc/aerial.nvim", {config = _53_}), spec("nvim-neo-tree/neo-tree.nvim", {branch = "v3.x", dependencies = {"nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"}, config = _56_}), spec("stevearc/oil.nvim", {config = _57_}), spec("echasnovski/mini.bracketed", {version = "*", config = true}), spec("echasnovski/mini.clue", {version = "*", opts = {triggers = {{mode = "n", keys = "<Leader>"}, {mode = "n", keys = "g"}, {mode = "x", keys = "g"}, {mode = "n", keys = "z"}}, clues = {{mode = "n", keys = "<Leader>f", desc = "+Find"}, {mode = "n", keys = "<Leader>g", desc = "+Git"}, {mode = "n", keys = "<Leader>s", desc = "+Search"}, {mode = "n", keys = "<Leader>S", desc = "+Sessions"}, {mode = "n", keys = "<Leader>u", desc = "+UI Toggles"}}}}), spec("echasnovski/mini.sessions", {version = "*", config = _59_}), spec("tpope/vim-rsi"), spec("jpalardy/vim-slime", {config = _63_}), spec("tpope/vim-projectionist"), spec("nvim-treesitter/nvim-treesitter", {opts = {highlight = {enable = true}, indent = {enable = true}, ensure_installed = {"bash", "css", "elixir", "erlang", "gdscript", "go", "graphql", "heex", "html", "http", "javascript", "json", "kdl", "lua", "nix", "rust", "scss", "sql", "svelte", "typescript", "xml", "yaml"}}, config = _64_}), spec("neovim/nvim-lspconfig", {config = _66_}), spec("saghen/blink.cmp", {version = "0.12.4", opts = {keymap = {preset = "super-tab"}, sources = {default = {"lsp", "path", "snippets"}}, cmdline = {enabled = false}, completion = {ghost_text = {enabled = true}, menu = {border = "none", auto_show = false}, documentation = {window = {border = "single"}, auto_show = true, auto_show_delay_ms = 500}}}, config = _67_}), spec("catppuccin/nvim", {name = "catppuccin", priority = 1000, config = _69_, lazy = false}), spec("Bekaboo/dropbar.nvim", {opts = {bar = {enable = false}}, config = _71_}), spec("echasnovski/mini.icons", {version = "*", config = true}), spec("catgoose/nvim-colorizer.lua", {event = "BufReadPre", opts = {user_default_options = {names = false}}}), spec("petertriho/nvim-scrollbar", {config = true}), spec("j-hui/fidget.nvim", {config = true}), spec("b0o/incline.nvim", {config = true}), spec("sphamba/smear-cursor.nvim", {config = true}), spec("akinsho/bufferline.nvim", {version = "*", after = "catppuccin", opts = {options = {mode = "tabs", indicator = {icon = "\226\148\131 "}, offsets = {{filetype = "neo-tree", text = "\238\175\149 Explorer", text_align = "left", separator = false}}, always_show_bufferline = false}}}), spec("lewis6991/gitsigns.nvim", {config = _74_}), spec("rebelot/heirline.nvim"), spec("stevearc/conform.nvim", {opts = {formatters_by_ft = {css = {"prettier"}, html = {"prettier"}, javascript = {"prettier"}, json = {"prettier"}, lua = {"stylua"}, scss = {"prettier"}, sql = {"sleek"}, typescript = {"prettier"}}, format_on_save = {timeout_ms = 500, lsp_fallback = true}}}), spec("mfussenegger/nvim-lint", {config = _75_}), spec("OXY2DEV/markview.nvim", {config = _76_, lazy = false}), spec("zbirenbaum/copilot.lua", {cmd = "Copilot", event = "InsertEnter", opts = {suggestion = {keymap = {accept = "<Tab>", next = "<C-n>", prev = "<C-p>", dismiss = "<C-q>"}}}, cond = false}), spec("olimorris/codecompanion.nvim", {config = true, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"}, strategies = {chat = {adapter = "anthropic"}, inline = {adapter = "anthropic"}}, cond = false}), spec("yetone/avante.nvim", {event = "VeryLazy", build = "make", opts = {windows = {sidebar_header = {rounded = false}, input = {prefix = "\239\145\160 "}}}, dependencies = {"nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter", "MunifTanjim/nui.nvim"}, cond = false, version = false}), spec("mistweaverco/kulala.nvim", {ft = {"http", "rest"}, opts = {global_keymaps = true}}), spec("Olical/conjure", {config = _77_}), spec("brianhuster/live-preview.nvim"), spec("sindrets/diffview.nvim", {config = true}), spec("kristijanhusak/vim-dadbod-ui", {dependencies = {{"tpope/vim-dadbod", lazy = true}, {"kristijanhusak/vim-dadbod-completion", ft = {"sql", "mysql", "plsql"}, lazy = true}}, cmd = {"DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer"}, init = _78_})}})
 end
 return vim.cmd("so ~/.config/nvim/scratch.lua")

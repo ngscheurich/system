@@ -648,11 +648,11 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 | `sm`   | Marks                  |
 | `sn`   | Notification History   |
 | `sq`   | Quickfix List          |
+| `st`   | Type Definitions (LSP)          |
 | `s"`   | Registers              |
 | `s/`   | Search History         |
 | `su`   | Undo History           |
 | `sw`   | Word                   |
-
 
 ```fennel "snacks-keys" +=
 ;; Quick
@@ -694,6 +694,28 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 (lazy-key "Search History" :<Leader>s/ #(Snacks.picker.search_history))
 (lazy-key "Undo History" :<Leader>su #(Snacks.picker.undo))
 (lazy-key "Word" :<Leader>sw #(Snacks.picker.grep_word))
+```
+
+
+| Keys   | Source                 |
+|:------:|------------------------|
+| `d`   | Definitions          |
+| `D`   | Declarations|
+| `i`   | Implementations          |
+| `r`   | References          |
+| `S`   | Workspace Symbols |
+| `s`   | Symbols          |
+| `t`   | Type Definitions          |
+
+```fennel "snacks-keys" +=
+;; LSP
+(lazy-key "Definitions" :<LocalLeader>d #(Snacks.picker.lsp_definitions))
+(lazy-key "Declarations" :<LocalLeader>D #(Snacks.picker.lsp_declarations))
+(lazy-key "Implementations" :<LocalLeader>i #(Snacks.picker.lsp_implementations))
+(lazy-key "References" :<LocalLeader>r #(Snacks.picker.lsp_references))
+(lazy-key "Symbols" :<LocalLeader>s #(Snacks.picker.lsp_symbols))
+(lazy-key "Workspace Symbols" :<LocalLeader>S #(Snacks.picker.lsp_workspace_symbols))
+(lazy-key "Type Definitions" :<LocalLeader>t #(Snacks.picker.type_definitions))
 ```
 
 ### Appearance
@@ -975,6 +997,19 @@ This section is for text-focused, generative AI tools that I’m experimenting w
                     :inline {:adapter :anthropic}}})
 ```
 
+```fennel "lazy-spec" +=
+(spec :yetone/avante.nvim
+      {:cond false
+       :event :VeryLazy
+       :version false
+       :build :make
+       :opts {:windows {:sidebar_header {:rounded false}
+                        :input {:prefix " "}}}
+       :dependencies [:nvim-lua/plenary.nvim
+                      :nvim-treesitter/nvim-treesitter
+                      :MunifTanjim/nui.nvim]})
+```
+
 ### Scratch
 
 ```fennel init.fnl +=
@@ -997,7 +1032,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 
 (spec :brianhuster/live-preview.nvim)
 
-
+(spec :sindrets/diffview.nvim {:config true})
 
 ;; (spec :joshuavial/aider.nvim {:opts {}})
 

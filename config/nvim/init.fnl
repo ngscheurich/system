@@ -165,6 +165,14 @@
                         (lazy-key "Search History" :<Leader>s/ #(Snacks.picker.search_history))
                         (lazy-key "Undo History" :<Leader>su #(Snacks.picker.undo))
                         (lazy-key "Word" :<Leader>sw #(Snacks.picker.grep_word))
+                        ;; LSP
+                        (lazy-key "Definitions" :<LocalLeader>d #(Snacks.picker.lsp_definitions))
+                        (lazy-key "Declarations" :<LocalLeader>D #(Snacks.picker.lsp_declarations))
+                        (lazy-key "Implementations" :<LocalLeader>i #(Snacks.picker.lsp_implementations))
+                        (lazy-key "References" :<LocalLeader>r #(Snacks.picker.lsp_references))
+                        (lazy-key "Symbols" :<LocalLeader>s #(Snacks.picker.lsp_symbols))
+                        (lazy-key "Workspace Symbols" :<LocalLeader>S #(Snacks.picker.lsp_workspace_symbols))
+                        (lazy-key "Type Definitions" :<LocalLeader>t #(Snacks.picker.type_definitions))
                         (lazy-key "Indent Guides"
                                   :<Leader>ui
                                   (fn []
@@ -445,6 +453,16 @@
                                        :nvim-treesitter/nvim-treesitter]
                         :strategies {:chat {:adapter :anthropic}
                                      :inline {:adapter :anthropic}}})
+                 (spec :yetone/avante.nvim
+                       {:cond false
+                        :event :VeryLazy
+                        :version false
+                        :build :make
+                        :opts {:windows {:sidebar_header {:rounded false}
+                                         :input {:prefix " "}}}
+                        :dependencies [:nvim-lua/plenary.nvim
+                                       :nvim-treesitter/nvim-treesitter
+                                       :MunifTanjim/nui.nvim]})
                  (spec :mistweaverco/kulala.nvim
                    {:ft [:http :rest]
                     :opts {:global_keymaps true}})
@@ -460,7 +478,7 @@
 
                  (spec :brianhuster/live-preview.nvim)
 
-
+                 (spec :sindrets/diffview.nvim {:config true})
 
                  ;; (spec :joshuavial/aider.nvim {:opts {}})
 
