@@ -26,7 +26,7 @@
 
 (fn get-diagnostic-sign [severity]
   "Gets the configured diagnostic sign for the given `SEVERITY`."
-  (get-in (vim.diagnostic.config) [:signs :text (.. :vim.diagnostic.severity. severity)]))
+  (get-in (vim.diagnostic.config) [:signs :text severity]))
 
 (fn get-diagnostic-count [severity]
   (length (vim.diagnostic.get 0 {:severity severity})))
@@ -132,16 +132,11 @@
             :provider lsp-provider
             :hl (hl :blue)})
 
-(vim.diagnostic.config {:signs {:text {"vim.diagnostic.severity.ERROR" " "
-                                       "vim.diagnostic.severity.WARN" " "
-                                       "vim.diagnostic.severity.INFO" " "
-                                       "vim.diagnostic.severity.HINT" " "}}})
-
 (local diagnostics {:condition conds.has_diagnostics
-                    :static {:icons {:error (get-diagnostic-sign :ERROR)
-                                     :warn (get-diagnostic-sign :WARN)
-                                     :info (get-diagnostic-sign :INFO)
-                                     :hint (get-diagnostic-sign :HINT)}}
+                    :static {:icons {:error (get-diagnostic-sign vim.diagnostic.severity.ERROR)
+                                     :warn (get-diagnostic-sign vim.diagnostic.severity.WARN)
+                                     :info (get-diagnostic-sign vim.diagnostic.severity.INFO)
+                                     :hint (get-diagnostic-sign vim.diagnostic.severity.HINT)}}
                     :init (fn [self]
                             (tset self :errors (get-diagnostic-count :ERROR))
                             (tset self :warns (get-diagnostic-count :WARN))
@@ -149,13 +144,13 @@
                             (tset self :hints (get-diagnostic-count :HINT)))
                     :update [:DiagnosticChanged :BufEnter]
 
-                    1 {:provider #(and (> $1.errors 0) (.. " " $1.icons.error $1.errors))
+                    1 {:provider #(and (> $1.errors 0) (.. " " $1.icons.error " " $1.errors))
                        :hl (hl :red)}
-                    2 {:provider #(and (> $1.warns 0) (.. " " $1.icons.warn $1.warns))
+                    2 {:provider #(and (> $1.warns 0) (.. " " $1.icons.warn " " $1.warns))
                        :hl (hl :yellow)}
-                    3 {:provider #(and (> $1.infos 0) (.. " " $1.icons.info $1.infos))
+                    3 {:provider #(and (> $1.infos 0) (.. " " $1.icons.info " " $1.infos))
                        :hl (hl :teal)}
-                    4 {:provider #(and (> $1.hints 0) (.. " " $1.icons.hint $1.hints))
+                    4 {:provider #(and (> $1.hints 0) (.. " " $1.icons.hint " " $1.hints))
                        :hl (hl :sapphire)}})
 
 (local filetype [{:provider #(let [(icon) (MiniIcons.get :filetype vim.bo.filetype)] icon)

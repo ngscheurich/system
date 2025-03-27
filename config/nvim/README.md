@@ -88,9 +88,13 @@ I also want access to some nfnl niceties from the standard (`core`) library.
         : some} (require :nfnl.core))
 ```
 
-## Options
+## Core
 
-In this section, I’ll configure built-in Neovim options and functionality. Each option is described in the Neovim documentation (`:h [option]`).
+In this section, I’ll configure built-in Neovim options and functionality.
+
+### Options
+
+Each option is described in the Neovim documentation (`:h [option]`).
 
 I’ll use LMT’s [macro references] feature to inject a `user-opts` macro into the following `each` form. This allows me to set options later in the document alongside some explanatory prose.
 
@@ -166,6 +170,16 @@ Last up is miscellaneous behavior (check out the `:help` docs for each option).
 :undofile true
 :updatetime 250
 :clipboard :unnamedplus
+```
+
+### Signs
+
+```fennel init.fnl +=
+(vim.diagnostic.config
+  {:signs {:text {vim.diagnostic.severity.ERROR :
+                  vim.diagnostic.severity.WARN :
+                  vim.diagnostic.severity.INFO :
+                  vim.diagnostic.severity.HINT :}}})
 ```
 
 ## Mappings
@@ -580,22 +594,18 @@ Neovim has a built-in completion system, but I prefer [Blink Completion] for its
 
 ```fennel "lazy-spec" +=
 (spec :saghen/blink.cmp
-      {:version :0.12.4
-       :opts {:keymap {:preset :super-tab}
-              :sources {:default [:lsp :path :snippets]}
+      {:version :*
+       :opts {:keymap {:preset :enter
+                       :<Tab> [#(if ($1.snippet_active) ($1.snippet_forward) ($1.select_next))
+                               :snippet_forward
+                               :fallback]
+                       :<S-Tab> [#(if ($1.snippet_active) ($1.snippet_backward) ($1.select_prev))
+                                 :snippet_backward
+                                 :fallback]}
               :cmdline {:enabled false}
-              :completion {:ghost_text {:enabled true}
-                           :menu {:border :none
-                                  ;; :auto_show #(not= $1.mode :cmdline)
-                                  :auto_show false
-                                  }
-                           :documentation {:window {:border :single}
-                                           :auto_show true :auto_show_delay_ms 500
-                                          }}}
-       :config (fn [_ opts]
-                 (let [cmp (require :blink.cmp)]
-                   (cmp.setup opts)
-                   (imap :<C-n> #(cmp.show {:providers [:buffer]}))))})
+              :completion {:list {:selection {:preselect false}}
+                           :documentation {:auto_show true}}
+              :signature {:enabled true}}})
 ```
 
 ### Picker
@@ -969,10 +979,11 @@ This section is for text-focused, generative AI tools that I’m experimenting w
       {:cond false
        :cmd :Copilot
        :event :InsertEnter
-       :opts {:suggestion {:keymap {:accept :<Tab>
-                                    :next "<C-n>"
-                                    :prev "<C-p>"
-                                    :dismiss "<C-q>"}}}})
+       :opts {:suggestion {:auto_trigger false
+                           :keymap {:accept :<Tab>
+                                    :next :<C-n>
+                                    :prev :<C-p>
+                                    :dismiss :<C-q>}}}})
 ```
 
 [CodeCompanion] is an LLM-agnostic coding assistant that brings all sorts of tricks to the party, including a chat-based UI, agents/tools to automatically apply suggested changes, and tons of extensibility. I have it set up to use [Anthropic] as an LLM provider, though I’m interested in exploring local solutions, e.g. with [Ollama].

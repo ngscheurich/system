@@ -23,7 +23,7 @@ local function hl(fg, bg)
   return {fg = catppuccin_color((fg or "text")), bg = catppuccin_color((bg or "mantle"))}
 end
 local function get_diagnostic_sign(severity)
-  return get_in(vim.diagnostic.config(), {"signs", "text", ("vim.diagnostic.severity." .. severity)})
+  return get_in(vim.diagnostic.config(), {"signs", "text", severity})
 end
 local function get_diagnostic_count(severity)
   return #vim.diagnostic.get(0, {severity = severity})
@@ -188,19 +188,18 @@ local function lsp_provider(self)
   end
 end
 local lsp = {condition = conds.lsp_attached, update = {"LspAttach", "LspDetach"}, static = {hidden = {"GitHub Copilot"}}, provider = lsp_provider, hl = hl("blue")}
-vim.diagnostic.config({signs = {text = {["vim.diagnostic.severity.ERROR"] = "\238\170\135 ", ["vim.diagnostic.severity.WARN"] = "\238\169\172 ", ["vim.diagnostic.severity.INFO"] = "\238\169\180 ", ["vim.diagnostic.severity.HINT"] = "\239\144\160 "}}})
 local diagnostics
 local function _40_(_241)
-  return ((_241.errors > 0) and (" " .. _241.icons.error .. _241.errors))
+  return ((_241.errors > 0) and (" " .. _241.icons.error .. " " .. _241.errors))
 end
 local function _41_(_241)
-  return ((_241.warns > 0) and (" " .. _241.icons.warn .. _241.warns))
+  return ((_241.warns > 0) and (" " .. _241.icons.warn .. " " .. _241.warns))
 end
 local function _42_(_241)
-  return ((_241.infos > 0) and (" " .. _241.icons.info .. _241.infos))
+  return ((_241.infos > 0) and (" " .. _241.icons.info .. " " .. _241.infos))
 end
 local function _43_(_241)
-  return ((_241.hints > 0) and (" " .. _241.icons.hint .. _241.hints))
+  return ((_241.hints > 0) and (" " .. _241.icons.hint .. " " .. _241.hints))
 end
 local function _44_(self)
   self["errors"] = get_diagnostic_count("ERROR")
@@ -209,7 +208,7 @@ local function _44_(self)
   self["hints"] = get_diagnostic_count("HINT")
   return nil
 end
-diagnostics = {{provider = _40_, hl = hl("red")}, {provider = _41_, hl = hl("yellow")}, {provider = _42_, hl = hl("teal")}, {provider = _43_, hl = hl("sapphire")}, condition = conds.has_diagnostics, static = {icons = {error = get_diagnostic_sign("ERROR"), warn = get_diagnostic_sign("WARN"), info = get_diagnostic_sign("INFO"), hint = get_diagnostic_sign("HINT")}}, init = _44_, update = {"DiagnosticChanged", "BufEnter"}}
+diagnostics = {{provider = _40_, hl = hl("red")}, {provider = _41_, hl = hl("yellow")}, {provider = _42_, hl = hl("teal")}, {provider = _43_, hl = hl("sapphire")}, condition = conds.has_diagnostics, static = {icons = {error = get_diagnostic_sign(vim.diagnostic.severity.ERROR), warn = get_diagnostic_sign(vim.diagnostic.severity.WARN), info = get_diagnostic_sign(vim.diagnostic.severity.INFO), hint = get_diagnostic_sign(vim.diagnostic.severity.HINT)}}, init = _44_, update = {"DiagnosticChanged", "BufEnter"}}
 local filetype
 local function _45_()
   local icon = MiniIcons.get("filetype", vim.bo.filetype)

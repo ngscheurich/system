@@ -57,6 +57,11 @@
             :clipboard :unnamedplus
             })]
   (tset vim.opt k v))
+(vim.diagnostic.config
+  {:signs {:text {vim.diagnostic.severity.ERROR :
+                  vim.diagnostic.severity.WARN :
+                  vim.diagnostic.severity.INFO :
+                  vim.diagnostic.severity.HINT :}}})
 (fn nmap [lhs rhs opt] (vim.keymap.set :n lhs rhs opt))
 (fn imap [lhs rhs opt] (vim.keymap.set :i lhs rhs opt))
 (fn tmap [lhs rhs opt] (vim.keymap.set :t lhs rhs opt))
@@ -302,22 +307,18 @@
                                      (each [s c (pairs servers)]
                                          ((get-in lc [s :setup]) c))))})
                  (spec :saghen/blink.cmp
-                       {:version :0.12.4
-                        :opts {:keymap {:preset :super-tab}
-                               :sources {:default [:lsp :path :snippets]}
+                       {:version :*
+                        :opts {:keymap {:preset :enter
+                                        :<Tab> [#(if ($1.snippet_active) ($1.snippet_forward) ($1.select_next))
+                                                :snippet_forward
+                                                :fallback]
+                                        :<S-Tab> [#(if ($1.snippet_active) ($1.snippet_backward) ($1.select_prev))
+                                                  :snippet_backward
+                                                  :fallback]}
                                :cmdline {:enabled false}
-                               :completion {:ghost_text {:enabled true}
-                                            :menu {:border :none
-                                                   ;; :auto_show #(not= $1.mode :cmdline)
-                                                   :auto_show false
-                                                   }
-                                            :documentation {:window {:border :single}
-                                                            :auto_show true :auto_show_delay_ms 500
-                                                           }}}
-                        :config (fn [_ opts]
-                                  (let [cmp (require :blink.cmp)]
-                                    (cmp.setup opts)
-                                    (imap :<C-n> #(cmp.show {:providers [:buffer]}))))})
+                               :completion {:list {:selection {:preselect false}}
+                                            :documentation {:auto_show true}}
+                               :signature {:enabled true}}})
                  (spec :catppuccin/nvim
                        {:name :catppuccin
                         :lazy false
@@ -430,10 +431,11 @@
                        {:cond false
                         :cmd :Copilot
                         :event :InsertEnter
-                        :opts {:suggestion {:keymap {:accept :<Tab>
-                                                     :next "<C-n>"
-                                                     :prev "<C-p>"
-                                                     :dismiss "<C-q>"}}}})
+                        :opts {:suggestion {:auto_trigger false
+                                            :keymap {:accept :<Tab>
+                                                     :next :<C-n>
+                                                     :prev :<C-p>
+                                                     :dismiss :<C-q>}}}})
                  (spec :olimorris/codecompanion.nvim
                        {:cond false
                         :config true 
