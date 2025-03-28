@@ -20,6 +20,8 @@
     # Language support
     fnlfmt
     nil
+    sleek
+    sqlfluff
 
     # Database tools
     freetds
