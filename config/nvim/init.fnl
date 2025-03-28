@@ -318,7 +318,10 @@
                                :cmdline {:enabled false}
                                :completion {:list {:selection {:preselect false}}
                                             :documentation {:auto_show true}}
-                               :signature {:enabled true}}})
+                               :signature {:enabled true}
+                               :sources {:default [:lsp :path :snippets :buffer]
+                                         :per_filetype {:sql [:dadbod :snippets :buffer]}
+                                         :providers {:dadbod {:name :Dadbod :module :vim_dadbod_completion.blink}}}}})
                  (spec :catppuccin/nvim
                        {:name :catppuccin
                         :lazy false

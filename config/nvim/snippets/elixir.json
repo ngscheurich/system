@@ -1,0 +1,78 @@
+{
+  "IO.puts/1": {
+    "prefix": "put",
+    "body": "IO.puts($0)"
+  },
+  "IO.inspect/1": {
+    "prefix": "ins",
+    "body": "IO.inspect($0)"
+  },
+  "IO.inspect/2 (label)": {
+    "prefix": "insl",
+    "body": "IO.inspect($1, label: \"$0\")"
+  },
+  "cond": {
+    "prefix": "cond",
+    "body": ["cond do", "  $1 -> ", "  $0", "end"]
+  },
+  "case": {
+    "prefix": "case",
+    "body": ["case $1 do", "  $2 -> ", "    $0", "end"]
+  },
+  "for": {
+    "prefix": "for",
+    "body": ["for ${1:item} <- ${2:items} do", "  $0", "end"]
+  },
+  "def + doc": {
+    "prefix": "defd",
+    "body": [
+      "@doc \"\"\"",
+      "${1:doc}",
+      "\"\"\"",
+      "def ${2:name} do",
+      "  $0",
+      "end"
+    ]
+  },
+  "def + spec": {
+    "prefix": "defs",
+    "body": [
+      "@spec ${1:name}(${2:args}) :: ${3:no_return}",
+      "def $1{4:args} do",
+      "  $0",
+      "end"
+    ]
+  },
+  "def + doc + spec": {
+    "prefix": "defds",
+    "body": [
+      "@doc \"\"\"",
+      "${1:doc}",
+      "\"\"\"",
+      "@spec ${2:name}(${3:args}) :: ${4:no_return}",
+      "def $2{5:args} do",
+      "  $0",
+      "end"
+    ]
+  },
+  "doc": {
+    "prefix": "doc",
+    "body": ["@doc \"\"\"", "$0", "\"\"\""]
+  },
+  "moduledoc": {
+    "prefix": "mdoc",
+    "body": ["@moduledoc \"\"\"", "$0", "\"\"\""]
+  },
+  "des": {
+    "prefix": "desc",
+    "body": ["describe \"${1:test group subject}\" do", "  $0", "end"]
+  },
+  "test": {
+    "prefix": "test",
+    "body": ["test \"${1:name}\" do", "  $0", "end"]
+  },
+  "IEX.pry/0": {
+    "prefix": "pry",
+    "body": ["require IEx; IEx.pry", "$0"]
+  }
+}

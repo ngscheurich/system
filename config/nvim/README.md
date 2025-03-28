@@ -605,7 +605,10 @@ Neovim has a built-in completion system, but I prefer [Blink Completion] for its
               :cmdline {:enabled false}
               :completion {:list {:selection {:preselect false}}
                            :documentation {:auto_show true}}
-              :signature {:enabled true}}})
+              :signature {:enabled true}
+              :sources {:default [:lsp :path :snippets :buffer]
+                        :per_filetype {:sql [:dadbod :snippets :buffer]}
+                        :providers {:dadbod {:name :Dadbod :module :vim_dadbod_completion.blink}}}}})
 ```
 
 ### Picker
