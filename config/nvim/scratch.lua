@@ -29,7 +29,7 @@ local function get_diagnostic_count(severity)
   return #vim.diagnostic.get(0, {severity = severity})
 end
 local function get_mode_opts(mode)
-  local list = {{modes = {"n", "niI", "niR", "niV", "nt", "nT"}, name = "NORMAL", color = "blue", icon = "\238\174\148 "}, {modes = {"no", "nov", "noV", "no\22"}, name = "NORMAL", color = "pink", icon = "\243\177\166\159 "}, {modes = {"v", "vs", "V", "Vs"}, name = "VISUAL", color = "pink", icon = "\243\176\146\133 "}, {modes = {"\22", "\22s"}, name = "VISUAL", color = "pink", icon = "\243\176\169\172 "}, {modes = {"s", "S", "\19"}, name = "SELECT", color = "rosewater", icon = "\243\176\171\153 "}, {modes = {"i", "ic", "ix"}, name = "INSERT", color = "green", icon = "\238\169\179 "}, {modes = {"R", "Rc", "Rx", "Rv", "Rvc", "Rvx"}, name = "REPLACE", color = "red", icon = "\238\172\189 "}, {modes = {"c"}, name = "COMMAND", color = "flamingo", icon = "\239\146\181 "}, {modes = {"cv"}, name = "EX", color = "flamingo", icon = "\238\173\173 "}, {modes = {"r", "rm", "r?", "!"}, name = "...", color = "lavender", icon = "\243\176\134\133 "}, {modes = {"t"}, name = "TERMINAL", color = "sapphire", icon = "\239\146\137 "}}
+  local list = {{modes = {"n", "niI", "niR", "niV", "nt", "nT"}, name = "NORMAL", color = "blue", icon = "\238\174\148 "}, {modes = {"no", "nov", "noV", "no\22"}, name = "NORMAL", color = "pink", icon = "\243\177\166\159 "}, {modes = {"v", "vs", "V", "Vs"}, name = "VISUAL", color = "pink", icon = "\243\176\146\133 "}, {modes = {"\22", "\22s"}, name = "VISUAL", color = "pink", icon = "\243\176\169\172 "}, {modes = {"s", "S", "\19"}, name = "SELECT", color = "rosewater", icon = "\243\176\171\153 "}, {modes = {"i", "ic", "ix"}, name = "INSERT", color = "green", icon = "\238\169\160 "}, {modes = {"R", "Rc", "Rx", "Rv", "Rvc", "Rvx"}, name = "REPLACE", color = "red", icon = "\238\172\189 "}, {modes = {"c"}, name = "COMMAND", color = "flamingo", icon = "\239\146\181 "}, {modes = {"cv"}, name = "EX", color = "flamingo", icon = "\238\173\173 "}, {modes = {"r", "rm", "r?", "!"}, name = "...", color = "lavender", icon = "\243\176\134\133 "}, {modes = {"t"}, name = "TERMINAL", color = "sapphire", icon = "\239\146\137 "}}
   local mode_opts = nil
   for _, t in ipairs(list) do
     if (mode_opts ~= nil) then break end
@@ -216,7 +216,7 @@ local function _45_()
 end
 local function _46_()
   local _, hl_group = MiniIcons.get("filetype", vim.bo.filetype)
-  return {fg = get_hl_attr(hl_group, "fg")}
+  return {fg = get_hl_attr(hl_group, "fg"), bg = catppuccin_color("mantle")}
 end
 local function _47_()
   return (" " .. vim.bo.filetype)

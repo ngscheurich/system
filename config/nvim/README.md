@@ -172,6 +172,12 @@ Last up is miscellaneous behavior (check out the `:help` docs for each option).
 :clipboard :unnamedplus
 ```
 
+```fennel "user-opts" +=
+:foldmethod :expr
+:foldexpr "v:lua.vim.treesitter.foldexpr()"
+:foldlevelstart 99
+```
+
 ### Signs
 
 ```fennel init.fnl +=
@@ -567,6 +573,7 @@ Neovim has a robust, built-in [Language Server Protocol] (LSP) client that is we
 :lexical {:cmd [(.. vim.env.HOME "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh")]}
 :gdscript {}
 :gopls {}
+:kulala_ls {}
 :lua_ls {}
 :nil_ls {}
 :rust_analyzer {}
@@ -898,7 +905,7 @@ Mention the `:G` command.
                    (nmap :<Leader>gd gs.toggle_deleted {:desc "Deleted (toggle)"})
                    (nmap :<Leader>gh gs.toggle_linehl {:desc "Line highlight (toggle)"})
                    (nmap :<Leader>gp gs.preview_hunk {:desc "Preview hunk"})
-                   (nmap :<Leader>gp gs.reset_hunk {:desc "Reset hunk"})
+                   (nmap :<Leader>gr gs.reset_hunk {:desc "Reset hunk"})
                    (nmap "[h" gs.prev_hunk {:desc "Previous hunk"})
                    (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
 ```
@@ -928,6 +935,7 @@ Conform supports a mapping of file types to lists of formatters, which I’ll de
 ```fennel "ft-formatters" +=
 :css [:prettier]
 :html [:prettier]
+:http [:kulala-fmt]
 :javascript [:prettier]
 :json [:prettier]
 :lua [:stylua]

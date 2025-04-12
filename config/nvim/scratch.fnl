@@ -38,7 +38,7 @@
               {:modes [:v :vs :V :Vs] :name :VISUAL :color :pink :icon "󰒅 "}
               {:modes ["\22" "\22s"] :name :VISUAL :color :pink :icon "󰩬 "}
               {:modes [:s :S "\19"] :name :SELECT :color :rosewater :icon "󰫙 "}
-              {:modes [:i :ic :ix] :name :INSERT :color :green :icon " "}
+              {:modes [:i :ic :ix] :name :INSERT :color :green :icon " "}
               {:modes [:R :Rc :Rx :Rv :Rvc :Rvx] :name :REPLACE :color :red :icon " "}
               {:modes [:c] :name :COMMAND :color :flamingo :icon " "}
               {:modes [:cv] :name :EX :color :flamingo :icon " "}
@@ -156,7 +156,7 @@
 (local filetype [{:provider #(let [(icon) (MiniIcons.get :filetype vim.bo.filetype)] icon)
                   :hl (fn []
                         (let [(_ hl-group) (MiniIcons.get :filetype vim.bo.filetype)]
-                          {:fg (get-hl-attr hl-group :fg)}))}
+                          {:fg (get-hl-attr hl-group :fg) :bg (catppuccin-color :mantle)}))}
                   {:provider #(.. " " vim.bo.filetype) :hl (hl :subtext1)}])
 
 (local ruler {:provider " %7(%l/%3L%):%2c %P "

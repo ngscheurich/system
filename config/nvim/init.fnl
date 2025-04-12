@@ -55,6 +55,9 @@
             :undofile true
             :updatetime 250
             :clipboard :unnamedplus
+            :foldmethod :expr
+            :foldexpr "v:lua.vim.treesitter.foldexpr()"
+            :foldlevelstart 99
             })]
   (tset vim.opt k v))
 (vim.diagnostic.config
@@ -299,6 +302,7 @@
                                          :lexical {:cmd [(.. vim.env.HOME "/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh")]}
                                          :gdscript {}
                                          :gopls {}
+                                         :kulala_ls {}
                                          :lua_ls {}
                                          :nil_ls {}
                                          :rust_analyzer {}
@@ -403,7 +407,7 @@
                                     (nmap :<Leader>gd gs.toggle_deleted {:desc "Deleted (toggle)"})
                                     (nmap :<Leader>gh gs.toggle_linehl {:desc "Line highlight (toggle)"})
                                     (nmap :<Leader>gp gs.preview_hunk {:desc "Preview hunk"})
-                                    (nmap :<Leader>gp gs.reset_hunk {:desc "Reset hunk"})
+                                    (nmap :<Leader>gr gs.reset_hunk {:desc "Reset hunk"})
                                     (nmap "[h" gs.prev_hunk {:desc "Previous hunk"})
                                     (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
                  (spec :rebelot/heirline.nvim)
@@ -411,6 +415,7 @@
                        {:opts {:formatters_by_ft {
                                :css [:prettier]
                                :html [:prettier]
+                               :http [:kulala-fmt]
                                :javascript [:prettier]
                                :json [:prettier]
                                :lua [:stylua]
