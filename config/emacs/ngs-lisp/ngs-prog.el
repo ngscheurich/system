@@ -1,10 +1,10 @@
 ;;; ngs-prog.el --- Programming setup -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 N. G. Scheurich
+;; Copyright (C) 2025 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
-;; Package-Requires: ((emacs "29.4"))
+;; Package-Requires: ((emacs "30.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -66,11 +66,8 @@
   :ensure t
   :after eglot
   :init
-  ;; (add-to-list 'eglot-server-programs
-  ;;  `((elixir-ts-mode heex-ts-mode elixir-mode) .
-  ;;    ("/etc/profiles/per-user/nscheurich/bin/nextls" "--stdio=true" :initializationOptions (:experimental (:completions (:enable t)))))))
   (add-to-list 'eglot-server-programs
-	       `((elixir-ts-mode heex-ts-mode) . ("/Users/nscheurich/.local/share/nvim/mason/bin/lexical")))
+	       `((elixir-ts-mode heex-ts-mode) . ("/Users/nick/Projects/lexical/_build/dev/package/lexical/bin/start_lexical.sh")))
   (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
   (add-hook 'heex-ts-mode-hook 'eglot-ensure)
   :mode

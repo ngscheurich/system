@@ -1,10 +1,10 @@
 ;;; ngs-minibuf.el --- Minibuffer enhancements -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 N. G. Scheurich
+;; Copyright (C) 2025 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
-;; Package-Requires: ((emacs "29.4"))
+;; Package-Requires: ((emacs "30.1"))
 
 ;; This file is NOT part of GNU Emacs.
 

@@ -4,7 +4,7 @@
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
-;; Package-Requires: ((emacs "29.4"))
+;; Package-Requires: ((emacs "30.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -64,12 +64,7 @@
   :init
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   :config
-  (package-initialize)
-
-  ;; Needed until https://github.com/d12frosted/homebrew-emacs-plus/issues/720
-  ;; is resolved.
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+  (package-initialize))
 
 ;; Projects management
 (use-package project

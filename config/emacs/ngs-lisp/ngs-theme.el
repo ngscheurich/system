@@ -28,8 +28,8 @@
 ;;; Code:
 
 ;; TODO: Use fontaine
-(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14"))
-(set-face-attribute 'default nil :font "Iosevka Comfy-15")
+(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-13"))
+; (set-face-attribute 'default nil :font "Iosevka Comfy-15")
 
 (setopt cursor-type 'hbar
         default-line-spacing 0.2)
@@ -142,8 +142,8 @@
   :init
   (setopt spacious-padding-widths
           '(:internal-border-width 8
-            :header-line-width 4
-            :mode-line-width 6
+            :header-line-width 2
+            :mode-line-width 2
             :tab-width 4
             :right-divider-width 16
             :scroll-bar-width 8
