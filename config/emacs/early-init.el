@@ -1,5 +1,7 @@
 ;; GNU Emacs early initialization
 
+(setq gc-cons-threshold most-positive-fixnum)
+
 (setopt frame-resize-pixelwise t
         window-resize-pixelwise t
         ring-bell-function 'ignore

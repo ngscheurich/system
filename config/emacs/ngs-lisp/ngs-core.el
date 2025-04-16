@@ -1,6 +1,6 @@
 ;;; ngs-core.el --- Core customizations  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 N. G. Scheurich
+;; Copyright (C) 2025 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
@@ -64,9 +64,14 @@
   :init
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   :config
-  (package-initialize))
+  (package-initialize)
 
-;; Projects setup
+  ;; Needed until https://github.com/d12frosted/homebrew-emacs-plus/issues/720
+  ;; is resolved.
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
+;; Projects management
 (use-package project
   :init
   (setopt project-list-file (expand-file-name "projects" ngs-var-dir)))

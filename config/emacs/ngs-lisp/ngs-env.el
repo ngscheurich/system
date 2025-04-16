@@ -1,6 +1,6 @@
 ;;; ngs-env.el --- Environment customizations  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 N. G. Scheurich
+;; Copyright (C) 2025 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
