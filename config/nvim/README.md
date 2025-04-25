@@ -540,6 +540,7 @@ nvim-treesitter accepts an `ensure_installed` option that allows me to list all 
 :kdl
 :lua
 :nix
+:python
 :rust
 :scss
 :sql
@@ -576,6 +577,7 @@ Neovim has a robust, built-in [Language Server Protocol] (LSP) client that is we
 :kulala_ls {}
 :lua_ls {}
 :nil_ls {}
+:pyright {}
 :rust_analyzer {}
 :ts_ls {}
 ```
@@ -740,35 +742,10 @@ While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no 
        :lazy false
        :priority 1000
        :config (fn []
-                 (let [{: setup} (require :catppuccin)]
-                   (setup {:color_overrides {:mocha {:rosewater :#ab7e8a
-                                                     :flamingo  :#a3685a
-                                                     :pink      :#b294bb
-                                                     :mauve     :#c07d90
-                                                     :red       :#cc6566
-                                                     :maroon    :#d57d62
-                                                     :peach     :#de935f
-                                                     :yellow    :#f0c674
-                                                     :green     :#b6bd68
-                                                     :teal      :#9fbd8f
-                                                     :sky       :#8abeb7
-                                                     :sapphire  :#85b0bc
-                                                     :blue      :#82a2be
-                                                     :lavender  :#a3a7c2
-                                                     :text      :#c4c8c6
-                                                     :subtext1  :#b5b7b4
-                                                     :subtext0  :#969896
-                                                     :overlay2  :#838585
-                                                     :overlay1  :#717374
-                                                     :overlay0  :#5e6063
-                                                     :surface2  :#4a4e52
-                                                     :surface1  :#373b41
-                                                     :surface0  :#282a2e
-                                                     :base      :#1d1f21
-                                                     :mantle    :#151718
-                                                     :crust     :#0e0f10}}
-                                             :integrations {:aerial true
-                                                            :blink_cmp true}}))
+                 (let [{: setup} (require :catppuccin)
+                        color-overrides (require :viridian)]
+                   (setup {:color_overrides color_overrides
+                          :integrations {:aerial true :blink_cmp true}}))
                  (vim.cmd.colorscheme :catppuccin))})
 ```
 
@@ -934,11 +911,13 @@ Conform supports a mapping of file types to lists of formatters, which I’ll de
 
 ```fennel "ft-formatters" +=
 :css [:prettier]
+:fennel [:fnlfmt]
 :html [:prettier]
 :http [:kulala-fmt]
 :javascript [:prettier]
 :json [:prettier]
 :lua [:stylua]
+:python [:black]
 :scss [:prettier]
 :sql [:sleek]
 :typescript [:prettier]
