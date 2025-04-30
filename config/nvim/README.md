@@ -91,7 +91,7 @@ I also want access to some nfnl niceties from the standard (`core`) library.
 
 ## Core
 
-In this section, I’ll configure built-in Neovim options and functionality.
+In this section I’ll configure built-in Neovim options and functionality.
 
 ### Options
 
@@ -193,7 +193,7 @@ Last up is miscellaneous behavior (check out the `:help` docs for each option).
 
 While the majority of my key mappings are related to plugins, and thereby handled in the [Plugins](#plugins) section, I do create a few to control native Neovim behavior.
 
-I’ll include some helper functions to make creating Mormal, Insert, and Terminal mode key mappings more succinct.
+I’ll include some helper functions to make creating Normal, Insert, and Terminal mode key mappings more succinct.
  
 ```fennel init.fnl +=
 (fn nmap [lhs rhs opt] (vim.keymap.set :n lhs rhs opt))
