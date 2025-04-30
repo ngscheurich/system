@@ -1,8 +1,4 @@
-(vim.cmd.set (.. (.. :packpath^= (vim.fn.stdpath :data)) :/site))
-(vim.cmd "packadd nfnl")
-
 (local {: get-in : merge : reduce : some} (require :nfnl.core))
-
 (local {: get_palette} (require :catppuccin.palettes))
 (local heirline (require :heirline))
 (local conds (require :heirline.conditions))
@@ -195,17 +191,18 @@
                (for [_ 1 (or n 1)] (set g (.. g " ")))
                g)})
 
-(heirline.setup {:statusline [mode-bar
-                              (gap 2)
-                              file
-                              (gap 2)
-                              git
-                              {:provider "%="}
-                              diagnostics
-                              (gap 2)
-                              lsp
-                              (gap 2)
-                              filetype
-                              (gap 2)
-                              ruler
-                              mode-tag]})
+{:setup (fn []
+          (heirline.setup {:statusline [mode-bar
+                                        (gap 2)
+                                        file
+                                        (gap 2)
+                                        git
+                                        {:provider "%="}
+                                        diagnostics
+                                        (gap 2)
+                                        lsp
+                                        (gap 2)
+                                        filetype
+                                        (gap 2)
+                                        ruler
+                                        mode-tag]}))}

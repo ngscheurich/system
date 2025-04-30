@@ -562,7 +562,7 @@ nvim-treesitter accepts an `ensure_installed` option that allows me to list all 
                    (setup opts)))})
 ```
 
-- [ ] TODO: nvim-treesitter-textobjects
+- [ ] TODO: Add nvim-treesitter-textobjects
 
 ### LSP Client
 
@@ -734,7 +734,7 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 
 ### Appearance
 
-While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no denying that it is a well-crafted and _comprehensive_ colorscheme plugin. I leverage the excellent Catppuccin foundation and define my own color palette based on [Tomorrow Night].
+While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no denying that it is a well-crafted and _comprehensive_ colorscheme plugin. I leverage the excellent Catppuccin foundation and define my own color palettes based on [Tomorrow Night] and [Caves of Qud].
 
 ```fennel "lazy-spec" +=
 (spec :catppuccin/nvim
@@ -743,10 +743,8 @@ While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no 
        :priority 1000
        :config (fn []
                  (let [{: setup} (require :catppuccin)
-                        color-overrides (require :viridian)]
-                   (setup {:color_overrides color_overrides
-                          :integrations {:aerial true :blink_cmp true}}))
-                 (vim.cmd.colorscheme :catppuccin))})
+                       {: apply} (require :themes/viridian)]
+                  (apply setup)))})
 ```
 
 A “breadbcrumbs” bar surfaces your current place in a structured document (markup, code, etc.) with a left-to-right list of larger to narrower scopes, ending with your current scope on the right. [dropbar.nvim] does a great job with this sort of UI.
@@ -769,7 +767,7 @@ A “breadbcrumbs” bar surfaces your current place in a structured document (m
 (spec :echasnovski/mini.icons {:version :* :config true :lazy false})
 ```
 
-[colorizer.lua] highlights certain color patterns in buffer text with the corresponding color value. While I find this useful for hexidecimal color patterns like `#fe30de`,  I don’t find it useful for color names like “blue”; I configure colorizer.lua to not highlight such names.
+[colorizer.lua] highlights certain color patterns in buffer text with the corresponding color value. While I find this useful for hexidecimal color patterns like `#fe30de`,  I don’t find it useful for color names like “blue”; I configure the plugin to not highlight such names.
 
 ```fennel "lazy-spec" +=
 (spec :catgoose/nvim-colorizer.lua
@@ -781,12 +779,6 @@ The [notifier snack][snacks-notifier] provides a modern look for `vim.notify` (`
 
 ```fennel "snacks-opts" +=
 :notifier {}
-```
-
-The [scroll snack][snacks-scroll] uses animations to smoothly scroll the buffer.
-
-```fennel "snacks-opts" +=
-:scroll {}
 ```
 
 The [statuscolumn snack][snacks-statuscolumn] enables a virtual statuscolumn to the right of line numbers that can display marks, signs, folds, and Git indicators.
@@ -816,44 +808,44 @@ The [indent snack][snacks-indent] shows indentation guides. I don’t enable it 
               (Snacks.indent.enable))))
 ```
 
+[tiny-glimmer.nvim] adds subtle color animations to yanking, searching, and undo/redo.
+
 ```fennel "lazy-spec" +=
-;; TODO: Some of these settings don't seem to work...
-;(spec :rachartier/tiny-glimmer.nvim
-;      {:opts {:overwrite {:search {:enabled true}
-;                          :undo {:enabled true}
-;                          :redo {:enabled true}}}})
+(spec :rachartier/tiny-glimmer.nvim
+      {:opts {:overwrite {:search {:enabled true}
+                          :undo {:enabled true}
+                          :redo {:enabled true}}}})
 ```
 
-Scrollbar with diagnostics indicators:
+[nvim-scrollbar] provides a scrollbar with diagnostics and source control indicators.
 
 ```fennel "lazy-spec" +=
 (spec :petertriho/nvim-scrollbar {:config true})
 ```
 
-Notifications and progress indicator:
+[Fidget] displays progress notifications in a discrete overlay, which is handy for language server progress reporting.
 
 ```fennel "lazy-spec" +=
 (spec :j-hui/fidget.nvim {:config true :event :LspProgress})
 ```
 
-Floating buffer labels:
+I use [Incline] to show floating a floating label in each window with the buffer name; this is useful for keeping track of what is being displayed since I use a global statusline.
 
 ```fennel "lazy-spec" +=
 (spec :b0o/incline.nvim {:config true})
 ```
 
-Animate the cursor with a smear effect:
+[smear-cursor.nvim] animate the cursor with a smear effect inspired by [Neovide]. I’ve yet to make up my mind as to whether this is a useful navigational cue, but it definitely looks cool.
 
 ```fennel "lazy-spec" +=
 (spec :sphamba/smear-cursor.nvim {:config true})
 ```
 
-Decorate tabpage indicators:
+While I’m not interested in displaying buffers in the tabline, I do like how [bufferline.nvim] style tabpage indicators.
 
 ```fennel "lazy-spec" +=
 (spec :akinsho/bufferline.nvim
       {:version :*
-       :after :catppuccin
        :event [:TabEnter :TabNew :TabNewEntered]
        :opts {:options {:mode :tabs
                         :indicator {:icon "┃ "}
@@ -866,7 +858,7 @@ Decorate tabpage indicators:
 
 ### Source Control
 
-Mention the `:G` command.
+While [gitsigns.nvim] does add source control markers (or “signs”) to the status column, it offers many more Git-centric features despite its name. In addition to configuring what the signs looks like, I add key mappings for some of the other features I use frequently, like a line blame indicator, change preview and reset, and navigating by hunk.
 
 ```fennel "lazy-spec" +=
 (spec :lewis6991/gitsigns.nvim
@@ -887,6 +879,8 @@ Mention the `:G` command.
                    (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
 ```
 
+The [gitbrowse snack] snack provides a handy way to open the current file on GitHub.
+
 ```fennel "snacks-opts" +=
 :gitbrowse {}
 ```
@@ -897,14 +891,26 @@ Mention the `:G` command.
 
 ### Status Line
 
+The _status line_ describes the information anchored to the bottom of each Neovim window or, in my case, instance tabpage. [Heirline.nvim] provides a framework for building out a custom statusline, which I’ve done in [a separate module](fnl/statusline.fnl). Key components of my statusline are:
+
+- Vim mode
+- File name and changed indicator
+- Current Git branch
+- Number of additions/deletions/changes
+- Attached language servers
+- Filetype
+- Position in buffer (line/column/percent)
 
 ```fennel "lazy-spec" +=
-(spec :rebelot/heirline.nvim)
+(spec :rebelot/heirline.nvim
+      {:config (fn []
+                (let [{: setup} (require :statusline)]
+                 (setup)))})
 ```
 
 ### Formatting
 
-Consistent formatting is useful in easing the cognitive burden of reading source code, as it will prevent one from encountering multiple stylistic modes within the context of, say, a single project. However, having to think about how to format text is not a useful way to spend brain cycles whilst building software. Luckily, we have a bevy of automated code-formatting tools at our disposable; I like [Conform] for its support for (and wrangling of) LSP formatting and good integration with standalone formatting tools.
+Consistent formatting is useful in easing the cognitive burden of reading source code, as it will prevent one from encountering multiple stylistic modes within the context of, say, a single project. Thankfully, we have a bevy of automated code-formatting tools at our disposable; I like [Conform] for its support for (and wrangling of) LSP formatting and good integration with standalone formatting tools.
 
 Conform supports a mapping of file types to lists of formatters, which I’ll define below in the `ft-formatters` macro. Any file types not included will fall back to using the respective language server, if one is running. I also configure Conform to format a buffer on save.
 
@@ -988,24 +994,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
                     :inline {:adapter :anthropic}}})
 ```
 
-```fennel "lazy-spec" +=
-(spec :yetone/avante.nvim
-      {:cond false
-       :event :VeryLazy
-       :version false
-       :build :make
-       :opts {:windows {:sidebar_header {:rounded false}
-                        :input {:prefix " "}}}
-       :dependencies [:nvim-lua/plenary.nvim
-                      :nvim-treesitter/nvim-treesitter
-                      :MunifTanjim/nui.nvim]})
-```
-
 ### Scratch
-
-```fennel init.fnl +=
-(vim.cmd "so ~/.config/nvim/scratch.lua")
-```
 
 ```fennel "lazy-spec" +=
 (spec :mistweaverco/kulala.nvim
@@ -1016,16 +1005,9 @@ This section is for text-focused, generative AI tools that I’m experimenting w
       {:config (fn []
                 (set vim.g.conjure#client#fennel#aniseed#deprecation_warning false))})
 
-;; {1 :iamcco/markdown-preview.nvim
-;;  :build (fn [] ((. vim.fn "mkdp#util#install")))
-;;  :cmd [:MarkdownPreviewToggle :MarkdownPreview :MarkdownPreviewStop]
-;;  :ft [:markdown]}
-
 (spec :brianhuster/live-preview.nvim)
 
 (spec :sindrets/diffview.nvim {:config true})
-
-;; (spec :joshuavial/aider.nvim {:opts {}})
 
 (spec :kristijanhusak/vim-dadbod-ui
       {:dependencies [{1 :tpope/vim-dadbod :lazy true}
@@ -1063,6 +1045,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [beam]: https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)
 [blink completion]: https://cmp.saghen.dev/
 [catppuccin]: https://github.com/catppuccin/nvim
+[caves of qud]: https://www.cavesofqud.com/
 [clojure]: https://clojure.org/
 [codecompanion]: https://codecompanion.olimorris.dev/
 [colorizer.lua]: https://github.com/catgoose/nvim-colorizer.lua
@@ -1078,6 +1061,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [folke lemaitre]: https://folke.io/
 [git]: https://git-scm.com/
 [go]: https://go.dev/
+[heirline.nvim]: https://github.com/rebelot/heirline.nvim
 [home manager]: https://github.com/nix-community/home-manager
 [kitty-graphics-protocol]: https://sw.kovidgoyal.net/kitty/graphics-protocol/
 [language server protocol]: https://microsoft.github.io/language-server-protocol/
@@ -1104,6 +1088,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [nix]: https://nixos.org/
 [nvim-lint]: https://github.com/mfussenegger/nvim-lint
 [nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
+[nvim-scrollbar]: https://github.com/petertriho/nvim-scrollbar
 [nvim-treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
 [oil]: https://github.com/stevearc/oil.nvim
 [oliver caldwell]: https://github.com/Olical
@@ -1111,6 +1096,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [plugins]: #pluins
 [process]: #process
 [ripgrep]: https://github.com/BurntSushi/ripgrep
+[snacks-gitbrowse]: https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
 [snacks-image]: https://github.com/folke/snacks.nvim/blob/main/docs/image.md
 [snacks-indent]: https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
 [snacks-input]: https://github.com/folke/snacks.nvim/blob/main/docs/input.md
@@ -1121,5 +1107,11 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [snacks-statuscolumn]: https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
 [snacks.nvim]: https://github.com/folke/snacks.nvim
 [steven arcangeli]: https://github.com/stevearc
+[tiny-glimmer]: https://github.com/rachartier/tiny-glimmer.nvim
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages
+[fidget]: https://github.com/j-hui/fidget.nvim
+[incline]: https://github.com/b0o/incline.nvim
+[smear-cursor.nvim]: https://github.com/sphamba/smear-cursor.nvim
+[neovide]: https://neovide.dev/features.html#animated-cursor
+[bufferline.nvim]: https://github.com/akinsho/bufferline.nvim

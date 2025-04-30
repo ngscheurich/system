@@ -1,6 +1,4 @@
--- [nfnl] Compiled from scratch.fnl by https://github.com/Olical/nfnl, do not edit.
-vim.cmd.set((("packpath^=" .. vim.fn.stdpath("data")) .. "/site"))
-vim.cmd("packadd nfnl")
+-- [nfnl] Compiled from fnl/statusline.fnl by https://github.com/Olical/nfnl, do not edit.
 local _local_1_ = require("nfnl.core")
 local get_in = _local_1_["get-in"]
 local merge = _local_1_["merge"]
@@ -233,4 +231,7 @@ local function gap(n)
   end
   return {provider = _48_}
 end
-return heirline.setup({statusline = {mode_bar, gap(2), file, gap(2), git, {provider = "%="}, diagnostics, gap(2), lsp, gap(2), filetype, gap(2), ruler, mode_tag}})
+local function _49_()
+  return heirline.setup({statusline = {mode_bar, gap(2), file, gap(2), git, {provider = "%="}, diagnostics, gap(2), lsp, gap(2), filetype, gap(2), ruler, mode_tag}})
+end
+return {setup = _49_}

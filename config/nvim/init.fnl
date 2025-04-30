@@ -126,7 +126,6 @@
                         :image {}
                         :picker {}
                         :notifier {}
-                        :scroll {}
                         :statuscolumn {}
                         :input {}
                         :indent {:enabled false :only_scope true :only_current true}
@@ -334,10 +333,8 @@
                         :priority 1000
                         :config (fn []
                                   (let [{: setup} (require :catppuccin)
-                                         color-overrides (require :viridian)]
-                                    (setup {:color_overrides color_overrides
-                                           :integrations {:aerial true :blink_cmp true}}))
-                                  (vim.cmd.colorscheme :catppuccin))})
+                                        {: apply} (require :themes/viridian)]
+                                   (apply setup)))})
                  (spec :Bekaboo/dropbar.nvim
                        {:opts {:bar {:enable false}}
                         :keys [(lazy-key :Breadcrumbs
@@ -351,18 +348,16 @@
                  (spec :catgoose/nvim-colorizer.lua
                        {:event :BufReadPre
                         :opts {:user_default_options {:names false}}})
-                 ;; TODO: Some of these settings don't seem to work...
-                 ;(spec :rachartier/tiny-glimmer.nvim
-                 ;      {:opts {:overwrite {:search {:enabled true}
-                 ;                          :undo {:enabled true}
-                 ;                          :redo {:enabled true}}}})
+                 (spec :rachartier/tiny-glimmer.nvim
+                       {:opts {:overwrite {:search {:enabled true}
+                                           :undo {:enabled true}
+                                           :redo {:enabled true}}}})
                  (spec :petertriho/nvim-scrollbar {:config true})
                  (spec :j-hui/fidget.nvim {:config true :event :LspProgress})
                  (spec :b0o/incline.nvim {:config true})
                  (spec :sphamba/smear-cursor.nvim {:config true})
                  (spec :akinsho/bufferline.nvim
                        {:version :*
-                        :after :catppuccin
                         :event [:TabEnter :TabNew :TabNewEntered]
                         :opts {:options {:mode :tabs
                                          :indicator {:icon "┃ "}
@@ -387,7 +382,10 @@
                                     (nmap :<Leader>gr gs.reset_hunk {:desc "Reset hunk"})
                                     (nmap "[h" gs.prev_hunk {:desc "Previous hunk"})
                                     (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
-                 (spec :rebelot/heirline.nvim)
+                 (spec :rebelot/heirline.nvim
+                       {:config (fn []
+                                 (let [{: setup} (require :statusline)]
+                                  (setup)))})
                  (spec :stevearc/conform.nvim
                        {:opts {:formatters_by_ft {
                                :css [:prettier]
@@ -430,16 +428,6 @@
                                        :nvim-treesitter/nvim-treesitter]
                         :strategies {:chat {:adapter :anthropic}
                                      :inline {:adapter :anthropic}}})
-                 (spec :yetone/avante.nvim
-                       {:cond false
-                        :event :VeryLazy
-                        :version false
-                        :build :make
-                        :opts {:windows {:sidebar_header {:rounded false}
-                                         :input {:prefix " "}}}
-                        :dependencies [:nvim-lua/plenary.nvim
-                                       :nvim-treesitter/nvim-treesitter
-                                       :MunifTanjim/nui.nvim]})
                  (spec :mistweaverco/kulala.nvim
                    {:ft [:http :rest]
                     :opts {:global_keymaps true}})
@@ -448,16 +436,9 @@
                        {:config (fn []
                                  (set vim.g.conjure#client#fennel#aniseed#deprecation_warning false))})
 
-                 ;; {1 :iamcco/markdown-preview.nvim
-                 ;;  :build (fn [] ((. vim.fn "mkdp#util#install")))
-                 ;;  :cmd [:MarkdownPreviewToggle :MarkdownPreview :MarkdownPreviewStop]
-                 ;;  :ft [:markdown]}
-
                  (spec :brianhuster/live-preview.nvim)
 
                  (spec :sindrets/diffview.nvim {:config true})
-
-                 ;; (spec :joshuavial/aider.nvim {:opts {}})
 
                  (spec :kristijanhusak/vim-dadbod-ui
                        {:dependencies [{1 :tpope/vim-dadbod :lazy true}
@@ -489,4 +470,3 @@
                                (lazy-key "Quickfix List" :<Leader>lq "<Cmd>Trouble qflist toggle<CR>")]})
                ]
                }))
-(vim.cmd "so ~/.config/nvim/scratch.lua")
