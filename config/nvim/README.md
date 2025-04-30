@@ -258,8 +258,12 @@ While the core Neovim experience is excellent, I lean on myriad community plugin
 - [Completion](#completion)
 - [Picker](#picker)
 - [Appearance](#appearance)
+- [Status Line](#status-line)
+- [Source Control](#source-control)
 - [Formatting](#formatting)
 - [Linting](#linting)
+- [Prose](#prose)
+- [Artificial Intelligence](#artificial-intelligence)
 
 Neovim has built in plugin management capabilites via its _packages_ feature (`:h packages`). While this is perfectly fine for many cases, I’ve had a great experience using [Folke Lemaitre]’s [lazy.nvim] plugin manager. Some of the features that I appreciate include:
 
@@ -510,7 +514,7 @@ The [explorer snack][snacks-explorer] provides a convenient file tree which I so
 :explorer {}
 ```
 
-### Treesitter
+### Tree-sitter
 
 [Tree-sitter] describes itself thusly:
 
@@ -851,6 +855,25 @@ While I’m not interested in displaying buffers in the tabline, I do like how [
                                    :separator false}]}}})
 ```
 
+### Status Line
+
+The _status line_ describes the information anchored to the bottom of each Neovim window or, in my case, instance tabpage. [Heirline.nvim] provides a framework for building out a custom status line, which I’ve done in [a separate module](fnl/statusline.fnl). Key components of my status line are:
+
+- Vim mode
+- File name and changed indicator
+- Current Git branch
+- Number of additions/deletions/changes
+- Attached language servers
+- Filetype
+- Position in buffer (line/column/percent)
+
+```fennel "lazy-spec" +=
+(spec :rebelot/heirline.nvim
+      {:config (fn []
+                (let [{: setup} (require :statusline)]
+                 (setup)))})
+```
+
 ### Source Control
 
 While [gitsigns.nvim] does add source control markers (or “signs”) to the status column, it offers many more Git-centric features despite its name. In addition to configuring what the signs looks like, I add key mappings for some of the other features I use frequently, like a line blame indicator, change preview and reset, and navigating by hunk.
@@ -882,25 +905,6 @@ The [gitbrowse snack] snack provides a handy way to open the current file on Git
 
 ```fennel "snacks-keys" +=
 (lazy-key "View on Remote" :<Leader>gB #(Snacks.gitbrowse))
-```
-
-### Status Line
-
-The _status line_ describes the information anchored to the bottom of each Neovim window or, in my case, instance tabpage. [Heirline.nvim] provides a framework for building out a custom statusline, which I’ve done in [a separate module](fnl/statusline.fnl). Key components of my statusline are:
-
-- Vim mode
-- File name and changed indicator
-- Current Git branch
-- Number of additions/deletions/changes
-- Attached language servers
-- Filetype
-- Position in buffer (line/column/percent)
-
-```fennel "lazy-spec" +=
-(spec :rebelot/heirline.nvim
-      {:config (fn []
-                (let [{: setup} (require :statusline)]
-                 (setup)))})
 ```
 
 ### Formatting
@@ -963,7 +967,7 @@ My go-to plugin here is [nvim-lint].
 
 ### Artifical Intelligence
 
-This section is for text-focused, generative AI tools that I’m experimenting with. These [LLM]-based assistants can be useful (and clever, in a way), though concerns around ethics and energy consumption are front of mind when interfacing with them.
+This section is for text-focused, generative AI tools that I’m experimenting with. These [LLM]-based assistants can be useful (and clever, in a way), though concerns around ethics and energy consumption remain top of mind.
 
 [copilot.lua] provides access to code completion features powered by GitHub’s [Copilot]. This is the simplest of the AI tools that I’ve tried, not that simple is a bad thing.
 
@@ -991,7 +995,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
                     :inline {:adapter :anthropic}}})
 ```
 
-### Scratch
+## Scratch
 
 This is where configuration changes and plugins I’m experimenting with go.
 

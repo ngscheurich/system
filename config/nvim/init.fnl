@@ -363,6 +363,10 @@
                                                     :text " Explorer"
                                                     :text_align :left
                                                     :separator false}]}}})
+                 (spec :rebelot/heirline.nvim
+                       {:config (fn []
+                                 (let [{: setup} (require :statusline)]
+                                  (setup)))})
                  (spec :lewis6991/gitsigns.nvim
                        {:config (fn []
                                   (let [gs (require :gitsigns)]
@@ -379,10 +383,6 @@
                                     (nmap :<Leader>gr gs.reset_hunk {:desc "Reset hunk"})
                                     (nmap "[h" gs.prev_hunk {:desc "Previous hunk"})
                                     (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
-                 (spec :rebelot/heirline.nvim
-                       {:config (fn []
-                                 (let [{: setup} (require :statusline)]
-                                  (setup)))})
                  (spec :stevearc/conform.nvim
                        {:opts {:formatters_by_ft {
                                :css [:prettier]
