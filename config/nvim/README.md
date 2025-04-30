@@ -951,6 +951,8 @@ My go-to plugin here is [nvim-lint].
 
 ### Prose
 
+[Markview.nvim] uses color, font weight, and symbols to enrich the way plain-text prose documents are displayed. I include it primarily for use with Markdown, but it also supports LaTeX, Typst, and YAML.
+
 ```fennel "lazy-spec" +=
 (spec :OXY2DEV/markview.nvim
       {:ft [:markdown :avante]
@@ -990,6 +992,8 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 ```
 
 ### Scratch
+
+This is where configuration changes and plugins I’m experimenting with go.
 
 ```fennel "lazy-spec" +=
 (spec :mistweaverco/kulala.nvim
@@ -1074,6 +1078,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [macro references]: https://github.com/driusan/lmt/blob/master/README.md#macro-references
 [make]: https://en.wikipedia.org/wiki/Make_%28software%29
 [markdown]: https://spec.commonmark.org/0.31.2/#what-is-markdown-
+[markview.nvim]: https://github.com/OXY2DEV/markview.nvim
 [mini.align]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
 [mini.bracketed]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
 [mini.clue]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-clue.md
