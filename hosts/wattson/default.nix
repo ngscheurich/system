@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  networking = {
+    hostName = "wattson";
+    computerName = "Wattson";
+  };
+
   nix.settings = {
     trusted-substituters = [
       "https://cache.nixos.org"

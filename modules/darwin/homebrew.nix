@@ -11,8 +11,8 @@
     global.brewfile = true;
 
     taps = [
+      "charmbracelet/tap"
       "d12frosted/emacs-plus"
-      "gcenx/wine"
       "homebrew/cask-versions"
       "homebrew/services"
       "morantron/homebrew-tmux-fingers"
@@ -23,15 +23,20 @@
       "asyncapi"
       "llvm"
       "luajit"
+      "mods"
+
+      "colima"
+      "docker"
+      "docker-compose"
+      "docker-credential-helper"
 
       {
         name = "emacs-plus";
         args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
       }
 
+      # tmux-fingers + deps
       "tmux-fingers"
-
-      # tmux-fingers deps
       "bdw-gc"
       "libevent"
       "libyaml"
@@ -48,7 +53,6 @@
       "daisydisk"
       "dash"
       "discord"
-      "docker"
       "dropbox"
       "fantastical"
       "figma"
@@ -72,11 +76,6 @@
       "raycast"
       "reaper"
       "vlc"
-      "whatsapp"
-      {
-        name = "gcenx/wine/wineskin";
-        args = { no_quarantine = true; };
-      }
       "wireshark"
     ];
 

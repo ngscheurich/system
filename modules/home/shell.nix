@@ -169,6 +169,7 @@ in
     neofetch
     ranger
     ripgrep
+    sd
     slides
     tldr
     tmux

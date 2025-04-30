@@ -13,13 +13,17 @@
     go
     lua
     nodejs
-    python39
+    # python39
     rustc
     cargo
 
     # Language support
+    black
     fnlfmt
     nil
+    pyright
+    sleek
+    sqlfluff
 
     # Database tools
     freetds

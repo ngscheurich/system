@@ -7,6 +7,8 @@
   ];
 
   nix = {
+    enable = true;
+
     extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs = true
@@ -18,8 +20,6 @@
       interval = { Hour = 3; Minute = 15; };
     };
   };
-
-  services.nix-daemon.enable = true;
 
   system.stateVersion = 4;
 

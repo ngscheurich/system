@@ -1,10 +1,10 @@
 ;;; ngs-env.el --- Environment customizations  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2024 N. G. Scheurich
+;; Copyright (C) 2025 N. G. Scheurich
 
 ;; Author: N. G. Scheurich <nick@scheurich.haus>
 ;; URL: https://scheurich.haus/emacs
-;; Package-Requires: ((emacs "29.4"))
+;; Package-Requires: ((emacs "30.1"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -27,7 +27,12 @@
 
 ;;; Code:
 
-;;; Add Nix bin directories to `exec-path'
+;; Needed until https://github.com/d12frosted/homebrew-emacs-plus/issues/720
+  ;; is resolved.
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+;; Add Nix bin directories to `exec-path'
 (add-to-list 'exec-path
 	     (format "/etc/profiles/per-user/%s/bin/" (getenv "USER")))
 (add-to-list 'exec-path "/run/current-system/sw/bin/")
