@@ -1,6 +1,6 @@
 # /etc/system
 
-![A collection of terminal emulator windows runnning neofetch, btm, and Neovim](https://user-images.githubusercontent.com/423798/214494353-eb1f2dde-b612-4b76-a16f-e4a2436bede2.png)
+![A collection of terminal emulator windows runnning neofetch, btm, and Neovim.](img/system.png)
 
 This repository contains system- and application-level configurations for the
 computers I use. Wanderers beware: it is ever-evolving and fraught with great
