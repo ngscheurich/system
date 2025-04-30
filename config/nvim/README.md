@@ -1,5 +1,7 @@
 # Neovim Configuration
 
+![Neovim running in a terminal emulator. There are three windows: one showing this file, one showing the tangled output, and one showing the compiled Lua code.](../../img/neovim.png)
+
 This is my [Neovim] configuration. It is written in a literate programming style; that is to say, with text meant for computer interpretation, i.e. _code_, intermingled with plain-language text meant to be parsed by humans. Specifically, this file is a [Markdown] document in which the computer code portions are marked up as [fenced code blocks] written primarily in the [Fennel] programming language.
 
 - [Process](#process)
