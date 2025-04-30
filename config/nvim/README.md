@@ -389,24 +389,6 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
                          :update_n_lines :\n}}})
 ```
 
-[aerial.nvim] displays a code/document outline in a side panel window.
-
-```fennel "lazy-spec" +=
-(spec :stevearc/aerial.nvim
-      {:config (fn []
-                 (let [{: setup} (require :aerial)]
-                   (setup {:on_attach (fn [b]
-                                        (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
-                                        (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
-      :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
-```
-
-The [explorer snack] provides a convenient file tree which I sometimes use to quickly understand the file structure of or orient myself in a project.
-
-```fennel "snacks-opts" +=
-:explorer {}
-```
-
 ### Workflow
 
 There are many great Neovim plugins that improve one’s general workflow.
@@ -508,6 +490,24 @@ The [image snack][snacks-image] snack uses the [Kitty Graphics Protocol] to disp
 
 ```fennel "snacks-opts" +=
 :image {}
+```
+
+[aerial.nvim] displays a code/document outline in a side panel window.
+
+```fennel "lazy-spec" +=
+(spec :stevearc/aerial.nvim
+      {:config (fn []
+                 (let [{: setup} (require :aerial)]
+                   (setup {:on_attach (fn [b]
+                                        (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
+                                        (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
+      :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
+```
+
+The [explorer snack][snacks-explorer] provides a convenient file tree which I sometimes use to quickly understand the file structure of or orient myself in a project.
+
+```fennel "snacks-opts" +=
+:explorer {}
 ```
 
 ### Treesitter

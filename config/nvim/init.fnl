@@ -120,11 +120,11 @@
                         :lazy false
                         :opts {
                         :utils {}
-                        :explorer {}
                         :bigfile {}
                         :quickfile {}
                         :scratch {}
                         :image {}
+                        :explorer {}
                         :picker {}
                         :notifier {}
                         :statuscolumn {}
@@ -206,13 +206,6 @@
                                           :highlight :\h
                                           :replace :\r
                                           :update_n_lines :\n}}})
-                 (spec :stevearc/aerial.nvim
-                       {:config (fn []
-                                  (let [{: setup} (require :aerial)]
-                                    (setup {:on_attach (fn [b]
-                                                         (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
-                                                         (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
-                       :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
                  (spec :stevearc/oil.nvim
                        {:config (fn []
                                   (let [oil (require :oil)]
@@ -258,6 +251,13 @@
                  (spec :tpope/vim-rsi)
                  (spec :jpalardy/vim-slime {:config #(tset vim.g :slime_target :tmux)})
                  (spec :tpope/vim-projectionist)
+                 (spec :stevearc/aerial.nvim
+                       {:config (fn []
+                                  (let [{: setup} (require :aerial)]
+                                    (setup {:on_attach (fn [b]
+                                                         (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
+                                                         (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
+                       :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
                  (spec :nvim-treesitter/nvim-treesitter
                        {:opts {:highlight {:enable true}
                                :indent {:enable true}
