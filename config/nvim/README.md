@@ -1113,7 +1113,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [snacks-statuscolumn]: https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
 [snacks.nvim]: https://github.com/folke/snacks.nvim
 [steven arcangeli]: https://github.com/stevearc
-[tiny-glimmer]: https://github.com/rachartier/tiny-glimmer.nvim
+[tiny-glimmer.nvim]: https://github.com/rachartier/tiny-glimmer.nvim
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages
 [vim-slime]: https://github.com/jpalardy/vim-slime
