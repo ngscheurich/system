@@ -1,3 +1,5 @@
+;; Based on Caves of Qud (https://www.cavesofqud.com/)
+
 (local color-overrides {:mocha {:rosewater "#ba9e5b"
                                 :flamingo "#f15f22"
                                 :pink "#ae4035"

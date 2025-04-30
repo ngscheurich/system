@@ -1,3 +1,5 @@
+;; Based on Tomorrow Night (https://github.com/chriskempson/tomorrow-theme?tab=readme-ov-file#tomorrow-night)
+
 (local color-overrides {:mocha {:rosewater "#ab7e8a"
                                 :flamingo "#a3685a"
                                 :pink "#b294bb"
