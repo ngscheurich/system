@@ -1058,6 +1058,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [fidget]: https://github.com/j-hui/fidget.nvim
 [folke lemaitre]: https://folke.io/
 [git]: https://git-scm.com/
+[gitsigns]: https://github.com/lewis6991/gitsigns.nvim
 [go]: https://go.dev/
 [heirline.nvim]: https://github.com/rebelot/heirline.nvim
 [home manager]: https://github.com/nix-community/home-manager
