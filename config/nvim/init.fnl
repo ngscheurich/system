@@ -120,6 +120,7 @@
                         :lazy false
                         :opts {
                         :utils {}
+                        :explorer {}
                         :bigfile {}
                         :quickfile {}
                         :scratch {}
@@ -212,10 +213,6 @@
                                                          (nmap "{" :<Cmd>AerialPrev<CR> {:buffer b})
                                                          (nmap "}" :<Cmd>AerialNext<CR> {:buffer b}))})))
                        :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
-                 (spec :nvim-neo-tree/neo-tree.nvim
-                       {:branch :v3.x
-                        :dependencies [:nvim-lua/plenary.nvim :MunifTanjim/nui.nvim]
-                        :keys [(lazy-key :Explore :<Leader>e "<Cmd>Neotree reveal<CR>")]})
                  (spec :stevearc/oil.nvim
                        {:config (fn []
                                   (let [oil (require :oil)]

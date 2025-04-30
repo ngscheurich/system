@@ -8,6 +8,7 @@ This is my [Neovim] configuration. It is written in a literate programming style
 - [Core](#core)
 - [Mappings](#mappins)
 - [Plugins](#plugins)
+- [Scratch](#scratch)
 
 ## Process
 
@@ -388,7 +389,7 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
                          :update_n_lines :\n}}})
 ```
 
-
+[aerial.nvim] displays a code/document outline in a side panel window.
 
 ```fennel "lazy-spec" +=
 (spec :stevearc/aerial.nvim
@@ -400,11 +401,10 @@ I rely heavily on [Leap] to move around buffers quickly. It works by providing a
       :keys [(lazy-key :Outline :<Leader>o :<Cmd>AerialToggle!<CR>)]})
 ```
 
-```fennel "lazy-spec" +=
-(spec :nvim-neo-tree/neo-tree.nvim
-      {:branch :v3.x
-       :dependencies [:nvim-lua/plenary.nvim :MunifTanjim/nui.nvim]
-       :keys [(lazy-key :Explore :<Leader>e "<Cmd>Neotree reveal<CR>")]})
+The [explorer snack] provides a convenient file tree which I sometimes use to quickly understand the file structure of or orient myself in a project.
+
+```fennel "snacks-opts" +=
+:explorer {}
 ```
 
 ### Workflow
@@ -479,9 +479,6 @@ There are many great Neovim plugins that improve one’s general workflow.
 (spec :tpope/vim-rsi)
 ```
 
-[unimpaired.vim] adds convenient paired bracket mappings.
-TODO: Can I add o/e bindimg to mini.bracketed?
-
 [vim-slime] sends text from the buffer to various targets, e.g. tmux.
 
 ```fennel "lazy-spec" +=
@@ -494,7 +491,7 @@ TODO: Can I add o/e bindimg to mini.bracketed?
 (spec :tpope/vim-projectionist)
 ```
 
-The `bigfile` and `quickfile` [snacks][snacks.nvim] provide some features around loading and working with files. The former disables some performance-hungry features in very large files (1.5 MB in size or greater, by default) while the latter defers loading of plugins until the contents of the file have been rendered.
+The [bigfile][snacks-bigfile] and [quickfile][snacks-quickfile] provide some features around loading and working with files. The former disables some performance-hungry features in very large files (1.5 MB in size or greater, by default) while the latter defers loading of plugins until the contents of the file have been rendered.
 
 ```fennel "snacks-opts" +=
 :bigfile {}
@@ -561,8 +558,6 @@ nvim-treesitter accepts an `ensure_installed` option that allows me to list all 
                  (let [{: setup} (require :nvim-treesitter.configs)]
                    (setup opts)))})
 ```
-
-- [ ] TODO: Add nvim-treesitter-textobjects
 
 ### LSP Client
 
@@ -1039,11 +1034,13 @@ This section is for text-focused, generative AI tools that I’m experimenting w
               (lazy-key "Quickfix List" :<Leader>lq "<Cmd>Trouble qflist toggle<CR>")]})
 ```
 
+[aerial.nvim]: https://github.com/stevearc/aerial.nvim
 [anthropic]: https://www.anthropic.com/
 [autocommand group]: https://neovim.io/doc/user/autocmd.html#_8.-groups
 [autocommand]: https://neovim.io/doc/user/autocmd.html#_1.-introduction
 [beam]: https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)
 [blink completion]: https://cmp.saghen.dev/
+[bufferline.nvim]: https://github.com/akinsho/bufferline.nvim
 [catppuccin]: https://github.com/catppuccin/nvim
 [caves of qud]: https://www.cavesofqud.com/
 [clojure]: https://clojure.org/
@@ -1058,11 +1055,13 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [evgeni chasnovski]: http://www.questionflow.org/
 [fenced code blocks]: https://spec.commonmark.org/0.31.2/#fenced-code-blocks
 [fennel]: https://fennel-lang.org/
+[fidget]: https://github.com/j-hui/fidget.nvim
 [folke lemaitre]: https://folke.io/
 [git]: https://git-scm.com/
 [go]: https://go.dev/
 [heirline.nvim]: https://github.com/rebelot/heirline.nvim
 [home manager]: https://github.com/nix-community/home-manager
+[incline]: https://github.com/b0o/incline.nvim
 [kitty-graphics-protocol]: https://sw.kovidgoyal.net/kitty/graphics-protocol/
 [language server protocol]: https://microsoft.github.io/language-server-protocol/
 [lazy.nvim]: https://github.com/folke/lazy.nvim
@@ -1083,6 +1082,7 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [mini.sessions]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
 [mini.splitjoin]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
 [mini.surround]: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
+[neovide]: https://neovide.dev/features.html#animated-cursor
 [neovim]: https://neovim.io/
 [nfnl]: https://github.com/Olical/nfnl
 [nix]: https://nixos.org/
@@ -1095,13 +1095,19 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [ollama]: https://ollama.com/
 [plugins]: #pluins
 [process]: #process
+[projectionist.vim]: https://github.com/tpope/vim-projectionist
 [ripgrep]: https://github.com/BurntSushi/ripgrep
+[rsi.vim]: https://github.com/tpope/vim-rsi
+[smear-cursor.nvim]: https://github.com/sphamba/smear-cursor.nvim
+[snacks-bigfile]: https://github.com/folke/snacks.nvim/blob/main/docs/bigfile.md
+[snacks-explorer]: https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
 [snacks-gitbrowse]: https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
 [snacks-image]: https://github.com/folke/snacks.nvim/blob/main/docs/image.md
 [snacks-indent]: https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
 [snacks-input]: https://github.com/folke/snacks.nvim/blob/main/docs/input.md
 [snacks-notifier]: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
 [snacks-picker]: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+[snacks-quickfile]: https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
 [snacks-scratch]: https://github.com/folke/snacks.nvim/blob/main/docs/scratch.md
 [snacks-scroll]: https://github.com/folke/snacks.nvim/blob/main/docs/scroll.md
 [snacks-statuscolumn]: https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
@@ -1110,8 +1116,4 @@ This section is for text-focused, generative AI tools that I’m experimenting w
 [tiny-glimmer]: https://github.com/rachartier/tiny-glimmer.nvim
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages
-[fidget]: https://github.com/j-hui/fidget.nvim
-[incline]: https://github.com/b0o/incline.nvim
-[smear-cursor.nvim]: https://github.com/sphamba/smear-cursor.nvim
-[neovide]: https://neovide.dev/features.html#animated-cursor
-[bufferline.nvim]: https://github.com/akinsho/bufferline.nvim
+[vim-slime]: https://github.com/jpalardy/vim-slime
