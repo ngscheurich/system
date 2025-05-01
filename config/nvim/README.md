@@ -1126,6 +1126,7 @@ This is where configuration changes and plugins I’m experimenting with go.
 [snacks.nvim]: https://github.com/folke/snacks.nvim
 [steven arcangeli]: https://github.com/stevearc
 [tiny-glimmer.nvim]: https://github.com/rachartier/tiny-glimmer.nvim
+[tomorrow night]:  https://github.com/chriskempson/tomorrow-theme?tab=readme-ov-file#tomorrow-night
 [tree-sitter]: https://tree-sitter.github.io/tree-sitter/
 [vim package]: https://neovim.io/doc/user/repeat.html#_using-vim-packages
 [vim-slime]: https://github.com/jpalardy/vim-slime
