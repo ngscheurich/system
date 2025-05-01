@@ -251,7 +251,7 @@ I set my leader key and local leader key to `<Space>` and `,` respectively. Thou
 
 ## Plugins
 
-While the core Neovim experience is excellent, I lean on myriad community plugins to enhance it in various ways. I’ll break these plugins up into sections:
+While the core Neovim experience is excellent, I lean on myriad community plugins to enhance it. I’ll break these plugins up into sections:
 
 - [Editing](#editing)
 - [Workflow](#workflow)
@@ -479,7 +479,7 @@ There are many great Neovim plugins that improve one’s general workflow.
 (spec :tpope/vim-projectionist)
 ```
 
-The [bigfile][snacks-bigfile] and [quickfile][snacks-quickfile] provide some features around loading and working with files. The former disables some performance-hungry features in very large files (1.5 MB in size or greater, by default) while the latter defers loading of plugins until the contents of the file have been rendered.
+The [bigfile][snacks-bigfile] and [quickfile][snacks-quickfile] snacks provide some features around loading and working with files. The former disables some performance-hungry features in very large files (1.5 MB in size or greater, by default) while the latter defers loading of plugins until the contents of the file have been rendered.
 
 ```fennel "snacks-opts" +=
 :bigfile {}
@@ -1073,7 +1073,7 @@ This is where configuration changes and plugins I’m experimenting with go.
 [heirline.nvim]: https://github.com/rebelot/heirline.nvim
 [home manager]: https://github.com/nix-community/home-manager
 [incline]: https://github.com/b0o/incline.nvim
-[kitty-graphics-protocol]: https://sw.kovidgoyal.net/kitty/graphics-protocol/
+[kitty graphics protocol]: https://sw.kovidgoyal.net/kitty/graphics-protocol/
 [language server protocol]: https://microsoft.github.io/language-server-protocol/
 [lazy.nvim]: https://github.com/folke/lazy.nvim
 [leap]: https://github.com/ggandor/leap.nvim
