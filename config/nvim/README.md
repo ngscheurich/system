@@ -735,7 +735,7 @@ Here’s a table to help keep things straight with the `<Leader>` mappings:
 
 ### Appearance
 
-While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no denying that it is a well-crafted and _comprehensive_ colorscheme plugin. I leverage the excellent Catppuccin foundation and define my own color palettes based on [Tomorrow Night] and [Caves of Qud].
+While I’m not overly fond of [Catppuccin]’s built-in palettes, there’s no denying that it is a well-crafted and _comprehensive_ colorscheme plugin. I leverage the excellent Catppuccin foundation and define my own color palettes based on [Tomorrow Night] and [Caves of Qud] (the image at the top of this document shows the Qud-inspired theme, `viridian`).
 
 ```fennel "lazy-spec" +=
 (spec :catppuccin/nvim
