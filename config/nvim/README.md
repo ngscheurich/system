@@ -899,7 +899,7 @@ While [gitsigns.nvim] does add source control markers (or “signs”) to the st
                    (nmap "]h" gs.next_hunk {:desc "Next hunk"})))})
 ```
 
-The [gitbrowse snack] snack provides a handy way to open the current file on GitHub.
+The [gitbrowse snack][snacks-gitbrowse] snack provides a handy way to open the current file on GitHub.
 
 ```fennel "snacks-opts" +=
 :gitbrowse {}
@@ -1068,7 +1068,7 @@ This is where configuration changes and plugins I’m experimenting with go.
 [fidget]: https://github.com/j-hui/fidget.nvim
 [folke lemaitre]: https://folke.io/
 [git]: https://git-scm.com/
-[gitsigns]: https://github.com/lewis6991/gitsigns.nvim
+[gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
 [go]: https://go.dev/
 [heirline.nvim]: https://github.com/rebelot/heirline.nvim
 [home manager]: https://github.com/nix-community/home-manager
