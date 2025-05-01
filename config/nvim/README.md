@@ -836,13 +836,13 @@ I use [Incline] to show floating a floating label in each window with the buffer
 (spec :b0o/incline.nvim {:config true})
 ```
 
-[smear-cursor.nvim] animate the cursor with a smear effect inspired by [Neovide]. I’ve yet to make up my mind as to whether this is a useful navigational cue, but it definitely looks cool.
+[smear-cursor.nvim] animates the cursor with a smear effect inspired by [Neovide]. I’ve yet to make up my mind as to whether this is a useful navigational cue, but it definitely looks cool.
 
 ```fennel "lazy-spec" +=
 (spec :sphamba/smear-cursor.nvim {:config true})
 ```
 
-While I’m not interested in displaying buffers in the tabline, I do like how [bufferline.nvim] style tabpage indicators.
+While I’m not interested in displaying buffers in the tabline, I do like how [bufferline.nvim] styles tabpage indicators.
 
 ```fennel "lazy-spec" +=
 (spec :akinsho/bufferline.nvim
@@ -859,7 +859,7 @@ While I’m not interested in displaying buffers in the tabline, I do like how [
 
 ### Status Line
 
-The _status line_ describes the information anchored to the bottom of each Neovim window or, in my case, instance tabpage. [Heirline.nvim] provides a framework for building out a custom status line, which I’ve done in [a separate module](fnl/statusline.fnl). Key components of my status line are:
+The _status line_ describes the information anchored to the bottom of each Neovim window or, in my case, tabpage. [Heirline.nvim] provides a framework for building out a custom status line, which I’ve done in [a separate module](fnl/statusline.fnl). Key components of my status line are:
 
 - Vim mode
 - File name and changed indicator
