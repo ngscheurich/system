@@ -39,8 +39,8 @@ end
 ---@return nil
 M.load_theme = function()
 	vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
-	M.unload("ngs_theme")
-	local theme_ok, theme = pcall(require, "ngs_theme")
+	M.unload("ngs.theme")
+	local theme_ok, theme = pcall(require, "ngs.theme")
 	if theme_ok then
 		local ngs = vim.g.ngs
 		ngs.theme = theme
