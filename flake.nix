@@ -39,8 +39,8 @@
         bienjensu = mkDarwinSystem {
           extraModules = [ ./hosts/bienjensu ];
         };
-        wattson = mkDarwinSystem {
-          extraModules = [ ./hosts/wattson ];
+        joulie = mkDarwinSystem {
+          extraModules = [ ./hosts/joulie ];
         };
       };
 

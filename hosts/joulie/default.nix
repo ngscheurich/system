@@ -2,8 +2,8 @@
 
 {
   networking = {
-    hostName = "wattson";
-    computerName = "Wattson";
+    hostName = "joulie";
+    computerName = "Joulie";
   };
 
   nix.settings = {
