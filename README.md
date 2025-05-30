@@ -2,9 +2,8 @@
 
 ![A collection of terminal emulator windows runnning neofetch, btm, and Neovim.](img/system.png)
 
-This repository contains system- and application-level configurations for the
-computers I use. Wanderers beware: it is ever-evolving and fraught with great
-peril.
+This repository contains configurations for the computer systems I use.
+Wanderers beware: this place is ever-evolving and fraught with great peril.
 
 ## Contents
 
@@ -51,7 +50,7 @@ as is possible.
 | Storage          | 512 GB PCIe 4.0 ×4 SSD       |
 
 
-### Wattson
+### Joulie
 
 My work computer is a 2021 14” [Apple MacBook Pro] that runs on the [Apple M1
 Pro] [SoC] architecture. I use [nix-darwin] to manage as much of the system as
@@ -75,7 +74,7 @@ System-level configuration is managed by [nix-darwin] or [NixOS], depending on
 the platform.
 
 Each system’s user-level packages are specified and configured using [Home
-Manager].
+Manager]. Some macOS applications are managed by [Homebrew] via nix-darwin.
 
 ### Modules
 
@@ -170,22 +169,22 @@ Alternatively, if you have [Go] installed, you can simply `make`.
 ## Dotfiles
 
 Home Manager has the capability to configure some of the programs that I use,
-but for those not supported and for anything but the simplest configurations I
-prefer to maintain a classic [dotfiles] setup. Programs configured this way
-include:
+but I prefer to maintain a classic [dotfiles] setup for some. Programs
+configured this way include:
 
-- [tmux], a terminal multiplexer
 - [Aerospace], a tiling window manager for macOS
 - [Emacs], a text editor and Lisp application environment
+- [ghostty], my terminal emulator of choice
 - [Karabiner-Elements], a keyboard customizer for macOS
-- [kitty], a feature-rich GPU-based terminal emulator
+- [kitty], another great terminal emulator
 - [Lazygit], a terminal UI for Git
 - [Neovim], my primary text editor and software development tool
 - [skhd], a simple hotkey daemon for macOS
+- [tmux], a terminal multiplexer
 - [yazi], a terminal file manager
 - [zellij], a terminal workspace
 
-These configs can be installed with Grimoire: `grim config link`.
+These configs can be managed with Grimoire: `grim config --help`.
 
 ## Quickstart
 
@@ -236,6 +235,7 @@ Log out and back in for all changes to take effect.
 [fish]: https://fishshell.com/
 [flake]: https://nixos.wiki/wiki/Flakes
 [fzf]: https://github.com/junegunn/fzf
+[ghostty]: https://ghostty.org/
 [git]: https://git-scm.com/
 [glow]: https://github.com/charmbracelet/glow
 [gnu privacy guard]: https://gnupg.org/
