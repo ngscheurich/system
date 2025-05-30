@@ -11,11 +11,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var theme string
 var themeCmd = &cobra.Command{
 	Use:   "theme",
 	Short: "Change user theme",
 	Run: func(cmd *cobra.Command, args []string) {
-		theme := runForm()
+		if theme == "" {
+			theme = runForm()
+		}
 		linkTheme(theme)
 		reloadGhosttyConf()
 		loadTmuxTheme()
@@ -96,5 +99,6 @@ func themePath() string {
 }
 
 func init() {
+	themeCmd.Flags().StringVarP(&theme, "theme", "t", "", "Theme name")
 	rootCmd.AddCommand(themeCmd)
 }
