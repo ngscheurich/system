@@ -12,6 +12,7 @@ import (
 )
 
 var theme string
+
 var themeCmd = &cobra.Command{
 	Use:   "theme",
 	Short: "Change user theme",
@@ -21,7 +22,8 @@ var themeCmd = &cobra.Command{
 		}
 		linkTheme(theme)
 		reloadGhosttyConf()
-		loadTmuxTheme()
+		reloadTmuxTheme()
+		reloadNvimTheme()
 	},
 }
 
@@ -85,9 +87,17 @@ func reloadGhosttyConf() {
 	}
 }
 
-func loadTmuxTheme() {
+func reloadTmuxTheme() {
 	script := path.Join(themePath(), "tmux.sh")
 	cmd := exec.Command(script)
+	err := cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func reloadNvimTheme() {
+	cmd := exec.Command("/etc/system/scripts/nvim-send.sh", "<Cmd>lua require('ngs.util').reload_theme(true)<CR>")
 	err := cmd.Run()
 	if err != nil {
 		panic(err)
