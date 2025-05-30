@@ -6,8 +6,7 @@ return {
 
 	config = function()
 		require("kanagawa").setup({
-			colors = { palette = require("spec.kanagawa." .. vim.g.ngs.theme.palette) },
-			-- colors = { palette = require("spec.kanagawa.default") },
+			colors = { palette = require("ngs.specs.kanagawa." .. vim.g.ngs.theme.palette) },
 			overrides = function(colors)
 				local theme = colors.theme
 				return {

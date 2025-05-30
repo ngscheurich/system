@@ -3,7 +3,7 @@ return {
 
 	config = function()
 		local heirline = require("heirline")
-		local c = require("spec.heirline.components")
+		local c = require("ngs.specs.heirline.components")
 		heirline.setup({
 			statusline = {
 				c.mode_bar,

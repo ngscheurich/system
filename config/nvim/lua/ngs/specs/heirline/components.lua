@@ -1,7 +1,7 @@
 local M = {}
 
 local conds = require("heirline.conditions")
-local util = require("util")
+local util = require("ngs.util")
 
 local clrs_ok, clrs = pcall(require, "kanagawa.colors")
 local clib_ok, clib = pcall(require, "kanagawa.lib.color")

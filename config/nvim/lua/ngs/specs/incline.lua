@@ -4,7 +4,7 @@ return {
 	event = "VeryLazy",
 
 	config = function()
-		local util = require("util")
+		local util = require("ngs.util")
 		local helpers = require("incline.helpers")
 
 		require("incline").setup({

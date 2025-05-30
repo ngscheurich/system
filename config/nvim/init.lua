@@ -9,27 +9,20 @@ vim.g.ngs = {
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-require("core.abbrevs")
-require("core.autocmds")
-require("core.commands")
-require("core.diagnostic")
-require("core.keymaps")
-require("core.options")
-
 vim.lsp.enable({ "lexical", "luals" })
 
-require("core.lazy")
+require("ngs.core.abbrevs")
+require("ngs.core.autocmds")
+require("ngs.core.commands")
+require("ngs.core.diagnostic")
+require("ngs.core.keymaps")
+require("ngs.core.options")
+require("ngs.core.lazy")
 
-vim.opt.runtimepath:prepend(vim.env.HOME .. "/.theme/nvim")
-local theme_ok, theme = pcall(require, "ngs_theme")
-if theme_ok then
-	local ngs = vim.g.ngs
-	ngs.theme = theme
-	vim.g.ngs = ngs
-end
+require("ngs.util").load_theme()
 
 require("lazy").setup({
-	spec = { { import = "spec" } },
+	spec = { { import = "ngs.specs" } },
 	install = { colorscheme = { vim.g.ngs.theme.colorscheme } },
 	checker = { enabled = true },
 	change_detection = { notify = false },
