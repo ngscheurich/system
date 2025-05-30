@@ -28,6 +28,9 @@ fish_add_path "$XDG_DATA_HOME/nvim/mason/bin"
 fish_add_path "/opt/homebrew/bin"
 fish_add_path "$HOME/.cargo/bin"
 
+# thefuck
+thefuck --alias | source
+
 # Source theme
 source "$HOME/.theme/shell.fish"
 

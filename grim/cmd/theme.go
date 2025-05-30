@@ -17,8 +17,7 @@ var themeCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		theme := runForm()
 		linkTheme(theme)
-		loadKittyTheme()
-		reloadKittyConf()
+		reloadGhosttyConf()
 		loadTmuxTheme()
 	},
 }
@@ -75,18 +74,8 @@ func linkTheme(theme string) {
 	}
 }
 
-func loadKittyTheme() {
-	conf := path.Join(themePath(), "kitty.conf")
-	cmd := exec.Command("kitty", "@", "set-colors", "--all", "--configured", conf)
-	err := cmd.Run()
-	if err != nil {
-		panic(err)
-	}
-}
-
-func reloadKittyConf() {
-	conf := path.Join(os.Getenv("XDG_CONFIG_HOME"), "kitty", "kitty.conf")
-	cmd := exec.Command("kitty", "@", "load-config", conf)
+func reloadGhosttyConf() {
+	cmd := exec.Command("/etc/system/scripts/reload-ghostty-conf.sh")
 	err := cmd.Run()
 	if err != nil {
 		panic(err)

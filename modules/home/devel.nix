@@ -33,6 +33,11 @@
     # Hardware
     tio
 
+    # AI
+    aichat
+    aider-chat
+    tgpt
+
     # Networking
     httpie
     ngrok
