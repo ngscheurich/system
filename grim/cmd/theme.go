@@ -40,7 +40,7 @@ func runForm() string {
 				Title("Themes").
 				Value(&theme),
 		),
-	)
+	).WithTheme(huh.ThemeBase16())
 
 	err := f.Run()
 	if err != nil {
