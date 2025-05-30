@@ -159,6 +159,7 @@ in
     ddgr
     eza
     fasd
+    fastfetch
     fd
     figlet
     fzy
@@ -166,7 +167,6 @@ in
     graph-easy
     htop
     jq
-    neofetch
     ranger
     ripgrep
     sd
