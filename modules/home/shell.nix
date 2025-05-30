@@ -171,6 +171,7 @@ in
     ripgrep
     sd
     slides
+    thefuck
     tldr
     tmux
     tree
