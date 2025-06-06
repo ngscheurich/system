@@ -9,6 +9,11 @@ path = "emacs"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
+name = "AIChat"
+path = "aichat"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
 name = "ghostty"
 path = "ghostty"
 dest = "$XDG_CONFIG_HOME"
