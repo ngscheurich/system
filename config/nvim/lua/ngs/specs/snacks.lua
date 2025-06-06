@@ -57,6 +57,10 @@ return {
     { "<Leader>su", function() Snacks.picker.undo() end, desc = "Undo history" },
     { "<Leader>sw", function() Snacks.picker.grep_word() end, desc = "Words" },
 
+    -- Picker Replacements
+    { "grr", function() Snacks.picker.lsp_references() end, desc = "References (LSP)" },
+    { "gO", function() Snacks.picker.lsp_symbols() end, desc = "Symbols (LSP)" },
+
     -- Miscellaneous
 		{ "<Leader>e", function() Snacks.explorer.open() end, desc = "Explorer (toggle)", },
 
