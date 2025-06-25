@@ -21,26 +21,29 @@
 
     brews = [
       "asyncapi"
-      "llvm"
-      "luajit"
-      "mods"
-
       "colima"
       "docker"
       "docker-compose"
       "docker-credential-helper"
+      "llvm"
+      "luajit"
+      "mods"
 
       {
         name = "emacs-plus";
-        args = [ "with-xwidgets" "with-savchenkovaleriy-big-sur-icon" ];
+        args = [
+          "with-xwidgets"
+          "with-savchenkovaleriy-big-sur-icon"
+        ];
       }
 
-      # tmux-fingers + deps
+      # tmux-fingers + deps ------------
       "tmux-fingers"
       "bdw-gc"
       "libevent"
       "libyaml"
       "pcre2"
+      # --------------------------------
     ];
 
     casks = [
@@ -76,7 +79,6 @@
       "raycast"
       "reaper"
       "vlc"
-      "wireshark"
     ];
 
     masApps = {
