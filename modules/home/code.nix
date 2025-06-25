@@ -25,6 +25,7 @@
     pgformatter
     pyright
     sleek
+    stylua
     sqlfluff
   ];
 }
