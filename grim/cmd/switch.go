@@ -42,7 +42,7 @@ func run_cmd(cmd *exec.Cmd) {
 
 func darwin_switch_cmd(host string) *exec.Cmd {
 	flake := fmt.Sprintf("%s#%s", SystemDir(), host)
-	return exec.Command("darwin-rebuild", "switch", "--flake", flake)
+	return exec.Command("sudo", "darwin-rebuild", "switch", "--flake", flake)
 }
 
 func nixos_switch_cmd(host string) *exec.Cmd {
