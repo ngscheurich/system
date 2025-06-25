@@ -25,7 +25,7 @@ as they say, may vary. Also, this proves a handy place to back them up and pull
 them down onto new machines.
 
 I use [Nix], a purely functional package manager, and various tools within its
-ecosystem, to declaratively configure the core parts of these systems.
+ecosystem to declaratively configure the core parts of these systems.
 
 In addition to the Nix configuration files, this repo also contains:
 
@@ -73,7 +73,7 @@ configurations for each of my systems.
 System-level configuration is managed by [nix-darwin] or [NixOS], depending on
 the platform.
 
-Each system’s user-level packages are specified and configured using [Home
+Each system’s user-level packages are declared and configured using [Home
 Manager]. Some macOS applications are managed by [Homebrew] via nix-darwin.
 
 ### Modules
@@ -86,34 +86,34 @@ least a little bit.
 #### Code
 
 One of the primary tasks I use my systems for is **source code editing**. My
-editor of choice is [Neovim], which is specified here. Additionally, this
-module specifies packages that my [Neovim configuration](#neovim) relies on for
-advanced editing features such as [Tree-sitter].
+editor of choice is [Neovim], which is declared here. Additionally, this
+module declares packages that my [Neovim configuration](config/nvim) relies
+on for advanced editing features such as [Tree-sitter] and various [LSP]
+servers.
 
 #### Crypt
 
 I use public key cryptography for encrypting data like emails and sensitive
 documents, and for authenticating ownership of Internet resources such as Git
-commits and domain names. This module specifies the [GNU Privacy Guard] package
-as well as a convenient terminal UI for it.
+commits and domain names. This module declares the [GNU Privacy Guard]
+package as well as a convenient terminal UI for it.
 
 #### Devel
 
-This module specifies packages that are used to build or run software. It
-includes [asdf] for managing certain programming languages, [Fennel] (a lovely
-little Lisp that compiles to Lua), and lots of build-time
-dependencies—[Autoconf], [Cmake], et al.
+This module declared packages that are used to build, debug, and run software.
+It declares programming languages, database and hardware tools, and lots of
+build-time dependencies—[Autoconf], [Cmake], et al.
 
 #### Devops 
 
 I sometimes find myself needing to engage in some light devops work and this
-module specifies packages that make those sorts of tasks a bit comfier on the
-command line.
+module declares packages support those sorts of tasks and makes them a bit
+comfier on the command line.
 
 #### Git
 
 The [Git] version control system is a key piece of my daily workflow. This
-specifes it along with configuration and some supplementary packages, namely
+declares it along with configuration and some supplementary packages, namely
 [Lazygit], a Git terminal UI.
 
 #### Prose
@@ -124,10 +124,18 @@ documentation, short stories, I specify some packages here like [Vale] and
 
 #### Shell
 
-The packages specified here work to provide a rich, productive experience on
-the command-line. Namely, [tmux] and [direnv] are critical to my workflow. This
-module also specifies [fzf] and modern replacements for some common Unix
-commands: [bat], [exa], [fd], and [ripgrep].
+The packages declared here work to provide a rich, productive experience on the
+command-line. Namely, [tmux], [Starship], and [direnv] are critical to my
+workflow. This module also declares modern replacements for some common Unix
+commands and a smörgåsbord of my favorite CLI and TUI programs related (but not
+limited) to:
+
+- File management
+- Find/replace
+- Monitoring
+- Networking
+- Multiplexing
+- Generative AI
 
 #### Vim
 
@@ -213,7 +221,7 @@ Build the system:
 
 Switch to the new system generation:
 
-    $ /tmp/nix-build/sw/bin/darwin-rebuild switch --flake /etc/system#[HOSTNAME]
+    $ sudo /tmp/nix-build/sw/bin/darwin-rebuild switch --flake /etc/system#[HOSTNAME]
 
 Log out and back in for all changes to take effect.
 
@@ -223,18 +231,14 @@ Log out and back in for all changes to take effect.
 [apple macbook pro]: https://en.wikipedia.org/wiki/MacBook_Pro
 [asdf]: https://asdf-vm.com/
 [autoconf]: https://www.gnu.org/software/autoconf/
-[bat]: https://github.com/sharkdp/bat
 [cmake]: https://cmake.org/
 [command-line interface]: https://en.wikipedia.org/wiki/Command-line_interface
 [direnv]: https://direnv.net/
 [dotfiles]: https://en.wikipedia.org/wiki/Hidden_file_and_hidden_directory
 [emacs]: https://www.gnu.org/software/emacs/
-[exa]: https://the.exa.website/
-[fd]: https://github.com/sharkdp/fd
-[fennel]: https://fennel-lang.org/
 [fish]: https://fishshell.com/
 [flake]: https://nixos.wiki/wiki/Flakes
-[fzf]: https://github.com/junegunn/fzf
+[lsp]: https://microsoft.github.io/language-server-protocol/
 [ghostty]: https://ghostty.org/
 [git]: https://git-scm.com/
 [glow]: https://github.com/charmbracelet/glow
@@ -250,7 +254,6 @@ Log out and back in for all changes to take effect.
 [nix-darwin]: https://github.com/LnL7/nix-darwin
 [nix]: https://nixos.org/
 [nixos]: https://en.wikipedia.org/wiki/NixOS
-[ripgrep]: https://github.com/BurntSushi/ripgrep
 [shell-modules]: modules/home/shell.nix
 [shell]: https://en.wikipedia.org/wiki/Shell_(computing)
 [skhd]: https://github.com/koekeishiya/skhd
