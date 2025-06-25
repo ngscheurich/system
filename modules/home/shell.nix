@@ -188,7 +188,7 @@ in
 
     # Multiplexing
     tmux
-    zellij
+    tmuxp
 
     # Generative AI
     aichat
