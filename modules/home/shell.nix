@@ -43,8 +43,8 @@ in
     inherit shellAliases;
 
     bashrcExtra = ''
-      [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
-  source "$EAT_SHELL_INTEGRATION_DIR/bash"
+          [ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+      source "$EAT_SHELL_INTEGRATION_DIR/bash"
     '';
   };
 
@@ -118,19 +118,29 @@ in
         "$character"
       ];
 
-      character = { vimcmd_symbol = "[🞈](bold blue)"; };
+      character = {
+        vimcmd_symbol = "[🞈](bold blue)";
+      };
 
-      directory = { read_only = ""; };
+      directory = {
+        read_only = "";
+      };
 
-      fill = { symbol = " "; };
+      fill = {
+        symbol = " ";
+      };
 
       git_branch = {
         symbol = " ";
         style = "purple";
         truncation_length = 32;
       };
-      git_commit = { tag_symbol = " "; };
-      git_status = { style = "bold purple"; };
+      git_commit = {
+        tag_symbol = " ";
+      };
+      git_status = {
+        style = "bold purple";
+      };
 
       nix_shell = {
         symbol = "";
@@ -153,32 +163,49 @@ in
   };
 
   home.packages = with pkgs; [
-    ack
-    asciinema
-    bottom
-    ddgr
+    # File management
     eza
     fasd
-    fastfetch
+    tree
+    yazi
+
+    # Find/replace
+    ack
     fd
-    figlet
     fzy
-    gnused
-    graph-easy
-    htop
-    jq
-    ranger
     ripgrep
     sd
-    slides
-    thefuck
-    tldr
-    tmux
-    tree
-    watch
-    watchman
+
+    # Monitoring
+    bottom
+    htop
+
+    # Networking
+    httpie
+    ngrok
+    websocat
     wget
-    yazi
+
+    # Multiplexing
+    tmux
     zellij
+
+    # Generative AI
+    aichat
+    vectorcode
+
+    # Miscellaneous
+    asciinema
+    fastfetch
+    figlet
+    fswatch
+    gnused
+    graph-easy
+    gum
+    imagemagick
+    jq
+    pay-respects
+    slides
+    tldr
   ];
 }

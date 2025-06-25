@@ -20,16 +20,11 @@ if [ -e "$HOME/.env" ]
   source "$HOME/.env"
 end
 
-
 # Append directories to path
 fish_add_path "$LOCAL_BIN_DIR"
-fish_add_path '/Applications/kitty.app/Contents/MacOS/'
-fish_add_path "$XDG_DATA_HOME/nvim/mason/bin"
-fish_add_path "/opt/homebrew/bin"
-fish_add_path "$HOME/.cargo/bin"
 
-# thefuck
-thefuck --alias | source
+# pay-respects
+pay-respects fish --alias | source
 
 # Source theme
 source "$HOME/.theme/shell.fish"
