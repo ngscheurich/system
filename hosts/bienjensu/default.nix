@@ -34,6 +34,8 @@
     };
   };
 
+  system.primaryUser = "nick";
+
   home-manager.backupFileExtension = "backup";
 
   home-manager.users = {
