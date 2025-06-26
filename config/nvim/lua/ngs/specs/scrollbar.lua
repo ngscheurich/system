@@ -6,20 +6,20 @@
 --  ui
 -- -------------------------------------------------------------------
 return {
-	"petertriho/nvim-scrollbar",
+  "petertriho/nvim-scrollbar",
 
-	opts = {
-		hide_if_all_visible = true,
-		excluded_buftypes = {},
-		excluded_filetypes = {
-			"popup",
-			"blink-cmp-menu",
-			"blink-cmp-signature",
-			"blink-cmp-documentation",
-		},
-		handlers = {
-			gitsigns = true,
-			search = true,
-		},
-	},
+  opts = {
+    hide_if_all_visible = true,
+    excluded_buftypes = {},
+    excluded_filetypes = {
+      "popup",
+      "blink-cmp-menu",
+      "blink-cmp-signature",
+      "blink-cmp-documentation",
+    },
+    handlers = {
+      gitsigns = true,
+      search = true,
+    },
+  },
 }

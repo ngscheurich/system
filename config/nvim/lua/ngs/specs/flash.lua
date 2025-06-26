@@ -6,10 +6,10 @@
 --  editing
 -- -------------------------------------------------------------------
 return {
-	"folke/flash.nvim",
+  "folke/flash.nvim",
 
-	event = "VeryLazy",
-	opts = {},
+  event = "VeryLazy",
+  opts = {},
 
   -- stylua: ignore
   keys = {

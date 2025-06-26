@@ -6,11 +6,11 @@
 --  misc
 -- -------------------------------------------------------------------
 return {
-	"Olical/conjure",
+  "Olical/conjure",
 
-	ft = { "fennel", "lua", "python", "rust" },
+  ft = { "fennel", "lua", "python", "rust" },
 
-	init = function()
-		vim.g["conjure#mapping#doc_word"] = "<LocalLeader>k"
-	end,
+  init = function()
+    vim.g["conjure#mapping#doc_word"] = "<LocalLeader>k"
+  end,
 }

@@ -6,13 +6,13 @@
 --  editing
 -- -------------------------------------------------------------------
 return {
-	"Wansmer/treesj",
+  "Wansmer/treesj",
 
-	opts = {
-		use_default_keymaps = false,
-	},
+  opts = {
+    use_default_keymaps = false,
+  },
 
-	keys = {
-		{ "<Leader>j", "<Cmd>TSJToggle<CR>", desc = "Join/split form" },
-	},
+  keys = {
+    { "<Leader>j", "<Cmd>TSJToggle<CR>", desc = "Join/split form" },
+  },
 }

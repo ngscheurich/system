@@ -6,6 +6,6 @@
 --  snippets
 -- -------------------------------------------------------------------
 return {
-	"chrisgrieser/nvim-scissors",
-	opts = {},
+  "chrisgrieser/nvim-scissors",
+  opts = {},
 }

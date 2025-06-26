@@ -6,7 +6,7 @@
 --  ui
 -- -------------------------------------------------------------------
 return {
-	"j-hui/fidget.nvim",
-	event = "LspProgress",
-	opts = {},
+  "j-hui/fidget.nvim",
+  event = "LspProgress",
+  opts = {},
 }

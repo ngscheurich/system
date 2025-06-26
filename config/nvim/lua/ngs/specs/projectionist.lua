@@ -6,5 +6,5 @@
 --  workflow
 -- -------------------------------------------------------------------
 return {
-	"tpope/vim-projectionist",
+  "tpope/vim-projectionist",
 }

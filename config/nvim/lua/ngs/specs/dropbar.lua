@@ -6,24 +6,24 @@
 --  ui
 -- -------------------------------------------------------------------
 return {
-	"Bekaboo/dropbar.nvim",
+  "Bekaboo/dropbar.nvim",
 
-	opts = {
-		bar = { enable = false },
-	},
+  opts = {
+    bar = { enable = false },
+  },
 
-	keys = {
-		{
-			"<Leader>ub",
-			mode = { "n" },
-			function()
-				if vim.o.winbar == "" then
-					vim.opt.winbar = "%{%v:lua.dropbar()%}"
-				else
-					vim.opt.winbar = ""
-				end
-			end,
-			desc = "Breadcrumbs",
-		},
-	},
+  keys = {
+    {
+      "<Leader>ub",
+      mode = { "n" },
+      function()
+        if vim.o.winbar == "" then
+          vim.opt.winbar = "%{%v:lua.dropbar()%}"
+        else
+          vim.opt.winbar = ""
+        end
+      end,
+      desc = "Breadcrumbs",
+    },
+  },
 }

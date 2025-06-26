@@ -6,14 +6,14 @@
 --  misc
 -- -------------------------------------------------------------------
 return {
-	"uga-rosa/ccc.nvim",
+  "uga-rosa/ccc.nvim",
 
-	event = "VeryLazy",
+  event = "VeryLazy",
 
-	opts = {
-		highlighter = {
-			auto_enable = true,
-			lsp = true,
-		},
-	},
+  opts = {
+    highlighter = {
+      auto_enable = true,
+      lsp = true,
+    },
+  },
 }
