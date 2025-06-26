@@ -1,5 +1,6 @@
 return {
 	"kevinhwang91/nvim-hlslens",
+
 	config = function()
 		local opts = {}
 		local sb_ok, sb_handler = pcall(require, "scrollbar.handlers.search")
