@@ -47,7 +47,9 @@ if clrs_ok and theme.name ~= "default" then
 	}
 
 	if light_theme then
+		colors.fg = "#222222"
 		colors.vcs_branch = p.lotusPink
+		colors.lsp = t.syn.operator
 	end
 end
 
