@@ -12,5 +12,13 @@ return {
 
 	keys = {
 		{ "<Leader>o", mode = { "n" }, "<Cmd>AerialToggle!<CR>", desc = "Outline" },
+		{
+			"gO",
+			mode = { "n" },
+			function()
+				require("aerial").snacks_picker()
+			end,
+			desc = "Symbols",
+		},
 	},
 }
