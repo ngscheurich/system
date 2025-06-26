@@ -2,7 +2,7 @@ vim.opt.conceallevel = 2
 vim.opt.cursorline = true
 vim.opt.fillchars = { vert = "\226\148\130" }
 vim.opt.laststatus = 3
-vim.opt.listchars = { tab = ">-", eol = "↵", nbsp = "␣", trail = "‧", extends = "⟩", precedes = "⟨" }
+vim.opt.listchars = { space = "·", tab = ">-", eol = "↵", nbsp = "␣", trail = "‧", extends = "⟩", precedes = "⟨" }
 vim.opt.number = true
 vim.opt.scrolloff = 13
 vim.opt.sidescrolloff = 8
