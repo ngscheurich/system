@@ -17,3 +17,5 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+
+vim.keymap.set("n", "<Leader>p", "<Cmd>Lazy<CR>", { desc = "Plugins" })
