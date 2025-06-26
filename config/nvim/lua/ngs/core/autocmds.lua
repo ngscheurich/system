@@ -18,3 +18,14 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.winhighlight = "Normal:NormalDark"
 	end,
 })
+
+local term_group = vim.api.nvim_create_augroup("ngs.term", {})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	desc = "Change the background of terminal buffers",
+	group = term_group,
+	pattern = "*",
+	callback = function()
+		vim.opt_local.winhighlight = "Normal:NormalDark"
+	end,
+})
