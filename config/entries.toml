@@ -4,13 +4,13 @@ path = "aerospace"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
-name = "Emacs"
-path = "emacs"
+name = "AIChat"
+path = "aichat"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
-name = "AIChat"
-path = "aichat"
+name = "Emacs"
+path = "emacs"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
@@ -31,6 +31,11 @@ dest = "$XDG_CONFIG_HOME"
 [[entries]]
 name = "Lazygit"
 path = "lazygit"
+dest = "$XDG_CONFIG_HOME"
+
+[[entries]]
+name = "MCPHub"
+path = "mcphub"
 dest = "$XDG_CONFIG_HOME"
 
 [[entries]]
