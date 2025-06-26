@@ -6,7 +6,8 @@
 
 {
   home.packages = with pkgs; [
-    # Languages
+    # Languages and runtimes
+    deno
     elixir
     erlang_27
     fennel
