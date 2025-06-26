@@ -14,6 +14,8 @@ return {
 		wk.setup(opts)
 		wk.add({
 			{ "<Leader>a", group = "ai" },
+			{ "<Leader>ac", group = "codecompanion" },
+			{ "<Leader>e", group = "explore" },
 			{ "<Leader>f", group = "find" },
 			{ "<Leader>g", group = "git" },
 			{ "<Leader>l", group = "list" },
