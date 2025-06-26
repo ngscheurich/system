@@ -115,6 +115,7 @@ directory and sorted by category.
 - [indent (snacks.nvim)](https://github.com/folke/snacks.nvim/blob/main/docs/indent.md): Indent guides and scopes
 - [notifier (snacks.nvim)](https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md): Enhanced `vim.notify`
 - [nvim-scrollbar](https://github.com/petertriho/nvim-scrollbar): Extensible scrollbar
+- [smear-cursor.nvim](https://github.com/sphamba/smear-cursor.nvim): Animates the cursor with a smear effect
 - [statuscolumn (snacks.nvim)](https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md): Enhanced statuscolumn
 - [tiny-glimmer.nvim](https://github.com/rachartier/tiny-glimmer.nvim): Adds subtle animations to some operations
 
