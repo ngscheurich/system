@@ -20,8 +20,10 @@ if [ -e "$HOME/.env" ]
   source "$HOME/.env"
 end
 
+
 # Append directories to path
 fish_add_path "$LOCAL_BIN_DIR"
+fish_add_path "/opt/homebrew/bin"
 
 # pay-respects
 pay-respects fish --alias | source
