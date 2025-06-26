@@ -28,6 +28,7 @@
       "llvm"
       "luajit"
       "mods"
+      "pngpaste"
 
       {
         name = "emacs-plus";

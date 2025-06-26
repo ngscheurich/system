@@ -77,6 +77,10 @@ directory and sorted by category.
 - [rsi.vim](https://github.com/tpope/vim-rsi): Readline-style mappings
 - [vim-dadbod-ui](https://github.com/kristijanhusak/vim-dadbod-ui): Relational database client
 
+### Notes
+
+- [obsidian.nvim](https://github.com/obsidian-nvim/obsidian.nvim): Write in and navigate Obsidian vaults
+
 ### Prose
 
 - [Markview](https://github.com/OXY2DEV/markview.nvim): Hackable document previewer
