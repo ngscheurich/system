@@ -1,19 +1,85 @@
 return {
 	"folke/snacks.nvim",
-
 	priority = 1000,
 	lazy = false,
 
-	---@type snacks.Config
 	opts = {
+		-- ===================================================================
+		--  bigfile (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/bigfile.md
+		--  Deal with big files
+		--  misc
+		-- -------------------------------------------------------------------
 		bigfile = { enabled = true },
-		explorer = { enabled = true },
+
+		-- ===================================================================
+		--  gitbrowse (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
+		--  Open the current file, branch, commit, or repo in a browser
+		--  source-control
+		-- -------------------------------------------------------------------
 		gitbrowse = { enabled = true },
+
+		-- ===================================================================
+		--  image (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/image.md
+		--  Image viewer using Kitty Graphics Protocol
+		--  misc
+		-- -------------------------------------------------------------------
 		image = { enabled = true },
-		indent = { enabled = false, only_scope = true, only_current = true },
+
+		-- ===================================================================
+		--  indent (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
+		--  Indent guides and scopes
+		--  ui
+		-- -------------------------------------------------------------------
+		indent = {
+			enabled = true,
+			char = ";",
+			only_scope = true,
+			only_current = true,
+			hl = "Statement",
+		},
+
+		-- ===================================================================
+		--  notifier (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
+		--  Enhanced `vim.notify`
+		--  ui
+		-- -------------------------------------------------------------------
 		notifier = { enabled = true },
+
+		-- ===================================================================
+		--  picker (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+		--  Fuzzy picker for selecting items from sources
+		--  workflow
+		-- -------------------------------------------------------------------
 		picker = { enabled = true },
+
+		-- ===================================================================
+		--  quickfile (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
+		--  Render files as quickly as possible
+		--  misc
+		-- -------------------------------------------------------------------
 		quickfile = { enabled = true },
+
+		-- ===================================================================
+		--  statuscolumn (snacks.nvim)
+		-- -------------------------------------------------------------------
+		--  https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
+		--  Enhanced statuscolumn
+		--  ui
+		-- -------------------------------------------------------------------
 		statuscolumn = { enabled = true },
 	},
 
@@ -58,12 +124,9 @@ return {
     { "<Leader>sw", function() Snacks.picker.grep_word() end, desc = "Words" },
 
     -- Picker Replacements
-    { "grr", function() Snacks.picker.lsp_references() end, desc = "References (LSP)" },
-    { "gO", function() Snacks.picker.lsp_symbols() end, desc = "Symbols (LSP)" },
+    { "grr", function() Snacks.picker.lsp_references() end, desc = "References" },
 
     -- Miscellaneous
-		{ "<Leader>e", function() Snacks.explorer.open() end, desc = "Explorer (toggle)", },
-
 		{ "<Leader>gB", function() Snacks.gitbrowse() end, desc = "View on GitHub", },
 
 		{

@@ -1,3 +1,10 @@
+-- ===================================================================
+--  Heirline
+-- -------------------------------------------------------------------
+--  https://github.com/rebelot/heirline.nvim
+--  Statusline framework designed around recursive inheritance
+--  ui
+-- -------------------------------------------------------------------
 return {
 	"rebelot/heirline.nvim",
 

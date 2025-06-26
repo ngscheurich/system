@@ -1,6 +1,12 @@
+-- ===================================================================
+--  oil.nvim
+-- -------------------------------------------------------------------
+--  https://github.com/stevearc/oil.nvim
+--  Explore the filesystem and edit it like a buffer
+--  workflow
+-- -------------------------------------------------------------------
 return {
 	"stevearc/oil.nvim",
-
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 
 	config = function()

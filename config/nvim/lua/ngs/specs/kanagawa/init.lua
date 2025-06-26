@@ -1,3 +1,10 @@
+-- ===================================================================
+--  Kanagawa
+-- -------------------------------------------------------------------
+--  https://github.com/rebelot/kanagawa.nvim
+--  Colorscheme inspired by _The Great Wave off Kanagawa_
+--  ui
+-- -------------------------------------------------------------------
 return {
 	"rebelot/kanagawa.nvim",
 

@@ -1,3 +1,10 @@
+-- ===================================================================
+--  Trouble
+-- -------------------------------------------------------------------
+--  https://github.com/folke/trouble.nvim
+--  Interactive listing of diagnostics, references, and more
+--  ui
+-- -------------------------------------------------------------------
 return {
 	"folke/trouble.nvim",
 	cmd = "Trouble",

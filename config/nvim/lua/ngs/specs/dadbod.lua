@@ -1,3 +1,10 @@
+-- =================================================================
+--  vim-dadbod-ui
+-- -----------------------------------------------------------------
+--  https://github.com/kristijanhusak/vim-dadbod-ui
+--  Relational database client
+--  misc
+-- -----------------------------------------------------------------
 return {
 	"kristijanhusak/vim-dadbod-ui",
 

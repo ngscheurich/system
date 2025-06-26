@@ -1,3 +1,10 @@
+-- ===================================================================
+--  tiny-glimmer.nvim
+-- -------------------------------------------------------------------
+--  https://github.com/rachartier/tiny-glimmer.nvim
+--  Adds subtle animations to some operations
+--  ui
+-- -------------------------------------------------------------------
 return {
 	"rachartier/tiny-glimmer.nvim",
 
