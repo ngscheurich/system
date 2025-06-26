@@ -2,11 +2,8 @@ return {
 	"saghen/blink.cmp",
 
 	version = "1.*",
-
 	event = "VeryLazy",
 
-	---@module 'blink.cmp'
-	---@type blink.cmp.Config
 	opts = {
 		keymap = { preset = "enter" },
 		completion = { documentation = { auto_show = false } },
@@ -18,7 +15,10 @@ return {
 				sql = { "dadbod", "snippets", "buffer" },
 			},
 			providers = {
-				dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+				dadbod = {
+					name = "Dadbod",
+					module = "vim_dadbod_completion.blink",
+				},
 			},
 		},
 
