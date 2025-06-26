@@ -8,5 +8,3 @@ vim.diagnostic.config({
 		},
 	},
 })
-
-vim.keymap.set("n", "<Leader>d", vim.diagnostic.open_float, { desc = "Show diagnostics" })
