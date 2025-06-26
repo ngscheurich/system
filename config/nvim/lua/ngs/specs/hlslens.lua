@@ -3,8 +3,9 @@ return {
 	config = function()
 		local opts = {}
 		local sb_ok, sb_handler = pcall(require, "scrollbar.handlers.search")
+		local hlslens = require("hlslens")
 
-		require("hlslens").setup(opts)
+		hlslens.setup(opts)
 
 		local start = "<Cmd>lua require('hlslens').start()<CR>"
 		local next = "<Cmd>execute('normal! ' . v:count1 . 'n')<CR>" .. start
@@ -16,6 +17,10 @@ return {
 		vim.keymap.set("n", "#", "#" .. start)
 		vim.keymap.set("n", "g*", "g*" .. start)
 		vim.keymap.set("n", "g#", "g#" .. start)
+		vim.keymap.set("n", "<Esc>", function()
+			hlslens.stop()
+			vim.cmd("nohlsearch")
+		end)
 
 		if sb_ok then
 			opts = {
