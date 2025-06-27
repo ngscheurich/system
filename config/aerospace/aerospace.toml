@@ -10,6 +10,8 @@ accordion-padding = 30
 default-root-container-layout      = 'tiles'
 default-root-container-orientation = 'auto'
 
+automatically-unhide-macos-hidden-apps = true
+
 key-mapping.preset = 'qwerty'
 
 on-focus-changed           = []
@@ -72,6 +74,7 @@ alt-shift-d = 'move-node-to-workspace D'
 alt-shift-e = 'move-node-to-workspace E'
 alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
+alt-shift-p = 'move-node-to-workspace P'
 alt-shift-t = 'move-node-to-workspace T'
 
 alt-tab = 'workspace-back-and-forth'
@@ -103,18 +106,27 @@ l = ['join-with right', 'mode main']
 if.app-id = 'com.1password.1password'
 run       = 'layout floating'
 
-[[on-window-detected]]
-if.app-id = 'com.apple.finder'
-run       = 'layout floating'
+# [[on-window-detected]]
+# if.app-id = 'com.apple.finder'
+# run       = 'layout floating'
 
 # Browser
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
 run       = 'move-node-to-workspace B'
 
-# Emacs
 [[on-window-detected]]
-if.app-id = 'org.gnu.Emacs'
+if.app-id = 'com.apple.Safari'
+run       = 'move-node-to-workspace B'
+
+# Emacs
+# [[on-window-detected]]
+# if.app-id = 'org.gnu.Emacs'
+# run       = 'move-node-to-workspace E'
+
+# Email
+[[on-window-detected]]
+if.app-id = 'com.apple.Mail'
 run       = 'move-node-to-workspace E'
 
 # Comms
@@ -137,8 +149,17 @@ run       = 'move-node-to-workspace M'
 
 # Notes
 [[on-window-detected]]
-if.app-id = 'com.electron.logseq'
+if.app-id = 'md.obsidian'
 run       = 'move-node-to-workspace N'
+
+# Planning
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run       = 'move-node-to-workspace P'
+
+[[on-window-detected]]
+if.app-id = 'com.busymac.busycal3'
+run       = 'move-node-to-workspace P'
 
 # Terminal
 [[on-window-detected]]
