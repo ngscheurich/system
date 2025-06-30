@@ -100,7 +100,7 @@ directory and sorted by category.
 
 - [Neotest](https://github.com/nvim-neotest/neotest): Extensible framework for interacting with tests
 
-### Tree Sitter
+### Tree-Sitter
 
 - [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects): Syntax-aware text-objects and movements
 - [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter): Tree-sitter configurations and abstraction layer
@@ -136,3 +136,4 @@ directory and sorted by category.
 [lazy.nvim]: https://github.com/folke/lazy.nvim
 [my terminal emulator]: https://ghostty.org/
 [neovim]: https://neovim.io/
+
