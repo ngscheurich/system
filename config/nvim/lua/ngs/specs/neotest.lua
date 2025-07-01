@@ -26,6 +26,7 @@ return {
     {"<Leader>tt", function () require("neotest").run.run_last() end, desc = "Last"},
     {"<Leader>tf", function () require("neotest").run.run(vim.fn.expand("%")) end, desc = "File"},
     {"<Leader>ts", function () require("neotest").summary.toggle() end, desc = "Summary (toggle)"},
+    {"<Leader>tp", function () require("neotest").output_panel.toggle() end, desc = "Output panel (toggle)"},
     -- stylue: ignore end
   },
 }
