@@ -122,7 +122,7 @@ local function file_path_provider(self)
   local name = vim.fn.fnamemodify(self.filename, ":.")
   local path = split_path(name)
 
-  if conds.width_percent_below(#path, 0.2) then
+  if not conds.width_percent_below(#path, 0.2) then
     return vim.fn.pathshorten(path)
   else
     return path
