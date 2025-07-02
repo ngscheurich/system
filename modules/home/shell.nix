@@ -26,6 +26,8 @@ let
     la = "eza --all --long";
     ll = "eza --long";
     lt = "eza --tree";
+    n = "nvim";
+    ns = "nvim -S";
     serve = "python -m http.server";
     vimdiff = "nvim -d";
     weather = "curl wttr.in";
