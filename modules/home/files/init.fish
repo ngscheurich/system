@@ -1,35 +1,37 @@
-# Set keybindings
-set -g fish_key_bindings fish_hybrid_key_bindings
+# Set universal keybindings
+set -U fish_key_bindings fish_hybrid_key_bindings
 
-# Export global ("environment") variables
-set -gx AWS_VAULT_KEYCHAIN_NAME login
-set -gx BROWSER open
-set -gx EDITOR nvim
-set -gx ERL_AFLAGS '-kernel shell_history enabled'
-set -gx GPG_TTY (tty)
-set -gx KERL_CONFIGURE_OPTIONS --without-javac
-set -gx PLAYDATE_SDK_PATH $HOME/Developer/PlaydateSDK/
-set -gx RANGER_DEVICONS_SEPARATOR '  '
-set -gx XDG_DATA_HOME $HOME/.local/share
-set -gx XDG_CONFIG_HOME $HOME/.config
-set -gx XDG_CACHE_HOME $HOME/.cache
-set -gx LOCAL_BIN_DIR $HOME/.local/bin
-set -gx SCRIPTS_DIR /etc/system/scripts
+# Export universal variables
+set -Ux AWS_VAULT_KEYCHAIN_NAME login
+set -Ux BROWSER open
+set -Ux EDITOR nvim
+set -Ux ERL_AFLAGS '-kernel shell_history enabled'
+set -Ux GPG_TTY (tty)
+set -Ux KERL_CONFIGURE_OPTIONS --without-javac
+set -Ux PLAYDATE_SDK_PATH $HOME/Developer/PlaydateSDK/
+set -Ux RANGER_DEVICONS_SEPARATOR '  '
+set -Ux XDG_DATA_HOME $HOME/.local/share
+set -Ux XDG_CONFIG_HOME $HOME/.config
+set -Ux XDG_CACHE_HOME $HOME/.cache
+set -Ux LOCAL_BIN_DIR $HOME/.local/bin
+set -Ux SCRIPTS_DIR /etc/system/scripts
 
+# Source system-local environment
 if [ -e "$HOME/.env" ]
   source "$HOME/.env"
 end
-
 
 # Append directories to path
 fish_add_path "$LOCAL_BIN_DIR"
 fish_add_path "/opt/homebrew/bin"
 
+# Source theme
+source "$HOME/.theme/shell.fish"
+
 # pay-respects
 pay-respects fish --alias | source
 
-# Source theme
-source "$HOME/.theme/shell.fish"
+# END USER CONFIG =============================================================
 
 # Generated completions for `grim`
 #
