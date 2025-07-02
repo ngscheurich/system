@@ -34,6 +34,8 @@
     };
   };
 
+  system.primaryUser = "nscheurich";
+
   home-manager.backupFileExtension = "backup";
 
   home-manager.users = {
