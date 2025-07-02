@@ -8,6 +8,10 @@
 return {
   "rebelot/heirline.nvim",
 
+  dependencies = {
+    "catppuccin/nvim",
+  },
+
   config = function()
     local heirline = require("heirline")
     local c = require("ngs.specs.heirline.components")

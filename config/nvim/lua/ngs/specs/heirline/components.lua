@@ -3,54 +3,46 @@ local M = {}
 local conds = require("heirline.conditions")
 local util = require("ngs.util")
 
-local clrs_ok, clrs = pcall(require, "kanagawa.colors")
-local clib_ok, clib = pcall(require, "kanagawa.lib.color")
+local pal_ok, pal = pcall(require, "catppuccin.palettes")
+local lib_ok, lib = pcall(require, "catppuccin.utils.colors")
 
 local theme = vim.g.ngs.theme
-local light_theme = theme.name == "lotus" or theme.name == "hasu"
 local colors = {}
 
-if clrs_ok and theme.name ~= "default" then
-  local c = clrs.setup()
-  local p, t = c.palette, c.theme
+if pal_ok and theme.name ~= "default" then
+  local p = pal.get_palette("mocha")
 
   colors = {
-    fg = t.ui.fg,
-    fg_dim = t.ui.fg_dim,
-    bg = t.ui.bg_m3,
+    fg = p.text,
+    fg_dim = p.subtext1,
+    bg = p.mantle,
 
-    lsp = t.syn.special1,
-    readonly = p.peachRed,
+    lsp = p.sapphire,
+    readonly = p.flamingo,
 
-    mode_name_fg = t.ui.bg_m3,
-    mode_name_bg = t.ui.bg,
-    mode_icon_fg = t.ui.bg_m3,
-    mode_normal = p.dragonBlue,
-    mode_visual = p.sakuraPink,
-    mode_select = p.sakuraPink,
-    mode_insert = p.autumnGreen,
-    mode_replace = p.autumnRed,
-    mode_command = p.boatYellow2,
-    mode_ex = p.boatYellow2,
-    mode_wait = p.waveAqua1,
-    mode_terminal = p.surimiOrange,
+    mode_name_fg = p.mantle,
+    mode_name_bg = p.text,
+    mode_icon_fg = p.subtext1,
+    mode_normal = p.blue,
+    mode_visual = p.rosewater,
+    mode_select = p.rosewater,
+    mode_insert = p.teal,
+    mode_replace = p.red,
+    mode_command = p.yellow,
+    mode_ex = p.yellow,
+    mode_wait = p.flamingo,
+    mode_terminal = p.maroon,
 
-    vcs_branch = p.sakuraPink,
-    vcs_added = t.vcs.added,
-    vcs_removed = t.vcs.removed,
-    vcs_changed = t.vcs.changed,
+    vcs_branch = p.mauve,
+    vcs_added = p.green,
+    vcs_removed = p.red,
+    vcs_changed = p.sapphire,
 
-    diag_error = t.diag.error,
-    diag_warning = t.diag.warning,
-    diag_info = t.diag.info,
-    diag_hint = t.diag.hint,
+    diag_error = p.red,
+    diag_warning = p.yellow,
+    diag_info = p.sapphire,
+    diag_hint = p.lavender,
   }
-
-  if light_theme then
-    colors.fg = "#222222"
-    colors.vcs_branch = p.lotusPink
-    colors.lsp = t.syn.operator
-  end
 end
 
 local function get_mode_opts(mode)
@@ -178,12 +170,20 @@ local function get_diagnostic_count(severity)
   return #vim.diagnostic.get(0, { severity = severity })
 end
 
-local function blend(c1, c2, amt)
-  if not clib_ok or not c1 or not c2 then
+local function darken(color, amount)
+  if not lib_ok or not color or not amount then
     return
   end
 
-  return clib(c1):blend(c2, amt):to_hex()
+  return lib.darken(color, amount)
+end
+
+local function lighten(color, amount)
+  if not lib_ok or not color or not amount then
+    return
+  end
+
+  return lib.lighten(color, amount)
 end
 
 M.mode_bar = {
@@ -195,15 +195,10 @@ M.mode_bar = {
     end,
     hl = function(self)
       local c1 = get_mode_opts(self.mode).color
-      local c2, amt = colors.mode_name_fg, 0.35
-
-      if light_theme then
-        c2, amt = colors.mode_name_bg, 0.15
-      end
 
       return {
-        fg = blend(c1, c2, 0.99),
-        bg = blend(c1, c2, amt),
+        fg = darken(c1, 0.15),
+        bg = darken(c1, 0.75),
         bold = true,
       }
     end,
@@ -216,12 +211,8 @@ M.mode_bar = {
       local c1 = get_mode_opts(self.mode).color
       local c2 = colors.mode_name_fg
 
-      if light_theme then
-        c2 = colors.mode_name_bg
-      end
-
       return {
-        fg = blend(c1, c2, 0.95),
+        fg = darken(c2, 0.95),
         bg = c1,
         bold = true,
       }
@@ -400,7 +391,7 @@ end
 
 M.ruler = {
   provider = " %7(%l/%3L%):%2c %P ",
-  hl = { fg = colors.fg, bg = blend(colors.bg, colors.fg, 0.1) },
+  hl = { fg = colors.fg, bg = lighten(colors.bg, 0.9) },
 }
 
 M.gap = function(width)

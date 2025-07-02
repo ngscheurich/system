@@ -2,7 +2,6 @@ vim.g.ngs = {
   theme = {
     name = "default",
     colorscheme = "default",
-    palette = "default",
   },
 }
 
