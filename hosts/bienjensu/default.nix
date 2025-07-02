@@ -65,7 +65,6 @@
       "epic-games"
       "godot"
       "playdate-simulator"
-      "protonvpn"
       "steam"
     ];
   };
