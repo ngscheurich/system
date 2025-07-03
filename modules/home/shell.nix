@@ -164,6 +164,35 @@ in
     config.theme = "ansi";
   };
 
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      modules = [
+        "title"
+        "separator"
+        "os"
+        "host"
+        "kernel"
+        "break"
+        "cpu"
+        "memory"
+        "uptime"
+        "loadavg"
+        "processes"
+        "disk"
+        "break"
+        "localip"
+        "publicip"
+        "netio"
+        "break"
+        "packages"
+        "terminal"
+        "shell"
+        "editor"
+      ];
+    };
+  };
+
   home.packages = with pkgs; [
     # File management
     eza
@@ -198,7 +227,6 @@ in
 
     # Miscellaneous
     asciinema
-    fastfetch
     figlet
     fswatch
     gnused
