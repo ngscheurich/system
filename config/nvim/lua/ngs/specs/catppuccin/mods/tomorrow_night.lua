@@ -39,6 +39,8 @@ return {
     })
 
     vim.cmd.colorscheme("catppuccin")
+    vim.cmd.hi("FloatBorder guifg=" .. color_overrides.mocha.surface1)
+    vim.cmd.hi("SnacksPicker guibg=" .. color_overrides.mocha.base)
 
     local light_bg = {
       "CursorLineNr",
