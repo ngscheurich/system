@@ -18,6 +18,10 @@
     rustc
     cargo
 
+    # Language tools
+    lexical
+    lua-language-server
+
     # Database tools
     freetds
     sqlite-interactive
