@@ -25,6 +25,7 @@ return {
       { "<Leader>f", group = "find" },
       { "<Leader>g", group = "git" },
       { "<Leader>l", group = "list" },
+      { "<Leader>n", group = "notes" },
       { "<Leader>s", group = "search" },
       { "<Leader>t", group = "test" },
       { "<Leader>u", group = "ui toggles" },

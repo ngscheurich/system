@@ -5,28 +5,29 @@
 --  Write in and navigate Obsidian vaults
 --  notes
 -- -------------------------------------------------------------------
+local vault_path = vim.fn.expand("~") .. "/Vaults/Notes"
+
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*",
-  -- lazy = true,
-  -- ft = "markdown",
-  -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+
   -- event = {
-  --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-  --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-  --   -- refer to `:h file-pattern` for more examples
-  --   "BufReadPre path/to/my-vault/*.md",
-  --   "BufNewFile path/to/my-vault/*.md",
+  --   "BufReadPre " .. vault_path .. "/*.md",
+  --   "BufNewFile " .. vault_path .. "/*.md",
   -- },
+
   dependencies = {
     "nvim-lua/plenary.nvim",
     "OXY2DEV/markview.nvim",
   },
+
   opts = {
+    legacy_commands = false,
+
     workspaces = {
       {
         name = "Notes",
-        path = "~/Vaults/Notes",
+        path = vault_path,
       },
     },
 
@@ -38,5 +39,21 @@ return {
       nvim_cmp = false,
       blink = true,
     },
+
+    note_id_func = function(title)
+      return title or "Untitled"
+    end,
+
+    note_frontmatter_func = function(_note)
+      return {}
+    end,
+  },
+
+  cmd = "Obsidian",
+
+  keys = {
+    { "<Leader>nn", "<Cmd>Obsidian new<CR>", desc = "New note" },
+    { "<Leader>nd", "<Cmd>Obsidian dailies<CR>", desc = "Open note" },
+    { "<Leader>nt", "<Cmd>Obsidian today<CR>", desc = "Today's note" },
   },
 }
