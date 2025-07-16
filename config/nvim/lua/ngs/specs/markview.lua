@@ -26,6 +26,10 @@ return {
       preview = {
         filetypes = { "markdown", "codecompanion" },
         ignore_buftypes = {},
+
+        enable_hybrid_mode = true,
+        hybrid_modes = { "n" },
+        icon_provider = "mini",
       },
       html = {
         container_elements = {
