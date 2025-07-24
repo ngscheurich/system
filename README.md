@@ -1,3 +1,6 @@
+> [!NOTE]
+> 🎒 I’m trying something old, but new, over at https://github.com/ngscheurich/dotfiles.
+
 # /etc/system
 
 ![A collection of terminal emulator windows runnning neofetch, btm, and Neovim.](img/system.png)
